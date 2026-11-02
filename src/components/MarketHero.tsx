@@ -30,12 +30,12 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
     if (!stats.assetsHistory || stats.assetsHistory.length < 2) return null;
 
     const series = stats.assetsHistory;
-    const start = series[0].assets;
-    const end = series[series.length - 1].assets;
+    const start = series[0].netAssets || series[0].assets;
+    const end = series[series.length - 1].netAssets || series[series.length - 1].assets;
     const diff = end - start;
     const rate = start > 0 ? diff / start : 0;
 
-    const values = series.map((d) => d.assets);
+    const values = series.map((d) => d.netAssets || d.assets);
     const minVal = Math.min(...values);
     const maxVal = Math.max(...values);
     const ySpan = maxVal - minVal;
@@ -82,19 +82,19 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
 
         {/* 3 Key Stat Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-          {/* Card 1: Assets in Funds (AUM) */}
+          {/* Card 1: Net Assets in Funds (AUM) */}
           <div className="bg-[#030a16]/85 border border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl p-4 sm:p-5 transition-all shadow-md group">
             <div className="flex items-center justify-between text-slate-400 mb-1.5 sm:mb-2">
               <span className="text-xs sm:text-sm font-semibold truncate text-slate-300">
-                {t.hero.grossAssets}
+                {t.hero.netAssets}
               </span>
               <Coins className="w-4 h-4 sm:w-5 sm:h-5 text-[#044CD0] group-hover:scale-110 transition-transform shrink-0" />
             </div>
             <div className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-100 truncate">
-              {formatLargeNumber(stats.totalAssetsGross)}
+              {formatLargeNumber(stats.totalAssetsNet)}
             </div>
             <div className="text-xs text-slate-400 mt-1 line-clamp-2 leading-snug min-h-[1.75rem] sm:min-h-[2rem]">
-              {t.hero.netAssets}: <span className="text-blue-400 font-semibold">{formatLargeNumber(stats.totalAssetsNet)}</span>
+              {t.hero.grossAssets}: <span className="text-blue-400 font-semibold">{formatLargeNumber(stats.totalAssetsGross)}</span>
             </div>
           </div>
 
@@ -197,7 +197,7 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
                           <div className="bg-[#030a16] border border-[#0e274d] px-2.5 py-1.5 rounded-lg shadow-xl text-[11px]">
                             <span className="text-slate-400 mr-2">{formatDate(item.date)}:</span>
                             <span className="font-bold text-slate-100">
-                              {formatLargeNumber(item.assets)}
+                              {formatLargeNumber(item.netAssets || item.assets)}
                             </span>
                           </div>
                         );
@@ -207,7 +207,7 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
                   />
                   <Area
                     type="monotone"
-                    dataKey="assets"
+                    dataKey="netAssets"
                     stroke="#044CD0"
                     strokeWidth={2.5}
                     fillOpacity={1}

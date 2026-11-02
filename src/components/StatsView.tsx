@@ -34,14 +34,14 @@ export function StatsView({ stats, history }: StatsViewProps) {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
         <div className="bg-[#051329] border border-[#0e274d] rounded-xl sm:rounded-2xl p-3.5 sm:p-5 shadow-md">
           <div className="flex items-center justify-between text-slate-400 mb-1 sm:mb-2">
-            <span className="text-[11px] sm:text-xs font-medium truncate">{t.hero.grossAssets}</span>
+            <span className="text-[11px] sm:text-xs font-medium truncate">{t.hero.netAssets}</span>
             <Coins className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#044CD0] shrink-0" />
           </div>
           <div className="text-base sm:text-xl lg:text-2xl font-black text-slate-100 truncate">
-            {formatLargeNumber(stats.totalAssetsGross)}
+            {formatLargeNumber(stats.totalAssetsNet)}
           </div>
           <div className="text-[10px] sm:text-xs text-slate-400 mt-1 truncate">
-            {t.assets.grossAssetsLabel} {formatLargeNumber(stats.totalAssetsNet)}
+            {t.hero.grossAssets}: {formatLargeNumber(stats.totalAssetsGross)}
           </div>
         </div>
 
