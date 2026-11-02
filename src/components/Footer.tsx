@@ -2,11 +2,13 @@
 
 import React from "react";
 import Link from "next/link";
-import { ExternalLink, ShieldCheck } from "lucide-react";
+import { ExternalLink, ShieldCheck, Lock, Accessibility } from "lucide-react";
 import { useTranslation } from "@/lib/i18n";
+import { useAccessibility } from "@/lib/accessibility";
 
 export function Footer() {
   const { t } = useTranslation();
+  const { openPrivacyModal } = useAccessibility();
 
   return (
     <footer className="w-full border-t border-[#0e274d] bg-[#030a16] mt-auto py-10">
@@ -68,15 +70,23 @@ export function Footer() {
             <h4 className="text-xs uppercase font-bold tracking-wider text-slate-300 mb-3 flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-[#3b82f6]" /> {t.footer.legalNoticeTitle}
             </h4>
-            <p className="text-xs text-slate-400 leading-relaxed">
+            <p className="text-xs text-slate-400 leading-relaxed mb-3">
               {t.footer.legalNoticeDesc}
             </p>
+            <button
+              type="button"
+              onClick={openPrivacyModal}
+              className="inline-flex items-center gap-1.5 text-xs text-[#60a5fa] hover:text-white font-medium hover:underline transition-colors"
+            >
+              <Lock className="w-3 h-3" />
+              {t.footer.privacyPolicyLink}
+            </button>
           </div>
         </div>
 
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
           <p>© {new Date().getFullYear()} WybieramFundusze. {t.footer.copyright}</p>
-          <div className="flex gap-4">
+          <div className="flex flex-wrap items-center gap-4 justify-center sm:justify-end">
             <Link href="/" className="hover:text-slate-200">
               {t.footer.catalogLink}
             </Link>
@@ -86,6 +96,13 @@ export function Footer() {
             <Link href="/tfi" className="hover:text-slate-200">
               {t.footer.tfiLink}
             </Link>
+            <button
+              type="button"
+              onClick={openPrivacyModal}
+              className="hover:text-slate-200 cursor-pointer"
+            >
+              {t.footer.privacyPolicyLink}
+            </button>
           </div>
         </div>
       </div>
