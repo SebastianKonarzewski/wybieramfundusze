@@ -20,8 +20,6 @@ import {
   ArrowDown,
   ChevronDown,
   ChevronUp,
-  Shield,
-  Coins,
 } from "lucide-react";
 import { SubfundCardModel } from "@/types/knf";
 import { StatusBadge } from "./StatusBadge";
@@ -66,10 +64,16 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
         try {
           const params = new URLSearchParams();
           if (searchTerm) params.set("search", searchTerm);
+          if (selectedClassification && selectedClassification !== "ALL") {
+            params.set("classification", selectedClassification);
+          }
+          if (selectedType && selectedType !== "ALL") {
+            params.set("fundType", selectedType);
+          }
           if (includeInactive) params.set("includeInactive", "true");
           if (includeLiquidating) params.set("includeLiquidating", "true");
           params.set("page", String(currentPage));
-          params.set("size", "36");
+          params.set("size", "24");
           params.set("sort", sortField === "name" ? `name,${sortOrder}` : "name,asc");
           params.set("enriched", "true");
 
@@ -77,7 +81,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
           if (res.ok) {
             const data = await res.json();
             setItems(data.items || []);
-            setPageInfo(data.page || { size: 36, totalElements: 0, totalPages: 0, number: 0 });
+            setPageInfo(data.page || { size: 24, totalElements: 0, totalPages: 0, number: 0 });
           }
         } catch (error) {
           console.error("Error fetching subfunds:", error);
@@ -90,7 +94,16 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
     }, 250);
 
     return () => clearTimeout(timer);
-  }, [searchTerm, includeInactive, includeLiquidating, currentPage, sortField, sortOrder]);
+  }, [
+    searchTerm,
+    selectedClassification,
+    selectedType,
+    includeInactive,
+    includeLiquidating,
+    currentPage,
+    sortField,
+    sortOrder,
+  ]);
 
   // Handle header click sorting
   const handleSort = (field: "name" | "fee" | "risk" | "valuation") => {
@@ -98,37 +111,28 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
       setSortOrder(sortOrder === "asc" ? "desc" : "asc");
     } else {
       setSortField(field);
-      // Default asc for fee & risk (lowest first), desc for valuation
       setSortOrder(field === "valuation" ? "desc" : "asc");
     }
   };
 
-  // Client-side filtering & sorting for enriched fields (fee, risk, valuation)
+  // Custom sort for enriched columns on the fetched page
   const processedItems = useMemo(() => {
-    let result = items.filter((item) => {
-      if (selectedType !== "ALL" && item.type !== selectedType) return false;
-      if (selectedClassification !== "ALL") {
-        const cls = (item.classification || "").toLowerCase();
-        if (!cls.includes(selectedClassification.toLowerCase())) return false;
-      }
-      return true;
-    });
+    let result = [...items];
 
-    // Custom sort by fee, risk, valuation
     if (sortField === "fee") {
-      result = [...result].sort((a, b) => {
+      result.sort((a, b) => {
         const fa = a.managementFee ?? (sortOrder === "asc" ? 999 : -1);
         const fb = b.managementFee ?? (sortOrder === "asc" ? 999 : -1);
         return sortOrder === "asc" ? fa - fb : fb - fa;
       });
     } else if (sortField === "risk") {
-      result = [...result].sort((a, b) => {
+      result.sort((a, b) => {
         const ra = a.riskLevel ?? (sortOrder === "asc" ? 999 : -1);
         const rb = b.riskLevel ?? (sortOrder === "asc" ? 999 : -1);
         return sortOrder === "asc" ? ra - rb : rb - ra;
       });
     } else if (sortField === "valuation") {
-      result = [...result].sort((a, b) => {
+      result.sort((a, b) => {
         const va = a.latestValuation ?? -1;
         const vb = b.latestValuation ?? -1;
         return sortOrder === "asc" ? va - vb : vb - va;
@@ -136,7 +140,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
     }
 
     return result;
-  }, [items, selectedType, selectedClassification, sortField, sortOrder]);
+  }, [items, sortField, sortOrder]);
 
   return (
     <div className="space-y-6">
@@ -210,54 +214,64 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
           </div>
         </div>
 
-        {/* Filter Badges: Type & Class */}
+        {/* Filter Badges: Type & Asset Class */}
         <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[#0e274d]">
           <div className="flex flex-wrap items-center gap-2">
-            {/* Type Filter */}
+            {/* Asset Class Filter */}
             <div className="flex items-center gap-1 text-xs">
-              <span className="text-slate-500 mr-1 font-medium">Typ:</span>
-              {["ALL", "SFIO", "FIO", "FIZ", "ETF"].map((type) => (
-                <button
-                  key={type}
-                  onClick={() => setSelectedType(type)}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors ${
-                    selectedType === type
-                      ? "bg-[#044CD0] text-white shadow-xs font-semibold"
-                      : "bg-[#030a16] text-slate-400 border border-[#0e274d] hover:text-slate-200"
-                  }`}
-                >
-                  {type === "ALL" ? "Wszystkie" : type}
-                </button>
-              ))}
-            </div>
-
-            <div className="hidden sm:block w-px h-4 bg-[#0e274d] mx-1" />
-
-            {/* Classification Quick Filter */}
-            <div className="flex items-center gap-1 text-xs">
-              <span className="text-slate-500 mr-1 font-medium">Klasa:</span>
+              <span className="text-slate-400 mr-1 font-semibold flex items-center gap-1">
+                <Compass className="w-3.5 h-3.5 text-[#3b82f6]" /> Klasa aktywów:
+              </span>
               {[
                 { id: "ALL", label: "Wszystkie" },
                 { id: "akcji", label: "Akcyjne" },
-                { id: "dłużn", label: "Dłużne" },
+                { id: "dłużn", label: "Dłużne / Obligacji" },
                 { id: "mieszan", label: "Mieszane" },
+                { id: "PPK", label: "PPK" },
+                { id: "alternatyw", label: "Alternatywne / Surowce" },
               ].map((cls) => (
                 <button
                   key={cls.id}
-                  onClick={() => setSelectedClassification(cls.id)}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors ${
+                  onClick={() => {
+                    setSelectedClassification(cls.id);
+                    setCurrentPage(0);
+                  }}
+                  className={`px-3 py-1 rounded-lg text-xs font-medium transition-all ${
                     selectedClassification === cls.id
-                      ? "bg-[#044CD0]/20 text-[#60a5fa] border border-[#044CD0]/40 font-semibold"
-                      : "bg-[#030a16] text-slate-400 border border-[#0e274d] hover:text-slate-200"
+                      ? "bg-[#044CD0] text-white shadow-md font-bold scale-102"
+                      : "bg-[#030a16] text-slate-300 border border-[#0e274d] hover:text-white hover:border-[#044CD0]/60"
                   }`}
                 >
                   {cls.label}
                 </button>
               ))}
             </div>
+
+            <div className="hidden sm:block w-px h-4 bg-[#0e274d] mx-1" />
+
+            {/* Fund Legal Type Filter */}
+            <div className="flex items-center gap-1 text-xs">
+              <span className="text-slate-400 mr-1 font-medium">Typ:</span>
+              {["ALL", "SFIO", "FIO", "FIZ", "ETF"].map((type) => (
+                <button
+                  key={type}
+                  onClick={() => {
+                    setSelectedType(type);
+                    setCurrentPage(0);
+                  }}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors ${
+                    selectedType === type
+                      ? "bg-[#044CD0]/20 text-[#60a5fa] border border-[#044CD0]/50 font-bold"
+                      : "bg-[#030a16] text-slate-400 border border-[#0e274d] hover:text-slate-200"
+                  }`}
+                >
+                  {type === "ALL" ? "Wszystkie typy" : type}
+                </button>
+              ))}
+            </div>
           </div>
 
-          {/* Toggle Button for Advanced Options (Inactive / Liquidating) */}
+          {/* Toggle Button for Advanced Options */}
           <button
             onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
             className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-200 py-1 px-2.5 rounded-lg border border-[#0e274d] hover:border-slate-600 transition-colors"
@@ -268,7 +282,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
           </button>
         </div>
 
-        {/* Collapsible Advanced Filters Section (Hidden by default!) */}
+        {/* Collapsible Advanced Filters Section */}
         {showAdvancedFilters && (
           <div className="p-4 rounded-xl bg-[#030a16] border border-[#0e274d] flex flex-wrap items-center gap-6 text-xs text-slate-300 animate-in fade-in duration-150">
             <span className="font-semibold text-slate-400">Rejestr i status prawny:</span>
@@ -310,9 +324,25 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
       <div className="flex items-center justify-between text-xs text-slate-400 px-1">
         <div>
           Znaleziono: <strong className="text-slate-200">{formatNumber(pageInfo.totalElements, 0)}</strong> subfunduszy
+          {selectedClassification !== "ALL" && (
+            <span className="ml-1 text-[#60a5fa]">
+              (kategoria:{" "}
+              <strong>
+                {selectedClassification === "akcji"
+                  ? "Akcyjne"
+                  : selectedClassification === "dłużn"
+                  ? "Dłużne"
+                  : selectedClassification === "mieszan"
+                  ? "Mieszane"
+                  : selectedClassification === "PPK"
+                  ? "PPK"
+                  : "Alternatywne / Surowce"}
+              </strong>)
+            </span>
+          )}
           {isPending && (
             <span className="ml-2 inline-flex items-center gap-1 text-[#3b82f6]">
-              <RefreshCw className="w-3 h-3 animate-spin" /> ładowanie danych...
+              <RefreshCw className="w-3 h-3 animate-spin" /> filtrowanie bazy...
             </span>
           )}
         </div>
@@ -364,9 +394,9 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
 
                   {/* Category & Classification */}
                   {(item.classification || item.category) && (
-                    <div className="text-xs text-slate-400 mb-4 flex items-center gap-1">
-                      <Compass className="w-3.5 h-3.5 text-slate-500 shrink-0" />
-                      <span className="truncate">
+                    <div className="text-xs text-slate-300 mb-4 flex items-center gap-1.5 bg-[#030a16]/60 p-2 rounded-xl border border-[#0e274d]/80">
+                      <Compass className="w-3.5 h-3.5 text-[#3b82f6] shrink-0" />
+                      <span className="truncate capitalize font-medium">
                         {item.classification}
                         {item.category ? ` • ${item.category}` : ""}
                       </span>
@@ -456,6 +486,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                       )}
                     </div>
                   </th>
+                  <th className="py-3.5 px-4 font-semibold">Klasa aktywów</th>
                   <th className="py-3.5 px-4 font-semibold">Status</th>
                   <th
                     onClick={() => handleSort("risk")}
@@ -523,8 +554,15 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                         >
                           {item.name}
                         </Link>
+                      </td>
+                      <td className="py-3 px-4 whitespace-nowrap">
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-[#030a16] border border-[#0e274d] text-slate-300 capitalize">
+                          {item.classification || "—"}
+                        </span>
                         {item.category && (
-                          <span className="text-xs text-slate-500">{item.category}</span>
+                          <div className="text-[11px] text-slate-500 mt-0.5">
+                            {item.category}
+                          </div>
                         )}
                       </td>
                       <td className="py-3 px-4 whitespace-nowrap">

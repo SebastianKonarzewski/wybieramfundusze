@@ -1,0 +1,5002 @@
+{
+  "191048": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "Subfundusz IPOPEMA Aktywnej Selekcji"
+  },
+  "191073": {
+    "c": "rynku surowców",
+    "cat": "rynku surowców",
+    "fn": "Subfundusz IPOPEMA Złota i Metali Szlachetnych"
+  },
+  "191098": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz IPOPEMA Obligacji Uniwersalny"
+  },
+  "191123": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz IPOPEMA Emerytura Plus"
+  },
+  "191148": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz IPOPEMA Dłużny Uniwersalny"
+  },
+  "191173": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz IPOPEMA Globalnych Megatrendów"
+  },
+  "191225": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz DB Fund Instrumentów Dłużnych w likwidacji"
+  },
+  "191246": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz DB Fund Dynamiczny w likwidacji"
+  },
+  "191267": {
+    "c": "mieszane",
+    "cat": "mieszane pozostałe",
+    "fn": "Subfundusz DB Fund Globalny Zrównoważony w likwidacji"
+  },
+  "191288": {
+    "c": "mieszane",
+    "cat": "mieszane cyklu życia 2045",
+    "fn": "ING Subfundusz Perspektywa 2045"
+  },
+  "191313": {
+    "c": "mieszane",
+    "cat": "mieszane cyklu życia 2040",
+    "fn": "ING Subfundusz Perspektywa 2040"
+  },
+  "191338": {
+    "c": "mieszane",
+    "cat": "mieszane cyklu życia 2035",
+    "fn": "ING Subfundusz Perspektywa 2035"
+  },
+  "191363": {
+    "c": "mieszane",
+    "cat": "mieszane cyklu życia 2030",
+    "fn": "ING Subfundusz Perspektywa 2030"
+  },
+  "191388": {
+    "c": "mieszane",
+    "cat": "mieszane cyklu życia 2025",
+    "fn": "ING Subfundusz Spokojna Perspektywa"
+  },
+  "191413": {
+    "c": "mieszane",
+    "cat": "mieszane pozostałe",
+    "fn": "Goldman Sachs Subfundusz Spokojna Perspektywa"
+  },
+  "191438": {
+    "c": "mieszane",
+    "cat": "mieszane cyklu życia 2050",
+    "fn": "ING Subfundusz Perspektywa 2050"
+  },
+  "191463": {
+    "c": "mieszane",
+    "cat": "mieszane cyklu życia 2060",
+    "fn": "ING Subfundusz Perspektywa 2060"
+  },
+  "191488": {
+    "c": "alternatywne",
+    "cat": "sekurytyzacyjne",
+    "fn": "Subfundusz KI 1"
+  },
+  "191515": {
+    "c": "alternatywne",
+    "cat": "sekurytyzacyjne",
+    "fn": "Subfundusz KI 2 w likwidacji"
+  },
+  "191542": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz EQUES Pieniężny"
+  },
+  "191569": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz EQUES Obligacji Uniwersalny"
+  },
+  "191594": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "Subfundusz EQUES Aktywnej Alokacji w likwidacji"
+  },
+  "191619": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz EQUES Akcji w likwidacji"
+  },
+  "191644": {
+    "c": "mieszane",
+    "cat": "mieszane cyklu życia 2020",
+    "fn": "Subfundusz PKO Zabezpieczenia Emerytalnego 2020"
+  },
+  "191669": {
+    "c": "mieszane",
+    "cat": "mieszane cyklu życia 2030",
+    "fn": "Subfundusz PKO Zabezpieczenia Emerytalnego 2030"
+  },
+  "191694": {
+    "c": "mieszane",
+    "cat": "mieszane cyklu życia 2040",
+    "fn": "Subfundusz PKO Zabezpieczenia Emerytalnego 2040"
+  },
+  "191719": {
+    "c": "mieszane",
+    "cat": "mieszane cyklu życia 2050",
+    "fn": "Subfundusz PKO Zabezpieczenia Emerytalnego 2050"
+  },
+  "191744": {
+    "c": "mieszane",
+    "cat": "mieszane cyklu życia 2060",
+    "fn": "Subfundusz PKO Zabezpieczenia Emerytalnego 2060"
+  },
+  "191769": {
+    "c": "mieszane",
+    "cat": "mieszane cyklu życia 2070",
+    "fn": "Subfundusz PKO Zabezpieczenia Emerytalnego 2070"
+  },
+  "191791": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "ALTUS Subfundusz Akcji w likwidacji"
+  },
+  "191814": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "ALTUS Subfundusz Optymalnego Wzrostu w likwidacji"
+  },
+  "191837": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "ALTUS Subfundusz SuperLokator w likwidacji"
+  },
+  "191862": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "ALTUS Subfundusz Absolutnej Stopy Zwrotu Rynku Polskiego (FIO) w likwidacji"
+  },
+  "191885": {
+    "c": "",
+    "cat": "",
+    "fn": "ALTUS Subfundusz Akcji Rynków Rozwiniętych"
+  },
+  "191902": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "ALTIUS Subfundusz Absolutnej Stopy Zwrotu Dłużny"
+  },
+  "191924": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "ALTUS Subfundusz Aktywnego Zarządzania w likwidacji"
+  },
+  "191947": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "ALTIUS Subfundusz Konserwatywny"
+  },
+  "191969": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "ALTUS Subfundusz Stabilnego Wzrostu w likwidacji"
+  },
+  "191992": {
+    "c": "akcji",
+    "cat": "akcji pozostałe",
+    "fn": "ALTIUS Subfundusz Short w likwidacji"
+  },
+  "192014": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "ALTUS Subfundusz Absolutnej Stopy Zwrotu Nowej Europy w likwidacji"
+  },
+  "192037": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Caspar Akcji Światowych Liderów"
+  },
+  "192059": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Caspar Kompas Rynkowy"
+  },
+  "192081": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Caspar Akcji Tureckich w likwidacji"
+  },
+  "192106": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Caspar Akcji Rosyjskich"
+  },
+  "192130": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "MS Obligacji w likwidacji"
+  },
+  "192152": {
+    "c": "",
+    "cat": "",
+    "fn": "MS Stabilnego Wzrostu"
+  },
+  "192171": {
+    "c": "",
+    "cat": "",
+    "fn": "MS Aktywnego Inwestowania"
+  },
+  "192190": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "MS Akcji"
+  },
+  "192213": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz AGRO Rynku Pieniężnego w likwidacji"
+  },
+  "192235": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz AGRO Obligacji w likwidacji"
+  },
+  "192257": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz AGRO Zrównoważony Lokacyjny Plus w likwidacji"
+  },
+  "192279": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "Subfundusz AGRO Strategii Giełdowych w likwidacji"
+  },
+  "192301": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz AGRO Strategii Indeksowych"
+  },
+  "192319": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "Subfundusz AGRO Global Markets w likwidacji"
+  },
+  "192341": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "PZU Energia Agresywny Absolutnej Stopy Zwrotu"
+  },
+  "192365": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "PZU Energia Ochrony Absolutnej Stopy Zwrotu"
+  },
+  "192389": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "PZU Energia Dłużny Krótkoterminowy"
+  },
+  "192563": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "PKO KONSERWATYWNY"
+  },
+  "192587": {
+    "c": "mieszane",
+    "cat": "mieszane pozostałe",
+    "fn": "PKO UMIARKOWANY"
+  },
+  "192611": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "PKO RUBINOWY"
+  },
+  "192635": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "PKO ZRÓWNOWAŻONY"
+  },
+  "192659": {
+    "c": "akcji",
+    "cat": "akcji pozostałe",
+    "fn": "PKO AKTYWNY"
+  },
+  "192683": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz inPZU Inwestycji Ostrożnych Obligacje Krótkoterminowe"
+  },
+  "192707": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz inPZU Zrównoważony"
+  },
+  "192725": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz inPZU Akcyjny Aktywny"
+  },
+  "192743": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz inPZU Sektorowy Medycyna"
+  },
+  "192761": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz inPZU Sektorowy Technologia"
+  },
+  "192797": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz PZU Puls Życia 2055"
+  },
+  "192833": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz PZU Puls Życia 2045"
+  },
+  "192851": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz PZU Puls Życia 2040"
+  },
+  "192869": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz PZU Puls Życia 2035"
+  },
+  "192887": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz inPZU Polskie Obligacje Skarbowe"
+  },
+  "192911": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz PZU Puls Życia 2030"
+  },
+  "192929": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz PZU Puls Życia 2025"
+  },
+  "192947": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "Subfundusz inPZU Obligacje Rynków Wschodzących"
+  },
+  "192971": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz inPZU Obligacje Skarbowe Rynków Rozwiniętych"
+  },
+  "192995": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz inPZU Akcje Polskie"
+  },
+  "193019": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz inPZU Akcje Rynków Wschodzących"
+  },
+  "193040": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz inPZU Akcje Rynków Rozwiniętych"
+  },
+  "193064": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz inPZU Akcje Amerykańskie"
+  },
+  "193085": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz inPZU Akcje Polskie Małych i Średnich Spółek "
+  },
+  "193106": {
+    "c": "alternatywne",
+    "cat": "aktywów niepublicznych",
+    "fn": "Subfundusz Finansowy"
+  },
+  "193134": {
+    "c": "alternatywne",
+    "cat": "aktywów niepublicznych",
+    "fn": "Subfundusz Strategiczny"
+  },
+  "193161": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2025",
+    "fn": "Subfundusz Emerytura 2025"
+  },
+  "193185": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2030",
+    "fn": "Subfundusz Emerytura 2030"
+  },
+  "193209": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2035",
+    "fn": "Subfundusz Emerytura 2035"
+  },
+  "193233": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2040",
+    "fn": "Subfundusz Emerytura 2040"
+  },
+  "193257": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2045",
+    "fn": "Subfundusz Emerytura 2045"
+  },
+  "193281": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2050",
+    "fn": "Subfundusz Emerytura 2050"
+  },
+  "193305": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2055",
+    "fn": "Subfundusz Emerytura 2055"
+  },
+  "193329": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2060",
+    "fn": "Subfundusz Emerytura 2060"
+  },
+  "193578": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2025",
+    "fn": "PKO EMERYTURA 2025"
+  },
+  "193603": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2030",
+    "fn": "PKO EMERYTURA 2030"
+  },
+  "193628": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2035",
+    "fn": "PKO EMERYTURA 2035"
+  },
+  "193653": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2040",
+    "fn": "PKO EMERYTURA 2040"
+  },
+  "193678": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2045",
+    "fn": "PKO EMERYTURA 2045"
+  },
+  "193703": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2050",
+    "fn": "PKO EMERYTURA 2050"
+  },
+  "193728": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2055",
+    "fn": "PKO EMERYTURA 2055"
+  },
+  "193753": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2060",
+    "fn": "PKO EMERYTURA 2060"
+  },
+  "193778": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2025",
+    "fn": "PPK inPZU 2025"
+  },
+  "193803": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2030",
+    "fn": "PPK inPZU 2030"
+  },
+  "193828": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2035",
+    "fn": "PPK inPZU 2035"
+  },
+  "193853": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2040",
+    "fn": "PPK inPZU 2040"
+  },
+  "193878": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2045",
+    "fn": "PPK inPZU 2045"
+  },
+  "193903": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2050",
+    "fn": "PPK inPZU 2050"
+  },
+  "193928": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2055",
+    "fn": "PPK inPZU 2055"
+  },
+  "193953": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2060",
+    "fn": "PPK inPZU 2060"
+  },
+  "193978": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2025",
+    "fn": "Esaliens 2025"
+  },
+  "194003": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2030",
+    "fn": "Esaliens 2030"
+  },
+  "194028": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2035",
+    "fn": "Esaliens 2035"
+  },
+  "194053": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2040",
+    "fn": "Esaliens 2040"
+  },
+  "194078": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2045",
+    "fn": "Esaliens 2045"
+  },
+  "194103": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2050",
+    "fn": "Esaliens 2050"
+  },
+  "194128": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2055",
+    "fn": "Esaliens 2055"
+  },
+  "194153": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2060",
+    "fn": "Esaliens 2060"
+  },
+  "194178": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2025",
+    "fn": "Generali Horyzont 2025"
+  },
+  "194203": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2030",
+    "fn": "Generali Horyzont 2030"
+  },
+  "194228": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2035",
+    "fn": "Generali Horyzont 2035"
+  },
+  "194253": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2040",
+    "fn": "Generali Horyzont 2040"
+  },
+  "194278": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2045",
+    "fn": "Generali Horyzont 2045"
+  },
+  "194303": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2050",
+    "fn": "Generali Horyzont 2050"
+  },
+  "194328": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2055",
+    "fn": "Generali Horyzont 2055"
+  },
+  "194353": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2060",
+    "fn": "Generali Horyzont 2060"
+  },
+  "194378": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2025",
+    "fn": "Erste PPK 2025"
+  },
+  "194403": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2030",
+    "fn": "Erste PPK 2030"
+  },
+  "194428": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2035",
+    "fn": "Erste PPK 2035"
+  },
+  "194453": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2040",
+    "fn": "Erste PPK 2040"
+  },
+  "194478": {
+    "c": "mieszane",
+    "cat": "mieszane pozostałe",
+    "fn": "Subfundusz Plan Wyważony  (Millennium SFIO)"
+  },
+  "194504": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Top Sectors (Millennium SFIO)"
+  },
+  "194554": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Dynamiczny USD (Millennium SFIO FZ)"
+  },
+  "194578": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Strukturalny (Partycypacyjny FIZ) w likwidacji"
+  },
+  "194603": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz K (Partycypacyjny FIZ) w likwidacji"
+  },
+  "194627": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz M (Partycypacyjny FIZ) w likwidacji"
+  },
+  "194651": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz O (Partycypacyjny FIZ) w likwidacji"
+  },
+  "194676": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz A"
+  },
+  "194700": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz B (Partycypacyjny FIZ)"
+  },
+  "194724": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz C (Partycypacyjny FIZ)"
+  },
+  "194748": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz D (Partycypacyjny FIZ)"
+  },
+  "194772": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz E (Partycypacyjny FIZ)"
+  },
+  "194796": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz F (Partycypacyjny FIZ)"
+  },
+  "194820": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz G (Partycypacyjny FIZ) w likwidacji"
+  },
+  "194844": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz I (Partycypacyjny FIZ) w likwidacji"
+  },
+  "194868": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz PKO Złota"
+  },
+  "194893": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz PKO Papierów Dłużnych USD"
+  },
+  "194918": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz PKO Papierów Dłużnych GBP"
+  },
+  "194942": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz PKO Papierów Dłużnych CHF"
+  },
+  "194966": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz PKO Akcji Rynku Azji i Pacyfiku"
+  },
+  "194991": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz PKO Ochrony Kapitału 100"
+  },
+  "195016": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz PKO Akcji Rynku Amerykańskiego"
+  },
+  "195041": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz PKO Akcji Rynku Japońskiego"
+  },
+  "195066": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz PKO Akcji Rynków Wschodzących"
+  },
+  "195091": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "Subfundusz Superfund RED"
+  },
+  "195118": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "Subfundusz Superfund Alfa Global"
+  },
+  "195145": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Superfund Stabilnego Wzrostu"
+  },
+  "195172": {
+    "c": "rynku surowców",
+    "cat": "rynku surowców",
+    "fn": "Subfundusz Superfund LEV Silver"
+  },
+  "195200": {
+    "c": "rynku surowców",
+    "cat": "rynku surowców",
+    "fn": "Subfundusz Superfund LEV Gold"
+  },
+  "195228": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Superfund Spokojna Inwestycja Plus"
+  },
+  "195256": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "PKO Subfundusz Obligacji Skarbowych Średnioterminowy"
+  },
+  "195279": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "PKO Subfundusz Zrównoważony"
+  },
+  "195302": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz GAMMA Portfel Pieniężny"
+  },
+  "195329": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz GAMMA Portfel Obligacyjny"
+  },
+  "195356": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz GAMMA Portfel Akcyjny"
+  },
+  "195383": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz GAMMA Portfel Akcji Średnich Spółek"
+  },
+  "195410": {
+    "c": "mieszane",
+    "cat": "mieszane pozostałe",
+    "fn": "Subfundusz Pekao Dochodu i Wzrostu Rynku Chińskiego"
+  },
+  "195434": {
+    "c": "rynku surowców",
+    "cat": "rynku surowców",
+    "fn": "Subfundusz Pekao Surowców i Energii"
+  },
+  "195459": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Pekao Spokojna Inwestycja"
+  },
+  "195484": {
+    "c": "mieszane",
+    "cat": "mieszane pozostałe",
+    "fn": "Subfundusz Pekao Wzrostu i Dochodu Rynku Europejskiego"
+  },
+  "195509": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz Pekao Obligacji Wysokodochodowych"
+  },
+  "195534": {
+    "c": "mieszane",
+    "cat": "mieszane pozostałe",
+    "fn": "Subfundusz Pekao Wzrostu i Dochodu Rynku Amerykańskiego"
+  },
+  "195559": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Pekao Akcji Dywidendowych"
+  },
+  "195584": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "Subfundusz Pekao Alternatywny - Absolutnej Stopy Zwrotu"
+  },
+  "195609": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Pekao Obligacji Rządu Amerykańskiego"
+  },
+  "195634": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Pekao Dłużny Aktywny"
+  },
+  "195658": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "Subfundusz Pekao Obligacji Samorządowych i Skarbowych"
+  },
+  "195682": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Pioneer Dochodu i Wzrostu Rynku Japońskiego"
+  },
+  "195705": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Pekao Bazowy 15 Obligacji Wysokodochodowych"
+  },
+  "195726": {
+    "c": "mieszane",
+    "cat": "mieszane pozostałe",
+    "fn": "Subfundusz Pekao Dochodu i Wzrostu Regionu Pacyfiku"
+  },
+  "195750": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Pekao Akcji Rynków Dalekiego Wschodu"
+  },
+  "195775": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Pekao Akcji Małych i Średnich Spółek Rynków Rozwiniętych"
+  },
+  "195800": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Pekao Akcji Rynków Wschodzących"
+  },
+  "195825": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Pioneer Akcji Europy Wschodniej"
+  },
+  "195849": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz Pekao Obligacji Wysokojakościowych"
+  },
+  "195874": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "Subfundusz Pioneer Absolutnej Stopy Zwrotu"
+  },
+  "195893": {
+    "c": "",
+    "cat": "",
+    "fn": "ING Subfundusz Gotówkowy Plus"
+  },
+  "195916": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "ING Subfundusz Akcji Polskich Plus"
+  },
+  "195938": {
+    "c": "",
+    "cat": "",
+    "fn": "ING Subfundusz Środkowoeuropejski Sektorów Defensywnych"
+  },
+  "195961": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "ING Subfundusz Krótkoterminowy Obligacji"
+  },
+  "195983": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "ING Subfundusz Konserwatywny"
+  },
+  "196004": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "ING Subfundusz Obligacji"
+  },
+  "196025": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "ING Subfundusz Stabilnego Wzrostu"
+  },
+  "196046": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "ING Subfundusz Zrównoważony"
+  },
+  "196067": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "ING Subfundusz Akcji"
+  },
+  "196088": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "ING Subfundusz Średnich i Małych Spółek"
+  },
+  "196109": {
+    "c": "",
+    "cat": "",
+    "fn": "ING Subfundusz Chiny i Indie USD"
+  },
+  "196133": {
+    "c": "",
+    "cat": "",
+    "fn": "ING Subfundusz Obligacji Plus"
+  },
+  "196156": {
+    "c": "",
+    "cat": "",
+    "fn": "ING Subfundusz Rosja EUR"
+  },
+  "196180": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "ING Subfundusz Globalnej Dywersyfikacji"
+  },
+  "196202": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "ING Subfundusz Indeks Obligacji"
+  },
+  "196224": {
+    "c": "",
+    "cat": "",
+    "fn": "ING Subfundusz Stabilnego Wzrostu Plus"
+  },
+  "196247": {
+    "c": "",
+    "cat": "",
+    "fn": "ING Subfundusz Zrównoważony Plus"
+  },
+  "196270": {
+    "c": "",
+    "cat": "",
+    "fn": "ING Subfundusz Akcji Plus"
+  },
+  "196293": {
+    "c": "",
+    "cat": "",
+    "fn": "NN Subfundusz Selektywny"
+  },
+  "196317": {
+    "c": "",
+    "cat": "",
+    "fn": "NN Subfundusz Środkowoeuropejski Budownictwa i Nieruchomości"
+  },
+  "196341": {
+    "c": "",
+    "cat": "",
+    "fn": "ING Subfundusz Środkowoeuropejski Sektora Finansowego"
+  },
+  "196365": {
+    "c": "",
+    "cat": "",
+    "fn": "ING Subfundusz Środkowoeuropejski Średnich i Małych Spółek"
+  },
+  "196388": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz PZU Akcji Rynków Rozwiniętych"
+  },
+  "196414": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz PZU Akcji Rynków Wschodzących"
+  },
+  "196440": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz PZU Akcji Spółek Dywidendowych"
+  },
+  "196466": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "Subfundusz PZU Dłużny Rynków Wschodzących"
+  },
+  "196492": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Rockbridge Neo Subfundusz Konserwatywny Plus"
+  },
+  "196516": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Rockbridge Neo Subfundusz Akcji Rynków Rozwiniętych"
+  },
+  "196540": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Rockbridge Neo Subfundusz Akcji Rynków Wschodzących"
+  },
+  "196564": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Rockbridge Neo Subfundusz Akcji Chińskich i Azjatyckich"
+  },
+  "196588": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Rockbridge Neo Subfundusz Akcji Ameryki Łacińskiej"
+  },
+  "196612": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Rockbridge Neo Subfundusz Akcji Europejskich"
+  },
+  "196636": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Rockbridge Neo Subfundusz Obligacji Plus"
+  },
+  "196660": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Rockbridge Neo Subfundusz Akcji Małych Spółek"
+  },
+  "196684": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Rockbridge Neo Subfundusz Rynku Polskiego"
+  },
+  "196708": {
+    "c": "akcji",
+    "cat": "akcji pozostałe",
+    "fn": "Rockbridge Neo Subfundusz Akcji Nowa Europa"
+  },
+  "196732": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Rockbridge Neo Subfundusz Akcji Polskich"
+  },
+  "196756": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Rockbridge Neo Subfundusz Obligacji Światowych"
+  },
+  "196780": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Rockbridge Neo Subfundusz Akcji Amerykańskich"
+  },
+  "196804": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Rockbridge Neo Subfundusz Azji i Rynków Wschodzących"
+  },
+  "196828": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Opera Avista.pl w likwidacji"
+  },
+  "196850": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Opera Universa.pl w likwidacji"
+  },
+  "196872": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "Subfundusz Opera Equilibrium.pl w likwidacji"
+  },
+  "196941": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Allianz Akcji"
+  },
+  "196965": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Allianz Akcji Globalnych"
+  },
+  "196987": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Allianz Obligacji Globalnych"
+  },
+  "197009": {
+    "c": "rynku surowców",
+    "cat": "rynku surowców",
+    "fn": "Subfundusz Allianz Akcji Rynku Złota"
+  },
+  "197031": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Allianz Globalny Stabilnego Dochodu"
+  },
+  "197053": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "Subfundusz Allianz Aktywnej Alokacji"
+  },
+  "197075": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Allianz Stabilnego Wzrostu"
+  },
+  "197097": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Allianz Polskich Obligacji Skarbowych"
+  },
+  "197119": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Allianz Obligacji Plus"
+  },
+  "197141": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Allianz Konserwatywny"
+  },
+  "197163": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Allianz Selektywny"
+  },
+  "197185": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Allianz Akcji Plus"
+  },
+  "197209": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Allianz Akcji Małych i Średnich Spółek"
+  },
+  "197231": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Skarbiec Krótkoterminowy Uniwersalny"
+  },
+  "197253": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Skarbiec - Nowej Generacji"
+  },
+  "197275": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Skarbiec - Selektywny Nowej Europy"
+  },
+  "197299": {
+    "c": "rynku surowców",
+    "cat": "rynku surowców",
+    "fn": "Subfundusz Skarbiec - Rynków Surowcowych"
+  },
+  "197321": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Skarbiec - Top Brands"
+  },
+  "197343": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Skarbiec - Spółek Wzrostowych"
+  },
+  "197364": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Skarbiec - Małych i Średnich Spółek"
+  },
+  "197385": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Skarbiec - Obligacja 2"
+  },
+  "197407": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "Subfundusz Skarbiec - Market Neutral"
+  },
+  "197429": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Skarbiec - Rynków Rozwiniętych"
+  },
+  "197451": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Skarbiec Krótkoterminowy Skarbowy"
+  },
+  "197473": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Skarbiec - Gotówkowy"
+  },
+  "197496": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Skarbiec - Value"
+  },
+  "197518": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Skarbiec Obligacji"
+  },
+  "197540": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Skarbiec - Dłużny Uniwersalny"
+  },
+  "197562": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Skarbiec - Rynków Wschodzących"
+  },
+  "197586": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Skarbiec Stabilnego Wzrostu"
+  },
+  "197608": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Skarbiec - Waga"
+  },
+  "197630": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Skarbiec Akcji Polskich"
+  },
+  "197652": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Skarbiec Polskich Innowacji"
+  },
+  "197674": {
+    "c": "alternatywne",
+    "cat": "aktywów niepublicznych",
+    "fn": "Subfundusz MCI.Euro Ventures 1.0."
+  },
+  "197700": {
+    "c": "alternatywne",
+    "cat": "aktywów niepublicznych",
+    "fn": "Subfundusz MCI.Tech Ventures 1.0 w likwidacji"
+  },
+  "197726": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Novo Wschodniouropejski ( w likwidacji)"
+  },
+  "197749": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Novo Małych Spółek Wschodnoeuropejskich (w likwidacji)"
+  },
+  "197773": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Novo Europejski (w likwidacji)"
+  },
+  "197797": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Novo Globalny (w likwidacji)"
+  },
+  "197821": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Novo Japoński (w likwidacji)"
+  },
+  "197845": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Novo Nordycki (w likwidacji)"
+  },
+  "197869": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Investor Nowych Technologii"
+  },
+  "197894": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Investor Rynków Wschodzących"
+  },
+  "197919": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Investor Turcja"
+  },
+  "197944": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Investor Indie i Chiny"
+  },
+  "197969": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Investor Zrównoważony Rynków Wschodzących"
+  },
+  "197993": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Investor Quality"
+  },
+  "198018": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz DWS Euroobligacji w likwidacji"
+  },
+  "198042": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz DWS Europa"
+  },
+  "198065": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Investor Akumulacji Kapitału"
+  },
+  "198090": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Investor Value"
+  },
+  "198115": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Investor Akcji Spółek Wzrostowych"
+  },
+  "198140": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Investor Konserwatywny"
+  },
+  "198165": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Investor Sektora Nieruchomości"
+  },
+  "198190": {
+    "c": "rynku surowców",
+    "cat": "rynku surowców",
+    "fn": "Subfundusz Investor Surowcowy"
+  },
+  "198215": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Investor Zmian Klimatycznych"
+  },
+  "198239": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz DWS Zrównoważony Sektora Finanse i Konsumpcja"
+  },
+  "198262": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Investor Obligacji Skarbowych Krótkoterminowy "
+  },
+  "198287": {
+    "c": "rynku surowców",
+    "cat": "rynku surowców",
+    "fn": "Subfundusz Investor Gold "
+  },
+  "198312": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Investor Niemcy"
+  },
+  "198337": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Investor Rosja w likwidacji"
+  },
+  "198362": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz 1 (Allianz FIZ) w likwidacji"
+  },
+  "198387": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Pioneer Lokacyjny"
+  },
+  "198410": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Pekao Konserwatywny"
+  },
+  "198431": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Pekao Stabilnego Wzrostu"
+  },
+  "198452": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Pekao Małych i Średnich Spółek Rynku Polskiego"
+  },
+  "198473": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Pekao Akcji - Aktywna Selekcja"
+  },
+  "198495": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Pekao Dynamicznych Spółek"
+  },
+  "198517": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Pekao Bazowy 15 Dywidendowy"
+  },
+  "198539": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Pekao Obligacji - Dynamiczna Alokacja 2"
+  },
+  "198561": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Pekao Konserwatywny Plus"
+  },
+  "198583": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Pekao Megatrendy"
+  },
+  "198605": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Pioneer Dochodu Mix 20"
+  },
+  "198628": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Pioneer Wzrostu i Dochodu Mix 40"
+  },
+  "198651": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Pioneer Wzrostu Mix 60"
+  },
+  "198675": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Pekao Zrównoważony"
+  },
+  "198696": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Pioneer Aktywnej Alokacji"
+  },
+  "198719": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Pekao Akcji Polskich"
+  },
+  "198740": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Pioneer Obligacji"
+  },
+  "198763": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Pekao Obligacji Plus"
+  },
+  "198784": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "GAMMA Subfundusz Papierów Dłużnych"
+  },
+  "198806": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "GAMMA Subfundusz Obligacji Korporacyjnych Plus w likwidacji"
+  },
+  "198831": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "GAMMA Subfundusz Plus"
+  },
+  "198853": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "GAMMA Subfundusz Stabilny"
+  },
+  "198875": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "GAMMA Subfundusz Aktywny"
+  },
+  "198899": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "GAMMA Subfundusz Akcyjny"
+  },
+  "198921": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "GAMMA Subfundusz Globalny Akcyjny"
+  },
+  "198945": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "GAMMA Subfundusz Obligacji Korporacyjnych"
+  },
+  "198967": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "GAMMA Subfundusz Globalny Obligacyjny"
+  },
+  "198991": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "GAMMA Subfundusz Akcji Małych i Średnich Spółek"
+  },
+  "199013": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Quercus Dłużny Krótkoterminowy"
+  },
+  "199038": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Quercus Gold short"
+  },
+  "199061": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Quercus Oil lev"
+  },
+  "199084": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Quercus Oil short"
+  },
+  "199107": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Quercus Wheat lev"
+  },
+  "199130": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Quercus Wheat short"
+  },
+  "199153": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Quercus Global Growth"
+  },
+  "199176": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz Quercus Akumulacji Kapitału"
+  },
+  "199201": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz Opera Tutus-plus w likwidacji"
+  },
+  "199226": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Agio Akcji Małych i Średnich Spółek"
+  },
+  "199251": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz Agio - Kapitał"
+  },
+  "199276": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Agio Akcji Globalnych"
+  },
+  "199301": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Agio - Aktywnej Alokacji"
+  },
+  "199323": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz Generali Euro"
+  },
+  "199373": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Generali Akcji Lifestyles"
+  },
+  "199398": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Generali Akcji Ekologicznych Globalny"
+  },
+  "199423": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "Subfundusz Generali Zagraniczny"
+  },
+  "199449": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Generali Obligacji Uniwersalny Plus"
+  },
+  "199474": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz SGB Dłużny"
+  },
+  "199499": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Generali Aktywa Polskie"
+  },
+  "199525": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "Subfundusz Generali Obligacje: Globalne Rynki Wschodzące"
+  },
+  "199575": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz Generali Profit Plus"
+  },
+  "199599": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Generali Obligacje Aktywny"
+  },
+  "199624": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz SGB Obligacji Uniwersalny"
+  },
+  "199674": {
+    "c": "rynku surowców",
+    "cat": "rynku surowców",
+    "fn": "Subfundusz Generali Złota"
+  },
+  "199749": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Rockbridge Neo Subfundusz Konserwatywny "
+  },
+  "199770": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Rockbridge Neo Subfundusz Obligacji Skarbowych"
+  },
+  "199792": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "Rockbridge Neo Subfundusz Aktywnej Alokacji"
+  },
+  "199814": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Rockbridge Neo Subfundusz Stabilnego Wzrostu"
+  },
+  "199836": {
+    "c": "akcji",
+    "cat": "akcji pozostałe",
+    "fn": "Rockbridge Neo Subfundusz Akcji Europy Środkowej i Wschodniej"
+  },
+  "199858": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Rockbridge Neo Subfundusz Akcji"
+  },
+  "199880": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Rockbridge Neo Subfundusz Akcji Średnich Spółek"
+  },
+  "199902": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Rockbridge Neo Subfundusz Globalnych Innowacji"
+  },
+  "199923": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "Rockbridge Neo Subfundusz Multistrategia"
+  },
+  "199944": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "ING Subfundusz Globalny Akcji Dywidendowych"
+  },
+  "199970": {
+    "c": "rynku surowców",
+    "cat": "rynku surowców",
+    "fn": "ING Subfundusz Surowców "
+  },
+  "199996": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "ING Subfundusz Akcji Rynków Wschodzących"
+  },
+  "200022": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "ING Subfundusz Globalny Akcji Odpowiedzialnego Inwestowania"
+  },
+  "200048": {
+    "c": "",
+    "cat": "",
+    "fn": "ING Subfundusz Papierów Dłużnych Rynków Wschodzących (Waluta Lokalna) (L)"
+  },
+  "200073": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "ING Subfundusz Globalny Obligacji Wysokodochodowych"
+  },
+  "200099": {
+    "c": "",
+    "cat": "",
+    "fn": "ING Subfundusz VIP Globalny Funduszy Akcji"
+  },
+  "200123": {
+    "c": "",
+    "cat": "",
+    "fn": "ING Subfundusz VIP Funduszy Akcji Rynków Wschodzących"
+  },
+  "200147": {
+    "c": "",
+    "cat": "",
+    "fn": "ING Subfundusz VIP Zrównoważony Funduszy Globalnych"
+  },
+  "200171": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "Goldman Sachs Subfundusz Multi Factor "
+  },
+  "200197": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "ING Subfundusz Konserwatywny Plus "
+  },
+  "200223": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "ING Subfundusz Akcji USA"
+  },
+  "200249": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "ING Subfundusz Obligacji Rynków Wschodzących (Waluta Lokalna)"
+  },
+  "200275": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "ING Subfundusz Obligacji Plus"
+  },
+  "200301": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "ING Subfundusz Stabilny Globalnej Dywersyfikacji"
+  },
+  "200327": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "ING Subfundusz Obligacji Korporacyjnych"
+  },
+  "200353": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "ING Subfundusz Akcji Europejskich"
+  },
+  "200379": {
+    "c": "",
+    "cat": "",
+    "fn": "ING Subfundusz Sektora Energii (L)"
+  },
+  "200404": {
+    "c": "",
+    "cat": "",
+    "fn": "ING Subfundusz Sektora Użyteczności Publicznej (L)"
+  },
+  "200428": {
+    "c": "",
+    "cat": "",
+    "fn": "ING Subfundusz Sektora Żywnościowego (L)"
+  },
+  "200452": {
+    "c": "",
+    "cat": "",
+    "fn": "ING Subfundusz Sektora Biotechnologii (L)"
+  },
+  "200476": {
+    "c": "",
+    "cat": "",
+    "fn": "ING Subfundusz Sektora Farmacji i Usług Medycznych (L)"
+  },
+  "200500": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "ING Subfundusz Akcji Japońskich"
+  },
+  "200526": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Allianz 1 (Allianz SFIO)"
+  },
+  "200549": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Allianz Artificial Intelligence"
+  },
+  "200574": {
+    "c": "rynku surowców",
+    "cat": "rynku surowców",
+    "fn": "Subfundusz Allianz Global Metals and Mining"
+  },
+  "200599": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Allianz India Equity"
+  },
+  "200624": {
+    "c": "mieszane",
+    "cat": "mieszane pozostałe",
+    "fn": "Subfundusz Allianz Dochodowy Income and Growth"
+  },
+  "200649": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "Subfundusz Allianz PIMCO ESG Income"
+  },
+  "200674": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "Subfundusz Allianz Structured Return w likwidacji"
+  },
+  "200699": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Allianz PIMCO Global Bond ESG"
+  },
+  "200724": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "Subfundusz Allianz PIMCO Global High Yield Bond"
+  },
+  "200749": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Allianz Trezor"
+  },
+  "200774": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "Subfundusz Allianz PIMCO EM Local Bond"
+  },
+  "200799": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Allianz 2 (Allianz SFIO) w likwidacji"
+  },
+  "200824": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "Subfundusz Allianz Emerging Markets Bond "
+  },
+  "200849": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "Subfundusz Allianz PIMCO Income"
+  },
+  "200874": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Allianz China A-Shares"
+  },
+  "200899": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Allianz Małych Spółek Europejskich"
+  },
+  "200924": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Allianz Obligacji Ultra Długoterminowych"
+  },
+  "200949": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Allianz Defensywna Multistrategia"
+  },
+  "200974": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Allianz Zbalansowana Multistrategia"
+  },
+  "200999": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "Subfundusz Allianz Dynamiczna Multistrategia"
+  },
+  "201024": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Allianz Europe Equity Growth Select"
+  },
+  "201049": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz ENERGA Trading 1 w likwidacji"
+  },
+  "201074": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz ENERGA Trading 2"
+  },
+  "201093": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Best Brands (Copernicus FIO) w likwidacji"
+  },
+  "201116": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Innowacji i Wzrostu (Copernicus FIO) w likwidacji"
+  },
+  "201139": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz Dłużnych Papierów Korporacyjnych (Copernicus FIO) w likwidacji"
+  },
+  "201162": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Płynnościowy Plus w likwidacji"
+  },
+  "201185": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Oszczędnościowy w likwidacji"
+  },
+  "201208": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Erste Prestiż Akcji Polskich"
+  },
+  "201233": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "Subfundusz Erste Prestiż Dłużny Globalny"
+  },
+  "201258": {
+    "c": "akcji",
+    "cat": "akcji pozostałe",
+    "fn": "Subfundusz Erste Prestiż Technologii i Innowacji"
+  },
+  "201283": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Erste Prestiż Dłużny Aktywny"
+  },
+  "201308": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Erste Prestiż Fair Invest"
+  },
+  "201333": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Santander Strategia Dynamiczna"
+  },
+  "201358": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Erste Prestiż Future Wealth"
+  },
+  "201383": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz Erste Prestiż Obligacji Korporacyjnych"
+  },
+  "201408": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Santander Prestiż Akcji Środkowej i Wschodniej Europy"
+  },
+  "201433": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Arka Prestiż Akcji Rosyjskich"
+  },
+  "201457": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Erste Prestiż Obligacji Skarbowych"
+  },
+  "201482": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Erste Prestiż Krótkoterminowy Uniwersalny"
+  },
+  "201507": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Erste Prestiż Akcji Europejskich"
+  },
+  "201532": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Erste Prestiż Akcji Globalnych"
+  },
+  "201557": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "Subfundusz Erste Prestiż Alfa"
+  },
+  "201648": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Caspar Ochrony Kapitału w likwidacji"
+  },
+  "201673": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Caspar Akcji Globalny Megatrendy"
+  },
+  "201695": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Open Finance Konserwatywny w likwidacji"
+  },
+  "201718": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Open Finance Obligacji w likwidacji"
+  },
+  "201741": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Open Finance Stabilnego Wzrostu w likwidacji"
+  },
+  "201764": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Open Finance Akcji w likwidacji"
+  },
+  "201787": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Open Finance Akcji Małych i Średnich Spółek w likwidacji"
+  },
+  "201809": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "Subfundusz Open Finance Aktywnej Alokacji w likwidacji"
+  },
+  "201832": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Esaliens Subfundusz Akcji"
+  },
+  "201853": {
+    "c": "akcji",
+    "cat": "akcji pozostałe",
+    "fn": "Esaliens Subfundusz Medycyny i Nowych Technologii"
+  },
+  "201874": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Esaliens Subfundusz Obligacji Uniwersalny"
+  },
+  "201895": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Esaliens Subfundusz Konserwatywny"
+  },
+  "201916": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Esaliens Subfundusz Małych i Średnich Spółek"
+  },
+  "201937": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Esaliens Subfundusz Stabilny"
+  },
+  "201958": {
+    "c": "alternatywne",
+    "cat": "sekurytyzacyjne",
+    "fn": "Subfundusz 1 (EGB Wierzytelności 2 NS FIZ) w likwidacji"
+  },
+  "201985": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz 2 (EGB Wierzytelności 2 NS FIZ)"
+  },
+  "202006": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz BPS Spokojna Inwestycja w likwidacji"
+  },
+  "202030": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz BPS Dłużny w likwidacji"
+  },
+  "202055": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz BPS Obligacji Korporacyjnych w likwidacji"
+  },
+  "202080": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz BPS Momentum Akcji w likwidacji"
+  },
+  "202104": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Optimum Konserwatywny w likwidacji"
+  },
+  "202126": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Optimum Obligacji w likwidacji"
+  },
+  "202148": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Optimum Akcji w likwidacji"
+  },
+  "202214": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz DELTA"
+  },
+  "202238": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz GAMMA"
+  },
+  "202263": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "Subfundusz SIGMA Obligacji Plus"
+  },
+  "202288": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "Subfundusz Skarbiec - Market Neutral 2"
+  },
+  "202313": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Skarbiec - Global Select Equity w likwidacji"
+  },
+  "202339": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "Subfundusz Skarbiec - Global Bond Opportunities w likwidacji"
+  },
+  "202365": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz Skarbiec - Global High Yield Bond w likwidacji"
+  },
+  "202390": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Skarbiec - Global Healthcare w likwidacji"
+  },
+  "202415": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "Subfundusz Skarbiec - Global Income w likwidacji"
+  },
+  "202441": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Skarbiec - Europe Strategic Dividend w likwidacji"
+  },
+  "202466": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Skarbiec - Global Macro Opportunities w likwidacji"
+  },
+  "202491": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Superfund Akcyjny"
+  },
+  "202516": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Superfund Obligacyjny Uniwersalny"
+  },
+  "202541": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Superfund Spokojna Inwestycja"
+  },
+  "202566": {
+    "c": "rynku surowców",
+    "cat": "rynku surowców",
+    "fn": "Subfundusz Superfund Spółek Złota i Srebra"
+  },
+  "202591": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Superfund Akcji AI & Blockchain "
+  },
+  "202616": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz SUPERFUND Plus US 500"
+  },
+  "202638": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz 1 (AGIO RB FIZ) w likwidacji"
+  },
+  "202664": {
+    "c": "alternatywne",
+    "cat": "sekurytyzacyjne",
+    "fn": "Subfundusz 1 (OPUS NS FIZ) w likwidacji"
+  },
+  "202691": {
+    "c": "mieszane",
+    "cat": "mieszane pozostałe",
+    "fn": "Amundi Subfundusz Globalnych Perspektyw Dynamiczny 1"
+  },
+  "202715": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Amundi Subfundusz Globalnych Perspektyw Dynamiczny"
+  },
+  "202736": {
+    "c": "",
+    "cat": "",
+    "fn": "\tAmundi Subfundusz Akcji Nowej Europy"
+  },
+  "202754": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Amundi Subfundusz Globalnych Perspektyw Konserwatywny"
+  },
+  "202776": {
+    "c": "",
+    "cat": "",
+    "fn": "\tAmundi Subfundusz Obligacji Korporacyjnch"
+  },
+  "202794": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "Amundi Subfundusz Globalnych Perspektyw Umiarkowany 1"
+  },
+  "202818": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "Amundi Subfundusz Globalnych Perspektyw Umiarkowany 2"
+  },
+  "202842": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "Amundi Subfundusz Globalnych Perspektyw Umiarkowany"
+  },
+  "202864": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Amundi Subfundusz Ostrożny Inwestor"
+  },
+  "202886": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "Subfundusz BNP Paribas Krajowych Funduszy Dłużnych Uniwersalny"
+  },
+  "202911": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "Subfundusz BNP Paribas Zdywersyfikowanych Aktywów w likwidacji"
+  },
+  "202937": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz BNP Paribas Małych i Średnich Spółek"
+  },
+  "202962": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz BNP Paribas Obligacji Korporacyjnych"
+  },
+  "202987": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Ipopema 1 w likwidacji"
+  },
+  "203015": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Ipopema 2 w likwidacji"
+  },
+  "203043": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz IPOPEMA 5 w likwidacji"
+  },
+  "203071": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz IPOPEMA 4 w likwidacji"
+  },
+  "203099": {
+    "c": "alternatywne",
+    "cat": "sekurytyzacyjne",
+    "fn": "Subfundusz IPOPEMA 7 w likwidacji"
+  },
+  "203127": {
+    "c": "alternatywne",
+    "cat": "sekurytyzacyjne",
+    "fn": "Subfundusz IPOPEMA 8 w likwidacji"
+  },
+  "203157": {
+    "c": "alternatywne",
+    "cat": "sekurytyzacyjne",
+    "fn": "Subfundusz IPOPEMA 9 w likwidacji"
+  },
+  "203184": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Pekao Obligacji Europejskich Plus"
+  },
+  "203206": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Pekao Obligacji Dolarowych Plus"
+  },
+  "203228": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Pekao Zrównoważony Rynku Amerykańskiego"
+  },
+  "203250": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Pekao Akcji Europejskich"
+  },
+  "203272": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Pekao Akcji Amerykańskich"
+  },
+  "203294": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz BNP Paribas TOP Funduszy Obligacji Krajowych w likwidacji"
+  },
+  "203319": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "Subfundusz BNP Paribas Obligacji Wysokodochodowych w likwidacji"
+  },
+  "203344": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "Subfundusz BNP Paribas Aktywny w likwidacji"
+  },
+  "203369": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz BNP Paribas Aktywnych Strategii Dłużnych w likwidacji"
+  },
+  "203394": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Investor Oszczędnościowy"
+  },
+  "203416": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Investor Zabezpieczenia Emerytalnego"
+  },
+  "203438": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Investor Akcji"
+  },
+  "203460": {
+    "c": "akcji",
+    "cat": "akcji pozostałe",
+    "fn": "Subfundusz Investor Fundamentalny Dywidend i Wzrostu"
+  },
+  "203482": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Investor Zrównoważony"
+  },
+  "203504": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Investor Obligacji Uniwersalny"
+  },
+  "203526": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Investor Top Małych i Średnich Spółek"
+  },
+  "203548": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Investor Małych i Średnich Spółek Rynków Rozwiniętych "
+  },
+  "203570": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "CP Private Equity w likwidacji"
+  },
+  "203595": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "CP Absolute Return w likwidacji"
+  },
+  "203620": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "CP Balanced Equity"
+  },
+  "203645": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "Subfundusz Neutral"
+  },
+  "203670": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "Subfundusz Alfa"
+  },
+  "203720": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "Subfundusz Momentum w likwidacji"
+  },
+  "203745": {
+    "c": "alternatywne",
+    "cat": "aktywów niepublicznych",
+    "fn": "Subfundusz 1R w likwidacji"
+  },
+  "203772": {
+    "c": "alternatywne",
+    "cat": "aktywów niepublicznych",
+    "fn": "Subfundusz 1I w likwidacji"
+  },
+  "203799": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "ING Subfundusz Pakiet Ostrożny"
+  },
+  "203824": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "ING Subfundusz Pakiet Umiarkowany"
+  },
+  "203849": {
+    "c": "mieszane",
+    "cat": "mieszane pozostałe",
+    "fn": "ING Subfundusz Pakiet Dynamiczny"
+  },
+  "203874": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "mBank Subfundusz Obligacji Korporacyjnych"
+  },
+  "203896": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "mBank Subfundusz Obligacji"
+  },
+  "203918": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Rockbridge Subfundusz Superior Akcji w likwidacji"
+  },
+  "203943": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "mBank Subfundusz Multiasset"
+  },
+  "203965": {
+    "c": "rynku surowców",
+    "cat": "rynku surowców",
+    "fn": "Rockbridge Subfundusz Superior Rynku Surowców w likwidacji"
+  },
+  "203990": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "mBank Subfundusz Innowacji PL"
+  },
+  "204012": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz AGIO Akcji Plus"
+  },
+  "204034": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz AGIO Dochodowy Plus"
+  },
+  "204056": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz AGIO Stabilny Plus"
+  },
+  "204078": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz AGIO Kapitał Plus"
+  },
+  "204100": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Esaliens Akcji Rynków Wschodzących "
+  },
+  "204125": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Esaliens Światowych Technologii Informacyjnych "
+  },
+  "204150": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Esaliens Akcji Amerykańskich"
+  },
+  "204175": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Esaliens Małych Spółek Amerykańskich "
+  },
+  "204200": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Esaliens Globalnej Alokacji "
+  },
+  "204225": {
+    "c": "rynku surowców",
+    "cat": "rynku surowców",
+    "fn": "Esaliens Złota i Metali Szlachetnych "
+  },
+  "204250": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Esaliens Akcji Globalnych "
+  },
+  "204275": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Esaliens Globalnych Obligacji Korporacyjnych "
+  },
+  "204300": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "Subfundusz Allianz Globalnych Strategii w likwidacji"
+  },
+  "204325": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Aviva Obligacji"
+  },
+  "204343": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz AMUNDI Indeks WIG 20 w likwidacji"
+  },
+  "204369": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz AMUNDI Indeks MSCI EMU w likwidacji"
+  },
+  "204395": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz AMUNDI Indeks S&P 500 w likwidacji"
+  },
+  "204421": {
+    "c": "akcji",
+    "cat": "akcji pozostałe",
+    "fn": "Subfundusz Franklin Zdywersyfikowany Akcji"
+  },
+  "204443": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "Subfundusz Fraxinus Zrównoważony w likwidacji"
+  },
+  "204465": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Fraxinus Elastycznego Dochodu w likwidacji"
+  },
+  "204487": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Credit Agricole Stabilnego Wzrostu"
+  },
+  "204509": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Credit Agricole Zrównoważony"
+  },
+  "204531": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Credit Agricole Dłużny Krótkoterminowy"
+  },
+  "204553": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Credit Agricole Akcyjny"
+  },
+  "204575": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Credit Agricole Akcji Nowej Europy"
+  },
+  "204598": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz BNP Paribas Akcji Polskich"
+  },
+  "204620": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz BNP Paribas Aktywnego Inwestowania"
+  },
+  "204642": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz BNP Paribas Stabilnego Inwestowania"
+  },
+  "204664": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz BNP Paribas Obligacji Skarbowych"
+  },
+  "204686": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz BNP Paribas Obligacji Uniwersalny"
+  },
+  "204708": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz BNP Paribas Globalny Akcji"
+  },
+  "204730": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz BNP Paribas Globalny Stabilnego Wzrostu"
+  },
+  "204752": {
+    "c": "alternatywne",
+    "cat": "aktywów niepublicznych",
+    "fn": "Subfundusz 1 (VALUE FIZ)"
+  },
+  "204778": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Gotowe Strategie Subfundusz Strategia na min. rok"
+  },
+  "204803": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Gotowe Strategie Subfundusz Strategia na min. 5 lat"
+  },
+  "204828": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Gotowe Strategie Subfundusz Strategia na min. 7 lat"
+  },
+  "204853": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Plus IPOPEMA Subfundusz Konserwatywny Uniwersalny "
+  },
+  "204878": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Dłużny (Pocztowy SFIO)"
+  },
+  "204896": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Plus IPOPEMA Subfundusz Stabilny"
+  },
+  "204921": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Plus IPOPEMA Subfundusz OBLIGACJI Uniwersalny "
+  },
+  "204946": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Dynamiczny (Pocztowy SFIO)"
+  },
+  "204964": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz Novo Primum Ochrony Kapitału w likwidacji"
+  },
+  "204990": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "MS Stabilnego Dochodu w likwidacji"
+  },
+  "205012": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2045",
+    "fn": "Erste PPK 2045"
+  },
+  "205037": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2050",
+    "fn": "Erste PPK 2050"
+  },
+  "205062": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2055",
+    "fn": "Erste PPK 2055"
+  },
+  "205087": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2060",
+    "fn": "Erste PPK 2060"
+  },
+  "205112": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2025",
+    "fn": "PFR PPK 2025"
+  },
+  "205137": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2030",
+    "fn": "PFR PPK 2030"
+  },
+  "205162": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2035",
+    "fn": "PFR PPK 2035"
+  },
+  "205187": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2040",
+    "fn": "PFR PPK 2040"
+  },
+  "205212": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2045",
+    "fn": "PFR PPK 2045"
+  },
+  "205237": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2050",
+    "fn": "PFR PPK 2050"
+  },
+  "205262": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2055",
+    "fn": "PFR PPK 2055"
+  },
+  "205287": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2060",
+    "fn": "PFR PPK 2060"
+  },
+  "205312": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2025",
+    "fn": "Allianz Plan Emerytalny 2025"
+  },
+  "205337": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2030",
+    "fn": "Allianz Plan Emerytalny 2030"
+  },
+  "205362": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2035",
+    "fn": "Allianz Plan Emerytalny 2035"
+  },
+  "205387": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2040",
+    "fn": "Allianz Plan Emerytalny 2040"
+  },
+  "205412": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2045",
+    "fn": "Allianz Plan Emerytalny 2045"
+  },
+  "205437": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2050",
+    "fn": "Allianz Plan Emerytalny 2050"
+  },
+  "205462": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2055",
+    "fn": "Allianz Plan Emerytalny 2055"
+  },
+  "205487": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2060",
+    "fn": "Allianz Plan Emerytalny 2060"
+  },
+  "205512": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2025",
+    "fn": "Allianz PPK 2025"
+  },
+  "205537": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2030",
+    "fn": "Allianz PPK 2030"
+  },
+  "205562": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2035",
+    "fn": "Allianz PPK 2035"
+  },
+  "205587": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2040",
+    "fn": "Allianz PPK 2040"
+  },
+  "205612": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2045",
+    "fn": "Allianz PPK 2045"
+  },
+  "205637": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2050",
+    "fn": "Allianz PPK 2050"
+  },
+  "205662": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2055",
+    "fn": "Allianz PPK 2055"
+  },
+  "205687": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2060",
+    "fn": "Allianz PPK 2060"
+  },
+  "205712": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2025",
+    "fn": "Investor PPK 2025"
+  },
+  "205737": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2030",
+    "fn": "Investor PPK 2030"
+  },
+  "205762": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2035",
+    "fn": "Investor PPK 2035"
+  },
+  "205787": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2040",
+    "fn": "Investor PPK 2040"
+  },
+  "205812": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2045",
+    "fn": "Investor PPK 2045"
+  },
+  "205837": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2050",
+    "fn": "Investor PPK 2050"
+  },
+  "205862": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2055",
+    "fn": "Investor PPK 2055"
+  },
+  "205887": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2060",
+    "fn": "Investor PPK 2060"
+  },
+  "205912": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2060",
+    "fn": "ING Subfundusz Emerytura 2060"
+  },
+  "205937": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2055",
+    "fn": "ING Subfundusz Emerytura 2055"
+  },
+  "205962": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2050",
+    "fn": "ING Subfundusz Emerytura 2050"
+  },
+  "205987": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2045",
+    "fn": "ING Subfundusz Emerytura 2045"
+  },
+  "206012": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2040",
+    "fn": "ING Subfundusz Emerytura 2040"
+  },
+  "206037": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2035",
+    "fn": "ING Subfundusz Emerytura 2035"
+  },
+  "206062": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2030",
+    "fn": "ING Subfundusz Emerytura 2030"
+  },
+  "206087": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2025",
+    "fn": "ING Subfundusz Emerytura 2025"
+  },
+  "206112": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2025",
+    "fn": "Pekao PPK 2025"
+  },
+  "206137": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2020",
+    "fn": "Pekao PPK 2020 Spokojne Jutro"
+  },
+  "206162": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2030",
+    "fn": "Pekao PPK 2030"
+  },
+  "206187": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2035",
+    "fn": "Pekao PPK 2035"
+  },
+  "206212": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2040",
+    "fn": "Pekao PPK 2040"
+  },
+  "206237": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2045",
+    "fn": "Pekao PPK 2045"
+  },
+  "206262": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2050",
+    "fn": "Pekao PPK 2050"
+  },
+  "206287": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2055",
+    "fn": "Pekao PPK 2055"
+  },
+  "206312": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2060",
+    "fn": "Pekao PPK 2060"
+  },
+  "206337": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2065",
+    "fn": "Pekao PPK 2065"
+  },
+  "206360": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2025",
+    "fn": "SKARBIEC PPK 2025"
+  },
+  "206385": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2030",
+    "fn": "SKARBIEC PPK 2030"
+  },
+  "206410": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2035",
+    "fn": "SKARBIEC PPK 2035"
+  },
+  "206435": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2040",
+    "fn": "SKARBIEC PPK 2040"
+  },
+  "206460": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2045",
+    "fn": "SKARBIEC PPK 2045"
+  },
+  "206485": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2050",
+    "fn": "SKARBIEC PPK 2050"
+  },
+  "206510": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2055",
+    "fn": "SKARBIEC PPK 2055"
+  },
+  "206535": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2060",
+    "fn": "SKARBIEC PPK 2060"
+  },
+  "206560": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2025",
+    "fn": "BNP Paribas PPK 2025"
+  },
+  "206585": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2030",
+    "fn": "BNP Paribas PPK 2030"
+  },
+  "206610": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2035",
+    "fn": "BNP Paribas PPK 2035"
+  },
+  "206635": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2040",
+    "fn": "BNP Paribas PPK 2040"
+  },
+  "206660": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2045",
+    "fn": "BNP Paribas PPK 2045"
+  },
+  "206685": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2050",
+    "fn": "BNP Paribas PPK 2050"
+  },
+  "206710": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2055",
+    "fn": "BNP Paribas PPK 2055"
+  },
+  "206735": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2060",
+    "fn": "BNP Paribas PPK 2060"
+  },
+  "206760": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "Subfundusz Amundi Stars Akcji Globalnych Zdywersyfikowany"
+  },
+  "206781": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Amundi Stars Obligacji Globalnych Uniwersalny"
+  },
+  "206802": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Amundi Stars Akcji Europejskich"
+  },
+  "206823": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Amundi Stars Akcji Globalnych Odpowiedzialnego Inwestowania "
+  },
+  "206844": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2025",
+    "fn": "BPS 2025"
+  },
+  "206867": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2030",
+    "fn": "BPS 2030"
+  },
+  "206890": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2035",
+    "fn": "BPS 2035"
+  },
+  "206913": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2040",
+    "fn": "BPS 2040"
+  },
+  "206936": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2045",
+    "fn": "BPS 2045"
+  },
+  "206959": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2050",
+    "fn": "BPS 2050"
+  },
+  "206982": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2055",
+    "fn": "BPS 2055"
+  },
+  "207005": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2060",
+    "fn": "BPS 2060"
+  },
+  "207028": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Baltic Makro Obligacji w likwidacji"
+  },
+  "207049": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Baltic Obligacji"
+  },
+  "207068": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Baltic Stabilnego Dochodu w likwidacji"
+  },
+  "207089": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "Subfundusz Baltic Makro Alokacji w likwidacji"
+  },
+  "207110": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Baltic Płynnych Akcji"
+  },
+  "207129": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "Subfundusz Baltic Makro Alokacji Plus w likwidacji"
+  },
+  "207150": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz BNPP Akcji Selektywny"
+  },
+  "207172": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz BNPP Globalny Strategii Dłużnych Uniwersalny"
+  },
+  "207195": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz BNPP Papierów Dłużnych Krótkoterminowych Skarbowych"
+  },
+  "207218": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz BNP Paribas Komercyjnych Papierów Dłużnych"
+  },
+  "207243": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz BNP Paribas Sektorowy"
+  },
+  "207267": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Inwestycyji Alternatywnych w likwidacji (Millennium SFIO FZ)"
+  },
+  "207292": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Plan Aktywny (Millennium SFIO)"
+  },
+  "207318": {
+    "c": "mieszane",
+    "cat": "mieszane pozostałe",
+    "fn": "Subfundusz Plan Spokojnyy (Millennium SFIO)"
+  },
+  "207344": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Obligacji Uniwersalny (Millennium SFIO)"
+  },
+  "207394": {
+    "c": "mieszane",
+    "cat": "mieszane pozostałe",
+    "fn": "Subfundusz Dynamiczny EUR (Millennium SFIO FZ)"
+  },
+  "207418": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "Subfundusz Multistrategia (Millennium SFIO)"
+  },
+  "207443": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Opera Substantia.pl"
+  },
+  "207466": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Opera Pecunia.pl w likwidacji"
+  },
+  "207661": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz A (Meritum FIZ) w likwidacji"
+  },
+  "207686": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz B (Meritum FIZ) w likwidacji"
+  },
+  "207711": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz D (Meritum FIZ) w likwidacji"
+  },
+  "207737": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Allianz Niskiego Ryzyka"
+  },
+  "207759": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Aviva Investors Nowych Spółek"
+  },
+  "207783": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "Subfundusz Allianz Optymalnego Wzrostu"
+  },
+  "207805": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Allianz Globalnych Akcji"
+  },
+  "207827": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "Subfundusz Allianz Globalnej Aktywnej Alokacji"
+  },
+  "207848": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz Allianz Dłużnych Papierów Korporacyjnych"
+  },
+  "207870": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Allianz Obligacji Dynamiczny"
+  },
+  "207892": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz Allianz Dochodowy"
+  },
+  "207913": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Allianz Globalny Obligacji"
+  },
+  "207935": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Allianz Kapitał Plus"
+  },
+  "207957": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Allianz Stabilnego Inwestowania"
+  },
+  "207979": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Allianz Polskich Akcji"
+  },
+  "208001": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Allianz Zrównoważony"
+  },
+  "208023": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Allianz Małych Spółek"
+  },
+  "208045": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Allianz Nowoczesnych Technologii"
+  },
+  "208067": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Allianz Europejskich Akcji"
+  },
+  "208089": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Allianz BRIC w likwidacji"
+  },
+  "208113": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Allianz Akcji"
+  },
+  "208133": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Allianz Akcji Rynków Wschodzących w likwidacji"
+  },
+  "208157": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Allianz Akcji Amerykańskich w likwidacji"
+  },
+  "208181": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Allianz Akcji Europejskich w likwidacji"
+  },
+  "208205": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Allianz Akcji Azji i Pacyfiku w likwidacji"
+  },
+  "208229": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Allianz Akcji Światowych w likwidacji"
+  },
+  "208253": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Allianz Akcji Strefy Euro w likwidacji"
+  },
+  "208277": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Allianz Akcji Eco Trends w likwidacji"
+  },
+  "208301": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz PKO Akcji Polskich "
+  },
+  "208323": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz PKO Akcji Małych i Średnich Spółek Plus"
+  },
+  "208348": {
+    "c": "",
+    "cat": "",
+    "fn": "PKO Subfundusz Akcji"
+  },
+  "208373": {
+    "c": "akcji",
+    "cat": "akcji pozostałe",
+    "fn": "PKO Subfundusz Akcji Małych i Średnich Spółek"
+  },
+  "208396": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "PKO Subfundusz Akcji Nowa Europa"
+  },
+  "208419": {
+    "c": "",
+    "cat": "",
+    "fn": "PKO Subfundusz Obligacji"
+  },
+  "208444": {
+    "c": "",
+    "cat": "",
+    "fn": "PKO Subfundusz Rynku Pieniężnego"
+  },
+  "208469": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "PKO Subfundusz Obligacji Skarbowych Krótkoterminowy"
+  },
+  "208492": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "PKO Subfundusz Dynamicznej Alokacji"
+  },
+  "208515": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "PKO Subfundusz Strategicznej Alokacji"
+  },
+  "208538": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz PKO Zrównoważony Plus"
+  },
+  "208563": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz PKO Obligacji Dolarowych"
+  },
+  "208586": {
+    "c": "rynku surowców",
+    "cat": "rynku surowców",
+    "fn": "Subfundusz PKO Akcji Rynku Złota"
+  },
+  "208609": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz PKO Akcji Rynku Polskiego"
+  },
+  "208632": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz PKO Akcji Rynku Amerykańskiego"
+  },
+  "208655": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz PKO Akcji Rynku Japońskiego"
+  },
+  "208678": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz PKO Akcji Rynków Wschodzących"
+  },
+  "208701": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz PKO Akcji Strefy Euro"
+  },
+  "208724": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz PKO Akcji Dużych Spółek Europejskich"
+  },
+  "208747": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz PKO Medycyny i Demografii Globalny"
+  },
+  "208769": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz PKO Stabilnego Wzrostu Plus"
+  },
+  "208794": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "Subfundusz PKO Obligacji Skarbowych i Samorządowych II"
+  },
+  "208816": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz PKO Obligacji Zielonej Transformacji"
+  },
+  "208838": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz PKO Ekologii i Odpowiedzialności Społecznej Globalny"
+  },
+  "208860": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "Subfundusz PKO Obligacji Skarbowych i Samorządowych"
+  },
+  "208882": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz PKO Obligacji Uniwersalny"
+  },
+  "208905": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz PKO Papierów Dłużnych Plus"
+  },
+  "208927": {
+    "c": "rynku surowców",
+    "cat": "rynku surowców",
+    "fn": "Subfundusz PKO Surowców Globalny"
+  },
+  "208950": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz PKO Infrastruktury i Budownictwa "
+  },
+  "208973": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz PKO Dóbr Luksusowych Globalny"
+  },
+  "208996": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz PKO Technologii i Innowacji Globalny"
+  },
+  "209019": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz PKO Skarbowy Plus"
+  },
+  "209044": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Novo Zrównoważonego Wzrostu w likwidacji"
+  },
+  "209066": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Novo Globalny Sektora Surowcowego"
+  },
+  "209085": {
+    "c": "mieszane",
+    "cat": "mieszane pozostałe",
+    "fn": "Subfundusz Novo Globalnego Dochodu w likwidacji"
+  },
+  "209106": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz Novo Obligacji Przedsiębiorstw w likwidacji"
+  },
+  "209128": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Novo Akcji w likwidacji"
+  },
+  "209150": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Novo Stabilnego Wzrostu w likwidacji"
+  },
+  "209172": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Novo Papierów Dłużnych w likwidacji"
+  },
+  "209194": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Novo Małych i Średnich Spółek w likwidacji"
+  },
+  "209216": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "Subfundusz Novo Aktywnej Alokacji w likwidacji"
+  },
+  "209237": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Novo TOP Global Equities"
+  },
+  "209256": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz Novo Konserwatywny Oszczędnościowy w likwidacji"
+  },
+  "209278": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Generali Korona Obligacji Uniwersalny"
+  },
+  "209300": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Generali Akcji Rynków Wschodzących"
+  },
+  "209395": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Generali Akcje Value"
+  },
+  "209440": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Generali Konserwatywny"
+  },
+  "209462": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Generali Stabilny Wzrost"
+  },
+  "209484": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Generali Akcje Małych i Średnich Spółek"
+  },
+  "209506": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz Generali Obligacji Krótkoterminowy"
+  },
+  "209528": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Generali Korona Obligacje"
+  },
+  "209550": {
+    "c": "rynku surowców",
+    "cat": "rynku surowców",
+    "fn": "Subfundusz Generali Surowców"
+  },
+  "209572": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Generali Akcji: Megatrendy"
+  },
+  "209594": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Generali Dolar"
+  },
+  "209640": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Generali Korona Zrównoważony"
+  },
+  "209662": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Generali Korona Akcje"
+  },
+  "209708": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Quercus Agresywny"
+  },
+  "209733": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "Subfundusz Quercus Global Balanced"
+  },
+  "209758": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Quercus Obligacji Skarbowych"
+  },
+  "209783": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "Subfundusz Quercus Absolutny"
+  },
+  "209807": {
+    "c": "akcji",
+    "cat": "akcji pozostałe",
+    "fn": "Subfundusz Quercus lev"
+  },
+  "209832": {
+    "c": "akcji",
+    "cat": "akcji pozostałe",
+    "fn": "Subfundusz Quercus short"
+  },
+  "209857": {
+    "c": "rynku surowców",
+    "cat": "rynku surowców",
+    "fn": "Subfundusz Quercus Gold"
+  },
+  "209882": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Allianz Akcyjny"
+  },
+  "209907": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Allianz Krótkoterminowych Obligacji"
+  },
+  "209932": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Allianz Dłużny"
+  },
+  "209957": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz Allianz Papierów Nieskarbowych"
+  },
+  "209982": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Allianz Spółek Dywidendowych"
+  },
+  "210007": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Rockbridge Subfundusz Akcji"
+  },
+  "210029": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Rockbridge Subfundusz Stabilnego Wzrostu"
+  },
+  "210051": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Rockbridge Subfundusz Akcji Globalnych"
+  },
+  "210073": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "BPH Subfundusz Akcji Selektywny"
+  },
+  "210092": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Rockbridge Subfundusz Gier i Innowacji"
+  },
+  "210114": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Rockbridge Subfundusz Value Leaders"
+  },
+  "210136": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Rockbridge Subfundusz Obligacji Aktywny 1"
+  },
+  "210158": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Rockbridge Subfundusz Growth Leaders"
+  },
+  "210180": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Rockbridge Subfundusz Akcji Średnich Spółek"
+  },
+  "210202": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Rockbridge Subfundusz Akcji Rynków Wschodzących"
+  },
+  "210225": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Rockbridge Subfundusz Zrównoważony"
+  },
+  "210247": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Rockbridge Subfundusz Obligacji Korporacyjnych"
+  },
+  "210269": {
+    "c": "",
+    "cat": "",
+    "fn": "BPH Subfundusz Nieruchomości Europy Wschodzącej"
+  },
+  "210294": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Rockbridge Subfundusz Obligacji"
+  },
+  "210316": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Rockbridge Subfundusz Obligacji Aktywny 2"
+  },
+  "210338": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Rockbridge Subfundusz Dłużny"
+  },
+  "210360": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Dynamicznych Spółek (Millennium FIO)"
+  },
+  "210382": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Akcji (Millennium FIO)"
+  },
+  "210404": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "Subfundusz Cyklu Koniunkturalnego  (Millennium FIO)"
+  },
+  "210426": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Stabilnego Wzrostu (Millennium FIO)"
+  },
+  "210448": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Dolarowa Lokata funduszu Millennium FIO"
+  },
+  "210471": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Papierów Dłużnych funduszu Millennium FIO"
+  },
+  "210494": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Obligacji Klasyczny (Millennium FIO)"
+  },
+  "210516": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Średnich Spółek Europy Środkowo-Wschodniej funduszu Millennium FIO"
+  },
+  "210539": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Instrumentów Dłużnych"
+  },
+  "210561": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "Subfundusz subGO Obligacje 1 w likwidacji"
+  },
+  "210588": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz 10"
+  },
+  "210606": {
+    "c": "alternatywne",
+    "cat": "sekurytyzacyjne",
+    "fn": "Subfundusz subGO Wierzytelności Płynnych w likwidacji"
+  },
+  "210632": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "Subfundusz subGO Micro w likwidacji"
+  },
+  "210658": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz subGO Fund Dynamic 3 w likwidacji"
+  },
+  "210683": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz subGO Fund Dynamic 4 w likwidacji"
+  },
+  "210708": {
+    "c": "mieszane",
+    "cat": "mieszane pozostałe",
+    "fn": "Subfundusz subGO Fund Energia 2 w likwidacji"
+  },
+  "210732": {
+    "c": "alternatywne",
+    "cat": "sekurytyzacyjne",
+    "fn": "Subfundusz subGO Fund Wierzytelności w likwidacji"
+  },
+  "210759": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz subGO Fund Private3"
+  },
+  "210777": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz 8"
+  },
+  "210795": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz 9"
+  },
+  "210813": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Pekao Strategii Globalnej - dynamiczny"
+  },
+  "210837": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Pioneer Zabezpieczony Rynku Polskiego"
+  },
+  "210861": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Pekao Zmiennej Alokacji"
+  },
+  "210886": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Pioneer Zmiennej Alokacji Rynku Polskiego"
+  },
+  "210910": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Pioneer Zmiennej Alokacji - Rynki Wschodzące"
+  },
+  "210934": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Pekao Zmiennej Alokacji Rynku Amerykańskiego"
+  },
+  "210959": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Fundusze Polskie"
+  },
+  "211000": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Pekao Strategii Globalnej"
+  },
+  "211025": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Pekao Strategii Globalnej - Stabilnego Wzrostu"
+  },
+  "211050": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Pioneer Zmiennej Alokacji - Rynki Europy Wschodniej"
+  },
+  "211074": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Pioneer Zmiennej Alokacji 3"
+  },
+  "211098": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz Pioneer Zmiennej Alokacji 2"
+  },
+  "211122": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "Subfundusz Pekao Kompas"
+  },
+  "211147": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz SKOK Aktywny Zmiennej Alokacji"
+  },
+  "211171": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz SEJF Stabilny Zmiennej Alokacji w likwidacji"
+  },
+  "211194": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz SKOK Fundusz Funduszy"
+  },
+  "211217": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz SEJF Obligacji w likwidacji"
+  },
+  "211239": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz SKOK Akcji"
+  },
+  "211263": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz SEJF Papierów Dłużnych w likwidacji"
+  },
+  "211285": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz SKOK Etyczny 1"
+  },
+  "211309": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz SEJF Etyczny 2 w likwidacji"
+  },
+  "211330": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz ALIOR Agresywny"
+  },
+  "211357": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz ALIOR Akcji Polskich"
+  },
+  "211381": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz ALIOR Sektora Finansowego"
+  },
+  "211399": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz ALIOR Obligacji Uniwersalny"
+  },
+  "211423": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz ALIOR Short Equity"
+  },
+  "211447": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz ALIOR Konserwatywny Obligacji Uniwersalny"
+  },
+  "211472": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz ALIOR Stabilny Mieszany"
+  },
+  "211496": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz ALIOR Spokojny Mieszany"
+  },
+  "211520": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz ALIOR Papierów Dłużnych"
+  },
+  "211547": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz ALIOR Fundusz Funduszy Strategia Ostrożna"
+  },
+  "211574": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "Subfundusz ALIOR Multi Asset"
+  },
+  "211601": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz ALIOR Zrównoważony"
+  },
+  "211625": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz ALIOR Akcji Zagranicznych"
+  },
+  "211649": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz ALIOR Stabilnych Spółek"
+  },
+  "211676": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "ALTER Subfundusz Rynku Polskiego"
+  },
+  "211703": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "ALTER Subfundusz RZ"
+  },
+  "211730": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "ALTER Subfundusz Private Equity w likwidacji"
+  },
+  "211758": {
+    "c": "",
+    "cat": "",
+    "fn": "Altus Subfundusz Real Estate w likwidacji"
+  },
+  "211787": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "INVENTUM Obligacji Subfundusz w likwidacji"
+  },
+  "211810": {
+    "c": "",
+    "cat": "",
+    "fn": "Idea Ochrony Kapitału Subfundusz w likwidacji"
+  },
+  "211835": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "INVENTUM Stabilnego Wzrostu Subfundusz w likwidacji"
+  },
+  "211858": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "INVENTUM Akcji Subfundusz w likwidacji"
+  },
+  "211881": {
+    "c": "",
+    "cat": "",
+    "fn": "INVENTUM Rynków Wschodzących Subfundusz w likwidacji"
+  },
+  "211906": {
+    "c": "",
+    "cat": "",
+    "fn": "INVENTUM Surowce Plus Subfundusz w likwidacji"
+  },
+  "211931": {
+    "c": "",
+    "cat": "",
+    "fn": "INVENTUM Zrównoważony Subfundusz w likwidacji"
+  },
+  "211956": {
+    "c": "",
+    "cat": "",
+    "fn": "INVENTUM Zmiennego Zaangażowania Subfundusz w likwidacji"
+  },
+  "211981": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "INVENTUM Pieniężny Subfundusz w likwidacji"
+  },
+  "212004": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "Subfundusz Opera Avista-plus.pl w likwidacji"
+  },
+  "212029": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz OPERA Beta-plus.pl w likwidacji"
+  },
+  "212054": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "Subfundusz Opera Alfa-plus.pl w likwidacji"
+  },
+  "212279": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz MED.subfund (SovereignFund FIZ) w likwidacji"
+  },
+  "212306": {
+    "c": "",
+    "cat": "",
+    "fn": "Subfundusz LRG subfund (SovereignFund FIZ) w likwidacji"
+  },
+  "212333": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Erste Akcji Polskich"
+  },
+  "212354": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Santander Platinum Stabilny"
+  },
+  "212375": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Erste Obligacji Uniwersalny"
+  },
+  "212396": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Erste Umiarkowany"
+  },
+  "212417": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Erste Akcji Małych i Średnich Spółek"
+  },
+  "212439": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Erste Zrównoważony"
+  },
+  "212460": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Erste Stabilnego Wzrostu"
+  },
+  "212481": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Erste Dłużny Krótkoterminowy"
+  },
+  "212502": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Santander Obligacji Skarbowych"
+  },
+  "212523": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Erste Akcji Spółek Wzrostowych"
+  },
+  "212544": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Santander Platinum Dynamiczny"
+  },
+  "212565": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Santander Akcji Środkowej i Wschodniej Europy"
+  },
+  "212586": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz Santander Obligacji Europejskich"
+  },
+  "212607": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Erste Prestiż Akcji Rynków Wschodzących"
+  },
+  "212632": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Erste Prestiż Akcji Amerykańskich"
+  },
+  "212657": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz PZU Obligacji Krótkoterminowych"
+  },
+  "212679": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz PZU Globalny Obligacji Korporacyjnych"
+  },
+  "212701": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz PZU Innowacyjnych Technologii w likwidacji"
+  },
+  "212726": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz PZU Dłużny Aktywny"
+  },
+  "212748": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz PZU Akcji Rynków Rozwiniętych"
+  },
+  "212770": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz PZU Dłużny Korporacyjny"
+  },
+  "212792": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz PZU Akcji Polskich"
+  },
+  "212814": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz PZU Dłużny Rynków Wschodzących"
+  },
+  "212836": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz PZU Papierów Dłużnych POLONEZ"
+  },
+  "212858": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz PZU Sejf+"
+  },
+  "212880": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz PZU Stabilnego Wzrostu MAZUREK"
+  },
+  "212902": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz PZU Zrównoważony"
+  },
+  "212924": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz PZU Globalny Akcji Medycznych"
+  },
+  "212946": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz PZU Akcji KRAKOWIAK"
+  },
+  "212968": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz PZU Akcji Małych i Średnich Spółek"
+  },
+  "212990": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "Subfundusz PZU Aktywny Globalny"
+  },
+  "213012": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz BPS Akcji Polskich"
+  },
+  "213034": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz BPS Stabilnego Wzrostu"
+  },
+  "213056": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz BPS Obligacji"
+  },
+  "213078": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz BPS Krótkoterminowy Uniwersalny"
+  },
+  "213100": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Akcji (Bezpieczna Jesień SFIO)"
+  },
+  "213150": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Subfundusz Stabilnego Wzrostu"
+  },
+  "213175": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Obligacji (Bezpieczna Jesień SFIO)"
+  },
+  "213200": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Konserwatywny (Bezpieczna Jesień SFIO)"
+  },
+  "213225": {
+    "c": "mieszane",
+    "cat": "mieszane pozostałe",
+    "fn": "Subfundusz IPOPEMA Zrównoważony Inwestycji Globalnych w likwidacji"
+  },
+  "213250": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz IPOPEMA Obligacji Korporacyjnych"
+  },
+  "213275": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz IPOPEMA Małych i Średnich Spółek"
+  },
+  "216924": {
+    "c": "mieszane",
+    "cat": "mieszane cyklu życia 2025",
+    "fn": "Subfundusz inPZU Puls Życia 2025"
+  },
+  "216959": {
+    "c": "mieszane",
+    "cat": "mieszane cyklu życia 2030",
+    "fn": "Subfundusz inPZU Puls Życia 2030"
+  },
+  "216983": {
+    "c": "mieszane",
+    "cat": "mieszane cyklu życia 2040",
+    "fn": "Subfundusz inPZU Puls Życia 2040"
+  },
+  "217007": {
+    "c": "mieszane",
+    "cat": "mieszane cyklu życia 2050",
+    "fn": "Subfundusz inPZU Puls Życia 2050"
+  },
+  "217031": {
+    "c": "mieszane",
+    "cat": "mieszane cyklu życia 2060",
+    "fn": "Subfundusz inPZU Puls Życia 2060"
+  },
+  "222319": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2065",
+    "fn": "Investor PPK 2065"
+  },
+  "222365": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2065",
+    "fn": "BNP Paribas PPK 2065"
+  },
+  "223538": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2065",
+    "fn": "ING Subfundusz Emerytura 2065"
+  },
+  "223713": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2065",
+    "fn": "Subfundusz Emerytura 2065"
+  },
+  "223759": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2065",
+    "fn": "SKARBIEC PPK 2065"
+  },
+  "224109": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2065",
+    "fn": "PPK inPZU 2065"
+  },
+  "224182": {
+    "c": "rynku surowców",
+    "cat": "rynku surowców",
+    "fn": "Subfundusz QUERCUS Silver"
+  },
+  "224398": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2065",
+    "fn": "PFR PPK 2065"
+  },
+  "224563": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2065",
+    "fn": "Allianz PPK 2065"
+  },
+  "224699": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2065",
+    "fn": "Generali Horyzont 2065"
+  },
+  "224770": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2065",
+    "fn": "PKO EMERYTURA 2065"
+  },
+  "225120": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2065",
+    "fn": "Esaliens 2065"
+  },
+  "225739": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2065",
+    "fn": "Erste PPK 2065"
+  },
+  "225913": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2065",
+    "fn": "Allianz Plan Emerytalny 2065"
+  },
+  "226605": {
+    "c": "alternatywne",
+    "cat": "sekurytyzacyjne",
+    "fn": "Subfundusz Ipopema 11 w likwidacji"
+  },
+  "232353": {
+    "c": "absolutnej stopy zwrotu",
+    "cat": "absolutnej stopy zwrotu",
+    "fn": "ING Subfundusz Total Return "
+  },
+  "233502": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz IPOPEMA Konserwatywny Uniwersalny"
+  },
+  "234899": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2065",
+    "fn": "BPS 2065"
+  },
+  "236479": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Generali Akcji Ekologicznych Europejski"
+  },
+  "239174": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz QUERCUS Dłużny 1"
+  },
+  "239216": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz QUERCUS Dłużny 2"
+  },
+  "239855": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Pekao Ekologiczny"
+  },
+  "404726": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz AGRO European Markets w likwidacji"
+  },
+  "412496": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "Subfundusz C-QUADRAT ARTS Total Return Bond"
+  },
+  "416179": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz inPZU Obligacje Skarbowe Amerykańskie "
+  },
+  "416221": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz inPZU Akcje Sektora Nieruchomości"
+  },
+  "416263": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz inPZU Akcje Sektora Informatycznego"
+  },
+  "416305": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz inPZU Akcje Europejskie"
+  },
+  "416347": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz inPZU Akcje Sektora Zielonej Energii"
+  },
+  "416389": {
+    "c": "rynku surowców",
+    "cat": "rynku surowców",
+    "fn": "Subfundusz inPZU Akcje Rynku Złota"
+  },
+  "416431": {
+    "c": "rynku surowców",
+    "cat": "rynku surowców",
+    "fn": "Subfundusz inPZU Akcje Rynku Surowców"
+  },
+  "416950": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "NN Subfundusz Obligacji 2"
+  },
+  "416992": {
+    "c": "akcji",
+    "cat": "akcji pozostałe",
+    "fn": "ING Subfundusz Akcji CEE"
+  },
+  "420110": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz ALIOR Ostrożny Obligacji Uniwersalny"
+  },
+  "422764": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Esaliens Konserwatywny Plus "
+  },
+  "423796": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz BNP Paribas Akcji Przełomowych Technologii"
+  },
+  "423839": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "Subfundusz BNP Paribas Globalny Obligacji Zamiennych"
+  },
+  "423882": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz BNP Paribas Akcji Azjatyckie Tygrysy"
+  },
+  "423925": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "Subfundusz BNP Paribas Globalny Obligacji Uniwersalny"
+  },
+  "423968": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz BNP Paribas Akcji Światowych"
+  },
+  "424011": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz BNP Paribas Akcji AQUA"
+  },
+  "426983": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Caspar Obligacji Skarbowy"
+  },
+  "430301": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "Subfundusz C-QUADRAT ARTS Total Return Flexible"
+  },
+  "432322": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz ALIOR Odpowiedzialny Obligacji Uniwersalny"
+  },
+  "433024": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Esaliens Autonomii Europejskiej "
+  },
+  "437760": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "Subfundusz BeGlobal Safe"
+  },
+  "437806": {
+    "c": "mieszane",
+    "cat": "mieszane pozostałe",
+    "fn": "Subfundusz BeGlobal Bond+"
+  },
+  "437851": {
+    "c": "mieszane",
+    "cat": "mieszane pozostałe",
+    "fn": "Subfundusz BeGlobal Mixed"
+  },
+  "437896": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz BeGlobal Profit"
+  },
+  "437941": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz BeGlobal Profit+"
+  },
+  "438365": {
+    "c": "alternatywne",
+    "cat": "nieruchomościowe",
+    "fn": "Subfundusz 4Estates 1 w likwidacji"
+  },
+  "483840": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Gotowe Strategie Subfundusz Strategia na min. 10 lat"
+  },
+  "483915": {
+    "c": "mieszane",
+    "cat": "mieszane pozostałe",
+    "fn": "Gotowe Strategie Subfundusz Strategia na min. 3 lata"
+  },
+  "483959": {
+    "c": "mieszane",
+    "cat": "mieszane cyklu życia 2035",
+    "fn": "Gotowe Strategie Subfundusz Emerytura 2035"
+  },
+  "484003": {
+    "c": "mieszane",
+    "cat": "mieszane cyklu życia 2045",
+    "fn": "Gotowe Strategie Subfundusz Emerytura 2045"
+  },
+  "484047": {
+    "c": "mieszane",
+    "cat": "mieszane cyklu życia 2055",
+    "fn": "Gotowe Strategie Subfundusz Emerytura 2055"
+  },
+  "561285": {
+    "c": "rynku surowców",
+    "cat": "rynku surowców",
+    "fn": "Subfundusz inPZU Złoto"
+  },
+  "561329": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz inPZU Akcje Sektora Cyberbezpieczeństwa"
+  },
+  "561375": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz inPZU Akcje Sektora Technologii Kosmicznych"
+  },
+  "561420": {
+    "c": "rynku surowców",
+    "cat": "rynku surowców",
+    "fn": "Subfundusz inPZU Bitcoin"
+  },
+  "561465": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz inPZU Zielone Obligacje"
+  },
+  "561510": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz inPZU Obligacje Korporacyjne High Yield"
+  },
+  "563779": {
+    "c": "akcji",
+    "cat": "akcji pozostałe",
+    "fn": "Subfundusz Quercus Tech lev"
+  },
+  "569903": {
+    "c": "mieszane",
+    "cat": "mieszane cyklu życia 2070",
+    "fn": "Subfundusz inPZU Puls Życia 2070"
+  },
+  "573371": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Erste Prestiż Spokojna Inwestycja"
+  },
+  "578636": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz Allianz Dłużnych Papierów Korporacyjnych"
+  },
+  "578681": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz Allianz Obligacji Dynamiczny"
+  },
+  "578726": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Subfundusz Allianz Turbo Akcji"
+  },
+  "578771": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz Allianz Dochodowy "
+  },
+  "578816": {
+    "c": "mieszane",
+    "cat": "mieszane pozostałe",
+    "fn": "Subfundusz Allianz Zrównoważony "
+  },
+  "589765": {
+    "c": "dłużne",
+    "cat": "obligacji korporacyjnych",
+    "fn": "Subfundusz Generali Obligacji Ekologicznych"
+  },
+  "595162": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Caspar Obligacji Uniwersalny"
+  },
+  "597227": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Allianz Euro Dochodowy"
+  },
+  "598450": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "Subfundusz Erste Prestiż Dłużny Dolarowy"
+  },
+  "599807": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz ALIOR Dolar Obligacji"
+  },
+  "599850": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz ALIOR Euro Obligacji"
+  },
+  "604093": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Amundi Stars Akcji Amerykańskich"
+  },
+  "604136": {
+    "c": "mieszane",
+    "cat": "mieszane ograniczonej alokacji",
+    "fn": "Amundi Subfundusz Stabilnego Wzrostu"
+  },
+  "604179": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Amundi Subfundusz Obligacji Polskich Uniwersalny"
+  },
+  "611168": {
+    "c": "rynku surowców",
+    "cat": "rynku surowców",
+    "fn": "Subfundusz BeGlobal Bitcoin PLN "
+  },
+  "614934": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz C-QUADRAT ARTS Best Momentum"
+  },
+  "616360": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2070",
+    "fn": "Generali Horyzont 2070 "
+  },
+  "616405": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2070",
+    "fn": "PFR PPK 2070"
+  },
+  "616450": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2070",
+    "fn": "PPK inPZU 2070"
+  },
+  "616495": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2070",
+    "fn": "PKO EMERYTURA 2070 "
+  },
+  "616551": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2070",
+    "fn": "Investor PPK 2070 "
+  },
+  "616621": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2070",
+    "fn": "Erste PPK 2070 "
+  },
+  "616721": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2070",
+    "fn": "Subfundusz Emerytura 2070 "
+  },
+  "616772": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2070",
+    "fn": "Esaliens 2070 "
+  },
+  "616922": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2070",
+    "fn": "Allianz Plan Emerytalny 2070 "
+  },
+  "617047": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2070",
+    "fn": "BNP Paribas PPK 2070"
+  },
+  "617093": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2070",
+    "fn": "ING Subfundusz Emerytura 2070"
+  },
+  "617712": {
+    "c": "PPK",
+    "cat": "PPK zdefiniowanej daty 2070",
+    "fn": "Pekao PPK 2070"
+  },
+  "619230": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Indeksowy Akcji Amerykańskich (Millennium SFIO)"
+  },
+  "619288": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz Indeksowy Akcji Europejskich (Millennium SFIO)"
+  },
+  "619331": {
+    "c": "akcji",
+    "cat": "akcji pozostałe",
+    "fn": "Subfundusz Indeksowy Akcji Rynków Wschodzących (Millennium SFIO)"
+  },
+  "619374": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "Subfundusz Indeksowy Globalnych Obligacji (Millennium SFIO)"
+  },
+  "628198": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "Subfundusz Pekao Euro Dłużny Krótkoterminowy"
+  },
+  "628241": {
+    "c": "akcji",
+    "cat": "akcji pozostałe",
+    "fn": "Subfundusz Akcji Rynku Złota (Millennium SFIO)"
+  },
+  "628455": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "Subfundusz Erste Prestiż Krótkoterminowy Euro"
+  },
+  "629564": {
+    "c": "akcji",
+    "cat": "akcji pozostałe",
+    "fn": "Subfundusz EQUES Akcji Uniwersalny"
+  },
+  "631322": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "Subfundusz PKO Obligacji Strefy Euro (EUR)"
+  },
+  "631366": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz PKO Akcji Strefy Euro (EUR)"
+  },
+  "631410": {
+    "c": "dłużne",
+    "cat": "obligacji pozostałe",
+    "fn": "Subfundusz PKO Obligacji Amerykańskich (USD)"
+  },
+  "631454": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz PKO Akcji Rynku Amerykańskiego (USD)"
+  },
+  "631527": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "ING Subfundusz Obligacji Uniwersalnych w EUR"
+  },
+  "631571": {
+    "c": "dłużne",
+    "cat": "obligacji uniwersalne",
+    "fn": "ING Subfundusz Obligacji Uniwersalnych w USD"
+  },
+  "632635": {
+    "c": "rynku surowców",
+    "cat": "rynku surowców",
+    "fn": "Subfundusz Pekao Złota"
+  },
+  "634195": {
+    "c": "akcji",
+    "cat": "akcji zagranicznych",
+    "fn": "Subfundusz PKO Akcji Europejskich Dochodowy"
+  },
+  "635470": {
+    "c": "dłużne",
+    "cat": "obligacji skarbowych",
+    "fn": "Subfundusz QUERCUS Sejf"
+  },
+  "635560": {
+    "c": "akcji",
+    "cat": "akcji polskich",
+    "fn": "Amundi Subfundusz Akcji Polskich"
+  },
+  "635604": {
+    "c": "mieszane",
+    "cat": "mieszane aktywnej alokacji",
+    "fn": "Amundi Subfundusz Zrównoważony"
+  }
+}

@@ -16,6 +16,7 @@ import {
   MarketStatistics,
   SubfundCardModel,
 } from "@/types/knf";
+import subfundsClassifications from "@/data/subfunds-classifications.json";
 
 const BASE_URL = "https://wybieramfundusze-api.knf.gov.pl";
 const DEFAULT_REVALIDATE = 3600; // 1 hour cache
@@ -23,6 +24,74 @@ const DEFAULT_REVALIDATE = 3600; // 1 hour cache
 interface FetchOptions {
   revalidate?: number | false;
   cache?: RequestCache;
+}
+
+// In-memory cache for subfund details to minimize repeated network calls
+const subfundDetailCache = new Map<number, KNFSubfundDetail>();
+
+export function inferClassificationFromName(name: string): { classification: string; category: string } {
+  const n = (name || "").toLowerCase();
+  if (n.includes("ppk") || n.includes("zdefiniowanej daty") || n.includes("emerytur")) {
+    return {
+      classification: "PPK",
+      category: "zdefiniowanej daty (PPK)",
+    };
+  }
+  if (
+    n.includes("akcj") ||
+    n.includes("equity") ||
+    n.includes("spółek") ||
+    n.includes("wzrost") ||
+    n.includes("indeks") ||
+    n.includes("tech")
+  ) {
+    return {
+      classification: "akcji",
+      category: n.includes("zagranic") || n.includes("global") ? "akcji zagranicznych" : "akcji polskich",
+    };
+  }
+  if (
+    n.includes("obligac") ||
+    n.includes("dłużn") ||
+    n.includes("skarb") ||
+    n.includes("papierów") ||
+    n.includes("rentier") ||
+    n.includes("konserwatywn") ||
+    n.includes("bond")
+  ) {
+    return {
+      classification: "dłużne",
+      category: n.includes("skarb") ? "obligacji skarbowych" : "obligacji uniwersalne",
+    };
+  }
+  if (
+    n.includes("mieszan") ||
+    n.includes("zrównoważ") ||
+    n.includes("stabilnego") ||
+    n.includes("alokacji") ||
+    n.includes("dynamicz")
+  ) {
+    return {
+      classification: "mieszane",
+      category: "mieszane aktywnej alokacji",
+    };
+  }
+  if (n.includes("surowc") || n.includes("złot") || n.includes("gold") || n.includes("commodity")) {
+    return {
+      classification: "rynku surowców",
+      category: "rynku surowców",
+    };
+  }
+  if (n.includes("pienięż") || n.includes("gotówk") || n.includes("lokacyj") || n.includes("płynności")) {
+    return {
+      classification: "rynku pieniężnego",
+      category: "rynku pieniężnego",
+    };
+  }
+  return {
+    classification: "alternatywne",
+    category: "aktywów niepublicznych",
+  };
 }
 
 /**
@@ -149,6 +218,7 @@ export const knfApi = {
   // ==========================================
   async getSubfunds(params?: {
     fundId?: number;
+    fundType?: string;
     includeInactive?: boolean;
     includeLiquidating?: boolean;
     search?: string;
@@ -159,6 +229,7 @@ export const knfApi = {
   }): Promise<KNFListResponse<KNFSubfund>> {
     const res = await knfFetch<KNFListResponse<KNFSubfund>>("/v1/subfunds", {
       fundId: params?.fundId,
+      fundType: params?.fundType,
       includeInactive: params?.includeInactive,
       includeLiquidating: params?.includeLiquidating,
       search: params?.search,
@@ -171,7 +242,14 @@ export const knfApi = {
   },
 
   async getSubfund(subfundId: number, asOf?: string): Promise<KNFSubfundDetail | null> {
-    return knfFetch<KNFSubfundDetail>(`/v1/subfunds/${subfundId}`, { asOf });
+    if (!asOf && subfundDetailCache.has(subfundId)) {
+      return subfundDetailCache.get(subfundId)!;
+    }
+    const detail = await knfFetch<KNFSubfundDetail>(`/v1/subfunds/${subfundId}`, { asOf });
+    if (detail && !asOf) {
+      subfundDetailCache.set(subfundId, detail);
+    }
+    return detail;
   },
 
   async getSubfundHistory(subfundId: number): Promise<KNFHistoryItem<KNFSubfundDetail>[]> {
@@ -335,10 +413,12 @@ export const knfApi = {
   },
 
   // ==========================================
-  // Wzbogacone subfundusze dla katalogu
+  // Wzbogacone subfundusze dla katalogu z pełną klasyfikacją
   // ==========================================
   async getEnrichedSubfunds(params?: {
     fundId?: number;
+    fundType?: string;
+    classification?: string;
     includeInactive?: boolean;
     includeLiquidating?: boolean;
     search?: string;
@@ -346,14 +426,105 @@ export const knfApi = {
     size?: number;
     sort?: string;
   }): Promise<{ items: SubfundCardModel[]; page: KNFListResponse<KNFSubfund>["page"] }> {
-    const listRes = await this.getSubfunds(params);
-    const subfunds = listRes.content;
+    const pageSize = params?.size ?? 24;
+    const currentPage = params?.page ?? 0;
+    const classFilter = params?.classification && params.classification !== "ALL" ? params.classification : null;
+    const classificationsMap = (subfundsClassifications || {}) as Record<
+      string,
+      { c: string; cat: string; fn: string }
+    >;
 
-    // Enrich batch with KID and latest valuation in parallel (max 20 per page)
+    // Fetch the list of subfunds (up to 2000 so we cover all)
+    const listRes = await this.getSubfunds({
+      fundId: params?.fundId,
+      fundType: params?.fundType,
+      includeInactive: params?.includeInactive,
+      includeLiquidating: params?.includeLiquidating,
+      search: params?.search,
+      page: 0,
+      size: 2000,
+      sort: params?.sort?.startsWith("name") ? params.sort : "name,asc",
+    });
+
+    let filtered = listRes.content.map((sf) => {
+      const meta = classificationsMap[String(sf.subfundId)];
+      const fallback = inferClassificationFromName(sf.name);
+      return {
+        ...sf,
+        classification: meta?.c || fallback.classification,
+        category: meta?.cat || fallback.category,
+        fullName: meta?.fn || sf.name,
+      };
+    });
+
+    // Handle sort if name,desc
+    if (params?.sort === "name,desc") {
+      filtered.sort((a, b) => b.name.localeCompare(a.name, "pl"));
+    } else if (params?.sort === "name,asc") {
+      filtered.sort((a, b) => a.name.localeCompare(b.name, "pl"));
+    }
+
+    // Filter by classification
+    if (classFilter) {
+      filtered = filtered.filter((sf) => {
+        const cls = (sf.classification || "").toLowerCase();
+        const cat = (sf.category || "").toLowerCase();
+        const name = (sf.name || "").toLowerCase();
+
+        if (classFilter === "akcji") {
+          return cls.includes("akcj") || cat.includes("akcj") || name.includes("akcj") || name.includes("equity");
+        }
+        if (classFilter === "dłużn") {
+          return (
+            cls.includes("dłużn") ||
+            cat.includes("dłużn") ||
+            cat.includes("skarb") ||
+            cat.includes("obligac") ||
+            name.includes("obligac") ||
+            name.includes("dłużn")
+          );
+        }
+        if (classFilter === "mieszan") {
+          return (
+            cls.includes("mieszan") ||
+            cat.includes("mieszan") ||
+            name.includes("mieszan") ||
+            name.includes("zrównoważ")
+          );
+        }
+        if (classFilter === "PPK") {
+          return (
+            cls.toUpperCase().includes("PPK") ||
+            cat.toUpperCase().includes("PPK") ||
+            name.toUpperCase().includes("PPK")
+          );
+        }
+        if (classFilter === "alternatyw") {
+          return (
+            cls.includes("alternatyw") ||
+            cls.includes("surowc") ||
+            cls.includes("absolut") ||
+            cat.includes("surowc") ||
+            cat.includes("alternatyw") ||
+            name.includes("surowc") ||
+            name.includes("złot")
+          );
+        }
+        return cls.includes(classFilter.toLowerCase()) || cat.includes(classFilter.toLowerCase());
+      });
+    }
+
+    const totalElements = filtered.length;
+    const totalPages = Math.ceil(totalElements / pageSize);
+    const startIndex = currentPage * pageSize;
+    const subfundsToEnrich = filtered.slice(startIndex, startIndex + pageSize);
+
+    // Enrich batch with full details, KID and latest valuation
     const enrichedItems: SubfundCardModel[] = await Promise.all(
-      subfunds.map(async (sf) => {
+      subfundsToEnrich.map(async (sf) => {
         try {
-          const [kid, valuationsRes] = await Promise.all([
+          const [details, kid, valuationsRes] = await Promise.all([
+            this.getSubfund(sf.subfundId),
             this.getLatestKidForSubfund(sf.subfundId),
             this.getValuations({ subfundId: sf.subfundId, size: 1 }),
           ]);
@@ -362,6 +533,13 @@ export const knfApi = {
 
           return {
             ...sf,
+            classification: details?.classification || sf.classification,
+            category: details?.category || sf.category,
+            fullName: details?.fullName || sf.fullName || sf.name,
+            isActive: details?.isActive ?? sf.isActive,
+            isLiquidating: details?.isLiquidating ?? sf.isLiquidating,
+            liquidationStartDate: details?.liquidationStartDate ?? sf.liquidationStartDate,
+            liquidationEndDate: details?.liquidationEndDate ?? sf.liquidationEndDate,
             riskLevel: kid?.riskLevel ?? null,
             managementFee: kid?.managementAndOtherFeesRate ?? null,
             benchmark: kid?.benchmark ?? null,
@@ -383,8 +561,12 @@ export const knfApi = {
 
     return {
       items: enrichedItems,
-      page: listRes.page,
+      page: {
+        size: pageSize,
+        totalElements,
+        totalPages,
+        number: currentPage,
+      },
     };
   },
 };
-
