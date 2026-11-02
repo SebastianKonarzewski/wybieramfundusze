@@ -66,6 +66,8 @@ export const en: Translations = {
     activeSubfundsDesc: "Segregated within umbrella funds",
     funds: "Funds",
     fundsDesc: "FIO, SFIO, and FIZ (incl. ETFs)",
+    investableProducts: "Funds & Subfunds to Choose From",
+    investableProductsDesc: "FIO, SFIO, and public FIZ (incl. ETFs)",
     companies: "Fund Managers (TFI)",
     companiesDesc: "Licensed by the KNF",
     educationalNote: "The catalog below displays distinct investment products with individual NAV valuations and Key Information Documents (KID) — segregated subfunds from umbrella structures and funds without segregated subfunds.",
@@ -74,7 +76,7 @@ export const en: Translations = {
     fullHistoryLink: "Full market history",
   },
   catalog: {
-    searchPlaceholder: "Search subfund by name or national code (e.g., Agio, PKO, Bonds, PLSFIO...)...",
+    searchPlaceholder: "Search fund or subfund by name or national code (e.g., Beta ETF, PKO, Bonds, PLSFIO...)...",
     assetClass: "Asset Class:",
     legalType: "Legal Type:",
     allTypes: "All Types",

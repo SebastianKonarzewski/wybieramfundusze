@@ -17,9 +17,15 @@ import {
   SubfundCardModel,
 } from "@/types/knf";
 import subfundsClassifications from "@/data/subfunds-classifications.json";
+import standaloneFundsData from "@/data/standalone-funds.json";
 
 const BASE_URL = "https://wybieramfundusze-api.knf.gov.pl";
 const DEFAULT_REVALIDATE = 3600; // 1 hour cache
+
+// Subfunds in KNF API with zero valuations (mostly non-public private FIZ subfunds)
+const UNQUOTED_SUBFUND_IDS = new Set([
+  204752, 203670, 211676, 211703, 193106, 191488, 197674, 203645, 635470, 193134, 203695, 635515,
+]);
 
 interface FetchOptions {
   revalidate?: number | false;
@@ -368,6 +374,9 @@ export const knfApi = {
     const activeFundsCount = activeFundsRes.page.totalElements || 0;
     const totalSubfundsCount = allSubfundsRes.page.totalElements || 0;
     const activeSubfundsCount = activeSubfundsRes.page.totalElements || 0;
+    // Exactly 688 products with available valuations in KNF API (635 subfunds + 53 standalone funds)
+    const investableProductsCount =
+      activeSubfundsCount - UNQUOTED_SUBFUND_IDS.size + (standaloneFundsData?.length || 53);
 
     return {
       totalAssetsGross: latestMarketAsset?.assets || 0,
@@ -378,17 +387,88 @@ export const knfApi = {
       liquidatingFundsCount: totalFundsCount - activeFundsCount,
       totalSubfundsCount,
       activeSubfundsCount,
+      investableProductsCount,
       companiesCount: companiesRes.page.totalElements || 0,
       assetsHistory,
     };
   },
 
   // ==========================================
-  // Pełny profil subfunduszu (dla strony detalu)
+  // Pełny profil subfunduszu / funduszu (dla strony detalu)
   // ==========================================
   async getSubfundFullProfile(subfundId: number): Promise<SubfundFullProfile | null> {
     const subfund = await this.getSubfund(subfundId);
-    if (!subfund) return null;
+    if (!subfund) {
+      // Check if subfundId corresponds to a standalone fund (without segregated subfunds, e.g. ETF)
+      const fund = await this.getFund(subfundId);
+      if (!fund) return null;
+
+      const [history, latestKidRes, valuationsRes, assetsRes] = await Promise.all([
+        this.getFundHistory(subfundId),
+        this.getKeyInformation({ fundId: subfundId, size: 1 }),
+        this.getValuations({ fundId: subfundId, size: 250, sort: "date,desc" }),
+        this.getAssets({ fundId: subfundId, size: 50, sort: "date,desc" }),
+      ]);
+
+      let latestKid: KNFKeyInformationDetail | null = null;
+      if (latestKidRes.content?.[0]) {
+        latestKid = await this.getKeyInformationDetail(latestKidRes.content[0].documentUuid);
+      }
+
+      let company: KNFCompanyDetail | null = null;
+      if (fund.companyId) {
+        company = await this.getCompany(fund.companyId);
+      }
+
+      const syntheticSubfund: KNFSubfundDetail = {
+        subfundId: fund.fundId,
+        fundId: fund.fundId,
+        nationalCode: fund.nationalCode,
+        name: fund.name,
+        fullName: fund.fullName || fund.name,
+        type: fund.type,
+        classification: fund.classification,
+        category: fund.category,
+        liquidationStartDate: fund.liquidationStartDate,
+        liquidationEndDate: fund.liquidationEndDate,
+        isLiquidating: fund.isLiquidating,
+        fromDate: fund.fromDate,
+        toDate: fund.toDate,
+        isActive: fund.isActive,
+      };
+
+      const mappedHistory: KNFHistoryItem<KNFSubfundDetail>[] = history.map((h) => ({
+        historyId: h.historyId,
+        validFrom: h.validFrom,
+        validTo: h.validTo,
+        data: {
+          subfundId: h.data.fundId,
+          fundId: h.data.fundId,
+          nationalCode: h.data.nationalCode,
+          name: h.data.name,
+          fullName: h.data.fullName || h.data.name,
+          type: h.data.type,
+          classification: h.data.classification,
+          category: h.data.category,
+          liquidationStartDate: h.data.liquidationStartDate,
+          liquidationEndDate: h.data.liquidationEndDate,
+          isLiquidating: h.data.isLiquidating,
+          fromDate: h.data.fromDate,
+          toDate: h.data.toDate,
+          isActive: h.data.isActive,
+        },
+      }));
+
+      return {
+        subfund: syntheticSubfund,
+        fund,
+        company,
+        latestKid,
+        valuations: valuationsRes.content || [],
+        assets: assetsRes.content || [],
+        history: mappedHistory,
+      };
+    }
 
     const [fund, history, latestKid, valuationsRes, assetsRes] = await Promise.all([
       subfund.fundId ? this.getFund(subfund.fundId) : Promise.resolve(null),
@@ -466,20 +546,46 @@ export const knfApi = {
       sort: params?.sort?.startsWith("name") ? params.sort : "name,asc",
     });
 
-    let filtered = listRes.content.map((sf) => {
+    // Exclude subfunds with no public valuations in API
+    const validSubfunds = listRes.content.filter((sf) => !UNQUOTED_SUBFUND_IDS.has(sf.subfundId));
+
+    // Prepare standalone funds if general query (no specific umbrella fundId specified)
+    let standalonePool: (KNFSubfund & { isFundOnly?: boolean; companyId?: number })[] = [];
+    if (!params?.fundId) {
+      const sTerm = (params?.search || "").toLowerCase().trim();
+      standalonePool = (standaloneFundsData as any[]).filter((f) => {
+        if (!sTerm) return true;
+        return (
+          (f.name || "").toLowerCase().includes(sTerm) ||
+          (f.fullName || "").toLowerCase().includes(sTerm) ||
+          (f.nationalCode || "").toLowerCase().includes(sTerm)
+        );
+      });
+    }
+
+    const combinedPool = [...validSubfunds, ...standalonePool];
+
+    let filtered = combinedPool.map((sf) => {
       const meta = classificationsMap[String(sf.subfundId)];
       const fallback = inferClassificationFromName(sf.name);
       return {
         ...sf,
-        classification: meta?.c || fallback.classification,
-        category: meta?.cat || fallback.category,
-        fullName: meta?.fn || sf.name,
+        classification: sf.classification || meta?.c || fallback.classification,
+        category: sf.category || meta?.cat || fallback.category,
+        fullName: (sf as any).fullName || meta?.fn || sf.name,
       };
     });
 
     // Filter by multiple fund types if selected
     if (activeFundTypes.length > 0) {
-      filtered = filtered.filter((sf) => activeFundTypes.includes(sf.type));
+      filtered = filtered.filter((sf) => {
+        return activeFundTypes.some((selectedType) => {
+          if (selectedType === "ETF") {
+            return sf.type === "ETF" || (sf.name || "").toUpperCase().includes("ETF");
+          }
+          return sf.type === selectedType;
+        });
+      });
     }
 
     // Filter by multiple classifications if selected
@@ -550,6 +656,39 @@ export const knfApi = {
     const enrichedItems: SubfundCardModel[] = await Promise.all(
       subfundsToEnrich.map(async (sf) => {
         try {
+          if ((sf as any).isFundOnly) {
+            // Standalone fund without segregated subfunds (e.g. Beta ETF, PZU ETF, standalone FIO/SFIO)
+            const [fundDetail, kidRes, valuationsRes] = await Promise.all([
+              this.getFund(sf.fundId),
+              this.getKeyInformation({ fundId: sf.fundId, size: 1 }),
+              this.getValuations({ fundId: sf.fundId, size: 1 }),
+            ]);
+
+            let kidDetail: KNFKeyInformationDetail | null = null;
+            if (kidRes.content?.[0]) {
+              kidDetail = await this.getKeyInformationDetail(kidRes.content[0].documentUuid);
+            }
+
+            const latestVal = valuationsRes.content[0];
+
+            return {
+              ...sf,
+              isFundOnly: true,
+              classification: fundDetail?.classification || sf.classification,
+              category: fundDetail?.category || sf.category,
+              fullName: fundDetail?.fullName || sf.fullName || sf.name,
+              isActive: fundDetail?.isActive ?? sf.isActive ?? true,
+              isLiquidating: fundDetail?.isLiquidating ?? sf.isLiquidating ?? false,
+              liquidationStartDate: fundDetail?.liquidationStartDate ?? null,
+              liquidationEndDate: fundDetail?.liquidationEndDate ?? null,
+              riskLevel: kidDetail?.riskLevel ?? null,
+              managementFee: kidDetail?.managementAndOtherFeesRate ?? null,
+              benchmark: kidDetail?.benchmark ?? null,
+              latestValuation: latestVal?.valuation ?? null,
+              latestValuationDate: latestVal?.date ?? null,
+            };
+          }
+
           const [details, kid, valuationsRes] = await Promise.all([
             this.getSubfund(sf.subfundId),
             this.getLatestKidForSubfund(sf.subfundId),

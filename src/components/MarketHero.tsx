@@ -80,68 +80,52 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
           </div>
         </div>
 
-        {/* 4 Key Stat Cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
+        {/* 3 Key Stat Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
           {/* Card 1: Assets in Funds (AUM) */}
-          <div className="bg-[#030a16]/85 border border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl p-3.5 sm:p-5 transition-all shadow-md group">
+          <div className="bg-[#030a16]/85 border border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl p-4 sm:p-5 transition-all shadow-md group">
             <div className="flex items-center justify-between text-slate-400 mb-1.5 sm:mb-2">
-              <span className="text-[11px] sm:text-xs font-semibold truncate text-slate-300">
+              <span className="text-xs sm:text-sm font-semibold truncate text-slate-300">
                 {t.hero.grossAssets}
               </span>
-              <Coins className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#044CD0] group-hover:scale-110 transition-transform shrink-0" />
+              <Coins className="w-4 h-4 sm:w-5 sm:h-5 text-[#044CD0] group-hover:scale-110 transition-transform shrink-0" />
             </div>
-            <div className="text-base sm:text-xl lg:text-2xl font-black text-slate-100 truncate">
+            <div className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-100 truncate">
               {formatLargeNumber(stats.totalAssetsGross)}
             </div>
-            <div className="text-[10px] sm:text-xs text-slate-400 mt-1 line-clamp-2 leading-snug min-h-[1.75rem] sm:min-h-[2rem]">
+            <div className="text-xs text-slate-400 mt-1 line-clamp-2 leading-snug min-h-[1.75rem] sm:min-h-[2rem]">
               {t.hero.netAssets}: <span className="text-blue-400 font-semibold">{formatLargeNumber(stats.totalAssetsNet)}</span>
             </div>
           </div>
 
-          {/* Card 2: Subfunds */}
-          <div className="bg-[#030a16]/85 border border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl p-3.5 sm:p-5 transition-all shadow-md group">
+          {/* Card 2: Investable Products (Subfunds + Standalone Funds) */}
+          <div className="bg-[#030a16]/85 border border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl p-4 sm:p-5 transition-all shadow-md group">
             <div className="flex items-center justify-between text-slate-400 mb-1.5 sm:mb-2">
-              <span className="text-[11px] sm:text-xs font-semibold truncate text-slate-300">
-                {t.hero.activeSubfunds}
+              <span className="text-xs sm:text-sm font-semibold truncate text-slate-300">
+                {t.hero.investableProducts}
               </span>
-              <Layers className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-400 group-hover:scale-110 transition-transform shrink-0" />
+              <Layers className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400 group-hover:scale-110 transition-transform shrink-0" />
             </div>
-            <div className="text-base sm:text-xl lg:text-2xl font-black text-blue-400">
-              {formatNumber(stats.activeSubfundsCount, 0)}
+            <div className="text-xl sm:text-2xl lg:text-3xl font-black text-blue-400">
+              {formatNumber(stats.investableProductsCount || 688, 0)}
             </div>
-            <div className="text-[10px] sm:text-xs text-slate-400 mt-1 line-clamp-2 leading-snug min-h-[1.75rem] sm:min-h-[2rem]">
-              {t.hero.activeSubfundsDesc}
+            <div className="text-xs text-slate-400 mt-1 line-clamp-2 leading-snug min-h-[1.75rem] sm:min-h-[2rem]">
+              {t.hero.investableProductsDesc}
             </div>
           </div>
 
-          {/* Card 3: Funds */}
-          <div className="bg-[#030a16]/85 border border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl p-3.5 sm:p-5 transition-all shadow-md group">
+          {/* Card 3: Fund Managers (TFI) */}
+          <div className="bg-[#030a16]/85 border border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl p-4 sm:p-5 transition-all shadow-md group">
             <div className="flex items-center justify-between text-slate-400 mb-1.5 sm:mb-2">
-              <span className="text-[11px] sm:text-xs font-semibold truncate text-slate-300">
-                {t.hero.funds}
-              </span>
-              <TrendingUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 group-hover:scale-110 transition-transform shrink-0" />
-            </div>
-            <div className="text-base sm:text-xl lg:text-2xl font-black text-slate-100">
-              {formatNumber(stats.activeFundsCount, 0)}
-            </div>
-            <div className="text-[10px] sm:text-xs text-slate-400 mt-1 line-clamp-2 leading-snug min-h-[1.75rem] sm:min-h-[2rem]">
-              {t.hero.fundsDesc}
-            </div>
-          </div>
-
-          {/* Card 4: Fund Managers (TFI) */}
-          <div className="bg-[#030a16]/85 border border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl p-3.5 sm:p-5 transition-all shadow-md group">
-            <div className="flex items-center justify-between text-slate-400 mb-1.5 sm:mb-2">
-              <span className="text-[11px] sm:text-xs font-semibold truncate text-slate-300">
+              <span className="text-xs sm:text-sm font-semibold truncate text-slate-300">
                 {t.hero.companies}
               </span>
-              <Building2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#044CD0] group-hover:scale-110 transition-transform shrink-0" />
+              <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-[#044CD0] group-hover:scale-110 transition-transform shrink-0" />
             </div>
-            <div className="text-base sm:text-xl lg:text-2xl font-black text-slate-100">
+            <div className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-100">
               {formatNumber(stats.companiesCount, 0)}
             </div>
-            <div className="text-[10px] sm:text-xs text-slate-400 mt-1 line-clamp-2 leading-snug min-h-[1.75rem] sm:min-h-[2rem]">
+            <div className="text-xs text-slate-400 mt-1 line-clamp-2 leading-snug min-h-[1.75rem] sm:min-h-[2rem]">
               {t.hero.companiesDesc}
             </div>
           </div>

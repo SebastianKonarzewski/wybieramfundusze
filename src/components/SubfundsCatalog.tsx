@@ -419,7 +419,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   <div className="flex items-center justify-between gap-2 mb-2.5">
                     <div className="flex items-center gap-1.5 flex-wrap">
                       <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-[#030a16] text-blue-300 border border-[#0e274d]">
-                        {item.type}
+                        {item.name.toUpperCase().includes("ETF") ? "ETF" : item.type}
                       </span>
                       {item.nationalCode && (
                         <span className="text-[10px] text-slate-500 font-mono">
@@ -592,7 +592,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                     >
                       <td className="py-3 px-4 whitespace-nowrap">
                         <span className="font-bold text-xs bg-[#030a16] border border-[#0e274d] px-2 py-0.5 rounded text-blue-300">
-                          {item.type}
+                          {item.name.toUpperCase().includes("ETF") ? "ETF" : item.type}
                         </span>
                         <div className="text-[10px] text-slate-500 font-mono mt-0.5">
                           {item.nationalCode}

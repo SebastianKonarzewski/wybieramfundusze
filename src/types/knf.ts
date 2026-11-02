@@ -232,6 +232,7 @@ export interface KNFTotalAsset {
 // Złożone modele dla frontendu
 // ==========================================
 export interface SubfundCardModel extends KNFSubfund {
+  isFundOnly?: boolean;
   companyName?: string;
   riskLevel?: number | null;
   managementFee?: number | null;
@@ -262,6 +263,7 @@ export interface MarketStatistics {
   liquidatingFundsCount: number;
   totalSubfundsCount: number;
   activeSubfundsCount: number;
+  investableProductsCount?: number;
   companiesCount: number;
   assetsHistory?: KNFTotalAsset[];
 }

@@ -64,6 +64,8 @@ export const pl = {
     activeSubfundsDesc: "Wydzielone w ramach parasoli",
     funds: "Fundusze",
     fundsDesc: "FIO, SFIO oraz FIZ (w tym ETF)",
+    investableProducts: "Fundusze i subfundusze do wyboru",
+    investableProductsDesc: "FIO, SFIO oraz publiczne FIZ (w tym ETF)",
     companies: "Towarzystwa (TFI)",
     companiesDesc: "Licencjonowane przez KNF",
     educationalNote: "Poniższy katalog prezentuje bezpośrednie produkty inwestycyjne posiadające odrębną wycenę jednostki oraz dokument kluczowych informacji (KID) — czyli subfundusze wydzielone w ramach funduszy parasolowych oraz fundusze bez wydzielonych subfunduszy.",
@@ -72,7 +74,7 @@ export const pl = {
     fullHistoryLink: "Pełna historia rynku",
   },
   catalog: {
-    searchPlaceholder: "Szukaj subfunduszu po nazwie lub kodzie (np. Agio, PKO, Obligacji, PLSFIO...)...",
+    searchPlaceholder: "Szukaj funduszu lub subfunduszu po nazwie lub kodzie (np. Beta ETF, PKO, Obligacji, PLSFIO...)...",
     assetClass: "Klasa aktywów:",
     legalType: "Typ prawny:",
     allTypes: "Wszystkie typy",
