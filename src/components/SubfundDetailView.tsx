@@ -175,3 +175,4 @@ export function SubfundDetailView({ profile }: { profile: SubfundFullProfile }) 
     </div>
   );
 }
+

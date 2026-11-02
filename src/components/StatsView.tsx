@@ -133,3 +133,4 @@ export function StatsView({ stats, history }: StatsViewProps) {
     </div>
   );
 }
+
