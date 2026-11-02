@@ -93,7 +93,7 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
             <div className="text-base sm:text-xl lg:text-2xl font-black text-slate-100 truncate">
               {formatLargeNumber(stats.totalAssetsGross)}
             </div>
-            <div className="text-[10px] sm:text-xs text-slate-400 mt-1 truncate">
+            <div className="text-[10px] sm:text-xs text-slate-400 mt-1 line-clamp-2 leading-snug min-h-[1.75rem] sm:min-h-[2rem]">
               {t.hero.netAssets}: <span className="text-blue-400 font-semibold">{formatLargeNumber(stats.totalAssetsNet)}</span>
             </div>
           </div>
@@ -109,7 +109,7 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
             <div className="text-base sm:text-xl lg:text-2xl font-black text-blue-400">
               {formatNumber(stats.activeSubfundsCount, 0)}
             </div>
-            <div className="text-[10px] sm:text-xs text-slate-400 mt-1 truncate">
+            <div className="text-[10px] sm:text-xs text-slate-400 mt-1 line-clamp-2 leading-snug min-h-[1.75rem] sm:min-h-[2rem]">
               {t.hero.activeSubfundsDesc}
             </div>
           </div>
@@ -125,7 +125,7 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
             <div className="text-base sm:text-xl lg:text-2xl font-black text-slate-100">
               {formatNumber(stats.activeFundsCount, 0)}
             </div>
-            <div className="text-[10px] sm:text-xs text-slate-400 mt-1 truncate">
+            <div className="text-[10px] sm:text-xs text-slate-400 mt-1 line-clamp-2 leading-snug min-h-[1.75rem] sm:min-h-[2rem]">
               {t.hero.fundsDesc}
             </div>
           </div>
@@ -141,7 +141,7 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
             <div className="text-base sm:text-xl lg:text-2xl font-black text-slate-100">
               {formatNumber(stats.companiesCount, 0)}
             </div>
-            <div className="text-[10px] sm:text-xs text-slate-400 mt-1 truncate">
+            <div className="text-[10px] sm:text-xs text-slate-400 mt-1 line-clamp-2 leading-snug min-h-[1.75rem] sm:min-h-[2rem]">
               {t.hero.companiesDesc}
             </div>
           </div>
