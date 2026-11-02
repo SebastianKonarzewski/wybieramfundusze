@@ -76,6 +76,8 @@ export const pl = {
   },
   catalog: {
     searchPlaceholder: "Szukaj funduszu lub subfunduszu po nazwie lub kodzie (np. Beta ETF, PKO, Obligacji, PLSFIO...)...",
+    viewModeGrid: "Widok kafelków",
+    viewModeTable: "Widok tabeli",
     assetClass: "Klasa aktywów:",
     legalType: "Typ prawny:",
     allTypes: "Wszystkie typy",

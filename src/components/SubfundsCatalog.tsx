@@ -57,7 +57,29 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
   const [sortField, setSortField] = useState<"name" | "fee" | "risk" | "valuation">("name");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [currentPage, setCurrentPage] = useState(0);
-  const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
+  const [viewMode, setViewMode] = useState<"grid" | "table">("table");
+  const [hasUserToggledView, setHasUserToggledView] = useState(false);
+
+  // Set default view: "table" on desktop (>=768px), "grid" on mobile (<768px)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const updateDefaultView = () => {
+      if (!hasUserToggledView) {
+        const isMobile = window.innerWidth < 768;
+        setViewMode(isMobile ? "grid" : "table");
+      }
+    };
+
+    updateDefaultView();
+    window.addEventListener("resize", updateDefaultView);
+    return () => window.removeEventListener("resize", updateDefaultView);
+  }, [hasUserToggledView]);
+
+  const handleViewModeChange = (mode: "grid" | "table") => {
+    setHasUserToggledView(true);
+    setViewMode(mode);
+  };
 
   // Toggle helpers for multi-select
   const toggleClassification = (id: string) => {
@@ -200,24 +222,26 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
             {/* View Mode Toggle */}
             <div className="flex items-center bg-[#030a16] p-1 rounded-xl border border-[#0e274d] shrink-0">
               <button
-                onClick={() => setViewMode("grid")}
-                className={`p-1.5 rounded-lg text-xs transition-colors ${
+                onClick={() => handleViewModeChange("grid")}
+                className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
                   viewMode === "grid"
                     ? "bg-[#044CD0] text-white shadow-xs"
                     : "text-slate-400 hover:text-slate-200"
                 }`}
-                title="Grid"
+                title={t.catalog.viewModeGrid}
+                aria-label={t.catalog.viewModeGrid}
               >
                 <LayoutGrid className="w-4 h-4" />
               </button>
               <button
-                onClick={() => setViewMode("table")}
-                className={`p-1.5 rounded-lg text-xs transition-colors ${
+                onClick={() => handleViewModeChange("table")}
+                className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
                   viewMode === "table"
                     ? "bg-[#044CD0] text-white shadow-xs"
                     : "text-slate-400 hover:text-slate-200"
                 }`}
-                title="Table"
+                title={t.catalog.viewModeTable}
+                aria-label={t.catalog.viewModeTable}
               >
                 <TableIcon className="w-4 h-4" />
               </button>

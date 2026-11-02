@@ -78,6 +78,8 @@ export const en: Translations = {
   },
   catalog: {
     searchPlaceholder: "Search fund or subfund by name or national code (e.g., Beta ETF, PKO, Bonds, PLSFIO...)...",
+    viewModeGrid: "Cards view",
+    viewModeTable: "Table view",
     assetClass: "Asset Class:",
     legalType: "Legal Type:",
     allTypes: "All Types",
