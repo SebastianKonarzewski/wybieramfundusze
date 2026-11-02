@@ -50,12 +50,36 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
   const [includeLiquidating, setIncludeLiquidating] = useState(false);
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
 
-  const [selectedType, setSelectedType] = useState<string>("ALL");
-  const [selectedClassification, setSelectedClassification] = useState<string>("ALL");
+  // Multi-select state for fund types and asset classes
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [selectedClassifications, setSelectedClassifications] = useState<string[]>([]);
   const [sortField, setSortField] = useState<"name" | "fee" | "risk" | "valuation">("name");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [currentPage, setCurrentPage] = useState(0);
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
+
+  // Toggle helpers for multi-select
+  const toggleClassification = (id: string) => {
+    setCurrentPage(0);
+    if (id === "ALL") {
+      setSelectedClassifications([]);
+      return;
+    }
+    setSelectedClassifications((prev) =>
+      prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]
+    );
+  };
+
+  const toggleType = (type: string) => {
+    setCurrentPage(0);
+    if (type === "ALL") {
+      setSelectedTypes([]);
+      return;
+    }
+    setSelectedTypes((prev) =>
+      prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
+    );
+  };
 
   // Fetch data on filter changes
   useEffect(() => {
@@ -64,11 +88,11 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
         try {
           const params = new URLSearchParams();
           if (searchTerm) params.set("search", searchTerm);
-          if (selectedClassification && selectedClassification !== "ALL") {
-            params.set("classification", selectedClassification);
+          if (selectedClassifications.length > 0) {
+            params.set("classifications", selectedClassifications.join(","));
           }
-          if (selectedType && selectedType !== "ALL") {
-            params.set("fundType", selectedType);
+          if (selectedTypes.length > 0) {
+            params.set("fundTypes", selectedTypes.join(","));
           }
           if (includeInactive) params.set("includeInactive", "true");
           if (includeLiquidating) params.set("includeLiquidating", "true");
@@ -96,8 +120,8 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
     return () => clearTimeout(timer);
   }, [
     searchTerm,
-    selectedClassification,
-    selectedType,
+    selectedClassifications,
+    selectedTypes,
     includeInactive,
     includeLiquidating,
     currentPage,
@@ -217,8 +241,8 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
         {/* Filter Badges: Type & Asset Class */}
         <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[#0e274d]">
           <div className="flex flex-wrap items-center gap-2">
-            {/* Asset Class Filter */}
-            <div className="flex items-center gap-1 text-xs">
+            {/* Asset Class Multi-Select Filter */}
+            <div className="flex items-center gap-1 text-xs flex-wrap">
               <span className="text-slate-400 mr-1 font-semibold flex items-center gap-1">
                 <Compass className="w-3.5 h-3.5 text-[#3b82f6]" /> Klasa aktywów:
               </span>
@@ -229,45 +253,59 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                 { id: "mieszan", label: "Mieszane" },
                 { id: "PPK", label: "PPK" },
                 { id: "alternatyw", label: "Alternatywne / Surowce" },
-              ].map((cls) => (
-                <button
-                  key={cls.id}
-                  onClick={() => {
-                    setSelectedClassification(cls.id);
-                    setCurrentPage(0);
-                  }}
-                  className={`px-3 py-1 rounded-lg text-xs font-medium transition-all ${
-                    selectedClassification === cls.id
-                      ? "bg-[#044CD0] text-white shadow-md font-bold scale-102"
-                      : "bg-[#030a16] text-slate-300 border border-[#0e274d] hover:text-white hover:border-[#044CD0]/60"
-                  }`}
-                >
-                  {cls.label}
-                </button>
-              ))}
+              ].map((cls) => {
+                const isSelected =
+                  cls.id === "ALL"
+                    ? selectedClassifications.length === 0
+                    : selectedClassifications.includes(cls.id);
+
+                return (
+                  <button
+                    key={cls.id}
+                    onClick={() => toggleClassification(cls.id)}
+                    className={`inline-flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+                      isSelected
+                        ? "bg-[#044CD0] text-white shadow-md font-bold scale-102 border border-blue-400/50"
+                        : "bg-[#030a16] text-slate-300 border border-[#0e274d] hover:text-white hover:border-[#044CD0]/60"
+                    }`}
+                  >
+                    {isSelected && cls.id !== "ALL" && (
+                      <Check className="w-3 h-3 stroke-[3]" />
+                    )}
+                    {cls.label}
+                  </button>
+                );
+              })}
             </div>
 
             <div className="hidden sm:block w-px h-4 bg-[#0e274d] mx-1" />
 
-            {/* Fund Legal Type Filter */}
-            <div className="flex items-center gap-1 text-xs">
-              <span className="text-slate-400 mr-1 font-medium">Typ:</span>
-              {["ALL", "SFIO", "FIO", "FIZ", "ETF"].map((type) => (
-                <button
-                  key={type}
-                  onClick={() => {
-                    setSelectedType(type);
-                    setCurrentPage(0);
-                  }}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors ${
-                    selectedType === type
-                      ? "bg-[#044CD0]/20 text-[#60a5fa] border border-[#044CD0]/50 font-bold"
-                      : "bg-[#030a16] text-slate-400 border border-[#0e274d] hover:text-slate-200"
-                  }`}
-                >
-                  {type === "ALL" ? "Wszystkie typy" : type}
-                </button>
-              ))}
+            {/* Fund Legal Type Multi-Select Filter */}
+            <div className="flex items-center gap-1 text-xs flex-wrap">
+              <span className="text-slate-400 mr-1 font-medium">Typ prawny:</span>
+              {["ALL", "SFIO", "FIO", "FIZ", "ETF"].map((type) => {
+                const isSelected =
+                  type === "ALL"
+                    ? selectedTypes.length === 0
+                    : selectedTypes.includes(type);
+
+                return (
+                  <button
+                    key={type}
+                    onClick={() => toggleType(type)}
+                    className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+                      isSelected
+                        ? "bg-[#044CD0] text-white shadow-xs font-bold border border-blue-400/60"
+                        : "bg-[#030a16] text-slate-400 border border-[#0e274d] hover:text-slate-200"
+                    }`}
+                  >
+                    {isSelected && type !== "ALL" && (
+                      <Check className="w-3 h-3 stroke-[3]" />
+                    )}
+                    {type === "ALL" ? "Wszystkie typy" : type}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -324,20 +362,30 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
       <div className="flex items-center justify-between text-xs text-slate-400 px-1">
         <div>
           Znaleziono: <strong className="text-slate-200">{formatNumber(pageInfo.totalElements, 0)}</strong> subfunduszy
-          {selectedClassification !== "ALL" && (
+          {(selectedClassifications.length > 0 || selectedTypes.length > 0) && (
             <span className="ml-1 text-[#60a5fa]">
-              (kategoria:{" "}
-              <strong>
-                {selectedClassification === "akcji"
-                  ? "Akcyjne"
-                  : selectedClassification === "dłużn"
-                  ? "Dłużne"
-                  : selectedClassification === "mieszan"
-                  ? "Mieszane"
-                  : selectedClassification === "PPK"
-                  ? "PPK"
-                  : "Alternatywne / Surowce"}
-              </strong>)
+              ({[
+                selectedClassifications.length > 0
+                  ? `klasy: ${selectedClassifications
+                      .map((c) =>
+                        c === "akcji"
+                          ? "Akcyjne"
+                          : c === "dłużn"
+                          ? "Dłużne"
+                          : c === "mieszan"
+                          ? "Mieszane"
+                          : c === "PPK"
+                          ? "PPK"
+                          : "Alternatywne"
+                      )
+                      .join(", ")}`
+                  : null,
+                selectedTypes.length > 0
+                  ? `typy: ${selectedTypes.join(", ")}`
+                  : null,
+              ]
+                .filter(Boolean)
+                .join(" • ")})
             </span>
           )}
           {isPending && (

@@ -418,7 +418,9 @@ export const knfApi = {
   async getEnrichedSubfunds(params?: {
     fundId?: number;
     fundType?: string;
+    fundTypes?: string[];
     classification?: string;
+    classifications?: string[];
     includeInactive?: boolean;
     includeLiquidating?: boolean;
     search?: string;
@@ -428,7 +430,23 @@ export const knfApi = {
   }): Promise<{ items: SubfundCardModel[]; page: KNFListResponse<KNFSubfund>["page"] }> {
     const pageSize = params?.size ?? 24;
     const currentPage = params?.page ?? 0;
-    const classFilter = params?.classification && params.classification !== "ALL" ? params.classification : null;
+
+    // Normalize classifications array
+    const activeClassifications: string[] = [];
+    if (params?.classifications && params.classifications.length > 0) {
+      activeClassifications.push(...params.classifications.filter((c) => c && c !== "ALL"));
+    } else if (params?.classification && params.classification !== "ALL") {
+      activeClassifications.push(params.classification);
+    }
+
+    // Normalize fundTypes array
+    const activeFundTypes: string[] = [];
+    if (params?.fundTypes && params.fundTypes.length > 0) {
+      activeFundTypes.push(...params.fundTypes.filter((t) => t && t !== "ALL"));
+    } else if (params?.fundType && params.fundType !== "ALL") {
+      activeFundTypes.push(params.fundType);
+    }
+
     const classificationsMap = (subfundsClassifications || {}) as Record<
       string,
       { c: string; cat: string; fn: string }
@@ -437,7 +455,7 @@ export const knfApi = {
     // Fetch the list of subfunds (up to 2000 so we cover all)
     const listRes = await this.getSubfunds({
       fundId: params?.fundId,
-      fundType: params?.fundType,
+      fundType: activeFundTypes.length === 1 ? activeFundTypes[0] : undefined,
       includeInactive: params?.includeInactive,
       includeLiquidating: params?.includeLiquidating,
       search: params?.search,
@@ -457,61 +475,68 @@ export const knfApi = {
       };
     });
 
-    // Handle sort if name,desc
-    if (params?.sort === "name,desc") {
-      filtered.sort((a, b) => b.name.localeCompare(a.name, "pl"));
-    } else if (params?.sort === "name,asc") {
-      filtered.sort((a, b) => a.name.localeCompare(b.name, "pl"));
+    // Filter by multiple fund types if selected
+    if (activeFundTypes.length > 0) {
+      filtered = filtered.filter((sf) => activeFundTypes.includes(sf.type));
     }
 
-    // Filter by classification
-    if (classFilter) {
+    // Filter by multiple classifications if selected
+    if (activeClassifications.length > 0) {
       filtered = filtered.filter((sf) => {
         const cls = (sf.classification || "").toLowerCase();
         const cat = (sf.category || "").toLowerCase();
         const name = (sf.name || "").toLowerCase();
 
-        if (classFilter === "akcji") {
-          return cls.includes("akcj") || cat.includes("akcj") || name.includes("akcj") || name.includes("equity");
-        }
-        if (classFilter === "dłużn") {
-          return (
-            cls.includes("dłużn") ||
-            cat.includes("dłużn") ||
-            cat.includes("skarb") ||
-            cat.includes("obligac") ||
-            name.includes("obligac") ||
-            name.includes("dłużn")
-          );
-        }
-        if (classFilter === "mieszan") {
-          return (
-            cls.includes("mieszan") ||
-            cat.includes("mieszan") ||
-            name.includes("mieszan") ||
-            name.includes("zrównoważ")
-          );
-        }
-        if (classFilter === "PPK") {
-          return (
-            cls.toUpperCase().includes("PPK") ||
-            cat.toUpperCase().includes("PPK") ||
-            name.toUpperCase().includes("PPK")
-          );
-        }
-        if (classFilter === "alternatyw") {
-          return (
-            cls.includes("alternatyw") ||
-            cls.includes("surowc") ||
-            cls.includes("absolut") ||
-            cat.includes("surowc") ||
-            cat.includes("alternatyw") ||
-            name.includes("surowc") ||
-            name.includes("złot")
-          );
-        }
-        return cls.includes(classFilter.toLowerCase()) || cat.includes(classFilter.toLowerCase());
+        return activeClassifications.some((classFilter) => {
+          if (classFilter === "akcji") {
+            return cls.includes("akcj") || cat.includes("akcj") || name.includes("akcj") || name.includes("equity");
+          }
+          if (classFilter === "dłużn") {
+            return (
+              cls.includes("dłużn") ||
+              cat.includes("dłużn") ||
+              cat.includes("skarb") ||
+              cat.includes("obligac") ||
+              name.includes("obligac") ||
+              name.includes("dłużn")
+            );
+          }
+          if (classFilter === "mieszan") {
+            return (
+              cls.includes("mieszan") ||
+              cat.includes("mieszan") ||
+              name.includes("mieszan") ||
+              name.includes("zrównoważ")
+            );
+          }
+          if (classFilter === "PPK") {
+            return (
+              cls.toUpperCase().includes("PPK") ||
+              cat.toUpperCase().includes("PPK") ||
+              name.toUpperCase().includes("PPK")
+            );
+          }
+          if (classFilter === "alternatyw") {
+            return (
+              cls.includes("alternatyw") ||
+              cls.includes("surowc") ||
+              cls.includes("absolut") ||
+              cat.includes("surowc") ||
+              cat.includes("alternatyw") ||
+              name.includes("surowc") ||
+              name.includes("złot")
+            );
+          }
+          return cls.includes(classFilter.toLowerCase()) || cat.includes(classFilter.toLowerCase());
+        });
       });
+    }
+
+    // Handle sort if name,desc
+    if (params?.sort === "name,desc") {
+      filtered.sort((a, b) => b.name.localeCompare(a.name, "pl"));
+    } else if (params?.sort === "name,asc") {
+      filtered.sort((a, b) => a.name.localeCompare(b.name, "pl"));
     }
 
     const totalElements = filtered.length;
