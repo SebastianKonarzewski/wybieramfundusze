@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { TrendingUp, Layers, Building2, BarChart2, Scale } from "lucide-react";
+import { TrendingUp, Layers, Building2, BarChart2, Scale, ExternalLink, FlaskConical } from "lucide-react";
 import { useCompare } from "./CompareContext";
 
 export function Navbar() {
@@ -18,7 +18,35 @@ export function Navbar() {
   ];
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-[#0e274d] bg-[#030a16]/90 backdrop-blur-md">
+    <header className="sticky top-0 z-40 w-full border-b border-[#0e274d] bg-[#030a16]/95 backdrop-blur-md">
+      {/* Dev / Preview Mode Top Announcement Banner */}
+      <div className="w-full bg-[#021838] border-b border-[#0e274d] text-[11px] sm:text-xs py-1.5 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md font-semibold bg-amber-500/15 text-amber-300 border border-amber-500/30">
+              <FlaskConical className="w-3 h-3 text-amber-400" />
+              Wersja poglądowa / testowa
+            </span>
+            <span className="text-slate-400 hidden md:inline">
+              Portal w trybie deweloperskim — dane pobierane w czasie rzeczywistym z API UKNF.
+            </span>
+          </div>
+
+          <div className="flex items-center gap-1.5 text-slate-300">
+            <span className="text-slate-400 hidden sm:inline">Oficjalny serwis produkcyjny UKNF:</span>
+            <a
+              href="https://wybieramfundusze.knf.gov.pl"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-[#60a5fa] hover:text-white font-medium hover:underline transition-colors"
+            >
+              wybieramfundusze.knf.gov.pl
+              <ExternalLink className="w-3 h-3" />
+            </a>
+          </div>
+        </div>
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand with UKNF Navy Blue styling */}
         <Link href="/" className="flex items-center gap-2.5 group">
