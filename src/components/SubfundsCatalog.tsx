@@ -24,8 +24,8 @@ import {
 import { SubfundCardModel } from "@/types/knf";
 import { StatusBadge } from "./StatusBadge";
 import { RiskBadge } from "./RiskBadge";
-import { formatCurrency, formatPercent, formatDate, formatNumber } from "@/lib/utils";
 import { useCompare } from "./CompareContext";
+import { useTranslation } from "@/lib/i18n";
 
 interface SubfundsCatalogProps {
   initialItems: SubfundCardModel[];
@@ -39,6 +39,7 @@ interface SubfundsCatalogProps {
 
 export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogProps) {
   const { toggleFund, isSelected } = useCompare();
+  const { t, formatCurrency, formatPercent, formatDate, formatNumber } = useTranslation();
 
   const [items, setItems] = useState<SubfundCardModel[]>(initialItems);
   const [pageInfo, setPageInfo] = useState(initialPage);
@@ -166,6 +167,15 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
     return result;
   }, [items, sortField, sortOrder]);
 
+  const classificationOptions = [
+    { id: "ALL", label: t.catalog.classes.ALL },
+    { id: "akcji", label: t.catalog.classes.akcji },
+    { id: "dłużn", label: t.catalog.classes.dłużn },
+    { id: "mieszan", label: t.catalog.classes.mieszan },
+    { id: "PPK", label: t.catalog.classes.PPK },
+    { id: "alternatyw", label: t.catalog.classes.alternatyw },
+  ];
+
   return (
     <div className="space-y-6">
       {/* Search & Filter Toolbar */}
@@ -176,7 +186,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input
               type="text"
-              placeholder="Szukaj subfunduszu po nazwie lub kodzie (np. Agio, PKO, Obligacji, PLSFIO...)..."
+              placeholder={t.catalog.searchPlaceholder}
               value={searchTerm}
               onChange={(e) => {
                 setSearchTerm(e.target.value);
@@ -196,7 +206,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                     ? "bg-[#044CD0] text-white shadow-xs"
                     : "text-slate-400 hover:text-slate-200"
                 }`}
-                title="Widok kafelków"
+                title="Grid"
               >
                 <LayoutGrid className="w-4 h-4" />
               </button>
@@ -207,7 +217,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                     ? "bg-[#044CD0] text-white shadow-xs"
                     : "text-slate-400 hover:text-slate-200"
                 }`}
-                title="Widok tabeli"
+                title="Table"
               >
                 <TableIcon className="w-4 h-4" />
               </button>
@@ -223,16 +233,16 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   setSortField(field);
                   setSortOrder(order);
                 }}
-                aria-label="Sortowanie"
+                aria-label={t.catalog.sort.label}
                 className="bg-transparent text-slate-200 font-medium focus:outline-hidden cursor-pointer w-full truncate"
               >
-                <option value="name,asc" className="bg-[#030a16]">Nazwa (A do Z)</option>
-                <option value="name,desc" className="bg-[#030a16]">Nazwa (Z do A)</option>
-                <option value="fee,asc" className="bg-[#030a16]">Najniższa opłata stała</option>
-                <option value="fee,desc" className="bg-[#030a16]">Najwyższa opłata stała</option>
-                <option value="risk,asc" className="bg-[#030a16]">Najniższe ryzyko (SRI 1-7)</option>
-                <option value="risk,desc" className="bg-[#030a16]">Najwyższe ryzyko (SRI 7-1)</option>
-                <option value="valuation,desc" className="bg-[#030a16]">Najwyższa wycena</option>
+                <option value="name,asc" className="bg-[#030a16]">{t.catalog.sort.nameAsc}</option>
+                <option value="name,desc" className="bg-[#030a16]">{t.catalog.sort.nameDesc}</option>
+                <option value="fee,asc" className="bg-[#030a16]">{t.catalog.sort.feeAsc}</option>
+                <option value="fee,desc" className="bg-[#030a16]">{t.catalog.sort.feeDesc}</option>
+                <option value="risk,asc" className="bg-[#030a16]">{t.catalog.sort.riskAsc}</option>
+                <option value="risk,desc" className="bg-[#030a16]">{t.catalog.sort.riskDesc}</option>
+                <option value="valuation,desc" className="bg-[#030a16]">{t.catalog.sort.valuationDesc}</option>
               </select>
             </div>
           </div>
@@ -244,16 +254,9 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
             {/* Asset Class Multi-Select Filter */}
             <div className="flex items-center gap-1 text-xs flex-wrap">
               <span className="text-slate-400 mr-1 font-semibold flex items-center gap-1 shrink-0">
-                <Compass className="w-3.5 h-3.5 text-[#3b82f6]" /> Klasa aktywów:
+                <Compass className="w-3.5 h-3.5 text-[#3b82f6]" /> {t.catalog.assetClass}
               </span>
-              {[
-                { id: "ALL", label: "Wszystkie" },
-                { id: "akcji", label: "Akcyjne" },
-                { id: "dłużn", label: "Dłużne / Obligacji" },
-                { id: "mieszan", label: "Mieszane" },
-                { id: "PPK", label: "PPK" },
-                { id: "alternatyw", label: "Alternatywne / Surowce" },
-              ].map((cls) => {
+              {classificationOptions.map((cls) => {
                 const isSelected =
                   cls.id === "ALL"
                     ? selectedClassifications.length === 0
@@ -282,7 +285,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
 
             {/* Fund Legal Type Multi-Select Filter */}
             <div className="flex items-center gap-1 text-xs flex-wrap">
-              <span className="text-slate-400 mr-1 font-medium shrink-0">Typ prawny:</span>
+              <span className="text-slate-400 mr-1 font-medium shrink-0">{t.catalog.legalType}</span>
               {["ALL", "SFIO", "FIO", "FIZ", "ETF"].map((type) => {
                 const isSelected =
                   type === "ALL"
@@ -302,7 +305,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                     {isSelected && type !== "ALL" && (
                       <Check className="w-3 h-3 stroke-[3]" />
                     )}
-                    {type === "ALL" ? "Wszystkie typy" : type}
+                    {type === "ALL" ? t.catalog.allTypes : type}
                   </button>
                 );
               })}
@@ -315,7 +318,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
             className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-200 py-1 px-2.5 rounded-lg border border-[#0e274d] hover:border-slate-600 transition-colors"
           >
             <SlidersHorizontal className="w-3.5 h-3.5" />
-            <span>Filtry zaawansowane</span>
+            <span>{t.catalog.advancedFilters}</span>
             {showAdvancedFilters ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
           </button>
         </div>
@@ -323,7 +326,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
         {/* Collapsible Advanced Filters Section */}
         {showAdvancedFilters && (
           <div className="p-4 rounded-xl bg-[#030a16] border border-[#0e274d] flex flex-wrap items-center gap-6 text-xs text-slate-300 animate-in fade-in duration-150">
-            <span className="font-semibold text-slate-400">Rejestr i status prawny:</span>
+            <span className="font-semibold text-slate-400">{t.catalog.legalRegistry}</span>
 
             <label className="flex items-center gap-2 cursor-pointer select-none group">
               <input
@@ -336,7 +339,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                 className="w-4 h-4 rounded bg-[#051329] border-slate-700 text-[#044CD0] accent-[#044CD0] cursor-pointer"
               />
               <span className="group-hover:text-slate-100 transition-colors">
-                Pokaż wykreślone / nieaktywne
+                {t.catalog.showInactive}
               </span>
             </label>
 
@@ -351,7 +354,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                 className="w-4 h-4 rounded bg-[#051329] border-slate-700 text-amber-500 accent-amber-500 cursor-pointer"
               />
               <span className="group-hover:text-slate-100 transition-colors">
-                Pokaż fundusze w likwidacji
+                {t.catalog.showLiquidating}
               </span>
             </label>
           </div>
@@ -361,27 +364,27 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
       {/* Results Header */}
       <div className="flex items-center justify-between text-xs text-slate-400 px-1">
         <div>
-          Znaleziono: <strong className="text-slate-200">{formatNumber(pageInfo.totalElements, 0)}</strong> subfunduszy
+          {t.catalog.foundCount} <strong className="text-slate-200">{formatNumber(pageInfo.totalElements, 0)}</strong> {t.catalog.subfundsCount}
           {(selectedClassifications.length > 0 || selectedTypes.length > 0) && (
             <span className="ml-1 text-[#60a5fa]">
               ({[
                 selectedClassifications.length > 0
-                  ? `klasy: ${selectedClassifications
+                  ? `${t.catalog.classesTagLabel} ${selectedClassifications
                       .map((c) =>
                         c === "akcji"
-                          ? "Akcyjne"
+                          ? t.catalog.classes.akcji
                           : c === "dłużn"
-                          ? "Dłużne"
+                          ? t.catalog.classes.dłużn
                           : c === "mieszan"
-                          ? "Mieszane"
+                          ? t.catalog.classes.mieszan
                           : c === "PPK"
-                          ? "PPK"
-                          : "Alternatywne"
+                          ? t.catalog.classes.PPK
+                          : t.catalog.classes.alternatyw
                       )
                       .join(", ")}`
                   : null,
                 selectedTypes.length > 0
-                  ? `typy: ${selectedTypes.join(", ")}`
+                  ? `${t.catalog.typesTagLabel} ${selectedTypes.join(", ")}`
                   : null,
               ]
                 .filter(Boolean)
@@ -390,12 +393,12 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
           )}
           {isPending && (
             <span className="ml-2 inline-flex items-center gap-1 text-[#3b82f6]">
-              <RefreshCw className="w-3 h-3 animate-spin" /> filtrowanie bazy...
+              <RefreshCw className="w-3 h-3 animate-spin" /> {t.common.filtering}
             </span>
           )}
         </div>
         <div>
-          Strona <strong className="text-slate-200">{pageInfo.number + 1}</strong> z{" "}
+          {t.common.page} <strong className="text-slate-200">{pageInfo.number + 1}</strong> {t.common.of}{" "}
           <strong className="text-slate-200">{Math.max(1, pageInfo.totalPages)}</strong>
         </div>
       </div>
@@ -454,12 +457,12 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   {/* Metrics preview */}
                   <div className="grid grid-cols-2 gap-2 pt-3 border-t border-[#0e274d] mb-4 text-xs">
                     <div>
-                      <span className="text-slate-500 text-[11px] block">Profil Ryzyka</span>
+                      <span className="text-slate-500 text-[11px] block">{t.catalog.card.riskProfile}</span>
                       <RiskBadge level={item.riskLevel} showLabel={false} size="sm" />
                     </div>
 
                     <div>
-                      <span className="text-slate-500 text-[11px] block">Opłata bieżąca</span>
+                      <span className="text-slate-500 text-[11px] block">{t.catalog.card.ongoingCharge}</span>
                       <span className="font-semibold text-slate-200">
                         {formatPercent(item.managementFee)}
                       </span>
@@ -467,7 +470,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
 
                     {item.latestValuation !== null && item.latestValuation !== undefined && (
                       <div className="col-span-2 pt-1 flex items-center justify-between text-slate-400 text-[11px]">
-                        <span>Ostatnia wycena:</span>
+                        <span>{t.catalog.card.latestValuation}</span>
                         <span className="font-bold text-slate-200">
                           {formatCurrency(item.latestValuation)}
                           {item.latestValuationDate && (
@@ -487,7 +490,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                     href={`/fundusze/${item.subfundId}`}
                     className="flex-1 text-center py-2 px-3 rounded-xl text-xs font-semibold bg-[#030a16] hover:bg-[#044CD0] text-slate-200 hover:text-white border border-[#0e274d] hover:border-transparent transition-all"
                   >
-                    Szczegóły funduszu
+                    {t.catalog.card.fundDetails}
                   </Link>
 
                   <button
@@ -504,7 +507,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                         ? "bg-[#044CD0] text-white border-blue-400 shadow-md"
                         : "bg-[#030a16] text-slate-400 border-[#0e274d] hover:text-[#60a5fa] hover:border-[#044CD0]/60"
                     }`}
-                    title={inCompare ? "Usuń z porównania" : "Dodaj do porównywarki"}
+                    title={inCompare ? t.catalog.card.removeFromCompare : t.catalog.card.addToCompare}
                   >
                     {inCompare ? <Check className="w-4 h-4" /> : <Scale className="w-4 h-4" />}
                   </button>
@@ -520,13 +523,13 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
             <table className="w-full text-left text-sm">
               <thead className="bg-[#030a16] text-xs uppercase tracking-wider text-slate-400 border-b border-[#0e274d]">
                 <tr>
-                  <th className="py-3.5 px-3 sm:px-4 font-semibold whitespace-nowrap">Typ / Kod</th>
+                  <th className="py-3.5 px-3 sm:px-4 font-semibold whitespace-nowrap">{t.catalog.table.typeCode}</th>
                   <th
                     onClick={() => handleSort("name")}
                     className="py-3.5 px-3 sm:px-4 font-semibold cursor-pointer hover:text-slate-200 select-none group whitespace-nowrap"
                   >
                     <div className="flex items-center gap-1.5">
-                      <span>Nazwa Subfunduszu</span>
+                      <span>{t.catalog.table.name}</span>
                       {sortField === "name" ? (
                         sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0]" />
                       ) : (
@@ -534,14 +537,14 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                       )}
                     </div>
                   </th>
-                  <th className="py-3.5 px-3 sm:px-4 font-semibold whitespace-nowrap">Klasa aktywów</th>
-                  <th className="py-3.5 px-3 sm:px-4 font-semibold whitespace-nowrap">Status</th>
+                  <th className="py-3.5 px-3 sm:px-4 font-semibold whitespace-nowrap">{t.catalog.table.assetClass}</th>
+                  <th className="py-3.5 px-3 sm:px-4 font-semibold whitespace-nowrap">{t.catalog.table.status}</th>
                   <th
                     onClick={() => handleSort("risk")}
                     className="py-3.5 px-3 sm:px-4 font-semibold cursor-pointer hover:text-slate-200 select-none group whitespace-nowrap"
                   >
                     <div className="flex items-center gap-1.5">
-                      <span>Ryzyko (SRI)</span>
+                      <span>{t.catalog.table.risk}</span>
                       {sortField === "risk" ? (
                         sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0]" />
                       ) : (
@@ -554,7 +557,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                     className="py-3.5 px-3 sm:px-4 font-semibold cursor-pointer hover:text-slate-200 select-none group whitespace-nowrap"
                   >
                     <div className="flex items-center gap-1.5">
-                      <span>Opłata stała</span>
+                      <span>{t.catalog.table.fee}</span>
                       {sortField === "fee" ? (
                         sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0]" />
                       ) : (
@@ -567,7 +570,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                     className="py-3.5 px-3 sm:px-4 font-semibold cursor-pointer hover:text-slate-200 select-none group whitespace-nowrap"
                   >
                     <div className="flex items-center gap-1.5">
-                      <span>Ostatnia wycena</span>
+                      <span>{t.catalog.table.valuation}</span>
                       {sortField === "valuation" ? (
                         sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0]" />
                       ) : (
@@ -575,7 +578,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                       )}
                     </div>
                   </th>
-                  <th className="py-3.5 px-3 sm:px-4 text-right font-semibold whitespace-nowrap">Porównaj</th>
+                  <th className="py-3.5 px-3 sm:px-4 text-right font-semibold whitespace-nowrap">{t.catalog.table.compare}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#0e274d]/70 text-slate-300">
@@ -659,7 +662,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                                 ? "bg-[#044CD0] text-white border-blue-400"
                                 : "bg-[#030a16] text-slate-400 border-[#0e274d] hover:text-[#60a5fa]"
                             }`}
-                            title={inCompare ? "Usuń z porównania" : "Porównaj"}
+                            title={inCompare ? t.catalog.card.removeFromCompare : t.common.compare}
                           >
                             <Scale className="w-3.5 h-3.5" />
                           </button>
@@ -667,7 +670,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                             href={`/fundusze/${item.subfundId}`}
                             className="px-2.5 py-1 text-xs rounded-lg bg-[#030a16] hover:bg-[#071938] border border-[#0e274d] text-slate-200 transition-colors"
                           >
-                            Profil
+                            {t.common.profile}
                           </Link>
                         </div>
                       </td>
@@ -683,8 +686,8 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
       {/* Pagination Controls */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-[#0e274d]">
         <div className="text-xs text-slate-400">
-          Wyświetlanie strony {pageInfo.number + 1} z {Math.max(1, pageInfo.totalPages)} (łącznie{" "}
-          {formatNumber(pageInfo.totalElements, 0)} pozycji)
+          {t.catalog.displayingPage} {pageInfo.number + 1} {t.common.of} {Math.max(1, pageInfo.totalPages)} ({t.catalog.totalItems}{" "}
+          {formatNumber(pageInfo.totalElements, 0)} {t.common.items})
         </div>
 
         <div className="flex items-center gap-2">
@@ -694,7 +697,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
             className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-[#030a16] border border-[#0e274d] text-slate-300 hover:bg-[#071938] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
           >
             <ChevronLeft className="w-4 h-4" />
-            Poprzednia
+            {t.common.previous}
           </button>
 
           <span className="text-xs font-bold text-slate-300 px-2">
@@ -706,7 +709,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
             disabled={pageInfo.number + 1 >= pageInfo.totalPages || isPending}
             className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-[#030a16] border border-[#0e274d] text-slate-300 hover:bg-[#071938] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
           >
-            Następna
+            {t.common.next}
             <ChevronRight className="w-4 h-4" />
           </button>
         </div>

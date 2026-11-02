@@ -1,21 +1,32 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
+export type Locale = "pl" | "en";
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
 /**
- * Format numbers strictly to Polish standard:
- * - Decimal separator: comma (",")
- * - Thousands separator: regular space (" ")
- * e.g. 1 000,07
+ * Format numbers according to active locale:
+ * - PL: Decimal separator: comma (","), Thousands: space (" ") e.g. 1 000,07
+ * - EN: Decimal separator: dot ("."), Thousands: comma (",") e.g. 1,000.07
  */
 export function formatNumber(
   value: number | null | undefined,
-  decimals: number = 2
+  decimals: number = 2,
+  locale: Locale = "pl"
 ): string {
   if (value === null || value === undefined || isNaN(value)) return "—";
+
+  if (locale === "en") {
+    return new Intl.NumberFormat("en-US", {
+      useGrouping: "always",
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    }).format(value);
+  }
+
   return new Intl.NumberFormat("pl-PL", {
     useGrouping: "always",
     minimumFractionDigits: decimals,
@@ -26,40 +37,65 @@ export function formatNumber(
 }
 
 /**
- * Format currency in Polish: e.g. "1 000,07 zł" or "2 727,41 PLN"
+ * Format currency:
+ * - PL: "1 000,07 zł"
+ * - EN: "PLN 1,000.07" (or "1,000.07 EUR")
  */
 export function formatCurrency(
   value: number | null | undefined,
-  currency: string = "zł"
+  currency: string = "PLN",
+  locale: Locale = "pl"
 ): string {
   if (value === null || value === undefined || isNaN(value)) return "—";
-  const numStr = formatNumber(value, 2);
+  const numStr = formatNumber(value, 2, locale);
+
+  if (locale === "en") {
+    const code = currency === "zł" ? "PLN" : currency;
+    return `${code} ${numStr}`;
+  }
+
   const currLabel = currency === "PLN" ? "zł" : currency;
   return `${numStr} ${currLabel}`;
 }
 
 /**
- * Format percent in Polish: e.g. "1,25%" or "-0,50%"
+ * Format percent:
+ * - PL: "1,25%" or "-0,50%"
+ * - EN: "1.25%" or "-0.50%"
  */
 export function formatPercent(
   value: number | null | undefined,
-  digits: number = 2
+  digits: number = 2,
+  locale: Locale = "pl"
 ): string {
   if (value === null || value === undefined || isNaN(value)) return "—";
-  // Value could be rate like 0.015 for 1.5% or already in percent
   const percentVal = value * 100;
-  const numStr = formatNumber(percentVal, digits);
+  const numStr = formatNumber(percentVal, digits, locale);
   return `${numStr}%`;
 }
 
 /**
- * Format date to Polish: e.g. "30 wrz 2026"
+ * Format date:
+ * - PL: "30 wrz 2026"
+ * - EN: "Sep 30, 2026"
  */
-export function formatDate(dateString: string | null | undefined): string {
+export function formatDate(
+  dateString: string | null | undefined,
+  locale: Locale = "pl"
+): string {
   if (!dateString) return "—";
   try {
     const date = new Date(dateString);
     if (isNaN(date.getTime())) return dateString;
+
+    if (locale === "en") {
+      return new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      }).format(date);
+    }
+
     return new Intl.DateTimeFormat("pl-PL", {
       year: "numeric",
       month: "short",
@@ -71,26 +107,48 @@ export function formatDate(dateString: string | null | undefined): string {
 }
 
 /**
- * Format large numbers in Polish with spaces and comma:
- * e.g. "461,45 mld zł" or "399,60 mld zł"
+ * Format large numbers (AUM):
+ * - PL: "461,45 mld zł"
+ * - EN: "PLN 461.45 bn"
  */
-export function formatLargeNumber(value: number | null | undefined): string {
+export function formatLargeNumber(
+  value: number | null | undefined,
+  locale: Locale = "pl"
+): string {
   if (value === null || value === undefined || isNaN(value)) return "—";
+
+  if (locale === "en") {
+    if (value >= 1_000_000_000_000) {
+      return `PLN ${formatNumber(value / 1_000_000_000_000, 2, "en")} trn`;
+    }
+    if (value >= 1_000_000_000) {
+      return `PLN ${formatNumber(value / 1_000_000_000, 2, "en")} bn`;
+    }
+    if (value >= 1_000_000) {
+      return `PLN ${formatNumber(value / 1_000_000, 2, "en")} m`;
+    }
+    if (value >= 1_000) {
+      return `PLN ${formatNumber(value / 1_000, 2, "en")} k`;
+    }
+    return `PLN ${formatNumber(value, 2, "en")}`;
+  }
+
+  // Polish formatting
   if (value >= 1_000_000_000_000) {
     const val = value / 1_000_000_000_000;
-    return `${formatNumber(val, 2)} bln zł`;
+    return `${formatNumber(val, 2, "pl")} bln zł`;
   }
   if (value >= 1_000_000_000) {
     const val = value / 1_000_000_000;
-    return `${formatNumber(val, 2)} mld zł`;
+    return `${formatNumber(val, 2, "pl")} mld zł`;
   }
   if (value >= 1_000_000) {
     const val = value / 1_000_000;
-    return `${formatNumber(val, 2)} mln zł`;
+    return `${formatNumber(val, 2, "pl")} mln zł`;
   }
   if (value >= 1_000) {
     const val = value / 1_000;
-    return `${formatNumber(val, 2)} tys. zł`;
+    return `${formatNumber(val, 2, "pl")} tys. zł`;
   }
-  return `${formatNumber(value, 2)} zł`;
+  return `${formatNumber(value, 2, "pl")} zł`;
 }

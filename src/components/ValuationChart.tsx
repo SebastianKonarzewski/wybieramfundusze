@@ -13,9 +13,9 @@ import {
   Legend,
 } from "recharts";
 import { KNFValuation } from "@/types/knf";
-import { formatCurrency, formatDate, formatPercent } from "@/lib/utils";
 import { TrendingUp, TrendingDown, Calendar, LineChart as ChartIcon } from "lucide-react";
 import { BenchmarkPoint, BenchmarkSeries } from "@/lib/benchmark-api";
+import { useTranslation } from "@/lib/i18n";
 
 interface ValuationChartProps {
   valuations: KNFValuation[];
@@ -28,6 +28,7 @@ export function ValuationChart({
   currency = "PLN",
   defaultBenchmark = "NONE",
 }: ValuationChartProps) {
+  const { t, locale, formatCurrency, formatDate, formatPercent } = useTranslation();
   const [selectedRange, setSelectedRange] = useState<"1M" | "3M" | "6M" | "1Y" | "3Y" | "MAX">("1Y");
   const [activeBenchmark, setActiveBenchmark] = useState<"NONE" | "WIG" | "TBSP">(defaultBenchmark);
   const [benchmarkData, setBenchmarkData] = useState<BenchmarkSeries | null>(null);
@@ -179,9 +180,9 @@ export function ValuationChart({
 
   if (valuations.length === 0) {
     return (
-      <div className="h-64 flex flex-col items-center justify-center bg-slate-900/40 border border-slate-800 rounded-2xl text-slate-500">
+      <div className="h-64 flex flex-col items-center justify-center bg-[#051329]/40 border border-[#0e274d] rounded-2xl text-slate-500">
         <Calendar className="w-8 h-8 mb-2 opacity-50" />
-        <p className="text-sm">Brak zarejestrowanych wycen w bazie UKNF dla wybranego okresu.</p>
+        <p className="text-sm">{t.chart.noValuations}</p>
       </div>
     );
   }
@@ -194,7 +195,7 @@ export function ValuationChart({
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
         <div>
           <div className="text-xs uppercase tracking-wider text-slate-400 font-medium mb-1">
-            Wycena jednostki uczestnictwa
+            {t.chart.unitValuation}
           </div>
           <div className="flex items-baseline gap-3 flex-wrap">
             <span className="text-2xl sm:text-3xl font-extrabold text-slate-100">
@@ -223,15 +224,15 @@ export function ValuationChart({
           {/* Benchmark selector */}
           <div className="flex items-center gap-1.5 bg-[#030a16] border border-[#0e274d] px-2.5 py-1 rounded-xl text-xs">
             <ChartIcon className="w-3.5 h-3.5 text-[#044CD0]" />
-            <span className="text-slate-400 font-medium">Benchmark:</span>
+            <span className="text-slate-400 font-medium">{t.chart.benchmarkLabel}</span>
             <select
               value={activeBenchmark}
               onChange={(e) => setActiveBenchmark(e.target.value as any)}
               className="bg-transparent text-slate-200 font-semibold focus:outline-hidden cursor-pointer"
             >
-              <option value="NONE" className="bg-[#030a16]">Brak (sama wycena)</option>
-              <option value="WIG" className="bg-[#030a16]">WIG20 TR (Akcje)</option>
-              <option value="TBSP" className="bg-[#030a16]">TBSP (Obligacje)</option>
+              <option value="NONE" className="bg-[#030a16]">{t.chart.noBenchmarkOption}</option>
+              <option value="WIG" className="bg-[#030a16]">{t.chart.wigOption}</option>
+              <option value="TBSP" className="bg-[#030a16]">{t.chart.tbspOption}</option>
             </select>
           </div>
 
@@ -273,7 +274,7 @@ export function ValuationChart({
                 axisLine={false}
                 tickFormatter={(d) => {
                   const date = new Date(d);
-                  return `${date.getDate()} ${date.toLocaleString("pl-PL", { month: "short" })}`;
+                  return `${date.getDate()} ${date.toLocaleString(locale === "pl" ? "pl-PL" : "en-US", { month: "short" })}`;
                 }}
               />
               <YAxis
@@ -319,7 +320,7 @@ export function ValuationChart({
                 axisLine={false}
                 tickFormatter={(d) => {
                   const date = new Date(d);
-                  return `${date.getDate()} ${date.toLocaleString("pl-PL", { month: "short" })}`;
+                  return `${date.getDate()} ${date.toLocaleString(locale === "pl" ? "pl-PL" : "en-US", { month: "short" })}`;
                 }}
               />
               <YAxis
@@ -339,7 +340,7 @@ export function ValuationChart({
                         <div className="flex items-center justify-between gap-4">
                           <span className="flex items-center gap-1.5 text-blue-400 font-medium">
                             <span className="w-2 h-2 rounded-full bg-[#044CD0]" />
-                            Subfundusz:
+                            {t.chart.subfundSeries}
                           </span>
                           <span className="font-bold text-slate-100">
                             {row.fundReturn >= 0 ? "+" : ""}
@@ -352,7 +353,7 @@ export function ValuationChart({
                         <div className="flex items-center justify-between gap-4">
                           <span className="flex items-center gap-1.5 text-amber-400 font-medium">
                             <span className="w-2 h-2 rounded-full bg-amber-400" />
-                            {benchmarkData?.name || "Benchmark"}:
+                            {activeBenchmark === "WIG" ? "WIG20 TR" : "TBSP"}:
                           </span>
                           <span className="font-bold text-slate-100">
                             {row.benchmarkReturn >= 0 ? "+" : ""}
@@ -369,12 +370,12 @@ export function ValuationChart({
                 verticalAlign="top"
                 align="right"
                 iconType="circle"
-                wrapperStyle={{ fontSize: 11, paddingBottom: 10 }}
+                wrapperStyle={{ fontSize: 11, paddingBottom: 12 }}
               />
               <Line
                 type="monotone"
                 dataKey="fundReturn"
-                name="Subfundusz (%)"
+                name={t.chart.subfundSeries}
                 stroke="#044CD0"
                 strokeWidth={2.5}
                 dot={false}
@@ -382,7 +383,7 @@ export function ValuationChart({
               <Line
                 type="monotone"
                 dataKey="benchmarkReturn"
-                name={`${benchmarkData?.name || "Benchmark"} (%)`}
+                name={activeBenchmark === "WIG" ? "WIG20 TR" : "TBSP"}
                 stroke="#f59e0b"
                 strokeWidth={2}
                 strokeDasharray="4 4"
@@ -391,19 +392,6 @@ export function ValuationChart({
             </LineChart>
           )}
         </ResponsiveContainer>
-      </div>
-
-      {/* Min / Max Footer */}
-      <div className="flex items-center justify-between text-xs text-slate-400 pt-3 border-t border-[#0e274d] mt-2">
-        <div>
-          Min w okresie: <strong className="text-slate-200">{formatCurrency(stats.min, currency)}</strong>
-        </div>
-        <div>
-          Liczba wycen: <strong className="text-slate-200">{filteredData.length}</strong>
-        </div>
-        <div>
-          Max w okresie: <strong className="text-slate-200">{formatCurrency(stats.max, currency)}</strong>
-        </div>
       </div>
     </div>
   );

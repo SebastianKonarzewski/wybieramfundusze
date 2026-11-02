@@ -28,13 +28,14 @@ import { SubfundFullProfile } from "@/types/knf";
 import { useCompare } from "./CompareContext";
 import { StatusBadge } from "./StatusBadge";
 import { RiskBadge } from "./RiskBadge";
-import { formatCurrency, formatPercent, formatDate } from "@/lib/utils";
+import { useTranslation } from "@/lib/i18n";
 
 // UKNF-inspired comparison line colors
 const COLORS = ["#044CD0", "#00b4d8", "#f59e0b", "#ec4899"];
 
 export function FundComparator() {
   const { selectedFunds, removeFund, addFund, clearFunds } = useCompare();
+  const { t, locale, formatCurrency, formatPercent, formatDate } = useTranslation();
 
   const [profiles, setProfiles] = useState<SubfundFullProfile[]>([]);
   const [loading, setLoading] = useState(false);
@@ -102,7 +103,7 @@ export function FundComparator() {
 
     const datesMap: Record<string, Record<string, number>> = {};
 
-    profiles.forEach((p, idx) => {
+    profiles.forEach((p) => {
       const fundKey = `fund_${p.subfund.subfundId}`;
       const sortedVals = [...p.valuations].sort(
         (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
@@ -137,11 +138,11 @@ export function FundComparator() {
           <div className="flex items-center gap-2 mb-1">
             <Scale className="w-5 h-5 text-[#3b82f6]" />
             <h2 className="text-lg font-bold text-slate-100">
-              Zestawienie porównawcze funduszy
+              {t.compare.summaryTitle}
             </h2>
           </div>
           <p className="text-xs text-slate-400">
-            Wybrano {selectedFunds.length} z 4 dopuszczalnych funduszy. Porównaj koszty, profile ryzyka i znormalizowane wyniki.
+            {t.compare.summarySubtitle.replace("{count}", String(selectedFunds.length))}
           </p>
         </div>
 
@@ -152,7 +153,7 @@ export function FundComparator() {
               className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-[#044CD0] hover:bg-[#033eb0] text-white transition-colors shadow-xs"
             >
               <Plus className="w-4 h-4" />
-              Dodaj fundusz ({selectedFunds.length}/4)
+              {t.compare.addFundBtn} ({selectedFunds.length}/4)
             </button>
           )}
 
@@ -162,7 +163,7 @@ export function FundComparator() {
               className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium bg-[#030a16] hover:bg-[#071938] border border-[#0e274d] text-slate-300 transition-colors"
             >
               <Trash2 className="w-3.5 h-3.5" />
-              Wyczyść
+              {t.common.clear}
             </button>
           )}
         </div>
@@ -175,7 +176,7 @@ export function FundComparator() {
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-bold text-slate-100 flex items-center gap-2">
                 <Search className="w-4 h-4 text-[#3b82f6]" />
-                Dodaj fundusz do porównywarki
+                {t.compare.searchModalTitle}
               </h3>
               <button
                 onClick={() => setIsSearching(false)}
@@ -190,7 +191,7 @@ export function FundComparator() {
               <input
                 type="text"
                 autoFocus
-                placeholder="Wpisz nazwę funduszu (np. AGIO, PKO, Allianz)..."
+                placeholder={t.compare.searchModalPlaceholder}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 rounded-xl bg-[#030a16] border border-[#0e274d] text-sm text-slate-100 focus:outline-hidden focus:border-[#044CD0]"
@@ -200,13 +201,13 @@ export function FundComparator() {
             <div className="max-h-60 overflow-y-auto divide-y divide-[#0e274d]">
               {searchLoading && (
                 <div className="py-4 text-center text-xs text-slate-500">
-                  Wyszukiwanie w rejestrze UKNF...
+                  {t.compare.searchUKNFSearching}
                 </div>
               )}
 
               {!searchLoading && searchResults.length === 0 && searchQuery.length >= 2 && (
                 <div className="py-4 text-center text-xs text-slate-500">
-                  Nie znaleziono funduszy o podanej frazie.
+                  {t.compare.noSearchResults}
                 </div>
               )}
 
@@ -240,7 +241,7 @@ export function FundComparator() {
                           : "bg-[#044CD0] text-white hover:bg-[#033eb0]"
                       }`}
                     >
-                      {alreadySelected ? "Dodany" : "Wybierz"}
+                      {alreadySelected ? t.compare.added : t.compare.select}
                     </button>
                   </div>
                 );
@@ -253,28 +254,28 @@ export function FundComparator() {
       {selectedFunds.length === 0 ? (
         <div className="p-12 text-center bg-[#051329]/50 border border-[#0e274d] rounded-3xl space-y-4">
           <Scale className="w-12 h-12 mx-auto text-[#3b82f6] opacity-60" />
-          <h3 className="text-lg font-bold text-slate-200">Brak wybranych funduszy do porównania</h3>
+          <h3 className="text-lg font-bold text-slate-200">{t.compare.emptyTitle}</h3>
           <p className="text-sm text-slate-400 max-w-md mx-auto">
-            Wybierz od 2 do 4 funduszy z katalogu klikając ikonę wagi lub dodaj fundusz bezpośrednio przyciskiem poniżej.
+            {t.compare.emptyDesc}
           </p>
           <div className="flex justify-center gap-3 pt-2">
             <Link
               href="/"
               className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#030a16] hover:bg-[#071938] border border-[#0e274d] text-slate-200 transition-colors"
             >
-              Przejdź do Katalogu
+              {t.compare.goToCatalog}
             </Link>
             <button
               onClick={() => setIsSearching(true)}
               className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#044CD0] text-white hover:bg-[#033eb0] transition-colors"
             >
-              Wyszukaj i dodaj fundusz
+              {t.compare.searchAndAdd}
             </button>
           </div>
         </div>
       ) : loading ? (
         <div className="p-12 text-center text-slate-400 text-sm">
-          Ładowanie metryk i dokumentów KID dla wybranych funduszy...
+          {t.compare.loadingMetrics}
         </div>
       ) : (
         <div className="space-y-8">
@@ -285,7 +286,7 @@ export function FundComparator() {
                 <thead>
                   <tr className="bg-[#030a16] border-b border-[#0e274d] text-slate-400">
                     <th className="py-4 px-4 w-44 sm:w-60 font-semibold uppercase tracking-wider text-[11px] sticky left-0 bg-[#030a16] z-20 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">
-                      Parametr
+                      {t.compare.parameter}
                     </th>
                     {profiles.map((p, idx) => (
                       <th
@@ -311,7 +312,7 @@ export function FundComparator() {
                           <button
                             onClick={() => removeFund(p.subfund.subfundId)}
                             className="text-slate-500 hover:text-rose-400 p-1"
-                            title="Usuń z porównania"
+                            title={t.catalog.card.removeFromCompare}
                           >
                             <X className="w-4 h-4" />
                           </button>
@@ -325,11 +326,13 @@ export function FundComparator() {
                   {/* Category: Status & Podstawowe */}
                   <tr className="bg-[#030a16]/60 font-bold text-[#60a5fa] text-[11px] uppercase tracking-wider">
                     <td colSpan={profiles.length + 1} className="py-2.5 px-4">
-                      1. Informacje podstawowe i status
+                      {t.compare.sections.basic}
                     </td>
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Towarzystwo (TFI)</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">
+                      {t.compare.params.company}
+                    </td>
                     {profiles.map((p) => (
                       <td key={p.subfund.subfundId} className="py-3 px-4 border-l border-[#0e274d]">
                         {p.company?.name || "—"}
@@ -337,7 +340,9 @@ export function FundComparator() {
                     ))}
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Typ prawny</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">
+                      {t.compare.params.legalType}
+                    </td>
                     {profiles.map((p) => (
                       <td key={p.subfund.subfundId} className="py-3 px-4 border-l border-[#0e274d] font-bold">
                         {p.subfund.type}
@@ -345,7 +350,9 @@ export function FundComparator() {
                     ))}
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Klasyfikacja / Kategoria</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">
+                      {t.compare.params.classification}
+                    </td>
                     {profiles.map((p) => (
                       <td key={p.subfund.subfundId} className="py-3 px-4 border-l border-[#0e274d]">
                         {p.subfund.classification || "—"} {p.subfund.category ? `(${p.subfund.category})` : ""}
@@ -353,7 +360,9 @@ export function FundComparator() {
                     ))}
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Status w rejestrze</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">
+                      {t.compare.params.status}
+                    </td>
                     {profiles.map((p) => (
                       <td key={p.subfund.subfundId} className="py-3 px-4 border-l border-[#0e274d]">
                         <StatusBadge
@@ -366,7 +375,9 @@ export function FundComparator() {
                     ))}
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Data rozpoczęcia (rejestr)</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">
+                      {t.compare.params.fromDate}
+                    </td>
                     {profiles.map((p) => (
                       <td key={p.subfund.subfundId} className="py-3 px-4 border-l border-[#0e274d]">
                         {formatDate(p.subfund.fromDate)}
@@ -377,11 +388,13 @@ export function FundComparator() {
                   {/* Category: Profil Ryzyka */}
                   <tr className="bg-[#030a16]/60 font-bold text-[#60a5fa] text-[11px] uppercase tracking-wider">
                     <td colSpan={profiles.length + 1} className="py-2.5 px-4">
-                      2. Profil Ryzyka i Benchmark
+                      {t.compare.sections.risk}
                     </td>
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Wskaźnik Ryzyka (SRI 1-7)</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">
+                      {t.compare.params.sri}
+                    </td>
                     {profiles.map((p) => (
                       <td key={p.subfund.subfundId} className="py-3 px-4 border-l border-[#0e274d]">
                         <RiskBadge level={p.latestKid?.riskLevel} size="md" />
@@ -389,13 +402,15 @@ export function FundComparator() {
                     ))}
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Benchmark referencyjny</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">
+                      {t.compare.params.benchmark}
+                    </td>
                     {profiles.map((p) => (
                       <td key={p.subfund.subfundId} className="py-3 px-4 border-l border-[#0e274d] text-xs">
                         {p.latestKid?.hasBenchmark && p.latestKid?.benchmark ? (
                           <span className="text-slate-200 font-medium">{p.latestKid.benchmark}</span>
                         ) : (
-                          <span className="text-slate-500 italic">Brak benchmarku</span>
+                          <span className="text-slate-500 italic">{t.compare.params.noBenchmark}</span>
                         )}
                       </td>
                     ))}
@@ -404,11 +419,13 @@ export function FundComparator() {
                   {/* Category: Koszty i opłaty */}
                   <tr className="bg-[#030a16]/60 font-bold text-[#60a5fa] text-[11px] uppercase tracking-wider">
                     <td colSpan={profiles.length + 1} className="py-2.5 px-4">
-                      3. Koszty i Opłaty (wg KID)
+                      {t.compare.sections.costs}
                     </td>
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Opłata bieżąca / zarządzanie</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">
+                      {t.compare.params.mgmtFee}
+                    </td>
                     {profiles.map((p) => (
                       <td
                         key={p.subfund.subfundId}
@@ -419,7 +436,9 @@ export function FundComparator() {
                     ))}
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Maks. opłata wstępna</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">
+                      {t.compare.params.entryFee}
+                    </td>
                     {profiles.map((p) => (
                       <td key={p.subfund.subfundId} className="py-3 px-4 border-l border-[#0e274d]">
                         {formatPercent(p.latestKid?.maxEntryFeeRate)}
@@ -427,7 +446,9 @@ export function FundComparator() {
                     ))}
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Maks. opłata za umorzenie</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">
+                      {t.compare.params.exitFee}
+                    </td>
                     {profiles.map((p) => (
                       <td key={p.subfund.subfundId} className="py-3 px-4 border-l border-[#0e274d]">
                         {formatPercent(p.latestKid?.maxExitFeeRate)}
@@ -435,7 +456,9 @@ export function FundComparator() {
                     ))}
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Koszty transakcyjne</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">
+                      {t.compare.params.transCosts}
+                    </td>
                     {profiles.map((p) => (
                       <td key={p.subfund.subfundId} className="py-3 px-4 border-l border-[#0e274d]">
                         {formatPercent(p.latestKid?.transactionCostsRate)}
@@ -443,15 +466,17 @@ export function FundComparator() {
                     ))}
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Opłata za sukces</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">
+                      {t.compare.params.successFee}
+                    </td>
                     {profiles.map((p) => (
                       <td key={p.subfund.subfundId} className="py-3 px-4 border-l border-[#0e274d] text-xs">
                         {p.latestKid?.hasSuccessFee ? (
                           <span className="text-amber-400">
-                            Tak {p.latestKid.successFee ? `(${p.latestKid.successFee})` : ""}
+                            {t.compare.params.yesWithNote} {p.latestKid.successFee ? `(${p.latestKid.successFee})` : ""}
                           </span>
                         ) : (
-                          <span className="text-slate-500">Brak</span>
+                          <span className="text-slate-500">—</span>
                         )}
                       </td>
                     ))}
@@ -460,11 +485,13 @@ export function FundComparator() {
                   {/* Category: Wycena bieżąca */}
                   <tr className="bg-[#030a16]/60 font-bold text-[#60a5fa] text-[11px] uppercase tracking-wider">
                     <td colSpan={profiles.length + 1} className="py-2.5 px-4">
-                      4. Ostatnia wycena jednostki
+                      {t.compare.sections.valuations}
                     </td>
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Ostatnia wartość jednostki</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">
+                      {t.compare.params.valuation}
+                    </td>
                     {profiles.map((p) => {
                       const latestVal = p.valuations[0];
                       return (
@@ -475,7 +502,7 @@ export function FundComparator() {
                                 {formatCurrency(latestVal.valuation, latestVal.currency)}
                               </div>
                               <div className="text-[11px] text-slate-500">
-                                Stan na: {formatDate(latestVal.date)}
+                                {t.compare.asOf} {formatDate(latestVal.date)}
                               </div>
                             </div>
                           ) : (
@@ -488,7 +515,9 @@ export function FundComparator() {
 
                   {/* Dokument KID */}
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Oficjalny plik KID (UKNF)</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">
+                      {t.compare.params.kidFile}
+                    </td>
                     {profiles.map((p) => (
                       <td key={p.subfund.subfundId} className="py-3 px-4 border-l border-[#0e274d]">
                         {p.latestKid ? (
@@ -499,7 +528,7 @@ export function FundComparator() {
                             className="inline-flex items-center gap-1.5 text-xs text-[#3b82f6] hover:text-[#60a5fa] font-medium"
                           >
                             <FileText className="w-3.5 h-3.5" />
-                            Pobierz PDF
+                            {t.compare.params.downloadPdf}
                           </a>
                         ) : (
                           <span className="text-slate-500">—</span>
@@ -519,11 +548,11 @@ export function FundComparator() {
                 <div className="flex items-center gap-2 mb-1">
                   <TrendingUp className="w-5 h-5 text-[#3b82f6]" />
                   <h3 className="text-base font-bold text-slate-100">
-                    Znormalizowana stopa zwrotu (%) w czasie
+                    {t.compare.normalizedChartTitle}
                   </h3>
                 </div>
                 <p className="text-xs text-slate-400">
-                  Porównanie względnej zmiany wartości jednostek w punktach procentowych (baza początkowa: 0%).
+                  {t.compare.normalizedChartDesc}
                 </p>
               </div>
 
@@ -538,7 +567,7 @@ export function FundComparator() {
                       axisLine={false}
                       tickFormatter={(d) => {
                         const date = new Date(d);
-                        return `${date.getDate()} ${date.toLocaleString("pl-PL", { month: "short" })}`;
+                        return `${date.getDate()} ${date.toLocaleString(locale === "pl" ? "pl-PL" : "en-US", { month: "short" })}`;
                       }}
                     />
                     <YAxis

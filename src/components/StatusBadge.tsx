@@ -1,6 +1,8 @@
+"use client";
+
 import React from "react";
 import { AlertTriangle, CheckCircle2, XCircle } from "lucide-react";
-import { formatDate } from "@/lib/utils";
+import { useTranslation } from "@/lib/i18n";
 
 interface StatusBadgeProps {
   isActive?: boolean;
@@ -19,18 +21,20 @@ export function StatusBadge({
   liquidationEndDate,
   className = "",
 }: StatusBadgeProps) {
+  const { t, formatDate } = useTranslation();
+
   if (isLiquidating) {
     return (
       <span
         title={
           liquidationStartDate
-            ? `Likwidacja od ${formatDate(liquidationStartDate)}${liquidationEndDate ? ` do ${formatDate(liquidationEndDate)}` : ""}`
-            : "Fundusz w trakcie likwidacji"
+            ? `${t.common.inLiquidation} ${t.common.since} ${formatDate(liquidationStartDate)}${liquidationEndDate ? ` - ${formatDate(liquidationEndDate)}` : ""}`
+            : t.common.inLiquidation
         }
         className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-400 border border-amber-500/30 ${className}`}
       >
         <AlertTriangle className="w-3 h-3 text-amber-400" />
-        W likwidacji
+        {t.common.inLiquidation}
       </span>
     );
   }
@@ -41,7 +45,7 @@ export function StatusBadge({
         className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700 ${className}`}
       >
         <XCircle className="w-3 h-3 text-slate-500" />
-        Nieaktywny
+        {t.common.inactive}
       </span>
     );
   }
@@ -51,7 +55,7 @@ export function StatusBadge({
       className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 ${className}`}
     >
       <CheckCircle2 className="w-3 h-3 text-emerald-400" />
-      Aktywny
+      {t.common.active}
     </span>
   );
 }

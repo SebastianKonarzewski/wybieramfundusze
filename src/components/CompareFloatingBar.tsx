@@ -4,9 +4,11 @@ import React from "react";
 import Link from "next/link";
 import { Scale, X, ArrowRight, Trash2 } from "lucide-react";
 import { useCompare } from "./CompareContext";
+import { useTranslation } from "@/lib/i18n";
 
 export function CompareFloatingBar() {
   const { selectedFunds, removeFund, clearFunds } = useCompare();
+  const { t } = useTranslation();
 
   if (selectedFunds.length === 0) return null;
 
@@ -17,7 +19,7 @@ export function CompareFloatingBar() {
         <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap max-w-full justify-center sm:justify-start">
           <div className="flex items-center gap-1.5 text-xs font-bold text-[#60a5fa] uppercase tracking-wider mr-1 sm:mr-2 shrink-0">
             <Scale className="w-4 h-4 text-[#3b82f6]" />
-            Porównanie ({selectedFunds.length}/4):
+            {t.compare.floatingBarTitle} ({selectedFunds.length}/4):
           </div>
 
           <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap max-h-20 sm:max-h-none overflow-y-auto">
@@ -30,7 +32,7 @@ export function CompareFloatingBar() {
                 <button
                   onClick={() => removeFund(fund.subfundId)}
                   className="text-slate-400 hover:text-rose-400 transition-colors cursor-pointer"
-                  title="Usuń z porównania"
+                  title={t.catalog.card.removeFromCompare}
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
@@ -44,7 +46,7 @@ export function CompareFloatingBar() {
           <button
             onClick={clearFunds}
             className="p-1.5 sm:p-2 text-slate-400 hover:text-slate-200 hover:bg-[#071938] rounded-lg text-xs transition-colors cursor-pointer"
-            title="Wyczyść wszystkie"
+            title={t.compare.clearAll}
           >
             <Trash2 className="w-4 h-4" />
           </button>
@@ -53,7 +55,7 @@ export function CompareFloatingBar() {
             href="/porownywarka"
             className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold bg-[#044CD0] hover:bg-[#033eb0] text-white shadow-md shadow-[#044CD0]/30 transition-all"
           >
-            Porównaj teraz
+            {t.common.compareNow}
             <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </Link>
         </div>
