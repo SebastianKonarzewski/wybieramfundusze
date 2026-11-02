@@ -43,7 +43,7 @@ export function KidDetailsCard({ kid }: { kid?: KNFKeyInformationDetail | null }
           href={pdfUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-[#044CD0] hover:bg-[#033eb0] text-white shadow-md shadow-[#044CD0]/20 transition-all shrink-0"
+          className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-[#044CD0] hover:bg-[#033eb0] text-white shadow-md shadow-[#044CD0]/20 transition-all w-full sm:w-auto shrink-0"
         >
           <Download className="w-4 h-4" />
           Pobierz oficjalny PDF KID

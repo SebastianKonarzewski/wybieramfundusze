@@ -186,9 +186,9 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
             />
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 justify-between sm:justify-end">
             {/* View Mode Toggle */}
-            <div className="flex items-center bg-[#030a16] p-1 rounded-xl border border-[#0e274d]">
+            <div className="flex items-center bg-[#030a16] p-1 rounded-xl border border-[#0e274d] shrink-0">
               <button
                 onClick={() => setViewMode("grid")}
                 className={`p-1.5 rounded-lg text-xs transition-colors ${
@@ -214,8 +214,8 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
             </div>
 
             {/* Sort Select */}
-            <div className="flex items-center gap-1.5 bg-[#030a16] border border-[#0e274d] px-3 py-2 rounded-xl text-xs sm:text-sm">
-              <ArrowUpDown className="w-3.5 h-3.5 text-[#044CD0]" />
+            <div className="flex-1 sm:flex-initial flex items-center gap-1.5 bg-[#030a16] border border-[#0e274d] px-2.5 sm:px-3 py-2 rounded-xl text-xs sm:text-sm min-w-0">
+              <ArrowUpDown className="w-3.5 h-3.5 text-[#044CD0] shrink-0" />
               <select
                 value={`${sortField},${sortOrder}`}
                 onChange={(e) => {
@@ -224,7 +224,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   setSortOrder(order);
                 }}
                 aria-label="Sortowanie"
-                className="bg-transparent text-slate-200 font-medium focus:outline-hidden cursor-pointer"
+                className="bg-transparent text-slate-200 font-medium focus:outline-hidden cursor-pointer w-full truncate"
               >
                 <option value="name,asc" className="bg-[#030a16]">Nazwa (A do Z)</option>
                 <option value="name,desc" className="bg-[#030a16]">Nazwa (Z do A)</option>
@@ -243,7 +243,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
           <div className="flex flex-wrap items-center gap-2">
             {/* Asset Class Multi-Select Filter */}
             <div className="flex items-center gap-1 text-xs flex-wrap">
-              <span className="text-slate-400 mr-1 font-semibold flex items-center gap-1">
+              <span className="text-slate-400 mr-1 font-semibold flex items-center gap-1 shrink-0">
                 <Compass className="w-3.5 h-3.5 text-[#3b82f6]" /> Klasa aktywów:
               </span>
               {[
@@ -263,7 +263,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   <button
                     key={cls.id}
                     onClick={() => toggleClassification(cls.id)}
-                    className={`inline-flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+                    className={`inline-flex items-center gap-1 px-2.5 sm:px-3 py-1 rounded-lg text-[11px] sm:text-xs font-medium transition-all cursor-pointer ${
                       isSelected
                         ? "bg-[#044CD0] text-white shadow-md font-bold scale-102 border border-blue-400/50"
                         : "bg-[#030a16] text-slate-300 border border-[#0e274d] hover:text-white hover:border-[#044CD0]/60"
@@ -282,7 +282,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
 
             {/* Fund Legal Type Multi-Select Filter */}
             <div className="flex items-center gap-1 text-xs flex-wrap">
-              <span className="text-slate-400 mr-1 font-medium">Typ prawny:</span>
+              <span className="text-slate-400 mr-1 font-medium shrink-0">Typ prawny:</span>
               {["ALL", "SFIO", "FIO", "FIZ", "ETF"].map((type) => {
                 const isSelected =
                   type === "ALL"
@@ -293,7 +293,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   <button
                     key={type}
                     onClick={() => toggleType(type)}
-                    className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+                    className={`inline-flex items-center gap-1 px-2 sm:px-2.5 py-1 rounded-lg text-[11px] sm:text-xs font-medium transition-all cursor-pointer ${
                       isSelected
                         ? "bg-[#044CD0] text-white shadow-xs font-bold border border-blue-400/60"
                         : "bg-[#030a16] text-slate-400 border border-[#0e274d] hover:text-slate-200"
@@ -409,7 +409,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
             return (
               <div
                 key={item.subfundId}
-                className="group relative bg-[#051329]/90 hover:bg-[#071938] border border-[#0e274d] hover:border-[#044CD0]/60 rounded-2xl p-5 transition-all flex flex-col justify-between shadow-md hover:shadow-xl"
+                className="group relative bg-[#051329]/90 hover:bg-[#071938] border border-[#0e274d] hover:border-[#044CD0]/60 rounded-2xl p-4 sm:p-5 transition-all flex flex-col justify-between shadow-md hover:shadow-xl"
               >
                 <div>
                   {/* Top tags & status */}
@@ -520,10 +520,10 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
             <table className="w-full text-left text-sm">
               <thead className="bg-[#030a16] text-xs uppercase tracking-wider text-slate-400 border-b border-[#0e274d]">
                 <tr>
-                  <th className="py-3.5 px-4 font-semibold">Typ / Kod</th>
+                  <th className="py-3.5 px-3 sm:px-4 font-semibold whitespace-nowrap">Typ / Kod</th>
                   <th
                     onClick={() => handleSort("name")}
-                    className="py-3.5 px-4 font-semibold cursor-pointer hover:text-slate-200 select-none group"
+                    className="py-3.5 px-3 sm:px-4 font-semibold cursor-pointer hover:text-slate-200 select-none group whitespace-nowrap"
                   >
                     <div className="flex items-center gap-1.5">
                       <span>Nazwa Subfunduszu</span>
@@ -534,11 +534,11 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                       )}
                     </div>
                   </th>
-                  <th className="py-3.5 px-4 font-semibold">Klasa aktywów</th>
-                  <th className="py-3.5 px-4 font-semibold">Status</th>
+                  <th className="py-3.5 px-3 sm:px-4 font-semibold whitespace-nowrap">Klasa aktywów</th>
+                  <th className="py-3.5 px-3 sm:px-4 font-semibold whitespace-nowrap">Status</th>
                   <th
                     onClick={() => handleSort("risk")}
-                    className="py-3.5 px-4 font-semibold cursor-pointer hover:text-slate-200 select-none group"
+                    className="py-3.5 px-3 sm:px-4 font-semibold cursor-pointer hover:text-slate-200 select-none group whitespace-nowrap"
                   >
                     <div className="flex items-center gap-1.5">
                       <span>Ryzyko (SRI)</span>
@@ -551,7 +551,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   </th>
                   <th
                     onClick={() => handleSort("fee")}
-                    className="py-3.5 px-4 font-semibold cursor-pointer hover:text-slate-200 select-none group"
+                    className="py-3.5 px-3 sm:px-4 font-semibold cursor-pointer hover:text-slate-200 select-none group whitespace-nowrap"
                   >
                     <div className="flex items-center gap-1.5">
                       <span>Opłata stała</span>
@@ -564,7 +564,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   </th>
                   <th
                     onClick={() => handleSort("valuation")}
-                    className="py-3.5 px-4 font-semibold cursor-pointer hover:text-slate-200 select-none group"
+                    className="py-3.5 px-3 sm:px-4 font-semibold cursor-pointer hover:text-slate-200 select-none group whitespace-nowrap"
                   >
                     <div className="flex items-center gap-1.5">
                       <span>Ostatnia wycena</span>
@@ -575,7 +575,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                       )}
                     </div>
                   </th>
-                  <th className="py-3.5 px-4 text-right font-semibold">Porównaj</th>
+                  <th className="py-3.5 px-3 sm:px-4 text-right font-semibold whitespace-nowrap">Porównaj</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#0e274d]/70 text-slate-300">

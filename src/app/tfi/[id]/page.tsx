@@ -62,10 +62,10 @@ export default async function CompanyDetailPage({
           </Link>
 
           {/* Profile Header */}
-          <div className="bg-gradient-to-b from-[#071938] via-[#051329] to-[#030a16] border border-[#0e274d] rounded-3xl p-6 sm:p-8 shadow-xl">
-            <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
-              <div className="space-y-3">
-                <div className="flex flex-wrap items-center gap-2">
+          <div className="bg-gradient-to-b from-[#071938] via-[#051329] to-[#030a16] border border-[#0e274d] rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-xl">
+            <div className="flex flex-col md:flex-row md:items-start justify-between gap-5 sm:gap-6">
+              <div className="space-y-2.5 sm:space-y-3">
+                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                   <span className="font-mono text-xs font-bold text-blue-300 bg-[#030a16] border border-[#0e274d] px-2.5 py-0.5 rounded-lg">
                     {company.nationalCode}
                   </span>
@@ -77,31 +77,31 @@ export default async function CompanyDetailPage({
                   )}
                 </div>
 
-                <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-100 tracking-tight">
+                <h1 className="text-xl sm:text-3xl font-extrabold text-slate-100 tracking-tight leading-tight">
                   {company.name}
                 </h1>
 
                 {company.fullName && company.fullName !== company.name && (
-                  <p className="text-sm text-slate-400">{company.fullName}</p>
+                  <p className="text-xs sm:text-sm text-slate-400">{company.fullName}</p>
                 )}
 
                 {/* Company details grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-3 text-xs text-slate-300">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3 pt-2 sm:pt-3 text-xs text-slate-300">
                   {(company.city || company.street) && (
-                    <div className="flex items-center gap-2 bg-[#030a16] p-2.5 rounded-xl border border-[#0e274d]">
+                    <div className="flex items-center gap-2 bg-[#030a16] p-2 sm:p-2.5 rounded-xl border border-[#0e274d]">
                       <MapPin className="w-4 h-4 text-slate-400 shrink-0" />
-                      <span>
+                      <span className="truncate">
                         {company.street}, {company.postCode} {company.city}
                       </span>
                     </div>
                   )}
 
                   {company.krs && (
-                    <div className="flex items-center gap-2 bg-[#030a16] p-2.5 rounded-xl border border-[#0e274d]">
+                    <div className="flex items-center gap-2 bg-[#030a16] p-2 sm:p-2.5 rounded-xl border border-[#0e274d]">
                       <span className="font-semibold text-slate-500">KRS:</span>
                       <span className="font-mono">{company.krs}</span>
                       {company.regon && (
-                        <span className="text-slate-500">| REGON: {company.regon}</span>
+                        <span className="text-slate-500 truncate">| REGON: {company.regon}</span>
                       )}
                     </div>
                   )}
@@ -111,17 +111,17 @@ export default async function CompanyDetailPage({
                       href={company.website.startsWith("http") ? company.website : `https://${company.website}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 bg-[#030a16] p-2.5 rounded-xl border border-[#0e274d] text-[#3b82f6] hover:text-[#60a5fa] transition-colors"
+                      className="flex items-center gap-2 bg-[#030a16] p-2 sm:p-2.5 rounded-xl border border-[#0e274d] text-[#3b82f6] hover:text-[#60a5fa] transition-colors"
                     >
                       <Globe className="w-4 h-4 shrink-0" />
                       <span className="truncate">{company.website}</span>
-                      <ExternalLink className="w-3 h-3 ml-auto" />
+                      <ExternalLink className="w-3 h-3 ml-auto shrink-0" />
                     </a>
                   )}
                 </div>
               </div>
 
-              <div className="bg-[#030a16] border border-[#0e274d] p-4 rounded-2xl shrink-0 text-center min-w-[140px]">
+              <div className="bg-[#030a16] border border-[#0e274d] p-3 sm:p-4 rounded-xl sm:rounded-2xl shrink-0 text-center w-full md:w-auto md:min-w-[140px]">
                 <div className="text-2xl font-black text-blue-400">{funds.length}</div>
                 <div className="text-xs text-slate-400 mt-0.5">Funduszy w rejestrze</div>
               </div>

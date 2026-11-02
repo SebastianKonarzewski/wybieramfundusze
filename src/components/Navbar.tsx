@@ -20,9 +20,9 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-[#0e274d] bg-[#030a16]/95 backdrop-blur-md">
       {/* Dev / Preview Mode Top Announcement Banner */}
-      <div className="w-full bg-[#021838] border-b border-[#0e274d] text-[11px] sm:text-xs py-1.5 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
-          <div className="flex items-center gap-2 flex-wrap">
+      <div className="w-full bg-[#021838] border-b border-[#0e274d] text-[11px] sm:text-xs py-1.5 px-3 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-x-4 gap-y-1 text-center sm:text-left">
+          <div className="flex items-center gap-2 flex-wrap justify-center sm:justify-start">
             <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md font-semibold bg-amber-500/15 text-amber-300 border border-amber-500/30">
               <FlaskConical className="w-3 h-3 text-amber-400" />
               Wersja poglądowa / testowa
@@ -32,7 +32,7 @@ export function Navbar() {
             </span>
           </div>
 
-          <div className="flex items-center gap-1.5 text-slate-300">
+          <div className="flex items-center gap-1.5 text-slate-300 shrink-0">
             <span className="text-slate-400 hidden sm:inline">Oficjalny serwis produkcyjny UKNF:</span>
             <a
               href="https://wybieramfundusze.knf.gov.pl"
@@ -47,22 +47,22 @@ export function Navbar() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between">
         {/* Brand with UKNF Navy Blue styling */}
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#02224D] to-[#044CD0] flex items-center justify-center text-white shadow-md shadow-[#044CD0]/30 group-hover:scale-105 transition-transform border border-blue-400/30">
-            <TrendingUp className="w-5 h-5 stroke-[2.5]" />
+        <Link href="/" className="flex items-center gap-2 sm:gap-2.5 group shrink-0">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-tr from-[#02224D] to-[#044CD0] flex items-center justify-center text-white shadow-md shadow-[#044CD0]/30 group-hover:scale-105 transition-transform border border-blue-400/30">
+            <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <span className="font-bold text-lg text-slate-100 tracking-tight">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="font-bold text-base sm:text-lg text-slate-100 tracking-tight">
                 Wybieram<span className="text-[#3b82f6]">Fundusze</span>
               </span>
-              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-[#044CD0]/20 text-[#60a5fa] border border-[#044CD0]/40">
+              <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider px-1.5 sm:px-2 py-0.5 rounded-full bg-[#044CD0]/20 text-[#60a5fa] border border-[#044CD0]/40 hidden xs:inline-block">
                 UKNF API
               </span>
             </div>
-            <p className="text-[11px] text-slate-400 hidden sm:block">
+            <p className="text-[10px] sm:text-[11px] text-slate-400 hidden sm:block">
               Porównywarka i rejestr funduszy inwestycyjnych
             </p>
           </div>
@@ -78,16 +78,17 @@ export function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`relative flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                className={`relative flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all ${
                   isActive
                     ? "bg-[#044CD0] text-white shadow-xs font-semibold"
                     : "text-slate-300 hover:text-white hover:bg-[#071938]"
                 }`}
+                title={link.label}
               >
-                <Icon className="w-4 h-4" />
+                <Icon className="w-4 h-4 shrink-0" />
                 <span className="hidden md:inline">{link.label}</span>
                 {link.badge !== undefined && link.badge > 0 && (
-                  <span className="flex items-center justify-center w-5 h-5 text-xs font-bold rounded-full bg-amber-400 text-slate-950 shadow-xs">
+                  <span className="flex items-center justify-center w-4 h-4 sm:w-5 sm:h-5 text-[10px] sm:text-xs font-bold rounded-full bg-amber-400 text-slate-950 shadow-xs">
                     {link.badge}
                   </span>
                 )}

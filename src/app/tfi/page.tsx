@@ -98,7 +98,7 @@ export default function CompaniesPage() {
                 <Link
                   key={company.companyId}
                   href={`/tfi/${company.companyId}`}
-                  className="group bg-[#051329] hover:bg-[#071938] border border-[#0e274d] hover:border-[#044CD0]/60 rounded-2xl p-5 transition-all flex flex-col justify-between shadow-xs hover:shadow-lg"
+                  className="group bg-[#051329] hover:bg-[#071938] border border-[#0e274d] hover:border-[#044CD0]/60 rounded-2xl p-4 sm:p-5 transition-all flex flex-col justify-between shadow-xs hover:shadow-lg"
                 >
                   <div>
                     <div className="flex items-center justify-between gap-2 mb-3">

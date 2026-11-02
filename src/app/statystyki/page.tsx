@@ -33,55 +33,55 @@ export default async function StatisticsPage() {
           </div>
 
           {/* 4 Stat Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="bg-[#051329] border border-[#0e274d] rounded-2xl p-5 shadow-md">
-              <div className="flex items-center justify-between text-slate-400 mb-2">
-                <span className="text-xs font-medium">Aktywa Brutto (AUM)</span>
-                <Coins className="w-4 h-4 text-[#044CD0]" />
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
+            <div className="bg-[#051329] border border-[#0e274d] rounded-xl sm:rounded-2xl p-3.5 sm:p-5 shadow-md">
+              <div className="flex items-center justify-between text-slate-400 mb-1 sm:mb-2">
+                <span className="text-[11px] sm:text-xs font-medium truncate">Aktywa Brutto</span>
+                <Coins className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#044CD0] shrink-0" />
               </div>
-              <div className="text-2xl font-black text-slate-100">
+              <div className="text-base sm:text-xl lg:text-2xl font-black text-slate-100 truncate">
                 {formatLargeNumber(stats.totalAssetsGross)}
               </div>
-              <div className="text-xs text-slate-400 mt-1">
+              <div className="text-[10px] sm:text-xs text-slate-400 mt-1 truncate">
                 Netto: {formatLargeNumber(stats.totalAssetsNet)}
               </div>
             </div>
 
-            <div className="bg-[#051329] border border-[#0e274d] rounded-2xl p-5 shadow-md">
-              <div className="flex items-center justify-between text-slate-400 mb-2">
-                <span className="text-xs font-medium">Aktywne Subfundusze</span>
-                <Layers className="w-4 h-4 text-blue-400" />
+            <div className="bg-[#051329] border border-[#0e274d] rounded-xl sm:rounded-2xl p-3.5 sm:p-5 shadow-md">
+              <div className="flex items-center justify-between text-slate-400 mb-1 sm:mb-2">
+                <span className="text-[11px] sm:text-xs font-medium truncate">Subfundusze</span>
+                <Layers className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-400 shrink-0" />
               </div>
-              <div className="text-2xl font-black text-blue-400">
+              <div className="text-base sm:text-xl lg:text-2xl font-black text-blue-400">
                 {formatNumber(stats.activeSubfundsCount, 0)}
               </div>
-              <div className="text-xs text-slate-400 mt-1">
+              <div className="text-[10px] sm:text-xs text-slate-400 mt-1 truncate">
                 Wybór z pełnego rejestru
               </div>
             </div>
 
-            <div className="bg-[#051329] border border-[#0e274d] rounded-2xl p-5 shadow-md">
-              <div className="flex items-center justify-between text-slate-400 mb-2">
-                <span className="text-xs font-medium">Fundusze Inwestycyjne</span>
-                <TrendingUp className="w-4 h-4 text-cyan-400" />
+            <div className="bg-[#051329] border border-[#0e274d] rounded-xl sm:rounded-2xl p-3.5 sm:p-5 shadow-md">
+              <div className="flex items-center justify-between text-slate-400 mb-1 sm:mb-2">
+                <span className="text-[11px] sm:text-xs font-medium truncate">Fundusze</span>
+                <TrendingUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 shrink-0" />
               </div>
-              <div className="text-2xl font-black text-slate-100">
+              <div className="text-base sm:text-xl lg:text-2xl font-black text-slate-100">
                 {formatNumber(stats.activeFundsCount, 0)}
               </div>
-              <div className="text-xs text-slate-400 mt-1">
+              <div className="text-[10px] sm:text-xs text-slate-400 mt-1 truncate">
                 FIO, SFIO, FIZ, ETF
               </div>
             </div>
 
-            <div className="bg-[#051329] border border-[#0e274d] rounded-2xl p-5 shadow-md">
-              <div className="flex items-center justify-between text-slate-400 mb-2">
-                <span className="text-xs font-medium">Towarzystwa (TFI)</span>
-                <Building2 className="w-4 h-4 text-[#044CD0]" />
+            <div className="bg-[#051329] border border-[#0e274d] rounded-xl sm:rounded-2xl p-3.5 sm:p-5 shadow-md">
+              <div className="flex items-center justify-between text-slate-400 mb-1 sm:mb-2">
+                <span className="text-[11px] sm:text-xs font-medium truncate">Towarzystwa (TFI)</span>
+                <Building2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#044CD0] shrink-0" />
               </div>
-              <div className="text-2xl font-black text-slate-100">
+              <div className="text-base sm:text-xl lg:text-2xl font-black text-slate-100">
                 {formatNumber(stats.companiesCount, 0)}
               </div>
-              <div className="text-xs text-slate-400 mt-1">
+              <div className="text-[10px] sm:text-xs text-slate-400 mt-1 truncate">
                 Aktywnie zarządzające
               </div>
             </div>

@@ -63,11 +63,11 @@ export default async function SubfundDetailPage({
           </Link>
 
           {/* Subfund Main Header */}
-          <div className="bg-gradient-to-b from-[#071938] via-[#051329] to-[#030a16] border border-[#0e274d] rounded-3xl p-6 sm:p-8 shadow-xl">
-            <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
-              <div className="space-y-3">
+          <div className="bg-gradient-to-b from-[#071938] via-[#051329] to-[#030a16] border border-[#0e274d] rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-xl">
+            <div className="flex flex-col md:flex-row md:items-start justify-between gap-5 sm:gap-6">
+              <div className="space-y-2.5 sm:space-y-3">
                 {/* Badges row */}
-                <div className="flex flex-wrap items-center gap-2">
+                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                   <span className="font-bold text-xs bg-[#030a16] text-blue-300 border border-[#0e274d] px-2.5 py-0.5 rounded-lg">
                     {subfund.type}
                   </span>
@@ -84,16 +84,16 @@ export default async function SubfundDetailPage({
                 </div>
 
                 {/* Subfund Title */}
-                <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-100 tracking-tight">
+                <h1 className="text-xl sm:text-3xl font-extrabold text-slate-100 tracking-tight leading-tight">
                   {subfund.name}
                 </h1>
 
                 {subfund.fullName && subfund.fullName !== subfund.name && (
-                  <p className="text-sm text-slate-400">{subfund.fullName}</p>
+                  <p className="text-xs sm:text-sm text-slate-400">{subfund.fullName}</p>
                 )}
 
                 {/* Classification and Company Link */}
-                <div className="flex flex-wrap items-center gap-4 text-xs text-slate-400 pt-1">
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-400 pt-1">
                   {company && (
                     <Link
                       href={`/tfi/${company.companyId}`}
@@ -124,18 +124,18 @@ export default async function SubfundDetailPage({
               </div>
 
               {/* Quick Metrics Pillar */}
-              <div className="flex flex-row md:flex-col gap-3 shrink-0">
-                <div className="bg-[#030a16] border border-[#0e274d] p-4 rounded-2xl min-w-[140px] text-center">
-                  <span className="text-[11px] font-medium text-slate-500 block">Opłata bieżąca</span>
-                  <span className="text-xl font-black text-blue-400">
+              <div className="grid grid-cols-2 md:flex md:flex-col gap-2.5 sm:gap-3 w-full md:w-auto shrink-0">
+                <div className="bg-[#030a16] border border-[#0e274d] p-3 sm:p-4 rounded-xl sm:rounded-2xl md:min-w-[140px] text-center">
+                  <span className="text-[10px] sm:text-[11px] font-medium text-slate-500 block">Opłata bieżąca</span>
+                  <span className="text-lg sm:text-xl font-black text-blue-400">
                     {formatPercent(latestKid?.managementAndOtherFeesRate)}
                   </span>
                 </div>
 
                 {valuations[0] && (
-                  <div className="bg-[#030a16] border border-[#0e274d] p-4 rounded-2xl min-w-[140px] text-center">
-                    <span className="text-[11px] font-medium text-slate-500 block">Ostatnia wycena</span>
-                    <span className="text-xl font-bold text-slate-100">
+                  <div className="bg-[#030a16] border border-[#0e274d] p-3 sm:p-4 rounded-xl sm:rounded-2xl md:min-w-[140px] text-center">
+                    <span className="text-[10px] sm:text-[11px] font-medium text-slate-500 block">Ostatnia wycena</span>
+                    <span className="text-lg sm:text-xl font-bold text-slate-100">
                       {formatCurrency(valuations[0].valuation, valuations[0].currency)}
                     </span>
                   </div>

@@ -284,7 +284,7 @@ export function FundComparator() {
               <table className="w-full text-left text-xs sm:text-sm border-collapse">
                 <thead>
                   <tr className="bg-[#030a16] border-b border-[#0e274d] text-slate-400">
-                    <th className="py-4 px-4 w-48 sm:w-60 font-semibold uppercase tracking-wider text-[11px]">
+                    <th className="py-4 px-4 w-44 sm:w-60 font-semibold uppercase tracking-wider text-[11px] sticky left-0 bg-[#030a16] z-20 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">
                       Parametr
                     </th>
                     {profiles.map((p, idx) => (
@@ -329,7 +329,7 @@ export function FundComparator() {
                     </td>
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400">Towarzystwo (TFI)</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Towarzystwo (TFI)</td>
                     {profiles.map((p) => (
                       <td key={p.subfund.subfundId} className="py-3 px-4 border-l border-[#0e274d]">
                         {p.company?.name || "—"}
@@ -337,7 +337,7 @@ export function FundComparator() {
                     ))}
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400">Typ prawny</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Typ prawny</td>
                     {profiles.map((p) => (
                       <td key={p.subfund.subfundId} className="py-3 px-4 border-l border-[#0e274d] font-bold">
                         {p.subfund.type}
@@ -345,7 +345,7 @@ export function FundComparator() {
                     ))}
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400">Klasyfikacja / Kategoria</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Klasyfikacja / Kategoria</td>
                     {profiles.map((p) => (
                       <td key={p.subfund.subfundId} className="py-3 px-4 border-l border-[#0e274d]">
                         {p.subfund.classification || "—"} {p.subfund.category ? `(${p.subfund.category})` : ""}
@@ -353,7 +353,7 @@ export function FundComparator() {
                     ))}
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400">Status w rejestrze</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Status w rejestrze</td>
                     {profiles.map((p) => (
                       <td key={p.subfund.subfundId} className="py-3 px-4 border-l border-[#0e274d]">
                         <StatusBadge
@@ -366,7 +366,7 @@ export function FundComparator() {
                     ))}
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400">Data rozpoczęcia (rejestr)</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Data rozpoczęcia (rejestr)</td>
                     {profiles.map((p) => (
                       <td key={p.subfund.subfundId} className="py-3 px-4 border-l border-[#0e274d]">
                         {formatDate(p.subfund.fromDate)}
@@ -381,7 +381,7 @@ export function FundComparator() {
                     </td>
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400">Wskaźnik Ryzyka (SRI 1-7)</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Wskaźnik Ryzyka (SRI 1-7)</td>
                     {profiles.map((p) => (
                       <td key={p.subfund.subfundId} className="py-3 px-4 border-l border-[#0e274d]">
                         <RiskBadge level={p.latestKid?.riskLevel} size="md" />
@@ -389,7 +389,7 @@ export function FundComparator() {
                     ))}
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400">Benchmark referencyjny</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Benchmark referencyjny</td>
                     {profiles.map((p) => (
                       <td key={p.subfund.subfundId} className="py-3 px-4 border-l border-[#0e274d] text-xs">
                         {p.latestKid?.hasBenchmark && p.latestKid?.benchmark ? (
@@ -408,7 +408,7 @@ export function FundComparator() {
                     </td>
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400">Opłata bieżąca / zarządzanie</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Opłata bieżąca / zarządzanie</td>
                     {profiles.map((p) => (
                       <td
                         key={p.subfund.subfundId}
@@ -419,7 +419,7 @@ export function FundComparator() {
                     ))}
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400">Maks. opłata wstępna</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Maks. opłata wstępna</td>
                     {profiles.map((p) => (
                       <td key={p.subfund.subfundId} className="py-3 px-4 border-l border-[#0e274d]">
                         {formatPercent(p.latestKid?.maxEntryFeeRate)}
@@ -427,7 +427,7 @@ export function FundComparator() {
                     ))}
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400">Maks. opłata za umorzenie</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Maks. opłata za umorzenie</td>
                     {profiles.map((p) => (
                       <td key={p.subfund.subfundId} className="py-3 px-4 border-l border-[#0e274d]">
                         {formatPercent(p.latestKid?.maxExitFeeRate)}
@@ -435,7 +435,7 @@ export function FundComparator() {
                     ))}
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400">Koszty transakcyjne</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Koszty transakcyjne</td>
                     {profiles.map((p) => (
                       <td key={p.subfund.subfundId} className="py-3 px-4 border-l border-[#0e274d]">
                         {formatPercent(p.latestKid?.transactionCostsRate)}
@@ -443,7 +443,7 @@ export function FundComparator() {
                     ))}
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400">Opłata za sukces</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Opłata za sukces</td>
                     {profiles.map((p) => (
                       <td key={p.subfund.subfundId} className="py-3 px-4 border-l border-[#0e274d] text-xs">
                         {p.latestKid?.hasSuccessFee ? (
@@ -464,7 +464,7 @@ export function FundComparator() {
                     </td>
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400">Ostatnia wartość jednostki</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Ostatnia wartość jednostki</td>
                     {profiles.map((p) => {
                       const latestVal = p.valuations[0];
                       return (
@@ -488,7 +488,7 @@ export function FundComparator() {
 
                   {/* Dokument KID */}
                   <tr>
-                    <td className="py-3 px-4 font-medium text-slate-400">Oficjalny plik KID (UKNF)</td>
+                    <td className="py-3 px-4 font-medium text-slate-400 sticky left-0 bg-[#051329] z-10 border-r border-[#0e274d] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.5)]">Oficjalny plik KID (UKNF)</td>
                     {profiles.map((p) => (
                       <td key={p.subfund.subfundId} className="py-3 px-4 border-l border-[#0e274d]">
                         {p.latestKid ? (

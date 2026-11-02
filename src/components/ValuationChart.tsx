@@ -236,14 +236,14 @@ export function ValuationChart({
           </div>
 
           {/* Range Buttons */}
-          <div className="flex items-center bg-[#030a16] p-1 rounded-xl border border-[#0e274d]">
+          <div className="flex items-center bg-[#030a16] p-1 rounded-xl border border-[#0e274d] overflow-x-auto">
             {(["1M", "3M", "6M", "1Y", "3Y", "MAX"] as const).map((range) => (
               <button
                 key={range}
                 onClick={() => setSelectedRange(range)}
-                className={`px-3 py-1 text-xs font-semibold rounded-lg transition-colors ${
+                className={`px-2 sm:px-3 py-1 text-[11px] sm:text-xs font-semibold rounded-lg transition-colors cursor-pointer shrink-0 ${
                   selectedRange === range
-                    ? "bg-[#044CD0] text-white shadow-xs"
+                    ? "bg-[#044CD0] text-white shadow-xs font-bold"
                     : "text-slate-400 hover:text-slate-200"
                 }`}
               >
@@ -255,7 +255,7 @@ export function ValuationChart({
       </div>
 
       {/* Chart Canvas */}
-      <div className="h-72 w-full">
+      <div className="h-60 sm:h-72 w-full">
         <ResponsiveContainer width="100%" height="100%">
           {activeBenchmark === "NONE" ? (
             <AreaChart data={alignedChartData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
