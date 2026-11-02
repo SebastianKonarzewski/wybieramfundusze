@@ -7,24 +7,25 @@ import {
   Layers,
   Building2,
   TrendingUp,
+  TrendingDown,
   Calendar,
   ArrowRight,
-  Lightbulb,
-  CheckCircle2,
+  Info,
 } from "lucide-react";
 import {
   ResponsiveContainer,
   AreaChart,
   Area,
+  YAxis,
   Tooltip,
 } from "recharts";
 import { MarketStatistics } from "@/types/knf";
 import { useTranslation } from "@/lib/i18n";
 
 export function MarketHero({ stats }: { stats: MarketStatistics }) {
-  const { t, locale, formatLargeNumber, formatDate, formatNumber, formatPercent } = useTranslation();
+  const { t, formatLargeNumber, formatDate, formatNumber, formatPercent } = useTranslation();
 
-  // Calculate 12-month asset trend dynamics if history is available
+  // Calculate 12-month asset trend dynamics with proper min/max scaling
   const trendData = useMemo(() => {
     if (!stats.assetsHistory || stats.assetsHistory.length < 2) return null;
 
@@ -34,6 +35,13 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
     const diff = end - start;
     const rate = start > 0 ? diff / start : 0;
 
+    const values = series.map((d) => d.assets);
+    const minVal = Math.min(...values);
+    const maxVal = Math.max(...values);
+    const ySpan = maxVal - minVal;
+    // Buffer for realistic slope visualization
+    const yPadding = ySpan > 0 ? ySpan * 0.25 : minVal * 0.05;
+
     return {
       series,
       start,
@@ -41,6 +49,8 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
       diff,
       rate,
       isPositive: rate >= 0,
+      yMin: Math.max(0, minVal - yPadding),
+      yMax: maxVal + yPadding,
     };
   }, [stats.assetsHistory]);
 
@@ -51,29 +61,22 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
       <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-[#02224D]/30 blur-3xl pointer-events-none" />
 
       <div className="relative z-10 space-y-6 sm:space-y-8">
-        {/* Top Header: Title & Active Notice & Date Badge */}
+        {/* Top Header: Title & Market Data Date */}
         <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
           <div className="max-w-3xl">
             <h1 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-slate-100 tracking-tight leading-tight">
               {t.hero.title}
             </h1>
-            <p className="text-slate-400 mt-2 sm:mt-3 text-xs sm:text-sm lg:text-base leading-relaxed">
+            <p className="text-slate-400 mt-2 text-xs sm:text-sm lg:text-base leading-relaxed">
               {t.hero.desc}
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2 self-start lg:self-auto shrink-0">
-            {/* Global Active Notice Badge */}
-            <div className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-semibold px-2.5 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/25">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>{t.hero.activeEntitiesNotice}</span>
-            </div>
-
-            {/* Date Badge */}
-            <div className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-400 bg-[#030a16]/80 border border-[#0e274d] px-2.5 sm:px-3 py-1.5 rounded-xl">
-              <Calendar className="w-3.5 h-3.5 text-[#044CD0]" />
-              <span>{t.hero.marketDataDate} <strong className="text-slate-200">{formatDate(stats.statsDate)}</strong></span>
-            </div>
+          <div className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-400 bg-[#030a16]/80 border border-[#0e274d] px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl self-start lg:self-auto shrink-0 shadow-xs">
+            <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#044CD0]" />
+            <span>
+              {t.hero.marketDataDate} <strong className="text-slate-200">{formatDate(stats.statsDate)}</strong>
+            </span>
           </div>
         </div>
 
@@ -95,7 +98,7 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
             </div>
           </div>
 
-          {/* Card 2: Active Subfunds */}
+          {/* Card 2: Subfunds */}
           <div className="bg-[#030a16]/85 border border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl p-3.5 sm:p-5 transition-all shadow-md group">
             <div className="flex items-center justify-between text-slate-400 mb-1.5 sm:mb-2">
               <span className="text-[11px] sm:text-xs font-semibold truncate text-slate-300">
@@ -111,7 +114,7 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
             </div>
           </div>
 
-          {/* Card 3: Active Funds (Umbrella + Standalone, incl. ETFs) */}
+          {/* Card 3: Funds */}
           <div className="bg-[#030a16]/85 border border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl p-3.5 sm:p-5 transition-all shadow-md group">
             <div className="flex items-center justify-between text-slate-400 mb-1.5 sm:mb-2">
               <span className="text-[11px] sm:text-xs font-semibold truncate text-slate-300">
@@ -127,7 +130,7 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
             </div>
           </div>
 
-          {/* Card 4: Licensed Fund Managers (TFI) */}
+          {/* Card 4: Fund Managers (TFI) */}
           <div className="bg-[#030a16]/85 border border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl p-3.5 sm:p-5 transition-all shadow-md group">
             <div className="flex items-center justify-between text-slate-400 mb-1.5 sm:mb-2">
               <span className="text-[11px] sm:text-xs font-semibold truncate text-slate-300">
@@ -144,39 +147,64 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
           </div>
         </div>
 
-        {/* Subtle Market Assets Dynamics Sparkline Strip */}
+        {/* Dynamic Market Assets Trend Strip with Scaled Domain */}
         {trendData && (
-          <div className="bg-[#030a16]/75 border border-[#0e274d] rounded-xl sm:rounded-2xl p-3 sm:p-4 flex flex-col md:flex-row items-center justify-between gap-3">
-            {/* Left: Trend summary metric */}
+          <div className="bg-[#030a16]/75 border border-[#0e274d] rounded-xl sm:rounded-2xl p-3 sm:p-4 flex flex-col md:flex-row items-center justify-between gap-3 shadow-md">
+            {/* Left: Trend summary & concrete values */}
             <div className="flex items-center gap-3 shrink-0 self-start md:self-auto">
-              <div className="w-8 h-8 rounded-lg bg-[#044CD0]/15 border border-[#044CD0]/30 flex items-center justify-center text-[#3b82f6] shrink-0">
-                <TrendingUp className="w-4 h-4" />
+              <div
+                className={`w-9 h-9 rounded-xl border flex items-center justify-center shrink-0 ${
+                  trendData.isPositive
+                    ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
+                    : "bg-rose-500/10 border-rose-500/30 text-rose-400"
+                }`}
+              >
+                {trendData.isPositive ? (
+                  <TrendingUp className="w-4 h-4" />
+                ) : (
+                  <TrendingDown className="w-4 h-4" />
+                )}
               </div>
               <div>
                 <div className="text-[11px] text-slate-400 font-medium">
                   {t.hero.marketTrend}
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className={`text-sm sm:text-base font-extrabold ${trendData.isPositive ? "text-emerald-400" : "text-rose-400"}`}>
-                    {trendData.isPositive ? "+" : ""}{formatPercent(trendData.rate)}
+                <div className="flex items-baseline gap-2">
+                  <span
+                    className={`text-sm sm:text-base font-extrabold ${
+                      trendData.isPositive ? "text-emerald-400" : "text-rose-400"
+                    }`}
+                  >
+                    {trendData.isPositive ? "+" : ""}
+                    {formatPercent(trendData.rate)}
                   </span>
-                  <span className="text-[11px] text-slate-400 font-medium">
-                    ({trendData.isPositive ? "+" : ""}{formatLargeNumber(trendData.diff)})
+                  <span className="text-[11px] text-slate-300 font-semibold">
+                    ({trendData.isPositive ? "+" : ""}
+                    {formatLargeNumber(trendData.diff)})
                   </span>
+                </div>
+                <div className="text-[10px] text-slate-500 font-medium mt-0.5">
+                  {t.hero.trendRange
+                    .replace("{start}", formatLargeNumber(trendData.start))
+                    .replace("{end}", formatLargeNumber(trendData.end))}
                 </div>
               </div>
             </div>
 
-            {/* Middle: Compact Sparkline AreaChart */}
-            <div className="h-10 w-full md:max-w-xs lg:max-w-md shrink-1">
+            {/* Middle: Sparkline AreaChart with scaled Y-Axis domain (no flat line!) */}
+            <div className="h-12 sm:h-14 w-full md:max-w-xs lg:max-w-md shrink-1">
               <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={trendData.series} margin={{ top: 2, right: 2, left: 2, bottom: 2 }}>
+                <AreaChart
+                  data={trendData.series}
+                  margin={{ top: 4, right: 4, left: 4, bottom: 4 }}
+                >
                   <defs>
-                    <linearGradient id="heroSparklineGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#044CD0" stopOpacity={0.4} />
+                    <linearGradient id="heroScaledGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#044CD0" stopOpacity={0.45} />
                       <stop offset="100%" stopColor="#044CD0" stopOpacity={0.0} />
                     </linearGradient>
                   </defs>
+                  <YAxis domain={[trendData.yMin, trendData.yMax]} hide />
                   <Tooltip
                     content={({ active, payload }) => {
                       if (active && payload && payload.length) {
@@ -184,7 +212,9 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
                         return (
                           <div className="bg-[#030a16] border border-[#0e274d] px-2.5 py-1.5 rounded-lg shadow-xl text-[11px]">
                             <span className="text-slate-400 mr-2">{formatDate(item.date)}:</span>
-                            <span className="font-bold text-slate-100">{formatLargeNumber(item.assets)}</span>
+                            <span className="font-bold text-slate-100">
+                              {formatLargeNumber(item.assets)}
+                            </span>
                           </div>
                         );
                       }
@@ -195,15 +225,15 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
                     type="monotone"
                     dataKey="assets"
                     stroke="#044CD0"
-                    strokeWidth={2}
+                    strokeWidth={2.5}
                     fillOpacity={1}
-                    fill="url(#heroSparklineGrad)"
+                    fill="url(#heroScaledGrad)"
                   />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
 
-            {/* Right: Link to full stats page */}
+            {/* Right: Direct Link to full stats page */}
             <Link
               href="/statystyki"
               className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#60a5fa] hover:text-white transition-colors shrink-0 self-end md:self-auto"
@@ -214,12 +244,10 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
           </div>
         )}
 
-        {/* Educational Insight Note */}
+        {/* Factual Note on Fund vs Subfund categorization */}
         <div className="flex items-start gap-2.5 bg-[#030a16]/60 border border-[#0e274d]/80 rounded-xl p-3 text-[11px] sm:text-xs text-slate-400 leading-relaxed">
-          <Lightbulb className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-          <p>
-            {t.hero.educationalNote}
-          </p>
+          <Info className="w-4 h-4 text-[#3b82f6] shrink-0 mt-0.5" />
+          <p>{t.hero.educationalNote}</p>
         </div>
       </div>
     </div>
