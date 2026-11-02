@@ -263,5 +263,6 @@ export interface MarketStatistics {
   totalSubfundsCount: number;
   activeSubfundsCount: number;
   companiesCount: number;
+  assetsHistory?: KNFTotalAsset[];
 }
 

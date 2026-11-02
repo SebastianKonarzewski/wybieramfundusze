@@ -353,7 +353,7 @@ export const knfApi = {
   async getMarketStats(): Promise<MarketStatistics> {
     const [totalAssetsRes, activeFundsRes, allFundsRes, activeSubfundsRes, allSubfundsRes, companiesRes] =
       await Promise.all([
-        this.getTotalAssets({ size: 1 }),
+        this.getTotalAssets({ size: 12, sort: "date,desc" }),
         this.getFunds({ size: 1, includeInactive: false, includeLiquidating: false }),
         this.getFunds({ size: 1, includeInactive: true, includeLiquidating: true }),
         this.getSubfunds({ size: 1, includeInactive: false, includeLiquidating: false }),
@@ -362,6 +362,7 @@ export const knfApi = {
       ]);
 
     const latestMarketAsset = totalAssetsRes.content[0];
+    const assetsHistory = [...(totalAssetsRes.content || [])].reverse();
 
     const totalFundsCount = allFundsRes.page.totalElements || 0;
     const activeFundsCount = activeFundsRes.page.totalElements || 0;
@@ -378,6 +379,7 @@ export const knfApi = {
       totalSubfundsCount,
       activeSubfundsCount,
       companiesCount: companiesRes.page.totalElements || 0,
+      assetsHistory,
     };
   },
 
