@@ -83,8 +83,8 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
         {/* 3 Key Stat Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
           {/* Card 1: Net Assets in Funds (AUM) */}
-          <div className="bg-[#030a16]/85 border border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl p-4 sm:p-5 transition-all shadow-md group">
-            <div className="flex items-center justify-between text-slate-400 mb-1.5 sm:mb-2">
+          <div className="bg-[#030a16]/85 border border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl px-4 pt-3.5 pb-3 sm:px-5 sm:pt-4 sm:pb-3.5 transition-all shadow-md group">
+            <div className="flex items-center justify-between text-slate-400 mb-1 sm:mb-1.5">
               <span className="text-xs sm:text-sm font-semibold truncate text-slate-300">
                 {t.hero.netAssets}
               </span>
@@ -93,14 +93,14 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
             <div className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-100 truncate">
               {formatLargeNumber(stats.totalAssetsNet)}
             </div>
-            <div className="text-xs text-slate-400 mt-1 line-clamp-2 leading-snug min-h-[1.75rem] sm:min-h-[2rem]">
+            <div className="text-xs text-slate-400 mt-1 line-clamp-2 leading-snug">
               {t.hero.grossAssets}: <span className="text-blue-400 font-semibold">{formatLargeNumber(stats.totalAssetsGross)}</span>
             </div>
           </div>
 
           {/* Card 2: Investable Products (Subfunds + Standalone Funds) */}
-          <div className="bg-[#030a16]/85 border border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl p-4 sm:p-5 transition-all shadow-md group">
-            <div className="flex items-center justify-between text-slate-400 mb-1.5 sm:mb-2">
+          <div className="bg-[#030a16]/85 border border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl px-4 pt-3.5 pb-3 sm:px-5 sm:pt-4 sm:pb-3.5 transition-all shadow-md group">
+            <div className="flex items-center justify-between text-slate-400 mb-1 sm:mb-1.5">
               <span className="text-xs sm:text-sm font-semibold truncate text-slate-300">
                 {t.hero.investableProducts}
               </span>
@@ -109,14 +109,14 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
             <div className="text-xl sm:text-2xl lg:text-3xl font-black text-blue-400">
               {formatNumber(stats.investableProductsCount || 688, 0)}
             </div>
-            <div className="text-xs text-slate-400 mt-1 line-clamp-2 leading-snug min-h-[1.75rem] sm:min-h-[2rem]">
+            <div className="text-xs text-slate-400 mt-1 line-clamp-2 leading-snug">
               {t.hero.investableProductsDesc}
             </div>
           </div>
 
           {/* Card 3: Fund Managers (TFI) */}
-          <div className="bg-[#030a16]/85 border border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl p-4 sm:p-5 transition-all shadow-md group">
-            <div className="flex items-center justify-between text-slate-400 mb-1.5 sm:mb-2">
+          <div className="bg-[#030a16]/85 border border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl px-4 pt-3.5 pb-3 sm:px-5 sm:pt-4 sm:pb-3.5 transition-all shadow-md group">
+            <div className="flex items-center justify-between text-slate-400 mb-1 sm:mb-1.5">
               <span className="text-xs sm:text-sm font-semibold truncate text-slate-300">
                 {t.hero.companies}
               </span>
@@ -125,7 +125,7 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
             <div className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-100">
               {formatNumber(stats.companiesCount, 0)}
             </div>
-            <div className="text-xs text-slate-400 mt-1 line-clamp-2 leading-snug min-h-[1.75rem] sm:min-h-[2rem]">
+            <div className="text-xs text-slate-400 mt-1 line-clamp-2 leading-snug">
               {t.hero.companiesDesc}
             </div>
           </div>
