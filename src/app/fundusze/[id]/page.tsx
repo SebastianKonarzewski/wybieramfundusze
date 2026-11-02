@@ -7,7 +7,6 @@ import {
   Calendar,
   Layers,
   Compass,
-  Scale,
   FileText,
   Clock,
   Coins,
@@ -50,29 +49,29 @@ export default async function SubfundDetailPage({
 
   return (
     <CompareProvider>
-      <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100">
+      <div className="min-h-screen flex flex-col bg-[#030a16] text-slate-100">
         <Navbar />
 
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
           {/* Back button */}
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-emerald-400 font-medium transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-[#3b82f6] font-medium transition-colors"
           >
             <ChevronLeft className="w-4 h-4" />
             Wróć do Katalogu Subfunduszy
           </Link>
 
           {/* Subfund Main Header */}
-          <div className="bg-gradient-to-b from-slate-900 via-slate-900/90 to-slate-950 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl">
+          <div className="bg-gradient-to-b from-[#071938] via-[#051329] to-[#030a16] border border-[#0e274d] rounded-3xl p-6 sm:p-8 shadow-xl">
             <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
               <div className="space-y-3">
                 {/* Badges row */}
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="font-bold text-xs bg-slate-800 text-slate-200 border border-slate-700 px-2.5 py-0.5 rounded-lg">
+                  <span className="font-bold text-xs bg-[#030a16] text-blue-300 border border-[#0e274d] px-2.5 py-0.5 rounded-lg">
                     {subfund.type}
                   </span>
-                  <span className="font-mono text-xs text-slate-400 bg-slate-950 px-2 py-0.5 rounded border border-slate-800">
+                  <span className="font-mono text-xs text-slate-400 bg-[#030a16] px-2 py-0.5 rounded border border-[#0e274d]">
                     {subfund.nationalCode}
                   </span>
                   <StatusBadge
@@ -98,7 +97,7 @@ export default async function SubfundDetailPage({
                   {company && (
                     <Link
                       href={`/tfi/${company.companyId}`}
-                      className="inline-flex items-center gap-1.5 text-cyan-400 hover:text-cyan-300 font-semibold transition-colors"
+                      className="inline-flex items-center gap-1.5 text-[#3b82f6] hover:text-[#60a5fa] font-semibold transition-colors"
                     >
                       <Building2 className="w-3.5 h-3.5" />
                       {company.name}
@@ -126,15 +125,15 @@ export default async function SubfundDetailPage({
 
               {/* Quick Metrics Pillar */}
               <div className="flex flex-row md:flex-col gap-3 shrink-0">
-                <div className="bg-slate-950/80 border border-slate-800 p-4 rounded-2xl min-w-[140px] text-center">
+                <div className="bg-[#030a16] border border-[#0e274d] p-4 rounded-2xl min-w-[140px] text-center">
                   <span className="text-[11px] font-medium text-slate-500 block">Opłata bieżąca</span>
-                  <span className="text-xl font-black text-emerald-400">
+                  <span className="text-xl font-black text-blue-400">
                     {formatPercent(latestKid?.managementAndOtherFeesRate)}
                   </span>
                 </div>
 
                 {valuations[0] && (
-                  <div className="bg-slate-950/80 border border-slate-800 p-4 rounded-2xl min-w-[140px] text-center">
+                  <div className="bg-[#030a16] border border-[#0e274d] p-4 rounded-2xl min-w-[140px] text-center">
                     <span className="text-[11px] font-medium text-slate-500 block">Ostatnia wycena</span>
                     <span className="text-xl font-bold text-slate-100">
                       {formatCurrency(valuations[0].valuation, valuations[0].currency)}
@@ -145,12 +144,12 @@ export default async function SubfundDetailPage({
             </div>
           </div>
 
-          {/* Section 1: Valuation Chart */}
+          {/* Section 1: Valuation Chart with Benchmark option */}
           <section className="space-y-4">
             <div className="flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-emerald-400" />
+              <TrendingUp className="w-5 h-5 text-[#044CD0]" />
               <h2 className="text-lg font-bold text-slate-100">
-                Historia wycen jednostki uczestnictwa
+                Historia wycen jednostki uczestnictwa & Porównanie z Benchmarkiem
               </h2>
             </div>
             <ValuationChart valuations={valuations} currency={valuations[0]?.currency || "PLN"} />
@@ -159,7 +158,7 @@ export default async function SubfundDetailPage({
           {/* Section 2: KID & Costs */}
           <section className="space-y-4">
             <div className="flex items-center gap-2">
-              <FileText className="w-5 h-5 text-emerald-400" />
+              <FileText className="w-5 h-5 text-[#044CD0]" />
               <h2 className="text-lg font-bold text-slate-100">
                 Koszty, Ryzyko i Dokument KID
               </h2>
@@ -170,7 +169,7 @@ export default async function SubfundDetailPage({
           {/* Section 3: Historical Transformations (History) */}
           <section className="space-y-4">
             <div className="flex items-center gap-2">
-              <Clock className="w-5 h-5 text-cyan-400" />
+              <Clock className="w-5 h-5 text-[#044CD0]" />
               <h2 className="text-lg font-bold text-slate-100">
                 Oś czasu i historia przekształceń (UKNF)
               </h2>
@@ -178,7 +177,7 @@ export default async function SubfundDetailPage({
             <p className="text-xs text-slate-400">
               Oficjalne rejestrowe zmiany strategii, nazwy oraz kategorii subfunduszu zarejestrowane przez Komisję Nadzoru Finansowego.
             </p>
-            <div className="bg-slate-900/40 border border-slate-800 rounded-3xl p-6">
+            <div className="bg-[#051329] border border-[#0e274d] rounded-3xl p-6 shadow-md">
               <HistoryTimeline history={history} />
             </div>
           </section>
@@ -187,7 +186,7 @@ export default async function SubfundDetailPage({
           {assets.length > 0 && (
             <section className="space-y-4">
               <div className="flex items-center gap-2">
-                <Coins className="w-5 h-5 text-teal-400" />
+                <Coins className="w-5 h-5 text-[#044CD0]" />
                 <h2 className="text-lg font-bold text-slate-100">
                   Wielkość aktywów pod zarządzaniem (AUM)
                 </h2>
@@ -203,4 +202,3 @@ export default async function SubfundDetailPage({
     </CompareProvider>
   );
 }
-

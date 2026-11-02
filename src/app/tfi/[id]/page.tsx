@@ -10,7 +10,6 @@ import {
   ChevronLeft,
   Layers,
   Clock,
-  ShieldCheck,
 } from "lucide-react";
 import { knfApi } from "@/lib/knf-api";
 import { Navbar } from "@/components/Navbar";
@@ -49,25 +48,25 @@ export default async function CompanyDetailPage({
 
   return (
     <CompareProvider>
-      <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100">
+      <div className="min-h-screen flex flex-col bg-[#030a16] text-slate-100">
         <Navbar />
 
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
           {/* Back button */}
           <Link
             href="/tfi"
-            className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-emerald-400 font-medium transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-[#3b82f6] font-medium transition-colors"
           >
             <ChevronLeft className="w-4 h-4" />
             Wróć do listy Towarzystw (TFI)
           </Link>
 
           {/* Profile Header */}
-          <div className="bg-gradient-to-b from-slate-900 via-slate-900/90 to-slate-950 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl">
+          <div className="bg-gradient-to-b from-[#071938] via-[#051329] to-[#030a16] border border-[#0e274d] rounded-3xl p-6 sm:p-8 shadow-xl">
             <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
               <div className="space-y-3">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="font-mono text-xs font-bold text-cyan-400 bg-cyan-950/80 border border-cyan-800/50 px-2.5 py-0.5 rounded-lg">
+                  <span className="font-mono text-xs font-bold text-blue-300 bg-[#030a16] border border-[#0e274d] px-2.5 py-0.5 rounded-lg">
                     {company.nationalCode}
                   </span>
                   <StatusBadge isActive={company.isActive} />
@@ -89,7 +88,7 @@ export default async function CompanyDetailPage({
                 {/* Company details grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-3 text-xs text-slate-300">
                   {(company.city || company.street) && (
-                    <div className="flex items-center gap-2 bg-slate-950/60 p-2.5 rounded-xl border border-slate-800">
+                    <div className="flex items-center gap-2 bg-[#030a16] p-2.5 rounded-xl border border-[#0e274d]">
                       <MapPin className="w-4 h-4 text-slate-400 shrink-0" />
                       <span>
                         {company.street}, {company.postCode} {company.city}
@@ -98,7 +97,7 @@ export default async function CompanyDetailPage({
                   )}
 
                   {company.krs && (
-                    <div className="flex items-center gap-2 bg-slate-950/60 p-2.5 rounded-xl border border-slate-800">
+                    <div className="flex items-center gap-2 bg-[#030a16] p-2.5 rounded-xl border border-[#0e274d]">
                       <span className="font-semibold text-slate-500">KRS:</span>
                       <span className="font-mono">{company.krs}</span>
                       {company.regon && (
@@ -112,7 +111,7 @@ export default async function CompanyDetailPage({
                       href={company.website.startsWith("http") ? company.website : `https://${company.website}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 bg-slate-950/60 p-2.5 rounded-xl border border-slate-800 text-cyan-400 hover:text-cyan-300 transition-colors"
+                      className="flex items-center gap-2 bg-[#030a16] p-2.5 rounded-xl border border-[#0e274d] text-[#3b82f6] hover:text-[#60a5fa] transition-colors"
                     >
                       <Globe className="w-4 h-4 shrink-0" />
                       <span className="truncate">{company.website}</span>
@@ -122,8 +121,8 @@ export default async function CompanyDetailPage({
                 </div>
               </div>
 
-              <div className="bg-slate-950/80 border border-slate-800 p-4 rounded-2xl shrink-0 text-center min-w-[140px]">
-                <div className="text-2xl font-black text-cyan-400">{funds.length}</div>
+              <div className="bg-[#030a16] border border-[#0e274d] p-4 rounded-2xl shrink-0 text-center min-w-[140px]">
+                <div className="text-2xl font-black text-blue-400">{funds.length}</div>
                 <div className="text-xs text-slate-400 mt-0.5">Funduszy w rejestrze</div>
               </div>
             </div>
@@ -131,17 +130,17 @@ export default async function CompanyDetailPage({
 
           {/* Grid: Funds List & History Timeline */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Managed Funds (2 cols) */}
+            {/* Managed Funds */}
             <div className="lg:col-span-2 space-y-4">
               <div className="flex items-center gap-2 mb-2">
-                <Layers className="w-5 h-5 text-emerald-400" />
+                <Layers className="w-5 h-5 text-[#044CD0]" />
                 <h2 className="text-lg font-bold text-slate-100">
                   Zarządzane Fundusze ({funds.length})
                 </h2>
               </div>
 
               {funds.length === 0 ? (
-                <div className="p-8 text-center bg-slate-900/40 border border-slate-800 rounded-2xl text-slate-500">
+                <div className="p-8 text-center bg-[#051329]/40 border border-[#0e274d] rounded-2xl text-slate-500">
                   Brak przypisanych funduszy w rejestrze.
                 </div>
               ) : (
@@ -149,11 +148,11 @@ export default async function CompanyDetailPage({
                   {funds.map((fund) => (
                     <div
                       key={fund.fundId}
-                      className="bg-slate-900/60 border border-slate-800 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-slate-700 transition-colors"
+                      className="bg-[#051329] border border-[#0e274d] rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-[#044CD0]/60 transition-colors"
                     >
                       <div>
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="font-bold text-xs bg-slate-800 px-2 py-0.5 rounded text-slate-200">
+                          <span className="font-bold text-xs bg-[#030a16] border border-[#0e274d] px-2 py-0.5 rounded text-blue-300">
                             {fund.type}
                           </span>
                           <span className="font-mono text-xs text-slate-500">
@@ -171,7 +170,7 @@ export default async function CompanyDetailPage({
 
                       <Link
                         href={`/?search=${encodeURIComponent(fund.name)}`}
-                        className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors self-start sm:self-auto shrink-0"
+                        className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-[#030a16] hover:bg-[#071938] border border-[#0e274d] text-slate-200 transition-colors self-start sm:self-auto shrink-0"
                       >
                         Pokaż subfundusze
                       </Link>
@@ -181,14 +180,14 @@ export default async function CompanyDetailPage({
               )}
             </div>
 
-            {/* Registration History (1 col) */}
+            {/* Registration History */}
             <div className="space-y-4">
               <div className="flex items-center gap-2 mb-2">
-                <Clock className="w-5 h-5 text-cyan-400" />
+                <Clock className="w-5 h-5 text-[#044CD0]" />
                 <h2 className="text-lg font-bold text-slate-100">Historia zmian (UKNF)</h2>
               </div>
 
-              <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-4">
+              <div className="bg-[#051329] border border-[#0e274d] rounded-2xl p-4">
                 <HistoryTimeline history={history} />
               </div>
             </div>
@@ -201,4 +200,3 @@ export default async function CompanyDetailPage({
     </CompareProvider>
   );
 }
-

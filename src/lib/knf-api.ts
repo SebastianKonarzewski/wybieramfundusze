@@ -280,7 +280,7 @@ export const knfApi = {
         this.getFunds({ size: 1, includeInactive: true, includeLiquidating: true }),
         this.getSubfunds({ size: 1, includeInactive: false, includeLiquidating: false }),
         this.getSubfunds({ size: 1, includeInactive: true, includeLiquidating: true }),
-        this.getCompanies({ size: 1, includeInactive: true }),
+        this.getCompanies({ size: 1, includeInactive: false }), // Only currently active TFI (54)
       ]);
 
     const latestMarketAsset = totalAssetsRes.content[0];

@@ -2,29 +2,29 @@
 
 @layer base {
   :root {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 220 50% 5%;
+    --foreground: 214 32% 95%;
   }
 
   body {
-    background-color: #020617;
-    color: #f8fafc;
+    background-color: #030a16;
+    color: #f1f5f9;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   }
 }
 
-/* Custom scrollbars */
+/* Custom scrollbars in UKNF navy theme */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #090d16;
+  background: #030c1c;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: #0e274d;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: #19407a;
 }

@@ -12,11 +12,11 @@ export function CompareFloatingBar() {
 
   return (
     <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-4xl px-4 animate-in fade-in slide-in-from-bottom-5 duration-200">
-      <div className="bg-slate-900/95 border border-emerald-500/40 rounded-2xl p-3 sm:p-4 shadow-2xl backdrop-blur-md flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div className="bg-[#051329]/95 border border-[#044CD0]/60 rounded-2xl p-3 sm:p-4 shadow-2xl backdrop-blur-md flex flex-col sm:flex-row items-center justify-between gap-3">
         {/* Left: Info & Fund pills */}
         <div className="flex items-center gap-2 flex-wrap max-w-full">
-          <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-400 uppercase tracking-wider mr-2">
-            <Scale className="w-4 h-4 text-emerald-400" />
+          <div className="flex items-center gap-1.5 text-xs font-bold text-[#60a5fa] uppercase tracking-wider mr-2">
+            <Scale className="w-4 h-4 text-[#3b82f6]" />
             Porównanie ({selectedFunds.length}/4):
           </div>
 
@@ -24,7 +24,7 @@ export function CompareFloatingBar() {
             {selectedFunds.map((fund) => (
               <span
                 key={fund.subfundId}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-200 border border-slate-700 hover:border-slate-600 transition-colors"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium bg-[#030a16] text-slate-200 border border-[#0e274d] hover:border-slate-600 transition-colors"
               >
                 <span className="truncate max-w-[120px] sm:max-w-[160px]">{fund.name}</span>
                 <button
@@ -43,7 +43,7 @@ export function CompareFloatingBar() {
         <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto justify-end">
           <button
             onClick={clearFunds}
-            className="p-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800 rounded-lg text-xs transition-colors"
+            className="p-2 text-slate-400 hover:text-slate-200 hover:bg-[#071938] rounded-lg text-xs transition-colors"
             title="Wyczyść wszystkie"
           >
             <Trash2 className="w-4 h-4" />
@@ -51,7 +51,7 @@ export function CompareFloatingBar() {
 
           <Link
             href="/porownywarka"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-emerald-500 text-slate-950 hover:bg-emerald-400 shadow-md shadow-emerald-500/25 transition-all"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-[#044CD0] hover:bg-[#033eb0] text-white shadow-md shadow-[#044CD0]/30 transition-all"
           >
             Porównaj teraz
             <ArrowRight className="w-4 h-4" />
@@ -61,4 +61,3 @@ export function CompareFloatingBar() {
     </div>
   );
 }
-

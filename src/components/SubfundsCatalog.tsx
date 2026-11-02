@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useTransition } from "react";
+import React, { useState, useEffect, useTransition, useMemo } from "react";
 import Link from "next/link";
 import {
   Search,
@@ -15,12 +15,18 @@ import {
   LayoutGrid,
   Table as TableIcon,
   RefreshCw,
-  Info,
+  ArrowUpDown,
+  ArrowUp,
+  ArrowDown,
+  ChevronDown,
+  ChevronUp,
+  Shield,
+  Coins,
 } from "lucide-react";
 import { SubfundCardModel } from "@/types/knf";
 import { StatusBadge } from "./StatusBadge";
 import { RiskBadge } from "./RiskBadge";
-import { formatCurrency, formatPercent, formatDate } from "@/lib/utils";
+import { formatCurrency, formatPercent, formatDate, formatNumber } from "@/lib/utils";
 import { useCompare } from "./CompareContext";
 
 interface SubfundsCatalogProps {
@@ -44,9 +50,12 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
   const [searchTerm, setSearchTerm] = useState("");
   const [includeInactive, setIncludeInactive] = useState(false);
   const [includeLiquidating, setIncludeLiquidating] = useState(false);
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
+
   const [selectedType, setSelectedType] = useState<string>("ALL");
   const [selectedClassification, setSelectedClassification] = useState<string>("ALL");
-  const [sortBy, setSortBy] = useState<string>("name,asc");
+  const [sortField, setSortField] = useState<"name" | "fee" | "risk" | "valuation">("name");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [currentPage, setCurrentPage] = useState(0);
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
 
@@ -60,15 +69,15 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
           if (includeInactive) params.set("includeInactive", "true");
           if (includeLiquidating) params.set("includeLiquidating", "true");
           params.set("page", String(currentPage));
-          params.set("size", "24");
-          params.set("sort", sortBy);
+          params.set("size", "36");
+          params.set("sort", sortField === "name" ? `name,${sortOrder}` : "name,asc");
           params.set("enriched", "true");
 
           const res = await fetch(`/api/subfunds?${params.toString()}`);
           if (res.ok) {
             const data = await res.json();
             setItems(data.items || []);
-            setPageInfo(data.page || { size: 24, totalElements: 0, totalPages: 0, number: 0 });
+            setPageInfo(data.page || { size: 36, totalElements: 0, totalPages: 0, number: 0 });
           }
         } catch (error) {
           console.error("Error fetching subfunds:", error);
@@ -78,49 +87,85 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
 
     const timer = setTimeout(() => {
       fetchFiltered();
-    }, 300);
+    }, 250);
 
     return () => clearTimeout(timer);
-  }, [searchTerm, includeInactive, includeLiquidating, sortBy, currentPage]);
+  }, [searchTerm, includeInactive, includeLiquidating, currentPage, sortField, sortOrder]);
 
-  // Client-side filtering for type and classification
-  const filteredItems = items.filter((item) => {
-    if (selectedType !== "ALL" && item.type !== selectedType) return false;
-    if (selectedClassification !== "ALL") {
-      const cls = (item.classification || "").toLowerCase();
-      if (!cls.includes(selectedClassification.toLowerCase())) return false;
+  // Handle header click sorting
+  const handleSort = (field: "name" | "fee" | "risk" | "valuation") => {
+    if (sortField === field) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortField(field);
+      // Default asc for fee & risk (lowest first), desc for valuation
+      setSortOrder(field === "valuation" ? "desc" : "asc");
     }
-    return true;
-  });
+  };
+
+  // Client-side filtering & sorting for enriched fields (fee, risk, valuation)
+  const processedItems = useMemo(() => {
+    let result = items.filter((item) => {
+      if (selectedType !== "ALL" && item.type !== selectedType) return false;
+      if (selectedClassification !== "ALL") {
+        const cls = (item.classification || "").toLowerCase();
+        if (!cls.includes(selectedClassification.toLowerCase())) return false;
+      }
+      return true;
+    });
+
+    // Custom sort by fee, risk, valuation
+    if (sortField === "fee") {
+      result = [...result].sort((a, b) => {
+        const fa = a.managementFee ?? (sortOrder === "asc" ? 999 : -1);
+        const fb = b.managementFee ?? (sortOrder === "asc" ? 999 : -1);
+        return sortOrder === "asc" ? fa - fb : fb - fa;
+      });
+    } else if (sortField === "risk") {
+      result = [...result].sort((a, b) => {
+        const ra = a.riskLevel ?? (sortOrder === "asc" ? 999 : -1);
+        const rb = b.riskLevel ?? (sortOrder === "asc" ? 999 : -1);
+        return sortOrder === "asc" ? ra - rb : rb - ra;
+      });
+    } else if (sortField === "valuation") {
+      result = [...result].sort((a, b) => {
+        const va = a.latestValuation ?? -1;
+        const vb = b.latestValuation ?? -1;
+        return sortOrder === "asc" ? va - vb : vb - va;
+      });
+    }
+
+    return result;
+  }, [items, selectedType, selectedClassification, sortField, sortOrder]);
 
   return (
     <div className="space-y-6">
       {/* Search & Filter Toolbar */}
-      <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-6 shadow-md backdrop-blur-sm space-y-4">
-        {/* Top line: Search input & View mode toggle */}
+      <div className="bg-[#051329] border border-[#0e274d] rounded-2xl p-4 sm:p-6 shadow-xl space-y-4">
+        {/* Top line: Search input & View mode toggle & Sort select */}
         <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
           <div className="relative flex-1">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input
               type="text"
-              placeholder="Szukaj subfunduszu po nazwie lub kodzie (np. Agio, PKO, PLSFIO...)..."
+              placeholder="Szukaj subfunduszu po nazwie lub kodzie (np. Agio, PKO, Obligacji, PLSFIO...)..."
               value={searchTerm}
               onChange={(e) => {
                 setSearchTerm(e.target.value);
                 setCurrentPage(0);
               }}
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-950/80 border border-slate-800 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-hidden focus:border-emerald-500 transition-colors"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#030a16] border border-[#0e274d] text-sm text-slate-100 placeholder:text-slate-500 focus:outline-hidden focus:border-[#044CD0] transition-colors"
             />
           </div>
 
           <div className="flex items-center gap-2">
             {/* View Mode Toggle */}
-            <div className="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800">
+            <div className="flex items-center bg-[#030a16] p-1 rounded-xl border border-[#0e274d]">
               <button
                 onClick={() => setViewMode("grid")}
                 className={`p-1.5 rounded-lg text-xs transition-colors ${
                   viewMode === "grid"
-                    ? "bg-slate-800 text-emerald-400 shadow-xs"
+                    ? "bg-[#044CD0] text-white shadow-xs"
                     : "text-slate-400 hover:text-slate-200"
                 }`}
                 title="Widok kafelków"
@@ -131,7 +176,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                 onClick={() => setViewMode("table")}
                 className={`p-1.5 rounded-lg text-xs transition-colors ${
                   viewMode === "table"
-                    ? "bg-slate-800 text-emerald-400 shadow-xs"
+                    ? "bg-[#044CD0] text-white shadow-xs"
                     : "text-slate-400 hover:text-slate-200"
                 }`}
                 title="Widok tabeli"
@@ -140,26 +185,33 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
               </button>
             </div>
 
-            {/* Sort select */}
-            <select
-              value={sortBy}
-              onChange={(e) => {
-                setSortBy(e.target.value);
-                setCurrentPage(0);
-              }}
-              aria-label="Sortowanie"
-              className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs sm:text-sm text-slate-200 focus:outline-hidden focus:border-emerald-500"
-            >
-              <option value="name,asc">Nazwa (A do Z)</option>
-              <option value="name,desc">Nazwa (Z do A)</option>
-              <option value="subfundId,desc">Najnowsze ID</option>
-              <option value="subfundId,asc">Najstarsze ID</option>
-            </select>
+            {/* Sort Select */}
+            <div className="flex items-center gap-1.5 bg-[#030a16] border border-[#0e274d] px-3 py-2 rounded-xl text-xs sm:text-sm">
+              <ArrowUpDown className="w-3.5 h-3.5 text-[#044CD0]" />
+              <select
+                value={`${sortField},${sortOrder}`}
+                onChange={(e) => {
+                  const [field, order] = e.target.value.split(",") as [any, any];
+                  setSortField(field);
+                  setSortOrder(order);
+                }}
+                aria-label="Sortowanie"
+                className="bg-transparent text-slate-200 font-medium focus:outline-hidden cursor-pointer"
+              >
+                <option value="name,asc" className="bg-[#030a16]">Nazwa (A do Z)</option>
+                <option value="name,desc" className="bg-[#030a16]">Nazwa (Z do A)</option>
+                <option value="fee,asc" className="bg-[#030a16]">Najniższa opłata stała</option>
+                <option value="fee,desc" className="bg-[#030a16]">Najwyższa opłata stała</option>
+                <option value="risk,asc" className="bg-[#030a16]">Najniższe ryzyko (SRI 1-7)</option>
+                <option value="risk,desc" className="bg-[#030a16]">Najwyższe ryzyko (SRI 7-1)</option>
+                <option value="valuation,desc" className="bg-[#030a16]">Najwyższa wycena</option>
+              </select>
+            </div>
           </div>
         </div>
 
-        {/* Filter Badges & Toggle Switches */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-800/80">
+        {/* Filter Badges: Type & Class */}
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[#0e274d]">
           <div className="flex flex-wrap items-center gap-2">
             {/* Type Filter */}
             <div className="flex items-center gap-1 text-xs">
@@ -170,8 +222,8 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   onClick={() => setSelectedType(type)}
                   className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors ${
                     selectedType === type
-                      ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
-                      : "bg-slate-950 text-slate-400 border border-slate-800 hover:text-slate-200"
+                      ? "bg-[#044CD0] text-white shadow-xs font-semibold"
+                      : "bg-[#030a16] text-slate-400 border border-[#0e274d] hover:text-slate-200"
                   }`}
                 >
                   {type === "ALL" ? "Wszystkie" : type}
@@ -179,7 +231,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
               ))}
             </div>
 
-            <div className="hidden sm:block w-px h-4 bg-slate-800 mx-1" />
+            <div className="hidden sm:block w-px h-4 bg-[#0e274d] mx-1" />
 
             {/* Classification Quick Filter */}
             <div className="flex items-center gap-1 text-xs">
@@ -195,8 +247,8 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   onClick={() => setSelectedClassification(cls.id)}
                   className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors ${
                     selectedClassification === cls.id
-                      ? "bg-teal-500/20 text-teal-400 border border-teal-500/30"
-                      : "bg-slate-950 text-slate-400 border border-slate-800 hover:text-slate-200"
+                      ? "bg-[#044CD0]/20 text-[#60a5fa] border border-[#044CD0]/40 font-semibold"
+                      : "bg-[#030a16] text-slate-400 border border-[#0e274d] hover:text-slate-200"
                   }`}
                 >
                   {cls.label}
@@ -205,8 +257,22 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
             </div>
           </div>
 
-          {/* User switches: includeInactive & includeLiquidating */}
-          <div className="flex items-center gap-4 text-xs">
+          {/* Toggle Button for Advanced Options (Inactive / Liquidating) */}
+          <button
+            onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
+            className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-200 py-1 px-2.5 rounded-lg border border-[#0e274d] hover:border-slate-600 transition-colors"
+          >
+            <SlidersHorizontal className="w-3.5 h-3.5" />
+            <span>Filtry zaawansowane</span>
+            {showAdvancedFilters ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+          </button>
+        </div>
+
+        {/* Collapsible Advanced Filters Section (Hidden by default!) */}
+        {showAdvancedFilters && (
+          <div className="p-4 rounded-xl bg-[#030a16] border border-[#0e274d] flex flex-wrap items-center gap-6 text-xs text-slate-300 animate-in fade-in duration-150">
+            <span className="font-semibold text-slate-400">Rejestr i status prawny:</span>
+
             <label className="flex items-center gap-2 cursor-pointer select-none group">
               <input
                 type="checkbox"
@@ -215,10 +281,10 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   setIncludeInactive(e.target.checked);
                   setCurrentPage(0);
                 }}
-                className="w-4 h-4 rounded bg-slate-950 border-slate-700 text-emerald-500 focus:ring-0 focus:ring-offset-0 cursor-pointer accent-emerald-500"
+                className="w-4 h-4 rounded bg-[#051329] border-slate-700 text-[#044CD0] accent-[#044CD0] cursor-pointer"
               />
-              <span className="text-slate-300 group-hover:text-slate-100 transition-colors">
-                Pokaż nieaktywne
+              <span className="group-hover:text-slate-100 transition-colors">
+                Pokaż wykreślone / nieaktywne
               </span>
             </label>
 
@@ -230,23 +296,23 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   setIncludeLiquidating(e.target.checked);
                   setCurrentPage(0);
                 }}
-                className="w-4 h-4 rounded bg-slate-950 border-slate-700 text-amber-500 focus:ring-0 focus:ring-offset-0 cursor-pointer accent-amber-500"
+                className="w-4 h-4 rounded bg-[#051329] border-slate-700 text-amber-500 accent-amber-500 cursor-pointer"
               />
-              <span className="text-slate-300 group-hover:text-slate-100 transition-colors">
-                Pokaż w likwidacji
+              <span className="group-hover:text-slate-100 transition-colors">
+                Pokaż fundusze w likwidacji
               </span>
             </label>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Results Header */}
       <div className="flex items-center justify-between text-xs text-slate-400 px-1">
         <div>
-          Znaleziono: <strong className="text-slate-200">{pageInfo.totalElements}</strong> subfunduszy
+          Znaleziono: <strong className="text-slate-200">{formatNumber(pageInfo.totalElements, 0)}</strong> subfunduszy
           {isPending && (
-            <span className="ml-2 inline-flex items-center gap-1 text-emerald-400">
-              <RefreshCw className="w-3 h-3 animate-spin" /> ładowanie...
+            <span className="ml-2 inline-flex items-center gap-1 text-[#3b82f6]">
+              <RefreshCw className="w-3 h-3 animate-spin" /> ładowanie danych...
             </span>
           )}
         </div>
@@ -259,19 +325,19 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
       {/* View Mode: Cards Grid */}
       {viewMode === "grid" ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredItems.map((item) => {
+          {processedItems.map((item) => {
             const inCompare = isSelected(item.subfundId);
 
             return (
               <div
                 key={item.subfundId}
-                className="group relative bg-slate-900/60 hover:bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-2xl p-5 transition-all flex flex-col justify-between shadow-xs hover:shadow-lg"
+                className="group relative bg-[#051329]/90 hover:bg-[#071938] border border-[#0e274d] hover:border-[#044CD0]/60 rounded-2xl p-5 transition-all flex flex-col justify-between shadow-md hover:shadow-xl"
               >
                 <div>
                   {/* Top tags & status */}
                   <div className="flex items-center justify-between gap-2 mb-2.5">
                     <div className="flex items-center gap-1.5 flex-wrap">
-                      <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-slate-800 text-slate-300 border border-slate-700">
+                      <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-[#030a16] text-blue-300 border border-[#0e274d]">
                         {item.type}
                       </span>
                       {item.nationalCode && (
@@ -291,7 +357,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   {/* Fund Name */}
                   <Link
                     href={`/fundusze/${item.subfundId}`}
-                    className="block font-bold text-base text-slate-100 group-hover:text-emerald-400 transition-colors line-clamp-2 leading-snug mb-3"
+                    className="block font-bold text-base text-slate-100 group-hover:text-[#60a5fa] transition-colors line-clamp-2 leading-snug mb-3"
                   >
                     {item.name}
                   </Link>
@@ -308,7 +374,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   )}
 
                   {/* Metrics preview */}
-                  <div className="grid grid-cols-2 gap-2 pt-3 border-t border-slate-800/80 mb-4 text-xs">
+                  <div className="grid grid-cols-2 gap-2 pt-3 border-t border-[#0e274d] mb-4 text-xs">
                     <div>
                       <span className="text-slate-500 text-[11px] block">Profil Ryzyka</span>
                       <RiskBadge level={item.riskLevel} showLabel={false} size="sm" />
@@ -338,10 +404,10 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                 </div>
 
                 {/* Bottom Action Buttons */}
-                <div className="flex items-center gap-2 pt-3 border-t border-slate-800/60 mt-auto">
+                <div className="flex items-center gap-2 pt-3 border-t border-[#0e274d]/80 mt-auto">
                   <Link
                     href={`/fundusze/${item.subfundId}`}
-                    className="flex-1 text-center py-2 px-3 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white transition-colors"
+                    className="flex-1 text-center py-2 px-3 rounded-xl text-xs font-semibold bg-[#030a16] hover:bg-[#044CD0] text-slate-200 hover:text-white border border-[#0e274d] hover:border-transparent transition-all"
                   >
                     Szczegóły funduszu
                   </Link>
@@ -357,8 +423,8 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                     }
                     className={`p-2 rounded-xl text-xs font-medium border transition-all ${
                       inCompare
-                        ? "bg-emerald-500 text-slate-950 border-emerald-400 shadow-sm"
-                        : "bg-slate-950 text-slate-400 border-slate-800 hover:text-emerald-400 hover:border-emerald-500/40"
+                        ? "bg-[#044CD0] text-white border-blue-400 shadow-md"
+                        : "bg-[#030a16] text-slate-400 border-[#0e274d] hover:text-[#60a5fa] hover:border-[#044CD0]/60"
                     }`}
                     title={inCompare ? "Usuń z porównania" : "Dodaj do porównywarki"}
                   >
@@ -370,32 +436,80 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
           })}
         </div>
       ) : (
-        /* View Mode: Table */
-        <div className="bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden shadow-md">
+        /* View Mode: Interactive Table with Clickable Column Headers */
+        <div className="bg-[#051329] border border-[#0e274d] rounded-2xl overflow-hidden shadow-xl">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
-              <thead className="bg-slate-950/80 text-xs uppercase tracking-wider text-slate-400 border-b border-slate-800">
+              <thead className="bg-[#030a16] text-xs uppercase tracking-wider text-slate-400 border-b border-[#0e274d]">
                 <tr>
-                  <th className="py-3 px-4">Typ / Kod</th>
-                  <th className="py-3 px-4">Nazwa Subfunduszu</th>
-                  <th className="py-3 px-4">Status</th>
-                  <th className="py-3 px-4">Ryzyko (SRI)</th>
-                  <th className="py-3 px-4">Opłata stała</th>
-                  <th className="py-3 px-4">Ostatnia wycena</th>
-                  <th className="py-3 px-4 text-right">Akcja</th>
+                  <th className="py-3.5 px-4 font-semibold">Typ / Kod</th>
+                  <th
+                    onClick={() => handleSort("name")}
+                    className="py-3.5 px-4 font-semibold cursor-pointer hover:text-slate-200 select-none group"
+                  >
+                    <div className="flex items-center gap-1.5">
+                      <span>Nazwa Subfunduszu</span>
+                      {sortField === "name" ? (
+                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0]" />
+                      ) : (
+                        <ArrowUpDown className="w-3 h-3 opacity-40 group-hover:opacity-100" />
+                      )}
+                    </div>
+                  </th>
+                  <th className="py-3.5 px-4 font-semibold">Status</th>
+                  <th
+                    onClick={() => handleSort("risk")}
+                    className="py-3.5 px-4 font-semibold cursor-pointer hover:text-slate-200 select-none group"
+                  >
+                    <div className="flex items-center gap-1.5">
+                      <span>Ryzyko (SRI)</span>
+                      {sortField === "risk" ? (
+                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0]" />
+                      ) : (
+                        <ArrowUpDown className="w-3 h-3 opacity-40 group-hover:opacity-100" />
+                      )}
+                    </div>
+                  </th>
+                  <th
+                    onClick={() => handleSort("fee")}
+                    className="py-3.5 px-4 font-semibold cursor-pointer hover:text-slate-200 select-none group"
+                  >
+                    <div className="flex items-center gap-1.5">
+                      <span>Opłata stała</span>
+                      {sortField === "fee" ? (
+                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0]" />
+                      ) : (
+                        <ArrowUpDown className="w-3 h-3 opacity-40 group-hover:opacity-100" />
+                      )}
+                    </div>
+                  </th>
+                  <th
+                    onClick={() => handleSort("valuation")}
+                    className="py-3.5 px-4 font-semibold cursor-pointer hover:text-slate-200 select-none group"
+                  >
+                    <div className="flex items-center gap-1.5">
+                      <span>Ostatnia wycena</span>
+                      {sortField === "valuation" ? (
+                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0]" />
+                      ) : (
+                        <ArrowUpDown className="w-3 h-3 opacity-40 group-hover:opacity-100" />
+                      )}
+                    </div>
+                  </th>
+                  <th className="py-3.5 px-4 text-right font-semibold">Porównaj</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60 text-slate-300">
-                {filteredItems.map((item) => {
+              <tbody className="divide-y divide-[#0e274d]/70 text-slate-300">
+                {processedItems.map((item) => {
                   const inCompare = isSelected(item.subfundId);
 
                   return (
                     <tr
                       key={item.subfundId}
-                      className="hover:bg-slate-800/40 transition-colors group"
+                      className="hover:bg-[#071938]/60 transition-colors group"
                     >
                       <td className="py-3 px-4 whitespace-nowrap">
-                        <span className="font-bold text-xs bg-slate-800 px-2 py-0.5 rounded text-slate-200">
+                        <span className="font-bold text-xs bg-[#030a16] border border-[#0e274d] px-2 py-0.5 rounded text-blue-300">
                           {item.type}
                         </span>
                         <div className="text-[10px] text-slate-500 font-mono mt-0.5">
@@ -405,7 +519,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                       <td className="py-3 px-4">
                         <Link
                           href={`/fundusze/${item.subfundId}`}
-                          className="font-semibold text-slate-100 hover:text-emerald-400 transition-colors block line-clamp-1"
+                          className="font-semibold text-slate-100 hover:text-[#60a5fa] transition-colors block line-clamp-1"
                         >
                           {item.name}
                         </Link>
@@ -456,8 +570,8 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                             }
                             className={`p-1.5 rounded-lg border text-xs transition-colors ${
                               inCompare
-                                ? "bg-emerald-500 text-slate-950 border-emerald-400"
-                                : "bg-slate-950 text-slate-400 border-slate-800 hover:text-emerald-400"
+                                ? "bg-[#044CD0] text-white border-blue-400"
+                                : "bg-[#030a16] text-slate-400 border-[#0e274d] hover:text-[#60a5fa]"
                             }`}
                             title={inCompare ? "Usuń z porównania" : "Porównaj"}
                           >
@@ -465,7 +579,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                           </button>
                           <Link
                             href={`/fundusze/${item.subfundId}`}
-                            className="px-2.5 py-1 text-xs rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors"
+                            className="px-2.5 py-1 text-xs rounded-lg bg-[#030a16] hover:bg-[#071938] border border-[#0e274d] text-slate-200 transition-colors"
                           >
                             Profil
                           </Link>
@@ -481,17 +595,17 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
       )}
 
       {/* Pagination Controls */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-800">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-[#0e274d]">
         <div className="text-xs text-slate-400">
           Wyświetlanie strony {pageInfo.number + 1} z {Math.max(1, pageInfo.totalPages)} (łącznie{" "}
-          {pageInfo.totalElements} pozycji)
+          {formatNumber(pageInfo.totalElements, 0)} pozycji)
         </div>
 
         <div className="flex items-center gap-2">
           <button
             onClick={() => setCurrentPage((p) => Math.max(0, p - 1))}
             disabled={pageInfo.number === 0 || isPending}
-            className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-[#030a16] border border-[#0e274d] text-slate-300 hover:bg-[#071938] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
           >
             <ChevronLeft className="w-4 h-4" />
             Poprzednia
@@ -504,7 +618,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
           <button
             onClick={() => setCurrentPage((p) => p + 1)}
             disabled={pageInfo.number + 1 >= pageInfo.totalPages || isPending}
-            className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-[#030a16] border border-[#0e274d] text-slate-300 hover:bg-[#071938] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
           >
             Następna
             <ChevronRight className="w-4 h-4" />
@@ -514,4 +628,3 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
     </div>
   );
 }
-

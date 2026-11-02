@@ -1,5 +1,5 @@
 import React from "react";
-import { FileText, Download, ShieldCheck, Target, AlertTriangle, Percent, ArrowUpRight, ArrowDownRight } from "lucide-react";
+import { FileText, Download, ShieldCheck, Target, Percent } from "lucide-react";
 import { KNFKeyInformationDetail } from "@/types/knf";
 import { RiskBadge } from "./RiskBadge";
 import { formatPercent, formatDate } from "@/lib/utils";
@@ -7,7 +7,7 @@ import { formatPercent, formatDate } from "@/lib/utils";
 export function KidDetailsCard({ kid }: { kid?: KNFKeyInformationDetail | null }) {
   if (!kid) {
     return (
-      <div className="p-8 text-center bg-slate-900/50 border border-slate-800 rounded-2xl text-slate-500">
+      <div className="p-8 text-center bg-[#051329]/50 border border-[#0e274d] rounded-2xl text-slate-500">
         <FileText className="w-8 h-8 mx-auto mb-2 opacity-50" />
         <p className="text-sm">Brak opublikowanego dokumentu KID (Kluczowe Informacje dla Inwestorów) w bazie UKNF dla tego subfunduszu.</p>
       </div>
@@ -19,10 +19,10 @@ export function KidDetailsCard({ kid }: { kid?: KNFKeyInformationDetail | null }
   return (
     <div className="space-y-6">
       {/* Top Banner with Download & Meta */}
-      <div className="bg-slate-900/70 border border-slate-800 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="bg-[#051329] border border-[#0e274d] rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-md">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#60a5fa]">
               Dokument Kluczowych Informacji (KID)
             </span>
             <span className="text-xs text-slate-500">
@@ -43,7 +43,7 @@ export function KidDetailsCard({ kid }: { kid?: KNFKeyInformationDetail | null }
           href={pdfUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 border border-emerald-500/30 transition-all shrink-0"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-[#044CD0] hover:bg-[#033eb0] text-white shadow-md shadow-[#044CD0]/20 transition-all shrink-0"
         >
           <Download className="w-4 h-4" />
           Pobierz oficjalny PDF KID
@@ -53,7 +53,7 @@ export function KidDetailsCard({ kid }: { kid?: KNFKeyInformationDetail | null }
       {/* Grid: Risk & Benchmark & Fees */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Risk & Benchmark Box */}
-        <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-5 space-y-5">
+        <div className="bg-[#051329] border border-[#0e274d] rounded-2xl p-5 space-y-5">
           <div>
             <h3 className="text-xs uppercase font-bold tracking-wider text-slate-400 mb-2">
               Poziom Ryzyka (SRI)
@@ -64,13 +64,13 @@ export function KidDetailsCard({ kid }: { kid?: KNFKeyInformationDetail | null }
             </p>
           </div>
 
-          <div className="pt-4 border-t border-slate-800/80">
+          <div className="pt-4 border-t border-[#0e274d]">
             <div className="flex items-center gap-2 text-xs uppercase font-bold tracking-wider text-slate-400 mb-2">
-              <Target className="w-4 h-4 text-cyan-400" />
+              <Target className="w-4 h-4 text-[#3b82f6]" />
               Wskaźnik Referencyjny (Benchmark)
             </div>
             {kid.hasBenchmark && kid.benchmark ? (
-              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 text-sm font-medium text-slate-200">
+              <div className="p-3 rounded-xl bg-[#030a16] border border-[#0e274d] text-sm font-medium text-slate-200">
                 {kid.benchmark}
               </div>
             ) : (
@@ -82,26 +82,26 @@ export function KidDetailsCard({ kid }: { kid?: KNFKeyInformationDetail | null }
         </div>
 
         {/* Fees Breakdown Box */}
-        <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-5">
+        <div className="bg-[#051329] border border-[#0e274d] rounded-2xl p-5">
           <h3 className="text-xs uppercase font-bold tracking-wider text-slate-400 mb-4 flex items-center gap-1.5">
-            <Percent className="w-4 h-4 text-emerald-400" />
+            <Percent className="w-4 h-4 text-[#3b82f6]" />
             Struktura kosztów i opłat
           </h3>
 
           <div className="space-y-3.5 text-xs">
             {/* Management fee */}
-            <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-950 border border-slate-800">
+            <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#030a16] border border-[#0e274d]">
               <div>
                 <span className="font-semibold text-slate-200 block">Opłaty bieżące i za zarządzanie</span>
                 <span className="text-[11px] text-slate-500">Roczny koszt stały potrącany z aktywów</span>
               </div>
-              <span className="text-sm font-bold text-emerald-400">
+              <span className="text-sm font-bold text-blue-400">
                 {formatPercent(kid.managementAndOtherFeesRate)}
               </span>
             </div>
 
             {/* Entry fee */}
-            <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-950 border border-slate-800">
+            <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#030a16] border border-[#0e274d]">
               <div>
                 <span className="font-semibold text-slate-200 block">Maks. opłata wstępna</span>
                 <span className="text-[11px] text-slate-500">Pobierana przy nabyciu jednostek</span>
@@ -112,7 +112,7 @@ export function KidDetailsCard({ kid }: { kid?: KNFKeyInformationDetail | null }
             </div>
 
             {/* Exit fee */}
-            <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-950 border border-slate-800">
+            <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#030a16] border border-[#0e274d]">
               <div>
                 <span className="font-semibold text-slate-200 block">Maks. opłata za umorzenie</span>
                 <span className="text-[11px] text-slate-500">Pobierana przy wyjściu z funduszu</span>
@@ -124,7 +124,7 @@ export function KidDetailsCard({ kid }: { kid?: KNFKeyInformationDetail | null }
 
             {/* Transaction costs */}
             {kid.transactionCostsRate !== null && kid.transactionCostsRate !== undefined && (
-              <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-950 border border-slate-800">
+              <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#030a16] border border-[#0e274d]">
                 <div>
                   <span className="font-semibold text-slate-200 block">Koszty transakcyjne portfela</span>
                   <span className="text-[11px] text-slate-500">Średnioroczne koszty obrotu aktywami</span>
@@ -138,16 +138,16 @@ export function KidDetailsCard({ kid }: { kid?: KNFKeyInformationDetail | null }
             {/* Success fee note */}
             {kid.hasSuccessFee && (
               <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 text-[11px] leading-relaxed">
-                <strong>Opłata za sukces (Success Fee):</strong> {kid.successFee || "Tak, pobierana w przypadku przewyższenia stopy odniesienia."}
+                <strong>Opłata za sukces (Success Fee):</strong> {kid.successFee || "Tak, pobierana w przypadku osiągnięcia wyniku powyżej benchmarku."}
               </div>
             )}
           </div>
         </div>
       </div>
 
-      {/* PRIIPs Scenarios Table */}
+      {/* PRIIPs Scenarios Table with Polish percent formatting */}
       {kid.scenarios && kid.scenarios.length > 0 && (
-        <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-5 shadow-md">
+        <div className="bg-[#051329] border border-[#0e274d] rounded-2xl p-5 shadow-lg">
           <div className="mb-4">
             <h3 className="text-sm font-bold text-slate-100">
               Scenariusze wyników inwestycyjnych (zgodne z rozporządzeniem PRIIPs)
@@ -171,12 +171,12 @@ export function KidDetailsCard({ kid }: { kid?: KNFKeyInformationDetail | null }
                   key={idx}
                   className={`p-4 rounded-xl border flex flex-col justify-between ${
                     isFavorable
-                      ? "bg-emerald-950/30 border-emerald-500/30"
+                      ? "bg-emerald-950/20 border-emerald-500/30"
                       : isUnfavorable
-                      ? "bg-rose-950/30 border-rose-500/30"
+                      ? "bg-rose-950/20 border-rose-500/30"
                       : isStress
-                      ? "bg-red-950/40 border-red-500/40"
-                      : "bg-slate-950 border-slate-800"
+                      ? "bg-red-950/30 border-red-500/40"
+                      : "bg-[#030a16] border-[#0e274d]"
                   }`}
                 >
                   <div className="text-xs font-bold uppercase tracking-wider text-slate-300 capitalize mb-3">
@@ -199,7 +199,7 @@ export function KidDetailsCard({ kid }: { kid?: KNFKeyInformationDetail | null }
                     )}
 
                     {res5Y && (
-                      <div className="flex items-center justify-between text-xs pt-2 border-t border-slate-800/60">
+                      <div className="flex items-center justify-between text-xs pt-2 border-t border-[#0e274d]">
                         <span className="text-slate-400">Po 5 latach (śr. rocznie):</span>
                         <span
                           className={`font-bold text-sm ${
@@ -221,4 +221,3 @@ export function KidDetailsCard({ kid }: { kid?: KNFKeyInformationDetail | null }
     </div>
   );
 }
-

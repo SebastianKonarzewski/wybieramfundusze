@@ -1,28 +1,77 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import {
   AreaChart,
   Area,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
   Tooltip,
   ResponsiveContainer,
-  ReferenceLine,
+  Legend,
 } from "recharts";
 import { KNFValuation } from "@/types/knf";
 import { formatCurrency, formatDate, formatPercent } from "@/lib/utils";
-import { TrendingUp, TrendingDown, Calendar, Maximize2 } from "lucide-react";
+import { TrendingUp, TrendingDown, Calendar, LineChart as ChartIcon } from "lucide-react";
+import { BenchmarkPoint, BenchmarkSeries } from "@/lib/benchmark-api";
 
 interface ValuationChartProps {
   valuations: KNFValuation[];
   currency?: string;
+  defaultBenchmark?: "NONE" | "WIG" | "TBSP";
 }
 
-export function ValuationChart({ valuations, currency = "PLN" }: ValuationChartProps) {
+export function ValuationChart({
+  valuations,
+  currency = "PLN",
+  defaultBenchmark = "NONE",
+}: ValuationChartProps) {
   const [selectedRange, setSelectedRange] = useState<"1M" | "3M" | "6M" | "1Y" | "3Y" | "MAX">("1Y");
+  const [activeBenchmark, setActiveBenchmark] = useState<"NONE" | "WIG" | "TBSP">(defaultBenchmark);
+  const [benchmarkData, setBenchmarkData] = useState<BenchmarkSeries | null>(null);
+  const [benchmarkLoading, setBenchmarkLoading] = useState(false);
 
-  // Sort chronologically ascending for the chart
+  // Fetch benchmark data when benchmark changes
+  useEffect(() => {
+    if (activeBenchmark === "NONE") {
+      setBenchmarkData(null);
+      return;
+    }
+
+    const rangeParam =
+      selectedRange === "1M"
+        ? "1mo"
+        : selectedRange === "3M"
+        ? "3mo"
+        : selectedRange === "6M"
+        ? "6mo"
+        : selectedRange === "1Y"
+        ? "1y"
+        : selectedRange === "3Y"
+        ? "3y"
+        : "5y";
+
+    const fetchBench = async () => {
+      setBenchmarkLoading(true);
+      try {
+        const res = await fetch(`/api/benchmarks?symbol=${activeBenchmark}&range=${rangeParam}`);
+        if (res.ok) {
+          const json = await res.json();
+          setBenchmarkData(json);
+        }
+      } catch (err) {
+        console.error("Error fetching benchmark:", err);
+      } finally {
+        setBenchmarkLoading(false);
+      }
+    };
+
+    fetchBench();
+  }, [activeBenchmark, selectedRange]);
+
+  // Sort valuations chronologically ascending
   const chronological = useMemo(() => {
     return [...valuations].sort(
       (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
@@ -81,6 +130,53 @@ export function ValuationChart({ valuations, currency = "PLN" }: ValuationChartP
     return { start, end, diff, returnRate, min, max };
   }, [filteredData]);
 
+  // Aligned chart points with benchmark if active
+  const alignedChartData = useMemo(() => {
+    if (activeBenchmark === "NONE" || !benchmarkData || filteredData.length === 0) {
+      return filteredData.map((d) => ({
+        date: d.date,
+        valuation: d.valuation,
+      }));
+    }
+
+    // Benchmark mode: normalize both series to percentage return (%) from start
+    const fundBase = filteredData[0].valuation;
+    const benchPoints = benchmarkData.points;
+    const benchMap: Record<string, number> = {};
+    benchPoints.forEach((p) => {
+      benchMap[p.date] = p.value;
+    });
+
+    // Find first available benchmark point on or before start
+    const firstFundDate = new Date(filteredData[0].date).getTime();
+    const availableBench = benchPoints.filter((p) => new Date(p.date).getTime() >= firstFundDate);
+    const benchBase = availableBench[0]?.value || benchPoints[0]?.value || 1;
+
+    return filteredData.map((d) => {
+      const fundReturn = fundBase > 0 ? ((d.valuation - fundBase) / fundBase) * 100 : 0;
+
+      // Find closest benchmark date on or before d.date
+      const targetTime = new Date(d.date).getTime();
+      let closestBenchVal = benchBase;
+      for (const bp of benchPoints) {
+        if (new Date(bp.date).getTime() <= targetTime) {
+          closestBenchVal = bp.value;
+        } else {
+          break;
+        }
+      }
+
+      const benchReturn = benchBase > 0 ? ((closestBenchVal - benchBase) / benchBase) * 100 : 0;
+
+      return {
+        date: d.date,
+        valuation: d.valuation,
+        fundReturn: parseFloat(fundReturn.toFixed(2)),
+        benchmarkReturn: parseFloat(benchReturn.toFixed(2)),
+      };
+    });
+  }, [filteredData, activeBenchmark, benchmarkData]);
+
   if (valuations.length === 0) {
     return (
       <div className="h-64 flex flex-col items-center justify-center bg-slate-900/40 border border-slate-800 rounded-2xl text-slate-500">
@@ -93,14 +189,14 @@ export function ValuationChart({ valuations, currency = "PLN" }: ValuationChartP
   const isPositive = stats.returnRate >= 0;
 
   return (
-    <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-5 shadow-md">
-      {/* Chart Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+    <div className="bg-[#051329] border border-[#0e274d] rounded-2xl p-5 shadow-lg">
+      {/* Top Bar: Valuation & Range & Benchmark Select */}
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
         <div>
           <div className="text-xs uppercase tracking-wider text-slate-400 font-medium mb-1">
             Wycena jednostki uczestnictwa
           </div>
-          <div className="flex items-baseline gap-3">
+          <div className="flex items-baseline gap-3 flex-wrap">
             <span className="text-2xl sm:text-3xl font-extrabold text-slate-100">
               {formatCurrency(stats.end, currency)}
             </span>
@@ -111,11 +207,7 @@ export function ValuationChart({ valuations, currency = "PLN" }: ValuationChartP
                   : "bg-rose-500/15 text-rose-400 border border-rose-500/30"
               }`}
             >
-              {isPositive ? (
-                <TrendingUp className="w-3.5 h-3.5" />
-              ) : (
-                <TrendingDown className="w-3.5 h-3.5" />
-              )}
+              {isPositive ? <TrendingUp className="w-3.5 h-3.5" /> : <TrendingDown className="w-3.5 h-3.5" />}
               {isPositive ? "+" : ""}
               {formatPercent(stats.returnRate)}
               <span className="text-[11px] font-normal opacity-80">
@@ -126,106 +218,193 @@ export function ValuationChart({ valuations, currency = "PLN" }: ValuationChartP
           </div>
         </div>
 
-        {/* Range Buttons */}
-        <div className="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 self-start sm:self-auto">
-          {(["1M", "3M", "6M", "1Y", "3Y", "MAX"] as const).map((range) => (
-            <button
-              key={range}
-              onClick={() => setSelectedRange(range)}
-              className={`px-3 py-1 text-xs font-semibold rounded-lg transition-colors ${
-                selectedRange === range
-                  ? "bg-slate-800 text-emerald-400 shadow-xs"
-                  : "text-slate-400 hover:text-slate-200"
-              }`}
+        {/* Controls: Benchmark selector & Range buttons */}
+        <div className="flex flex-wrap items-center gap-2 self-start lg:self-auto">
+          {/* Benchmark selector */}
+          <div className="flex items-center gap-1.5 bg-[#030a16] border border-[#0e274d] px-2.5 py-1 rounded-xl text-xs">
+            <ChartIcon className="w-3.5 h-3.5 text-[#044CD0]" />
+            <span className="text-slate-400 font-medium">Benchmark:</span>
+            <select
+              value={activeBenchmark}
+              onChange={(e) => setActiveBenchmark(e.target.value as any)}
+              className="bg-transparent text-slate-200 font-semibold focus:outline-hidden cursor-pointer"
             >
-              {range}
-            </button>
-          ))}
+              <option value="NONE" className="bg-[#030a16]">Brak (sama wycena)</option>
+              <option value="WIG" className="bg-[#030a16]">WIG20 TR (Akcje)</option>
+              <option value="TBSP" className="bg-[#030a16]">TBSP (Obligacje)</option>
+            </select>
+          </div>
+
+          {/* Range Buttons */}
+          <div className="flex items-center bg-[#030a16] p-1 rounded-xl border border-[#0e274d]">
+            {(["1M", "3M", "6M", "1Y", "3Y", "MAX"] as const).map((range) => (
+              <button
+                key={range}
+                onClick={() => setSelectedRange(range)}
+                className={`px-3 py-1 text-xs font-semibold rounded-lg transition-colors ${
+                  selectedRange === range
+                    ? "bg-[#044CD0] text-white shadow-xs"
+                    : "text-slate-400 hover:text-slate-200"
+                }`}
+              >
+                {range}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* Chart Canvas */}
       <div className="h-72 w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={filteredData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-            <defs>
-              <linearGradient id="valGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop
-                  offset="5%"
-                  stopColor={isPositive ? "#10b981" : "#f43f5e"}
-                  stopOpacity={0.35}
-                />
-                <stop
-                  offset="95%"
-                  stopColor={isPositive ? "#10b981" : "#f43f5e"}
-                  stopOpacity={0}
-                />
-              </linearGradient>
-            </defs>
-            <XAxis
-              dataKey="date"
-              stroke="#475569"
-              fontSize={11}
-              tickLine={false}
-              axisLine={false}
-              tickFormatter={(d) => {
-                const date = new Date(d);
-                return `${date.getDate()} ${date.toLocaleString("pl-PL", { month: "short" })}`;
-              }}
-            />
-            <YAxis
-              stroke="#475569"
-              fontSize={11}
-              tickLine={false}
-              axisLine={false}
-              domain={["dataMin - 1", "dataMax + 1"]}
-              tickFormatter={(v) => v.toFixed(1)}
-            />
-            <Tooltip
-              content={({ active, payload }) => {
-                if (active && payload && payload.length) {
-                  const data = payload[0].payload as KNFValuation;
-                  return (
-                    <div className="bg-slate-900 border border-slate-700 px-3 py-2 rounded-xl shadow-xl text-xs">
-                      <div className="text-slate-400 font-medium mb-1">
-                        {formatDate(data.date)}
+          {activeBenchmark === "NONE" ? (
+            <AreaChart data={alignedChartData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+              <defs>
+                <linearGradient id="valGradUknf" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#044CD0" stopOpacity={0.4} />
+                  <stop offset="95%" stopColor="#02224D" stopOpacity={0.05} />
+                </linearGradient>
+              </defs>
+              <XAxis
+                dataKey="date"
+                stroke="#475569"
+                fontSize={11}
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={(d) => {
+                  const date = new Date(d);
+                  return `${date.getDate()} ${date.toLocaleString("pl-PL", { month: "short" })}`;
+                }}
+              />
+              <YAxis
+                stroke="#475569"
+                fontSize={11}
+                tickLine={false}
+                axisLine={false}
+                domain={["dataMin - 1", "dataMax + 1"]}
+                tickFormatter={(v) => v.toFixed(1)}
+              />
+              <Tooltip
+                content={({ active, payload }) => {
+                  if (active && payload && payload.length) {
+                    const data = payload[0].payload;
+                    return (
+                      <div className="bg-[#030a16] border border-[#0e274d] px-3.5 py-2.5 rounded-xl shadow-xl text-xs">
+                        <div className="text-slate-400 font-medium mb-1">{formatDate(data.date)}</div>
+                        <div className="text-base font-bold text-slate-100">
+                          {formatCurrency(data.valuation, currency)}
+                        </div>
                       </div>
-                      <div className="text-base font-bold text-slate-100">
-                        {formatCurrency(data.valuation, currency)}
+                    );
+                  }
+                  return null;
+                }}
+              />
+              <Area
+                type="monotone"
+                dataKey="valuation"
+                stroke="#044CD0"
+                strokeWidth={2.5}
+                fillOpacity={1}
+                fill="url(#valGradUknf)"
+              />
+            </AreaChart>
+          ) : (
+            <LineChart data={alignedChartData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+              <XAxis
+                dataKey="date"
+                stroke="#475569"
+                fontSize={11}
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={(d) => {
+                  const date = new Date(d);
+                  return `${date.getDate()} ${date.toLocaleString("pl-PL", { month: "short" })}`;
+                }}
+              />
+              <YAxis
+                stroke="#475569"
+                fontSize={11}
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={(v) => `${v}%`}
+              />
+              <Tooltip
+                content={({ active, payload, label }) => {
+                  if (active && payload && payload.length) {
+                    const row = payload[0].payload;
+                    return (
+                      <div className="bg-[#030a16] border border-[#0e274d] p-3 rounded-xl shadow-xl text-xs space-y-1.5">
+                        <div className="text-slate-400 font-semibold mb-1">{formatDate(String(label))}</div>
+                        <div className="flex items-center justify-between gap-4">
+                          <span className="flex items-center gap-1.5 text-blue-400 font-medium">
+                            <span className="w-2 h-2 rounded-full bg-[#044CD0]" />
+                            Subfundusz:
+                          </span>
+                          <span className="font-bold text-slate-100">
+                            {row.fundReturn >= 0 ? "+" : ""}
+                            {formatPercent(row.fundReturn / 100)}
+                            <span className="text-[11px] text-slate-400 font-normal ml-1">
+                              ({formatCurrency(row.valuation, currency)})
+                            </span>
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between gap-4">
+                          <span className="flex items-center gap-1.5 text-amber-400 font-medium">
+                            <span className="w-2 h-2 rounded-full bg-amber-400" />
+                            {benchmarkData?.name || "Benchmark"}:
+                          </span>
+                          <span className="font-bold text-slate-100">
+                            {row.benchmarkReturn >= 0 ? "+" : ""}
+                            {formatPercent(row.benchmarkReturn / 100)}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  );
-                }
-                return null;
-              }}
-            />
-            <Area
-              type="monotone"
-              dataKey="valuation"
-              stroke={isPositive ? "#10b981" : "#f43f5e"}
-              strokeWidth={2.5}
-              fillOpacity={1}
-              fill="url(#valGrad)"
-            />
-          </AreaChart>
+                    );
+                  }
+                  return null;
+                }}
+              />
+              <Legend
+                verticalAlign="top"
+                align="right"
+                iconType="circle"
+                wrapperStyle={{ fontSize: 11, paddingBottom: 10 }}
+              />
+              <Line
+                type="monotone"
+                dataKey="fundReturn"
+                name="Subfundusz (%)"
+                stroke="#044CD0"
+                strokeWidth={2.5}
+                dot={false}
+              />
+              <Line
+                type="monotone"
+                dataKey="benchmarkReturn"
+                name={`${benchmarkData?.name || "Benchmark"} (%)`}
+                stroke="#f59e0b"
+                strokeWidth={2}
+                strokeDasharray="4 4"
+                dot={false}
+              />
+            </LineChart>
+          )}
         </ResponsiveContainer>
       </div>
 
       {/* Min / Max Footer */}
-      <div className="flex items-center justify-between text-xs text-slate-400 pt-3 border-t border-slate-800/80 mt-2">
+      <div className="flex items-center justify-between text-xs text-slate-400 pt-3 border-t border-[#0e274d] mt-2">
         <div>
-          Min w okresie:{" "}
-          <strong className="text-slate-200">{formatCurrency(stats.min, currency)}</strong>
+          Min w okresie: <strong className="text-slate-200">{formatCurrency(stats.min, currency)}</strong>
         </div>
         <div>
           Liczba wycen: <strong className="text-slate-200">{filteredData.length}</strong>
         </div>
         <div>
-          Max w okresie:{" "}
-          <strong className="text-slate-200">{formatCurrency(stats.max, currency)}</strong>
+          Max w okresie: <strong className="text-slate-200">{formatCurrency(stats.max, currency)}</strong>
         </div>
       </div>
     </div>
   );
 }
-
