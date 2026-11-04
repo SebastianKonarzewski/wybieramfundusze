@@ -180,23 +180,25 @@ export function Navbar() {
               </Link>
             )}
 
+            {/* Language Switcher (Compact single button toggle EN/PL) */}
+            <LanguageSwitcher />
+
             {/* Dark / Light Theme Toggle */}
             <ThemeToggle />
 
             {/* Accessibility Toolbar */}
             <AccessibilityToolbar />
 
-            {/* Language Switcher (Visible on tablets sm: to md:, on small screens accessed via hamburger menu) */}
-            <div className="hidden sm:block">
-              <LanguageSwitcher />
-            </div>
-
-            {/* Hamburger Button */}
+            {/* Hamburger Button with explicit active state when menu is open */}
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               data-component="navbar-hamburger"
-              className="p-1.5 sm:p-2 rounded-lg border border-slate-300 dark:border-[#0e274d] bg-white dark:bg-[#030a16] text-slate-700 dark:text-slate-200 hover:text-[#044CD0] dark:hover:text-white transition-colors flex items-center justify-center shrink-0 cursor-pointer shadow-xs"
+              className={`p-1.5 sm:p-2 rounded-lg border transition-all flex items-center justify-center shrink-0 cursor-pointer shadow-xs ${
+                isMobileMenuOpen
+                  ? "bg-[#044CD0] text-white border-blue-400 shadow-md ring-2 ring-blue-400/30"
+                  : "border-slate-300 dark:border-[#0e274d] bg-white dark:bg-[#030a16] text-slate-700 dark:text-slate-200 hover:text-[#044CD0] dark:hover:text-white"
+              }`}
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-nav-drawer"
               aria-label={isMobileMenuOpen ? t.nav.closeMenu : t.nav.openMenu}
@@ -220,14 +222,33 @@ export function Navbar() {
               aria-hidden="true"
             />
 
-            {/* Drawer Container */}
+            {/* Drawer Container (Only portal subpages) */}
             <div
               id="mobile-nav-drawer"
               data-component="mobile-nav"
-              className="lg:hidden border-b border-[#0e274d] bg-[#030a16] text-slate-200 shadow-2xl relative z-50 animate-in slide-in-from-top-2 duration-150"
+              className="lg:hidden border-b border-slate-200 dark:border-[#0e274d] bg-white dark:bg-[#030a16] text-slate-800 dark:text-slate-200 shadow-2xl relative z-50 animate-in slide-in-from-top-2 duration-150"
             >
-              <div className="max-w-7xl mx-auto px-3.5 py-4 space-y-4">
-                {/* Navigation Links */}
+              <div className="max-w-7xl mx-auto px-3.5 py-3 space-y-3">
+                {/* Header inside drawer with title and explicit Close button */}
+                <div className="flex items-center justify-between pb-2.5 border-b border-slate-200 dark:border-[#0e274d]">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-[#044CD0] dark:bg-[#3b82f6]" />
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                      {t.nav.menu}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-slate-300 dark:border-[#0e274d] bg-slate-100 dark:bg-[#071938] text-slate-700 dark:text-slate-300 hover:text-white hover:bg-rose-600 dark:hover:bg-rose-600 hover:border-rose-500 text-xs font-semibold transition-colors cursor-pointer"
+                    aria-label={t.nav.closeMenu}
+                  >
+                    <span>{t.common.close}</span>
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+
+                {/* Portal Subpages Navigation Links Only */}
                 <nav className="flex flex-col gap-1.5" aria-label={t.nav.menu}>
                   {navLinks.map((link) => {
                     const Icon = link.icon;
@@ -242,13 +263,13 @@ export function Navbar() {
                         className={`flex items-center justify-between p-3 rounded-xl text-sm font-semibold transition-all ${
                           isActive
                             ? "bg-[#044CD0] text-white shadow-md font-bold"
-                            : "text-slate-200 hover:text-white hover:bg-[#071938] border border-transparent hover:border-[#0e274d]"
+                            : "text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#071938] border border-transparent hover:border-slate-300 dark:hover:border-[#0e274d]"
                         }`}
                       >
                         <div className="flex items-center gap-3">
                           <div
                             className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
-                              isActive ? "bg-white/20 text-white" : "bg-[#071938] text-[#60a5fa]"
+                              isActive ? "bg-white/20 text-white" : "bg-slate-100 dark:bg-[#071938] text-[#044CD0] dark:text-[#60a5fa]"
                             }`}
                           >
                             <Icon className="w-4 h-4" />
@@ -264,31 +285,6 @@ export function Navbar() {
                     );
                   })}
                 </nav>
-
-                {/* Additional Settings & Official Link Section */}
-                <div className="border-t border-[#0e274d] pt-3.5 space-y-3">
-                  {/* Language Switcher in Mobile Drawer */}
-                  <div className="flex items-center justify-between px-1">
-                    <span className="text-xs text-slate-400 font-medium">
-                      {t.nav.portalLanguage}
-                    </span>
-                    <LanguageSwitcher />
-                  </div>
-
-                  {/* KNF Official Production Portal Link */}
-                  <a
-                    href="https://wybieramfundusze.knf.gov.pl"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-between p-2.5 rounded-xl bg-[#021838] border border-[#0e274d] text-xs text-slate-300 hover:text-white transition-colors"
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
-                      <span className="font-medium">wybieramfundusze.knf.gov.pl</span>
-                    </div>
-                    <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
-                  </a>
-                </div>
               </div>
             </div>
           </>

@@ -689,14 +689,29 @@ html.high-contrast [data-component="mobile-nav"] nav a[aria-current="page"] * {
   stroke: #000000 !important;
 }
 
-/* Language Switcher */
-html.high-contrast [data-component="language-switcher"] {
+/* Language Toggle Button */
+html.high-contrast [data-component="language-toggle"] {
   background-color: #000000 !important;
   border: 2px solid #ffff00 !important;
+  color: #ffff00 !important;
 }
 
-html.high-contrast [data-component="language-switcher"] button {
-  border: none !important;
+html.high-contrast [data-component="language-toggle"] svg {
+  color: #ffff00 !important;
+  stroke: #ffff00 !important;
+}
+
+html.high-contrast [data-component="language-toggle"]:hover,
+html.high-contrast [data-component="language-toggle"]:focus-visible {
+  background-color: #ffff00 !important;
+  border-color: #ffff00 !important;
+  color: #000000 !important;
+}
+
+html.high-contrast [data-component="language-toggle"]:hover svg,
+html.high-contrast [data-component="language-toggle"]:focus-visible svg {
+  color: #000000 !important;
+  stroke: #000000 !important;
 }
 
 /* Active & Selected items (Filter pills, active tabs, active page nav, selected view mode) */
