@@ -14,8 +14,28 @@ import {
 import { useAccessibility, FontSize } from "@/lib/accessibility";
 import { useTranslation } from "@/lib/i18n";
 
-export function AccessibilityToolbar() {
-  const [isOpen, setIsOpen] = useState(false);
+interface AccessibilityToolbarProps {
+  isOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}
+
+export function AccessibilityToolbar({
+  isOpen: controlledIsOpen,
+  onOpenChange,
+}: AccessibilityToolbarProps = {}) {
+  const [internalIsOpen, setInternalIsOpen] = useState(false);
+  const isControlled = controlledIsOpen !== undefined;
+  const isOpen = isControlled ? controlledIsOpen : internalIsOpen;
+
+  const setIsOpen = (open: boolean) => {
+    if (onOpenChange) {
+      onOpenChange(open);
+    }
+    if (!isControlled) {
+      setInternalIsOpen(open);
+    }
+  };
+
   const {
     fontSize,
     setFontSize,

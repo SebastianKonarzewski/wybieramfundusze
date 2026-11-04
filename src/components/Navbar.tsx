@@ -25,10 +25,12 @@ export function Navbar() {
   const { selectedFunds } = useCompare();
   const { t, locale } = useTranslation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isA11yOpen, setIsA11yOpen] = useState(false);
 
-  // Auto-close mobile menu on route change
+  // Auto-close mobile menu and WCAG menu on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
+    setIsA11yOpen(false);
   }, [pathname]);
 
   // Lock body scroll when mobile menu is open
@@ -42,20 +44,36 @@ export function Navbar() {
     }
   }, [isMobileMenuOpen]);
 
-  // Close mobile menu on Escape key
+  // Close menus on Escape key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setIsMobileMenuOpen(false);
+        setIsA11yOpen(false);
       }
     };
-    if (isMobileMenuOpen) {
+    if (isMobileMenuOpen || isA11yOpen) {
       document.addEventListener("keydown", handleKeyDown);
     }
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isMobileMenuOpen]);
+  }, [isMobileMenuOpen, isA11yOpen]);
+
+  // Coordinated menu toggles: opening one closes the other
+  const handleA11yOpenChange = (open: boolean) => {
+    if (open) {
+      setIsMobileMenuOpen(false);
+    }
+    setIsA11yOpen(open);
+  };
+
+  const toggleMobileMenu = () => {
+    if (!isMobileMenuOpen) {
+      setIsA11yOpen(false);
+    }
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
   const navLinks = [
     { href: "/", label: t.nav.catalog, icon: Layers },
@@ -168,7 +186,10 @@ export function Navbar() {
             <ThemeToggle />
 
             {/* Accessibility Toolbar */}
-            <AccessibilityToolbar />
+            <AccessibilityToolbar
+              isOpen={isA11yOpen}
+              onOpenChange={handleA11yOpenChange}
+            />
 
             {/* Language Switcher */}
             <LanguageSwitcher />
@@ -198,12 +219,15 @@ export function Navbar() {
             <ThemeToggle />
 
             {/* Accessibility Toolbar */}
-            <AccessibilityToolbar />
+            <AccessibilityToolbar
+              isOpen={isA11yOpen}
+              onOpenChange={handleA11yOpenChange}
+            />
 
             {/* Hamburger Button with explicit active state when menu is open */}
             <button
               type="button"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              onClick={toggleMobileMenu}
               data-component="navbar-hamburger"
               className={`p-1.5 sm:p-2 rounded-lg border transition-all flex items-center justify-center shrink-0 cursor-pointer shadow-xs ${
                 isMobileMenuOpen
@@ -230,26 +254,7 @@ export function Navbar() {
             data-component="mobile-nav"
             className="lg:hidden border-b border-slate-200 dark:border-[#0e274d] bg-white dark:bg-[#030a16] text-slate-800 dark:text-slate-200 shadow-2xl relative z-50 max-h-[calc(100vh-4.5rem)] overflow-y-auto animate-in slide-in-from-top-2 duration-150"
           >
-            <div className="max-w-7xl mx-auto px-3.5 py-3 space-y-3">
-              {/* Header inside drawer with title and explicit Close button */}
-              <div className="flex items-center justify-between pb-2.5 border-b border-slate-200 dark:border-[#0e274d]">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-[#044CD0] dark:bg-[#3b82f6]" />
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                    {t.nav.menu}
-                  </span>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-slate-300 dark:border-[#0e274d] bg-slate-100 dark:bg-[#071938] text-slate-700 dark:text-slate-300 hover:text-white hover:bg-rose-600 dark:hover:bg-rose-600 hover:border-rose-500 text-xs font-semibold transition-colors cursor-pointer"
-                  aria-label={t.nav.closeMenu}
-                >
-                  <span>{t.common.close}</span>
-                  <X className="w-3.5 h-3.5" />
-                </button>
-              </div>
-
+            <div className="max-w-7xl mx-auto px-3.5 py-3">
               {/* Portal Subpages Navigation Links Only */}
               <nav className="flex flex-col gap-1.5" aria-label={t.nav.menu}>
                 {navLinks.map((link) => {
