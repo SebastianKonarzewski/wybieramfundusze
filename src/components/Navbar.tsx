@@ -31,14 +31,14 @@ export function Navbar() {
 
       <header className="sticky top-0 z-40 w-full border-b border-[#0e274d] bg-[#030a16]/95 backdrop-blur-md">
         {/* Dev / Preview Mode Top Announcement Banner */}
-        <div className="w-full bg-[#021838] border-b border-[#0e274d] text-[10px] sm:text-xs py-1 sm:py-1.5 px-2.5 sm:px-6 lg:px-8">
+        <div className="w-full bg-[#021838] border-b border-[#0e274d] text-[10px] sm:text-xs py-1 sm:py-1.5 px-2.5 sm:px-4 lg:px-5 xl:px-8">
           <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-x-4 gap-y-0.5 sm:gap-y-1 text-center sm:text-left">
             <div className="flex items-center gap-1.5 sm:gap-2 justify-center sm:justify-start">
               <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded font-semibold bg-amber-500/15 text-amber-300 border border-amber-500/30 shrink-0">
                 <FlaskConical className="w-3 h-3 text-amber-400" />
                 {t.nav.devBannerTitle}
               </span>
-              <span className="text-slate-400 hidden lg:inline">
+              <span className="text-slate-400 hidden xl:inline">
                 {t.nav.devBannerDesc}
               </span>
             </div>
@@ -58,7 +58,7 @@ export function Navbar() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-2.5 sm:px-6 lg:px-8 h-13 sm:h-16 flex items-center justify-between gap-1.5 sm:gap-2">
+        <div className="max-w-7xl mx-auto px-2.5 sm:px-4 lg:px-5 xl:px-8 h-13 sm:h-16 flex items-center justify-between gap-1.5 lg:gap-2 xl:gap-3">
           {/* Brand with UKNF Navy Blue styling */}
           <Link href="/" className="flex items-center gap-1.5 sm:gap-2.5 group shrink-0 min-w-0">
             <div className="w-7 h-7 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-tr from-[#02224D] to-[#044CD0] flex items-center justify-center text-white shadow-md shadow-[#044CD0]/30 group-hover:scale-105 transition-transform border border-blue-400/30 shrink-0">
@@ -66,7 +66,7 @@ export function Navbar() {
             </div>
             <div className="flex flex-col min-w-0">
               <div className="flex items-center gap-1 sm:gap-2">
-                <span className="font-bold text-sm sm:text-lg text-slate-100 tracking-tight whitespace-nowrap">
+                <span className="font-bold text-sm sm:text-base xl:text-lg text-slate-100 tracking-tight whitespace-nowrap">
                   {t.nav.brandName}<span className="text-[#3b82f6]">{t.nav.brandHighlight}</span>
                 </span>
                 <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider px-1.5 sm:px-2 py-0.5 rounded-full bg-[#f0f7ff] dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-[#60a5fa] border border-[#bfdbfe] dark:border-[#044CD0]/40 hidden xl:inline-block shadow-2xs">
@@ -80,8 +80,8 @@ export function Navbar() {
           </Link>
 
           {/* Navigation, Accessibility & Language Switcher */}
-          <div className="flex items-center gap-1 sm:gap-2 shrink-0">
-            <nav className="flex items-center gap-0.5 sm:gap-1">
+          <div className="flex items-center gap-1 sm:gap-1.5 xl:gap-2 shrink-0">
+            <nav className="flex items-center gap-0.5 sm:gap-1 xl:gap-1.5">
               {navLinks.map((link) => {
                 const Icon = link.icon;
                 const isActive = pathname === link.href;
@@ -90,7 +90,7 @@ export function Navbar() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`relative flex items-center justify-center gap-1.5 lg:gap-2 p-1.5 sm:p-2 lg:px-3 lg:py-2 rounded-lg text-xs lg:text-sm font-medium transition-all ${
+                    className={`relative flex items-center justify-center gap-1.5 lg:gap-1.5 xl:gap-2 p-1.5 sm:p-2 lg:px-2 lg:py-1.5 xl:px-3 xl:py-2 rounded-lg text-xs xl:text-sm font-medium transition-all whitespace-nowrap shrink-0 ${
                       isActive
                         ? "bg-[#044CD0] text-white shadow-xs font-semibold"
                         : "text-slate-300 hover:text-white hover:bg-[#071938]"
@@ -108,7 +108,7 @@ export function Navbar() {
                     </div>
                     <span className="hidden lg:inline">{link.label}</span>
                     {link.badge !== undefined && link.badge > 0 && (
-                      <span className="hidden lg:flex items-center justify-center w-5 h-5 text-xs font-bold rounded-full bg-amber-400 text-slate-950 shadow-xs">
+                      <span className="hidden lg:flex items-center justify-center min-w-[16px] h-4 xl:min-w-[20px] xl:h-5 px-1 text-[10px] xl:text-xs font-bold rounded-full bg-amber-400 text-slate-950 shadow-xs shrink-0">
                         {link.badge}
                       </span>
                     )}
