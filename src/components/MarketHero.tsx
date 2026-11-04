@@ -59,9 +59,9 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
 
   return (
     <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-b from-[#071938] via-[#051329] to-[#030a16] border border-[#0e274d] p-4 sm:p-8 lg:p-10 mb-6 sm:mb-8 shadow-2xl">
-      {/* Background glow effects - analogously distributed in both themes */}
-      <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-[#044CD0]/10 dark:bg-[#044CD0]/15 blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-slate-300/40 dark:bg-[#02224D]/30 blur-3xl pointer-events-none" />
+      {/* Background glow effects with UKNF blue - dark mode only */}
+      <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-[#044CD0]/15 dark:block hidden blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-[#02224D]/30 dark:block hidden blur-3xl pointer-events-none" />
 
       <div className="relative z-10 space-y-6 sm:space-y-8">
         {/* Top Header: Title & Market Data Date */}
