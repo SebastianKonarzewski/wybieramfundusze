@@ -190,7 +190,7 @@ html.light .catalog-table-container tbody tr {
 }
 
 html.light .catalog-table-container tbody tr:hover {
-  background-color: rgba(234, 244, 254, 0.75) !important;
+  background-color: rgba(219, 234, 254, 0.85) !important;
 }
 
 html.light .catalog-table-container tbody tr td {
