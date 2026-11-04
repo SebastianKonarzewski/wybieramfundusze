@@ -138,18 +138,19 @@ html.light [class*="bg-blue-50"] {
   background-color: #f0f7ff !important;
 }
 
-/* Hero banner gradient: mirrors dark mode layout (top-to-bottom with top-right accent), smoothly reaching pure white */
+/* Hero banner gradient: mirrors dark mode layout (top-right blue accent, bottom-left soft grayish-blue glow, smoothly reaching clean white) */
 html.light [class*="from-[#071938]"][class*="to-[#030a16]"] {
   background: 
-    radial-gradient(ellipse 65% 55% at 100% 0%, rgba(4, 76, 208, 0.08) 0%, rgba(227, 239, 253, 0.5) 35%, transparent 70%),
-    linear-gradient(180deg, #eaf2fd 0%, #f4f8fe 30%, #ffffff 65%, #ffffff 100%) !important;
+    radial-gradient(ellipse 65% 55% at 100% 0%, rgba(4, 76, 208, 0.08) 0%, rgba(227, 239, 253, 0.45) 30%, transparent 65%),
+    radial-gradient(ellipse 55% 50% at 0% 100%, rgba(195, 212, 232, 0.35) 0%, rgba(220, 232, 246, 0.22) 30%, transparent 60%),
+    linear-gradient(180deg, #f0f6fe 0%, #f7faff 25%, #ffffff 55%, #ffffff 100%) !important;
   border-color: #d0e2f7 !important;
 }
 
-/* Catalog Grid Cards in light mode - distinct delicate light blue tint and soft blue borders */
+/* Catalog Grid Cards in light mode - lighter, less saturated uniform delicate blue tint */
 html.light .catalog-grid-card {
-  background-color: #edf5fe !important;
-  border-color: #bfdbfe !important;
+  background-color: #f4f8fe !important;
+  border-color: #d0e2f7 !important;
 }
 
 html.light .catalog-grid-card:hover {
@@ -157,37 +158,37 @@ html.light .catalog-grid-card:hover {
   border-color: #93c5fd !important;
 }
 
-/* Catalog Table styling in light mode - distinct delicate light blue tint and soft blue dividers */
+/* Catalog Table styling in light mode - lighter, less saturated uniform delicate blue tint and soft blue dividers */
 html.light .catalog-table-container,
 html.light .catalog-table-container [class*="bg-[#051329]"] {
-  background-color: #edf5fe !important;
-  border-color: #bfdbfe !important;
+  background-color: #f4f8fe !important;
+  border-color: #d0e2f7 !important;
 }
 
 html.light .catalog-table-container table {
   border-collapse: collapse !important;
-  background-color: #edf5fe !important;
+  background-color: #f4f8fe !important;
 }
 
 html.light .catalog-table-container thead,
 html.light .catalog-table-container thead [class*="bg-[#030a16]"],
 html.light .catalog-table-container thead th {
-  background-color: #dbeafe !important;
-  color: #1e40af !important;
-  border-color: #bfdbfe !important;
+  background-color: #e2eefa !important;
+  color: #1e3a8a !important;
+  border-color: #d0e2f7 !important;
 }
 
 html.light .catalog-table-container tbody tr {
-  background-color: #edf5fe !important;
-  border-color: #bfdbfe !important;
+  background-color: #f4f8fe !important;
+  border-color: #d0e2f7 !important;
 }
 
 html.light .catalog-table-container tbody tr:hover {
-  background-color: #dbeafe !important;
+  background-color: #e2effd !important;
 }
 
 html.light .catalog-table-container tbody tr td {
-  border-color: #bfdbfe !important;
+  border-color: #d0e2f7 !important;
 }
 
 /* Explicitly eliminate any black border on first row, below thead or between rows */
@@ -198,14 +199,14 @@ html.light .catalog-table-container tbody,
 html.light .catalog-table-container tbody tr,
 html.light .catalog-table-container tbody tr:first-child,
 html.light .catalog-table-container tbody tr:first-child td {
-  border-top-color: #bfdbfe !important;
-  border-bottom-color: #bfdbfe !important;
+  border-top-color: #d0e2f7 !important;
+  border-bottom-color: #d0e2f7 !important;
 }
 
 html.light .catalog-table-container [class*="divide-[#bfdbfe]"] > * + *,
 html.light .catalog-table-container [class*="divide-[#d0e2f7]"] > * + *,
 html.light .catalog-table-container [class*="divide-[#0e274d]"] > * + * {
-  border-color: #bfdbfe !important;
+  border-color: #d0e2f7 !important;
 }
 
 /* Hover background states in light mode */
