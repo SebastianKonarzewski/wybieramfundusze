@@ -130,8 +130,8 @@ export function Navbar() {
         >
           {/* Brand with UKNF Navy Blue styling */}
           <Link href="/" className="flex items-center gap-1.5 sm:gap-2.5 group shrink-0 min-w-0">
-            <div className="w-8.5 h-8.5 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-tr from-[#02224D] to-[#044CD0] flex items-center justify-center text-white shadow-md shadow-[#044CD0]/30 group-hover:scale-105 transition-transform border border-blue-400/30 shrink-0">
-              <TrendingUp className="w-4.5 h-4.5 sm:w-5 sm:h-5 stroke-[2.5]" />
+            <div className="w-8 h-8 sm:w-9.5 sm:h-9.5 rounded-lg sm:rounded-xl bg-gradient-to-tr from-[#02224D] to-[#044CD0] flex items-center justify-center text-white shadow-xs border border-blue-400/40 shrink-0">
+              <TrendingUp className="w-4 h-4 sm:w-4.5 sm:h-4.5 stroke-[2.2]" />
             </div>
             <div className="flex flex-col min-w-0">
               <div className="flex items-center gap-1 sm:gap-2">
