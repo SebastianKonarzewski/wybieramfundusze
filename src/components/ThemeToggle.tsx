@@ -15,6 +15,7 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={toggleTheme}
+      data-component="theme-toggle"
       className={`p-1.5 sm:p-2 rounded-lg border transition-all cursor-pointer flex items-center justify-center relative shrink-0 ${
         isLight
           ? "bg-white text-blue-600 border-slate-300 hover:bg-slate-50 hover:border-blue-500 shadow-xs"

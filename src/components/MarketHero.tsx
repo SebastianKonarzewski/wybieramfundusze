@@ -22,10 +22,12 @@ import {
 import { MarketStatistics } from "@/types/knf";
 import { useTranslation } from "@/lib/i18n";
 import { useTheme } from "@/lib/theme";
+import { useAccessibility } from "@/lib/accessibility";
 
 export function MarketHero({ stats }: { stats: MarketStatistics }) {
   const { t, formatLargeNumber, formatDate, formatNumber, formatPercent } = useTranslation();
   const { theme } = useTheme();
+  const { highContrast } = useAccessibility();
   const isLight = theme === "light";
 
   // Calculate 12-month asset trend dynamics with proper min/max scaling
@@ -140,6 +142,7 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
             {/* Left: Trend summary & concrete values */}
             <div className="flex items-center gap-3 shrink-0 self-start md:self-auto">
               <div
+                data-component="trend-icon-box"
                 className={`w-9 h-9 rounded-xl border flex items-center justify-center shrink-0 ${
                   trendData.isPositive
                     ? "bg-emerald-50 dark:bg-emerald-500/10 border-emerald-300 dark:border-emerald-500/30 text-emerald-700 dark:text-emerald-400"
@@ -191,12 +194,12 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
                     <linearGradient id="heroScaledGrad" x1="0" y1="0" x2="0" y2="1">
                       <stop
                         offset="0%"
-                        stopColor={isLight ? "#60a5fa" : "#044CD0"}
-                        stopOpacity={isLight ? 0.08 : 0.4}
+                        stopColor={highContrast ? "transparent" : isLight ? "#60a5fa" : "#044CD0"}
+                        stopOpacity={highContrast ? 0 : isLight ? 0.08 : 0.4}
                       />
                       <stop
                         offset="100%"
-                        stopColor="#044CD0"
+                        stopColor={highContrast ? "transparent" : "#044CD0"}
                         stopOpacity={0.0}
                       />
                     </linearGradient>
@@ -221,10 +224,10 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
                   <Area
                     type="monotone"
                     dataKey="netAssets"
-                    stroke={isLight ? "#044CD0" : "#3b82f6"}
+                    stroke={highContrast ? "#ffff00" : isLight ? "#044CD0" : "#3b82f6"}
                     strokeWidth={2}
-                    fillOpacity={1}
-                    fill="url(#heroScaledGrad)"
+                    fillOpacity={highContrast ? 0 : 1}
+                    fill={highContrast ? "none" : "url(#heroScaledGrad)"}
                   />
                 </AreaChart>
               </ResponsiveContainer>

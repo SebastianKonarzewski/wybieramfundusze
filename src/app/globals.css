@@ -501,6 +501,16 @@ html.high-contrast [class*="bg-[#f0f7ff]"],
 html.high-contrast [class*="bg-[#eff6ff]"],
 html.high-contrast [class*="bg-[#f8fbff]"],
 html.high-contrast [class*="bg-[#f4f8fe]"],
+html.high-contrast [class*="bg-[#dbeafe]"],
+html.high-contrast [class*="bg-[#eaf4fe]"],
+html.high-contrast [class*="bg-white"],
+html.high-contrast [class*="bg-slate-50"],
+html.high-contrast [class*="bg-slate-100"],
+html.high-contrast [class*="bg-emerald-50"],
+html.high-contrast [class*="bg-rose-50"],
+html.high-contrast [class*="bg-emerald-500/10"],
+html.high-contrast [class*="bg-rose-500/10"],
+html.high-contrast [data-component="trend-icon-box"],
 html.high-contrast .catalog-grid-card,
 html.high-contrast .catalog-table-container,
 html.high-contrast footer,
@@ -518,12 +528,25 @@ html.high-contrast [class*="rounded-3xl"] {
 html.high-contrast [class*="border-[#0e274d]"],
 html.high-contrast [class*="border-blue-"],
 html.high-contrast [class*="border-slate-"],
+html.high-contrast [class*="border-emerald-"],
+html.high-contrast [class*="border-rose-"],
 html.high-contrast [class*="divide-[#0e274d]"] > * + *,
 html.high-contrast [class*="divide-slate-"] > * + *,
 html.high-contrast [class*="divide-[#bfdbfe]"] > * + *,
 html.high-contrast [class*="divide-[#d0e2f7]"] > * + *,
 html.high-contrast hr {
   border-color: #ffff00 !important;
+}
+
+html.high-contrast [data-component="trend-icon-box"] {
+  background-color: #000000 !important;
+  border: 2px solid #ffff00 !important;
+  color: #ffff00 !important;
+}
+
+html.high-contrast [data-component="trend-icon-box"] svg {
+  color: #ffff00 !important;
+  stroke: #ffff00 !important;
 }
 
 html.high-contrast .catalog-grid-card,
@@ -569,15 +592,16 @@ html.high-contrast svg {
 /* 6. Interactive Controls: Buttons, Links, Tabs */
 html.high-contrast a,
 html.high-contrast button {
+  background-color: #000000 !important;
   color: #ffff00 !important;
   border-color: #ffff00 !important;
 }
 
-/* Hover and Focus: Solid Yellow with Black text */
+/* Hover and Focus-visible: Solid Yellow with Black text */
 html.high-contrast a:hover,
-html.high-contrast a:focus,
+html.high-contrast a:focus-visible,
 html.high-contrast button:hover:not(:disabled),
-html.high-contrast button:focus:not(:disabled) {
+html.high-contrast button:focus-visible:not(:disabled) {
   background-color: #ffff00 !important;
   color: #000000 !important;
   border-color: #ffff00 !important;
@@ -585,9 +609,34 @@ html.high-contrast button:focus:not(:disabled) {
 }
 
 html.high-contrast a:hover *,
-html.high-contrast a:focus *,
+html.high-contrast a:focus-visible *,
 html.high-contrast button:hover:not(:disabled) *,
-html.high-contrast button:focus:not(:disabled) * {
+html.high-contrast button:focus-visible:not(:disabled) * {
+  color: #000000 !important;
+  stroke: #000000 !important;
+}
+
+/* Theme Toggle Button explicit contract */
+html.high-contrast [data-component="theme-toggle"] {
+  background-color: #000000 !important;
+  border: 2px solid #ffff00 !important;
+  color: #ffff00 !important;
+}
+
+html.high-contrast [data-component="theme-toggle"] svg {
+  color: #ffff00 !important;
+  stroke: #ffff00 !important;
+}
+
+html.high-contrast [data-component="theme-toggle"]:hover,
+html.high-contrast [data-component="theme-toggle"]:focus-visible {
+  background-color: #ffff00 !important;
+  border-color: #ffff00 !important;
+  color: #000000 !important;
+}
+
+html.high-contrast [data-component="theme-toggle"]:hover svg,
+html.high-contrast [data-component="theme-toggle"]:focus-visible svg {
   color: #000000 !important;
   stroke: #000000 !important;
 }
@@ -761,9 +810,9 @@ html.high-contrast [class*="bg-amber-500/15"] svg {
 }
 
 /* Neutral chips and tags */
-html.high-contrast [class*="bg-white"]:not(button):not(a):not(input) {
+html.high-contrast [class*="bg-white"] {
   background-color: #000000 !important;
-  border: 1px solid #ffff00 !important;
+  border-color: #ffff00 !important;
   color: #ffff00 !important;
 }
 
@@ -790,6 +839,13 @@ html.high-contrast .recharts-default-tooltip {
 html.high-contrast .recharts-tooltip-item {
   color: #ffff00 !important;
 }
+html.high-contrast .recharts-area-area,
+html.high-contrast path.recharts-area-area {
+  fill: transparent !important;
+  fill-opacity: 0 !important;
+}
+html.high-contrast .recharts-area-curve,
+html.high-contrast path.recharts-area-curve,
 html.high-contrast path.recharts-curve {
   stroke: #ffff00 !important;
 }
