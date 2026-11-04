@@ -90,7 +90,7 @@ export function AccessibilityToolbar({
         aria-haspopup="dialog"
         title={t.a11y.toolbarTitle}
         aria-label={t.a11y.toolbarTitle}
-        className={`w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl border transition-all cursor-pointer flex items-center justify-center relative shrink-0 ${
+        className={`w-8.5 h-8.5 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl border transition-all cursor-pointer flex items-center justify-center relative shrink-0 ${
           isOpen || hasNonDefaultSettings
             ? "bg-[#044CD0] text-white border-blue-400 shadow-xs"
             : "bg-[#030a16] text-slate-300 border-[#0e274d] hover:text-white hover:border-[#044CD0]/60"

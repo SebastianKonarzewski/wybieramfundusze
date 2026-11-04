@@ -130,8 +130,8 @@ export function Navbar() {
         >
           {/* Brand with UKNF Navy Blue styling */}
           <Link href="/" className="flex items-center gap-1.5 sm:gap-2.5 group shrink-0 min-w-0">
-            <div className="w-7 h-7 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-tr from-[#02224D] to-[#044CD0] flex items-center justify-center text-white shadow-md shadow-[#044CD0]/30 group-hover:scale-105 transition-transform border border-blue-400/30 shrink-0">
-              <TrendingUp className="w-3.5 h-3.5 sm:w-5 sm:h-5 stroke-[2.5]" />
+            <div className="w-8.5 h-8.5 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-tr from-[#02224D] to-[#044CD0] flex items-center justify-center text-white shadow-md shadow-[#044CD0]/30 group-hover:scale-105 transition-transform border border-blue-400/30 shrink-0">
+              <TrendingUp className="w-4.5 h-4.5 sm:w-5 sm:h-5 stroke-[2.5]" />
             </div>
             <div className="flex flex-col min-w-0">
               <div className="flex items-center gap-1 sm:gap-2">
@@ -201,7 +201,7 @@ export function Navbar() {
             {selectedFunds.length > 0 && (
               <Link
                 href="/porownywarka"
-                className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl border border-blue-500/50 bg-[#044CD0]/15 text-[#60a5fa] hover:text-white flex items-center justify-center shrink-0"
+                className="relative w-8.5 h-8.5 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl border border-blue-500/50 bg-[#044CD0]/15 text-[#60a5fa] hover:text-white flex items-center justify-center shrink-0"
                 title={`${t.nav.comparator} (${selectedFunds.length})`}
                 aria-label={`${t.nav.comparator} (${selectedFunds.length})`}
               >
@@ -229,7 +229,7 @@ export function Navbar() {
               type="button"
               onClick={toggleMobileMenu}
               data-component="navbar-hamburger"
-              className={`w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl border transition-all flex items-center justify-center shrink-0 cursor-pointer shadow-xs ${
+              className={`w-8.5 h-8.5 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl border transition-all flex items-center justify-center shrink-0 cursor-pointer shadow-xs ${
                 isMobileMenuOpen
                   ? "bg-[#044CD0] text-white border-blue-400 shadow-md ring-2 ring-blue-400/30"
                   : "border-slate-300 dark:border-[#0e274d] bg-white dark:bg-[#030a16] text-slate-700 dark:text-slate-200 hover:text-[#044CD0] dark:hover:text-white"

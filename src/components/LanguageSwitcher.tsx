@@ -22,7 +22,7 @@ export function LanguageSwitcher() {
       type="button"
       onClick={toggleLocale}
       data-component="language-toggle"
-      className="h-9 sm:h-10 px-2 sm:px-2.5 rounded-lg sm:rounded-xl border border-slate-300 dark:border-[#0e274d] bg-white dark:bg-[#030a16] text-slate-700 dark:text-slate-200 hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-[#044CD0]/60 transition-all flex items-center justify-center gap-1.5 shrink-0 cursor-pointer shadow-xs text-xs font-bold"
+      className="h-8.5 sm:h-10 px-2 sm:px-2.5 rounded-lg sm:rounded-xl border border-slate-300 dark:border-[#0e274d] bg-white dark:bg-[#030a16] text-slate-700 dark:text-slate-200 hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-[#044CD0]/60 transition-all flex items-center justify-center gap-1.5 shrink-0 cursor-pointer shadow-xs text-xs font-bold"
       title={label}
       aria-label={label}
     >
