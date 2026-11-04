@@ -542,15 +542,15 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
         </div>
       ) : (
         /* View Mode: Interactive Table with Clickable Column Headers */
-        <div className="bg-[#051329] border border-[#0e274d] rounded-2xl overflow-hidden shadow-xl">
+        <div className="catalog-table-container bg-[#f0f6ff] dark:bg-[#051329] border border-blue-200/80 dark:border-[#0e274d] rounded-2xl overflow-hidden shadow-xl">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm min-w-[720px]">
-              <thead className="bg-[#030a16] text-xs uppercase tracking-wider text-slate-400 border-b border-[#0e274d]">
+            <table className="w-full text-left text-sm min-w-[720px] border-collapse">
+              <thead className="bg-[#e2eefa] dark:bg-[#030a16] text-xs uppercase tracking-wider text-[#2b4b77] dark:text-slate-400 border-b border-[#d0e2f7] dark:border-[#0e274d]">
                 <tr>
                   <th className="py-3.5 px-3 sm:px-4 font-semibold whitespace-nowrap">{t.catalog.table.typeCode}</th>
                   <th
                     onClick={() => handleSort("name")}
-                    className="py-3.5 px-3 sm:px-4 font-semibold cursor-pointer hover:text-slate-200 select-none group whitespace-nowrap"
+                    className="py-3.5 px-3 sm:px-4 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group whitespace-nowrap"
                   >
                     <div className="flex items-center gap-1.5">
                       <span>{t.catalog.table.name}</span>
@@ -565,7 +565,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   <th className="py-3.5 px-3 sm:px-4 font-semibold whitespace-nowrap">{t.catalog.table.status}</th>
                   <th
                     onClick={() => handleSort("risk")}
-                    className="py-3.5 px-3 sm:px-4 font-semibold cursor-pointer hover:text-slate-200 select-none group whitespace-nowrap"
+                    className="py-3.5 px-3 sm:px-4 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group whitespace-nowrap"
                   >
                     <div className="flex items-center gap-1.5">
                       <span>{t.catalog.table.risk}</span>
@@ -578,7 +578,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   </th>
                   <th
                     onClick={() => handleSort("fee")}
-                    className="py-3.5 px-3 sm:px-4 font-semibold cursor-pointer hover:text-slate-200 select-none group whitespace-nowrap"
+                    className="py-3.5 px-3 sm:px-4 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group whitespace-nowrap"
                   >
                     <div className="flex items-center gap-1.5">
                       <span>{t.catalog.table.fee}</span>
@@ -591,7 +591,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   </th>
                   <th
                     onClick={() => handleSort("valuation")}
-                    className="py-3.5 px-3 sm:px-4 font-semibold cursor-pointer hover:text-slate-200 select-none group whitespace-nowrap"
+                    className="py-3.5 px-3 sm:px-4 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group whitespace-nowrap"
                   >
                     <div className="flex items-center gap-1.5">
                       <span>{t.catalog.table.valuation}</span>
@@ -605,17 +605,17 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   <th className="py-3.5 px-3 sm:px-4 text-right font-semibold whitespace-nowrap">{t.catalog.table.compare}</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#0e274d]/70 text-slate-300">
+              <tbody className="divide-y divide-[#d0e2f7] dark:divide-[#0e274d]/70 text-slate-800 dark:text-slate-300">
                 {processedItems.map((item) => {
                   const inCompare = isSelected(item.subfundId);
 
                   return (
                     <tr
                       key={item.subfundId}
-                      className="hover:bg-[#071938]/60 transition-colors group"
+                      className="bg-[#f8faff] dark:bg-transparent hover:bg-[#e2eefa] dark:hover:bg-[#071938]/60 transition-colors group"
                     >
                       <td className="py-3 px-4 whitespace-nowrap">
-                        <span className="font-bold text-xs bg-[#030a16] border border-[#0e274d] px-2 py-0.5 rounded text-blue-300">
+                        <span className="font-bold text-xs bg-white dark:bg-[#030a16] border border-blue-200 dark:border-[#0e274d] px-2 py-0.5 rounded text-[#044CD0] dark:text-blue-300 shadow-2xs">
                           {item.name.toUpperCase().includes("ETF") ? "ETF" : item.type}
                         </span>
                         <div className="text-[10px] text-slate-500 font-mono mt-0.5">
@@ -625,13 +625,13 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                       <td className="py-3 px-4">
                         <Link
                           href={`/fundusze/${item.subfundId}`}
-                          className="font-semibold text-slate-100 hover:text-[#60a5fa] transition-colors block line-clamp-1"
+                          className="font-semibold text-slate-900 dark:text-slate-100 hover:text-[#044CD0] dark:hover:text-[#60a5fa] transition-colors block line-clamp-1"
                         >
                           {item.name}
                         </Link>
                       </td>
                       <td className="py-3 px-4 whitespace-nowrap">
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-[#030a16] border border-[#0e274d] text-slate-300 capitalize">
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-white dark:bg-[#030a16] border border-blue-200 dark:border-[#0e274d] text-slate-700 dark:text-slate-300 capitalize shadow-2xs">
                           {item.classification || "—"}
                         </span>
                         {item.category && (
@@ -651,13 +651,13 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                       <td className="py-3 px-4 whitespace-nowrap">
                         <RiskBadge level={item.riskLevel} showLabel={false} size="sm" />
                       </td>
-                      <td className="py-3 px-4 whitespace-nowrap font-medium text-slate-200">
+                      <td className="py-3 px-4 whitespace-nowrap font-medium text-slate-800 dark:text-slate-200">
                         {formatPercent(item.managementFee)}
                       </td>
                       <td className="py-3 px-4 whitespace-nowrap">
                         {item.latestValuation ? (
                           <div>
-                            <span className="font-bold text-slate-200">
+                            <span className="font-bold text-slate-900 dark:text-slate-200">
                               {formatCurrency(item.latestValuation)}
                             </span>
                             {item.latestValuationDate && (
@@ -667,7 +667,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                             )}
                           </div>
                         ) : (
-                          <span className="text-slate-600">—</span>
+                          <span className="text-slate-400 dark:text-slate-600">—</span>
                         )}
                       </td>
                       <td className="py-3 px-4 text-right whitespace-nowrap">
@@ -681,10 +681,10 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                                 category: item.category,
                               })
                             }
-                            className={`p-1.5 rounded-lg border text-xs transition-colors ${
+                            className={`p-1.5 rounded-lg border text-xs transition-colors shadow-2xs ${
                               inCompare
                                 ? "bg-[#044CD0] text-white border-blue-400"
-                                : "bg-[#030a16] text-slate-400 border-[#0e274d] hover:text-[#60a5fa]"
+                                : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-blue-200 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-blue-400"
                             }`}
                             title={inCompare ? t.catalog.card.removeFromCompare : t.common.compare}
                           >
@@ -692,7 +692,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                           </button>
                           <Link
                             href={`/fundusze/${item.subfundId}`}
-                            className="px-2.5 py-1 text-xs rounded-lg bg-[#030a16] hover:bg-[#071938] border border-[#0e274d] text-slate-200 transition-colors"
+                            className="px-2.5 py-1 text-xs rounded-lg bg-white hover:bg-blue-50 dark:bg-[#030a16] dark:hover:bg-[#071938] border border-blue-200 dark:border-[#0e274d] text-slate-700 dark:text-slate-200 font-medium transition-colors shadow-2xs"
                           >
                             {t.common.profile}
                           </Link>

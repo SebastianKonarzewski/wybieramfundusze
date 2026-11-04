@@ -69,7 +69,7 @@ export function Navbar() {
                 <span className="font-bold text-sm sm:text-lg text-slate-100 tracking-tight whitespace-nowrap">
                   {t.nav.brandName}<span className="text-[#3b82f6]">{t.nav.brandHighlight}</span>
                 </span>
-                <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider px-1.5 sm:px-2 py-0.5 rounded-full bg-[#044CD0]/20 text-[#60a5fa] border border-[#044CD0]/40 hidden xl:inline-block">
+                <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider px-1.5 sm:px-2 py-0.5 rounded-full bg-[#f0f7ff] dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-[#60a5fa] border border-[#bfdbfe] dark:border-[#044CD0]/40 hidden xl:inline-block shadow-2xs">
                   UKNF API
                 </span>
               </div>
