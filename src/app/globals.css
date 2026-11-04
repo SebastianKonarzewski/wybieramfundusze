@@ -155,19 +155,19 @@ html.light [class*="from-[#071938]"][class*="to-[#030a16]"] {
 
 /* Catalog Grid Cards in light mode - lighter, slightly translucent delicate blue tint */
 html.light .catalog-grid-card {
-  background-color: rgba(244, 248, 254, 0.65) !important;
+  background-color: rgba(248, 251, 255, 0.5) !important;
   border-color: #d8e6f8 !important;
 }
 
 html.light .catalog-grid-card:hover {
-  background-color: rgba(226, 239, 253, 0.8) !important;
+  background-color: rgba(234, 244, 254, 0.75) !important;
   border-color: #93c5fd !important;
 }
 
 /* Catalog Table styling in light mode - lighter, slightly translucent delicate blue tint and soft blue dividers */
 html.light .catalog-table-container,
 html.light .catalog-table-container [class*="bg-[#051329]"] {
-  background-color: rgba(244, 248, 254, 0.65) !important;
+  background-color: rgba(248, 251, 255, 0.5) !important;
   border-color: #d8e6f8 !important;
 }
 
@@ -179,18 +179,18 @@ html.light .catalog-table-container table {
 html.light .catalog-table-container thead,
 html.light .catalog-table-container thead [class*="bg-[#030a16]"],
 html.light .catalog-table-container thead th {
-  background-color: rgba(226, 238, 250, 0.75) !important;
+  background-color: rgba(236, 244, 253, 0.7) !important;
   color: #1e3a8a !important;
   border-color: #d8e6f8 !important;
 }
 
 html.light .catalog-table-container tbody tr {
-  background-color: rgba(244, 248, 254, 0.6) !important;
+  background-color: rgba(248, 251, 255, 0.45) !important;
   border-color: #d8e6f8 !important;
 }
 
 html.light .catalog-table-container tbody tr:hover {
-  background-color: rgba(226, 239, 253, 0.8) !important;
+  background-color: rgba(234, 244, 254, 0.75) !important;
 }
 
 html.light .catalog-table-container tbody tr td {
