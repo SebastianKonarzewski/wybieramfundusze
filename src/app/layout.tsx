@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ThemeProvider } from "@/lib/theme";
 import { LocaleProvider } from "@/lib/i18n";
 import { AccessibilityProvider } from "@/lib/accessibility";
 import { CookieBanner } from "@/components/CookieBanner";
@@ -32,13 +33,15 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-[#030a16] text-slate-100 font-sans selection:bg-blue-600/30 selection:text-blue-300">
-        <LocaleProvider>
-          <AccessibilityProvider>
-            {children}
-            <CookieBanner />
-            <PrivacyModal />
-          </AccessibilityProvider>
-        </LocaleProvider>
+        <ThemeProvider>
+          <LocaleProvider>
+            <AccessibilityProvider>
+              {children}
+              <CookieBanner />
+              <PrivacyModal />
+            </AccessibilityProvider>
+          </LocaleProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
