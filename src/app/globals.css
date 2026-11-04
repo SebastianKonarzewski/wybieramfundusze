@@ -50,6 +50,224 @@ html.reduced-motion *::after {
   scroll-behavior: auto !important;
 }
 
+/* ==========================================================================
+   Light Mode Theme
+   Default portal mode is Dark (html.dark).
+   When html.light is present, clean high-contrast light mode styling is applied.
+   High Contrast (html.high-contrast) is declared after this and takes precedence.
+   ========================================================================== */
+
+html.light {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+html.light body {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+/* Light mode custom scrollbars */
+html.light ::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+html.light ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+}
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Base dark container overrides */
+html.light .bg-\[\#030a16\] {
+  background-color: #f8fafc !important;
+}
+
+html.light .bg-\[\#051329\] {
+  background-color: #ffffff !important;
+}
+
+html.light .bg-\[\#071938\] {
+  background-color: #f1f5f9 !important;
+}
+
+html.light .bg-\[\#021838\] {
+  background-color: #eff6ff !important;
+}
+
+html.light .bg-\[\#02224D\] {
+  background-color: #e0f2fe !important;
+}
+
+html.light .bg-\[\#020b18\] {
+  background-color: #f8fafc !important;
+}
+
+html.light .bg-\[\#030c1c\] {
+  background-color: #ffffff !important;
+}
+
+html.light .bg-\[\#0e274d\] {
+  background-color: #e2e8f0 !important;
+}
+
+/* Translucent surfaces in light mode */
+html.light header.bg-\[\#030a16\]\/95,
+html.light .bg-\[\#030a16\]\/95,
+html.light .bg-\[\#030a16\]\/90 {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+}
+
+html.light .bg-\[\#030a16\]\/85,
+html.light .bg-\[\#030a16\]\/80,
+html.light .bg-\[\#030a16\]\/60 {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+html.light .bg-\[\#051329\]\/95,
+html.light .bg-\[\#051329\]\/90,
+html.light .bg-\[\#051329\]\/80 {
+  background-color: rgba(255, 255, 255, 0.98) !important;
+}
+
+html.light .bg-\[\#051329\]\/40 {
+  background-color: #f1f5f9 !important;
+}
+
+html.light .bg-\[\#071938\]\/60 {
+  background-color: #f1f5f9 !important;
+}
+
+html.light .bg-\[\#044CD0\]\/20,
+html.light .bg-\[\#044CD0\]\/10 {
+  background-color: rgba(4, 76, 208, 0.08) !important;
+}
+
+/* Hover background states in light mode */
+html.light .hover\:bg-\[\#071938\]:hover {
+  background-color: #f1f5f9 !important;
+}
+
+html.light .hover\:bg-\[\#0e274d\]:hover {
+  background-color: #e2e8f0 !important;
+}
+
+html.light .hover\:bg-\[\#071938\]\/60:hover {
+  background-color: #f1f5f9 !important;
+}
+
+/* Light mode Hero gradient */
+html.light .from-\[\#071938\].via-\[\#051329\].to-\[\#030a16\] {
+  background-image: linear-gradient(to bottom, #eff6ff, #f8fafc, #ffffff) !important;
+}
+
+/* Light mode borders */
+html.light .border-\[\#0e274d\],
+html.light .border-\[\#0e274d\]\/80,
+html.light .border-\[\#0e274d\]\/70,
+html.light .border-\[\#0e274d\]\/60,
+html.light .border-\[\#0e274d\]\/50,
+html.light .border-\[\#0e274d\]\/40,
+html.light .border-\[\#0e274d\]\/30,
+html.light .border-\[\#0e274d\]\/20,
+html.light .divide-\[\#0e274d\],
+html.light .divide-\[\#0e274d\]\/80,
+html.light .divide-\[\#0e274d\]\/70,
+html.light .divide-\[\#0e274d\]\/60,
+html.light .divide-\[\#0e274d\]\/40,
+html.light .border-slate-800,
+html.light .border-slate-700 {
+  border-color: #e2e8f0 !important;
+}
+
+/* Light mode text colors */
+html.light .text-slate-100 {
+  color: #0f172a !important;
+}
+
+html.light .text-slate-200 {
+  color: #1e293b !important;
+}
+
+html.light .text-slate-300 {
+  color: #334155 !important;
+}
+
+html.light .text-slate-400 {
+  color: #64748b !important;
+}
+
+html.light .text-slate-500 {
+  color: #64748b !important;
+}
+
+html.light .text-blue-300,
+html.light .text-blue-400,
+html.light .text-\[\#60a5fa\],
+html.light .text-\[\#3b82f6\] {
+  color: #044CD0 !important;
+}
+
+html.light .text-amber-300 {
+  color: #b45309 !important;
+}
+
+html.light .text-emerald-400 {
+  color: #059669 !important;
+}
+
+html.light .text-rose-400 {
+  color: #dc2626 !important;
+}
+
+/* Light mode hover states for nav & links */
+html.light .hover\:text-white:hover {
+  color: #044CD0 !important;
+}
+
+/* Keep white text on primary blue buttons */
+html.light .bg-\[\#044CD0\] {
+  background-color: #044CD0 !important;
+  color: #ffffff !important;
+}
+
+html.light .bg-\[\#044CD0\] .text-white,
+html.light .bg-\[\#044CD0\].text-white,
+html.light button.bg-\[\#044CD0\],
+html.light a.bg-\[\#044CD0\] {
+  color: #ffffff !important;
+}
+
+html.light .hover\:bg-\[\#033eb0\]:hover {
+  background-color: #033eb0 !important;
+  color: #ffffff !important;
+}
+
+/* Form inputs & select in light mode */
+html.light input:not([type="checkbox"]):not([type="radio"]),
+html.light select,
+html.light textarea {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+html.light input::placeholder {
+  color: #94a3b8 !important;
+}
+
+html.light select option {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+/* Card elevations in light mode */
+html.light .shadow-md,
+html.light .shadow-xl,
+html.light .shadow-2xl {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px -1px rgba(0, 0, 0, 0.08) !important;
+}
+
 /* Accessibility: High Contrast (WCAG AAA Black & Yellow) */
 html.high-contrast {
   background-color: #000000 !important;

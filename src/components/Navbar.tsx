@@ -8,6 +8,7 @@ import { useCompare } from "./CompareContext";
 import { useTranslation } from "@/lib/i18n";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { AccessibilityToolbar } from "./AccessibilityToolbar";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -117,6 +118,9 @@ export function Navbar() {
             </nav>
 
             <div className="w-px h-4 sm:h-5 bg-[#0e274d] mx-0.5" />
+
+            {/* Dark / Light Theme Toggle */}
+            <ThemeToggle />
 
             {/* Accessibility Toolbar */}
             <AccessibilityToolbar />

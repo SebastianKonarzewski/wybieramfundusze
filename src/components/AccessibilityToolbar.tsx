@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import {
   Accessibility,
   Sun,
+  Moon,
   Eye,
   Zap,
   RotateCcw,
@@ -17,6 +18,8 @@ import { useTranslation } from "@/lib/i18n";
 export function AccessibilityToolbar() {
   const [isOpen, setIsOpen] = useState(false);
   const {
+    theme,
+    toggleTheme,
     fontSize,
     setFontSize,
     highContrast,
@@ -59,7 +62,7 @@ export function AccessibilityToolbar() {
   ];
 
   const hasNonDefaultSettings =
-    fontSize !== "normal" || highContrast || reducedMotion;
+    theme !== "dark" || fontSize !== "normal" || highContrast || reducedMotion;
 
   return (
     <div className="relative shrink-0" ref={menuRef}>
@@ -129,6 +132,41 @@ export function AccessibilityToolbar() {
                 </button>
               ))}
             </div>
+          </div>
+
+          {/* Theme Mode Toggle (Dark / Light) */}
+          <div className="pt-2 border-t border-[#0e274d]/80 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              {theme === "light" ? (
+                <Sun className="w-4 h-4 text-amber-500 shrink-0" />
+              ) : (
+                <Moon className="w-4 h-4 text-[#3b82f6] shrink-0" />
+              )}
+              <div>
+                <div className="font-semibold text-slate-200">{t.a11y.theme}</div>
+                <div className="text-[10px] text-slate-400">
+                  {theme === "light" ? t.a11y.themeLight : t.a11y.themeDark}
+                </div>
+              </div>
+            </div>
+
+            <button
+              onClick={toggleTheme}
+              role="switch"
+              aria-checked={theme === "light"}
+              className={`w-11 h-6 rounded-full p-1 transition-colors relative cursor-pointer ${
+                theme === "light" ? "bg-[#044CD0]" : "bg-[#030a16] border border-[#0e274d]"
+              }`}
+              title={theme === "light" ? t.a11y.switchToDark : t.a11y.switchToLight}
+            >
+              <div
+                className={`w-4 h-4 rounded-full transition-transform ${
+                  theme === "light"
+                    ? "translate-x-5 bg-white"
+                    : "translate-x-0 bg-slate-400"
+                }`}
+              />
+            </button>
           </div>
 
           {/* High Contrast Toggle */}

@@ -98,6 +98,7 @@ export function PrivacyModal() {
               <li><strong className="text-slate-200">comparison_funds</strong> — {t.privacyModal.storageItem2}</li>
               <li><strong className="text-slate-200">cookie_consent</strong> — {t.privacyModal.storageItem3}</li>
               <li><strong className="text-slate-200">a11y_preferences</strong> — {t.privacyModal.storageItem4}</li>
+              <li><strong className="text-slate-200">theme_mode</strong> — {t.privacyModal.storageItem5}</li>
             </ul>
           </section>
 
