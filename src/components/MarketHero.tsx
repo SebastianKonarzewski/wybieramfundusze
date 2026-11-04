@@ -21,9 +21,12 @@ import {
 } from "recharts";
 import { MarketStatistics } from "@/types/knf";
 import { useTranslation } from "@/lib/i18n";
+import { useTheme } from "@/lib/theme";
 
 export function MarketHero({ stats }: { stats: MarketStatistics }) {
   const { t, formatLargeNumber, formatDate, formatNumber, formatPercent } = useTranslation();
+  const { theme } = useTheme();
+  const isLight = theme === "light";
 
   // Calculate 12-month asset trend dynamics with proper min/max scaling
   const trendData = useMemo(() => {
@@ -133,7 +136,7 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
 
         {/* Dynamic Market Assets Trend Strip with Scaled Domain */}
         {trendData && (
-          <div className="bg-white dark:bg-[#030a16]/75 border border-blue-200/80 dark:border-[#0e274d] rounded-xl sm:rounded-2xl p-3 sm:p-4 flex flex-col md:flex-row items-center justify-between gap-3 shadow-sm dark:shadow-md">
+          <div className="bg-white dark:bg-[#030a16]/75 border border-slate-200/90 dark:border-[#0e274d] rounded-xl sm:rounded-2xl p-3 sm:p-4 flex flex-col md:flex-row items-center justify-between gap-3 shadow-xs dark:shadow-md">
             {/* Left: Trend summary & concrete values */}
             <div className="flex items-center gap-3 shrink-0 self-start md:self-auto">
               <div
@@ -186,8 +189,16 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
                 >
                   <defs>
                     <linearGradient id="heroScaledGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#044CD0" stopOpacity={0.45} />
-                      <stop offset="100%" stopColor="#044CD0" stopOpacity={0.0} />
+                      <stop
+                        offset="0%"
+                        stopColor={isLight ? "#60a5fa" : "#044CD0"}
+                        stopOpacity={isLight ? 0.08 : 0.4}
+                      />
+                      <stop
+                        offset="100%"
+                        stopColor="#044CD0"
+                        stopOpacity={0.0}
+                      />
                     </linearGradient>
                   </defs>
                   <YAxis domain={[trendData.yMin, trendData.yMax]} hide />
@@ -210,8 +221,8 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
                   <Area
                     type="monotone"
                     dataKey="netAssets"
-                    stroke="#044CD0"
-                    strokeWidth={2.5}
+                    stroke={isLight ? "#044CD0" : "#3b82f6"}
+                    strokeWidth={2}
                     fillOpacity={1}
                     fill="url(#heroScaledGrad)"
                   />
