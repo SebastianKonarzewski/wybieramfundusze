@@ -138,12 +138,12 @@ html.light [class*="bg-blue-50"] {
   background-color: #f0f7ff !important;
 }
 
-/* Hero banner gradient: mirrors dark mode layout (top-right blue accent, bottom-left soft grayish-blue glow, smoothly reaching clean white) */
+/* Hero banner background: pure white base with soft blue top-right corner and subtle grayish-blue bottom-left corner */
 html.light [class*="from-[#071938]"][class*="to-[#030a16]"] {
   background: 
     radial-gradient(ellipse 65% 55% at 100% 0%, rgba(4, 76, 208, 0.08) 0%, rgba(227, 239, 253, 0.45) 30%, transparent 65%),
     radial-gradient(ellipse 55% 50% at 0% 100%, rgba(195, 212, 232, 0.35) 0%, rgba(220, 232, 246, 0.22) 30%, transparent 60%),
-    linear-gradient(180deg, #f0f6fe 0%, #f7faff 25%, #ffffff 55%, #ffffff 100%) !important;
+    #ffffff !important;
   border-color: #d0e2f7 !important;
 }
 
