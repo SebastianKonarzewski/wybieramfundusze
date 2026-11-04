@@ -37,7 +37,7 @@ export function Navbar() {
                 <FlaskConical className="w-3 h-3 text-amber-400" />
                 {t.nav.devBannerTitle}
               </span>
-              <span className="text-slate-400 hidden md:inline">
+              <span className="text-slate-400 hidden lg:inline">
                 {t.nav.devBannerDesc}
               </span>
             </div>
@@ -68,11 +68,11 @@ export function Navbar() {
                 <span className="font-bold text-sm sm:text-lg text-slate-100 tracking-tight whitespace-nowrap">
                   {t.nav.brandName}<span className="text-[#3b82f6]">{t.nav.brandHighlight}</span>
                 </span>
-                <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider px-1.5 sm:px-2 py-0.5 rounded-full bg-[#044CD0]/20 text-[#60a5fa] border border-[#044CD0]/40 hidden md:inline-block">
+                <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider px-1.5 sm:px-2 py-0.5 rounded-full bg-[#044CD0]/20 text-[#60a5fa] border border-[#044CD0]/40 hidden xl:inline-block">
                   UKNF API
                 </span>
               </div>
-              <p className="text-[10px] sm:text-[11px] text-slate-400 hidden sm:block truncate">
+              <p className="text-[10px] sm:text-[11px] text-slate-400 hidden xl:block truncate">
                 {t.nav.brandSubtitle}
               </p>
             </div>
@@ -80,7 +80,7 @@ export function Navbar() {
 
           {/* Navigation, Accessibility & Language Switcher */}
           <div className="flex items-center gap-1 sm:gap-2 shrink-0">
-            <nav className="flex items-center gap-0.5 sm:gap-1.5">
+            <nav className="flex items-center gap-0.5 sm:gap-1">
               {navLinks.map((link) => {
                 const Icon = link.icon;
                 const isActive = pathname === link.href;
@@ -89,7 +89,7 @@ export function Navbar() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`relative flex items-center justify-center gap-1.5 sm:gap-2 p-1.5 sm:px-3 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-all ${
+                    className={`relative flex items-center justify-center gap-1.5 lg:gap-2 p-1.5 sm:p-2 lg:px-3 lg:py-2 rounded-lg text-xs lg:text-sm font-medium transition-all ${
                       isActive
                         ? "bg-[#044CD0] text-white shadow-xs font-semibold"
                         : "text-slate-300 hover:text-white hover:bg-[#071938]"
@@ -100,14 +100,14 @@ export function Navbar() {
                     <div className="relative flex items-center justify-center">
                       <Icon className="w-4 h-4 shrink-0" />
                       {link.badge !== undefined && link.badge > 0 && (
-                        <span className="absolute -top-1.5 -right-2 flex items-center justify-center min-w-[14px] h-[14px] px-0.5 text-[9px] font-black rounded-full bg-amber-400 text-slate-950 shadow-xs sm:hidden">
+                        <span className="absolute -top-1.5 -right-2 flex items-center justify-center min-w-[14px] h-[14px] px-0.5 text-[9px] font-black rounded-full bg-amber-400 text-slate-950 shadow-xs lg:hidden">
                           {link.badge}
                         </span>
                       )}
                     </div>
-                    <span className="hidden md:inline">{link.label}</span>
+                    <span className="hidden lg:inline">{link.label}</span>
                     {link.badge !== undefined && link.badge > 0 && (
-                      <span className="hidden sm:flex items-center justify-center w-5 h-5 text-xs font-bold rounded-full bg-amber-400 text-slate-950 shadow-xs">
+                      <span className="hidden lg:flex items-center justify-center w-5 h-5 text-xs font-bold rounded-full bg-amber-400 text-slate-950 shadow-xs">
                         {link.badge}
                       </span>
                     )}

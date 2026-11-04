@@ -57,17 +57,17 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
   const [sortField, setSortField] = useState<"name" | "fee" | "risk" | "valuation">("name");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [currentPage, setCurrentPage] = useState(0);
-  const [viewMode, setViewMode] = useState<"grid" | "table">("table");
+  const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
   const [hasUserToggledView, setHasUserToggledView] = useState(false);
 
-  // Set default view: "table" on desktop (>=768px), "grid" on mobile (<768px)
+  // Set default view: "table" on desktop (>=1024px), "grid" on mobile & tablet (<1024px)
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     const updateDefaultView = () => {
       if (!hasUserToggledView) {
-        const isMobile = window.innerWidth < 768;
-        setViewMode(isMobile ? "grid" : "table");
+        const isDesktop = window.innerWidth >= 1024;
+        setViewMode(isDesktop ? "table" : "grid");
       }
     };
 
@@ -429,7 +429,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
 
       {/* View Mode: Cards Grid */}
       {viewMode === "grid" ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {processedItems.map((item) => {
             const inCompare = isSelected(item.subfundId);
 
