@@ -90,15 +90,15 @@ export function AccessibilityToolbar({
         aria-haspopup="dialog"
         title={t.a11y.toolbarTitle}
         aria-label={t.a11y.toolbarTitle}
-        className={`p-1.5 sm:p-2 rounded-lg border transition-all cursor-pointer flex items-center justify-center relative ${
+        className={`w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl border transition-all cursor-pointer flex items-center justify-center relative shrink-0 ${
           isOpen || hasNonDefaultSettings
             ? "bg-[#044CD0] text-white border-blue-400 shadow-xs"
             : "bg-[#030a16] text-slate-300 border-[#0e274d] hover:text-white hover:border-[#044CD0]/60"
         }`}
       >
-        <Accessibility className="w-4 h-4" />
+        <Accessibility className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
         {hasNonDefaultSettings && (
-          <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-amber-400" />
+          <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-amber-400 ring-2 ring-[#030a16]" />
         )}
       </button>
 

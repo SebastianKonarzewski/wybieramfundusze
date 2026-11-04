@@ -22,11 +22,11 @@ export function LanguageSwitcher() {
       type="button"
       onClick={toggleLocale}
       data-component="language-toggle"
-      className="p-1.5 sm:px-2.5 sm:py-1.5 rounded-lg border border-slate-300 dark:border-[#0e274d] bg-white dark:bg-[#030a16] text-slate-700 dark:text-slate-200 hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-[#044CD0]/60 transition-all flex items-center gap-1 shrink-0 cursor-pointer shadow-xs text-xs font-bold"
+      className="h-9 sm:h-10 px-2 sm:px-2.5 rounded-lg sm:rounded-xl border border-slate-300 dark:border-[#0e274d] bg-white dark:bg-[#030a16] text-slate-700 dark:text-slate-200 hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-[#044CD0]/60 transition-all flex items-center justify-center gap-1.5 shrink-0 cursor-pointer shadow-xs text-xs font-bold"
       title={label}
       aria-label={label}
     >
-      <Globe className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.2]" />
+      <Globe className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.2]" />
       <span>{nextLocale}</span>
     </button>
   );

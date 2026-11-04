@@ -196,17 +196,17 @@ export function Navbar() {
           </div>
 
           {/* Mobile Navigation Controls (< lg) */}
-          <div className="flex lg:hidden items-center gap-1 sm:gap-1.5 shrink-0">
+          <div className="flex lg:hidden items-center gap-1.5 sm:gap-2 shrink-0">
             {/* Quick Comparator Badge Link (only when funds are selected for comparison) */}
             {selectedFunds.length > 0 && (
               <Link
                 href="/porownywarka"
-                className="relative p-1.5 sm:p-2 rounded-lg border border-blue-500/50 bg-[#044CD0]/15 text-[#60a5fa] hover:text-white flex items-center justify-center shrink-0"
+                className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl border border-blue-500/50 bg-[#044CD0]/15 text-[#60a5fa] hover:text-white flex items-center justify-center shrink-0"
                 title={`${t.nav.comparator} (${selectedFunds.length})`}
                 aria-label={`${t.nav.comparator} (${selectedFunds.length})`}
               >
-                <Scale className="w-4 h-4" />
-                <span className="absolute -top-1 -right-1 flex items-center justify-center min-w-[15px] h-[15px] px-0.5 text-[9px] font-black rounded-full bg-amber-400 text-slate-950 shadow-xs">
+                <Scale className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
+                <span className="absolute -top-1 -right-1 flex items-center justify-center min-w-[16px] h-4 px-0.5 text-[9px] font-black rounded-full bg-amber-400 text-slate-950 shadow-xs">
                   {selectedFunds.length}
                 </span>
               </Link>
@@ -224,12 +224,12 @@ export function Navbar() {
               onOpenChange={handleA11yOpenChange}
             />
 
-            {/* Hamburger Button with explicit active state when menu is open */}
+            {/* Hamburger Button with exact same dimensions and scaling as all other buttons */}
             <button
               type="button"
               onClick={toggleMobileMenu}
               data-component="navbar-hamburger"
-              className={`p-1.5 sm:p-2 rounded-lg border transition-all flex items-center justify-center shrink-0 cursor-pointer shadow-xs ${
+              className={`w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl border transition-all flex items-center justify-center shrink-0 cursor-pointer shadow-xs ${
                 isMobileMenuOpen
                   ? "bg-[#044CD0] text-white border-blue-400 shadow-md ring-2 ring-blue-400/30"
                   : "border-slate-300 dark:border-[#0e274d] bg-white dark:bg-[#030a16] text-slate-700 dark:text-slate-200 hover:text-[#044CD0] dark:hover:text-white"
@@ -239,9 +239,9 @@ export function Navbar() {
               aria-label={isMobileMenuOpen ? t.nav.closeMenu : t.nav.openMenu}
             >
               {isMobileMenuOpen ? (
-                <X className="w-4 h-4 sm:w-5 sm:h-5 text-current" />
+                <X className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-current" />
               ) : (
-                <Menu className="w-4 h-4 sm:w-5 sm:h-5 text-current" />
+                <Menu className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-current" />
               )}
             </button>
           </div>

@@ -16,7 +16,7 @@ export function ThemeToggle() {
       type="button"
       onClick={toggleTheme}
       data-component="theme-toggle"
-      className={`p-1.5 sm:p-2 rounded-lg border transition-all cursor-pointer flex items-center justify-center relative shrink-0 ${
+      className={`w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl border transition-all cursor-pointer flex items-center justify-center relative shrink-0 ${
         isLight
           ? "bg-white text-blue-600 border-slate-300 hover:bg-slate-50 hover:border-blue-500 shadow-xs"
           : "bg-[#030a16] text-slate-300 border-[#0e274d] hover:text-white hover:border-[#044CD0]/60"
@@ -25,9 +25,9 @@ export function ThemeToggle() {
       aria-label={t.a11y.themeToggle}
     >
       {isLight ? (
-        <Moon className="w-4 h-4 text-[#044CD0] transition-transform" />
+        <Moon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-[#044CD0] transition-transform" />
       ) : (
-        <Sun className="w-4 h-4 text-amber-400 transition-transform" />
+        <Sun className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-amber-400 transition-transform" />
       )}
     </button>
   );
