@@ -412,9 +412,8 @@ html.high-contrast * {
 }
 
 /* Only hide decorative glow blobs - NEVER hide structural layout containers */
-html.high-contrast .pointer-events-none[class*="blur-"],
-html.high-contrast div.blur-3xl,
-html.high-contrast div.blur-2xl {
+html.high-contrast [data-component="hero-glow-blob"],
+html.high-contrast div.blur-3xl:not(header):not(nav):not(div:has(header)) {
   display: none !important;
 }
 
@@ -424,8 +423,9 @@ html.high-contrast [class*="backdrop-blur"] {
   -webkit-backdrop-filter: none !important;
 }
 
-/* 2. Header, Navbar & Top Announcement Banner (Always Fully Visible) */
-html.high-contrast header {
+/* 2. Header, Navbar & Top Announcement Banner (Always Fully Visible & Sticky) */
+html.high-contrast header,
+html.high-contrast [data-component="navbar-header"] {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
@@ -433,19 +433,40 @@ html.high-contrast header {
   border-bottom: 2px solid #ffff00 !important;
   position: sticky !important;
   top: 0 !important;
-  z-index: 40 !important;
+  z-index: 50 !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
+html.high-contrast [data-component="announcement-banner"],
 html.high-contrast [class*="bg-[#021838]"] {
   display: block !important;
   visibility: visible !important;
+  opacity: 1 !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 28px !important;
   background-color: #000000 !important;
   border-bottom: 1px solid #ffff00 !important;
   color: #ffff00 !important;
 }
 
+html.high-contrast [data-component="announcement-banner"] *,
 html.high-contrast [class*="bg-[#021838]"] * {
   color: #ffff00 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+html.high-contrast [data-component="navbar-content"] {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 100% !important;
+  background-color: #000000 !important;
 }
 
 /* Brand Logo Container */

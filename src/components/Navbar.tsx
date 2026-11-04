@@ -29,9 +29,15 @@ export function Navbar() {
         {t.a11y.skipToContent}
       </a>
 
-      <header className="sticky top-0 z-40 w-full border-b border-[#0e274d] bg-[#030a16]/95 backdrop-blur-md">
+      <header
+        data-component="navbar-header"
+        className="sticky top-0 z-50 w-full border-b border-[#0e274d] bg-[#030a16]/95 backdrop-blur-md"
+      >
         {/* Dev / Preview Mode Top Announcement Banner */}
-        <div className="w-full bg-[#021838] border-b border-[#0e274d] text-[10px] sm:text-xs py-1 sm:py-1.5 px-2.5 sm:px-4 lg:px-5 xl:px-8">
+        <div
+          data-component="announcement-banner"
+          className="w-full bg-[#021838] border-b border-[#0e274d] text-[10px] sm:text-xs py-1 sm:py-1.5 px-2.5 sm:px-4 lg:px-5 xl:px-8"
+        >
           <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-x-4 gap-y-0.5 sm:gap-y-1 text-center sm:text-left">
             <div className="flex items-center gap-1.5 sm:gap-2 justify-center sm:justify-start">
               <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded font-semibold bg-amber-500/15 text-amber-300 border border-amber-500/30 shrink-0">
@@ -58,7 +64,10 @@ export function Navbar() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-2.5 sm:px-4 lg:px-5 xl:px-8 h-13 sm:h-16 flex items-center justify-between gap-1.5 lg:gap-2 xl:gap-3">
+        <div
+          data-component="navbar-content"
+          className="max-w-7xl mx-auto px-2.5 sm:px-4 lg:px-5 xl:px-8 h-13 sm:h-16 flex items-center justify-between gap-1.5 lg:gap-2 xl:gap-3"
+        >
           {/* Brand with UKNF Navy Blue styling */}
           <Link href="/" className="flex items-center gap-1.5 sm:gap-2.5 group shrink-0 min-w-0">
             <div className="w-7 h-7 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-tr from-[#02224D] to-[#044CD0] flex items-center justify-center text-white shadow-md shadow-[#044CD0]/30 group-hover:scale-105 transition-transform border border-blue-400/30 shrink-0">
