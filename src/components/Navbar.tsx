@@ -90,6 +90,7 @@ export function Navbar() {
                   <Link
                     key={link.href}
                     href={link.href}
+                    aria-current={isActive ? "page" : undefined}
                     className={`relative flex items-center justify-center gap-1.5 lg:gap-1.5 xl:gap-2 p-1.5 sm:p-2 lg:px-2 lg:py-1.5 xl:px-3 xl:py-2 rounded-lg text-xs xl:text-sm font-medium transition-all whitespace-nowrap shrink-0 ${
                       isActive
                         ? "bg-[#044CD0] text-white shadow-xs font-semibold"

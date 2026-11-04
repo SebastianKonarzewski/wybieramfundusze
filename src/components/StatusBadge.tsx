@@ -26,6 +26,7 @@ export function StatusBadge({
   if (isLiquidating) {
     return (
       <span
+        data-component="status-badge"
         title={
           liquidationStartDate
             ? `${t.common.inLiquidation} ${t.common.since} ${formatDate(liquidationStartDate)}${liquidationEndDate ? ` - ${formatDate(liquidationEndDate)}` : ""}`
@@ -42,6 +43,7 @@ export function StatusBadge({
   if (isActive === false) {
     return (
       <span
+        data-component="status-badge"
         className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700 ${className}`}
       >
         <XCircle className="w-3 h-3 text-slate-500" />
@@ -52,6 +54,7 @@ export function StatusBadge({
 
   return (
     <span
+      data-component="status-badge"
       className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 ${className}`}
     >
       <CheckCircle2 className="w-3 h-3 text-emerald-400" />

@@ -223,6 +223,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
             <div className="flex items-center bg-[#030a16] p-1 rounded-xl border border-[#0e274d] shrink-0">
               <button
                 onClick={() => handleViewModeChange("grid")}
+                aria-pressed={viewMode === "grid"}
                 className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
                   viewMode === "grid"
                     ? "bg-[#044CD0] text-white shadow-xs"
@@ -235,6 +236,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
               </button>
               <button
                 onClick={() => handleViewModeChange("table")}
+                aria-pressed={viewMode === "table"}
                 className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
                   viewMode === "table"
                     ? "bg-[#044CD0] text-white shadow-xs"
@@ -290,6 +292,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   <button
                     key={cls.id}
                     onClick={() => toggleClassification(cls.id)}
+                    aria-pressed={isSelected}
                     className={`inline-flex items-center gap-1 px-2.5 sm:px-3 py-1 rounded-lg text-[11px] sm:text-xs font-medium transition-all cursor-pointer ${
                       isSelected
                         ? "bg-[#044CD0] text-white shadow-md font-bold scale-102 border border-blue-400/50"
@@ -320,6 +323,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   <button
                     key={type}
                     onClick={() => toggleType(type)}
+                    aria-pressed={isSelected}
                     className={`inline-flex items-center gap-1 px-2 sm:px-2.5 py-1 rounded-lg text-[11px] sm:text-xs font-medium transition-all cursor-pointer ${
                       isSelected
                         ? "bg-[#044CD0] text-white shadow-xs font-bold border border-blue-400/60"

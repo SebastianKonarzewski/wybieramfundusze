@@ -94,6 +94,7 @@ export function RiskBadge({ level, showLabel = true, size = "md" }: RiskBadgePro
         {[1, 2, 3, 4, 5, 6, 7].map((num) => (
           <span
             key={num}
+            data-active={num <= level ? "true" : "false"}
             className={`w-1.5 h-3 rounded-xs ${
               num <= level ? info.dot : "bg-slate-200 dark:bg-slate-800 border border-slate-300/40 dark:border-transparent"
             }`}
