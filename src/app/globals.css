@@ -393,304 +393,273 @@ html.light:not(.high-contrast) [class*="bg-red-950"] {
 }
 
 /* ==========================================================================
-   Accessibility: High Contrast (WCAG AAA)
-   - Dark High Contrast (Black & Yellow) for dark theme: html.dark.high-contrast
-   - Light High Contrast (White & Black) for light theme: html.light.high-contrast
+   Accessibility: High Contrast (WCAG AAA Black & Yellow)
+   Full precedence over both dark and light modes.
+   Standard Polish Public Portal / KNF / BIP / Gov.pl High Contrast Theme.
    ========================================================================== */
 
-/* Shared High Contrast Rules */
+/* 1. Global Canvas & Resets */
+html.high-contrast,
+html.high-contrast body {
+  background-color: #000000 !important;
+  background-image: none !important;
+  color: #ffff00 !important;
+}
+
 html.high-contrast * {
   box-shadow: none !important;
   text-shadow: none !important;
 }
 
-html.high-contrast [class*="blur-"],
-html.high-contrast .blur-3xl,
-html.high-contrast .blur-2xl {
+/* Only hide decorative glow blobs - NEVER hide structural layout containers */
+html.high-contrast .pointer-events-none[class*="blur-"],
+html.high-contrast div.blur-3xl,
+html.high-contrast div.blur-2xl {
   display: none !important;
 }
 
-/* ==========================================================================
-   1. DARK HIGH CONTRAST (WCAG AAA Black & Yellow)
-   ========================================================================== */
-html.dark.high-contrast,
-html.dark.high-contrast body,
-html.high-contrast:not(.light),
-html.high-contrast:not(.light) body {
+/* Reset backdrop-blur on all header and floating containers so they stay 100% visible */
+html.high-contrast [class*="backdrop-blur"] {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* 2. Header, Navbar & Top Announcement Banner (Always Fully Visible) */
+html.high-contrast header {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
   background-color: #000000 !important;
-  background-image: none !important;
+  border-bottom: 2px solid #ffff00 !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 40 !important;
+}
+
+html.high-contrast [class*="bg-[#021838]"] {
+  display: block !important;
+  visibility: visible !important;
+  background-color: #000000 !important;
+  border-bottom: 1px solid #ffff00 !important;
   color: #ffff00 !important;
 }
 
-html.dark.high-contrast [class*="bg-[#030a16]"],
-html.dark.high-contrast [class*="bg-[#051329]"],
-html.dark.high-contrast [class*="bg-[#071938]"],
-html.dark.high-contrast [class*="bg-[#021838]"],
-html.dark.high-contrast [class*="bg-[#02224D]"],
-html.dark.high-contrast [class*="bg-[#020b18]"],
-html.dark.high-contrast [class*="bg-[#030c1c]"],
-html.dark.high-contrast [class*="bg-slate-900"],
-html.dark.high-contrast [class*="bg-slate-950"],
-html.dark.high-contrast [class*="bg-slate-800"],
-html.dark.high-contrast [class*="from-[#071938]"],
-html.dark.high-contrast [class*="from-[#02224D]"],
-html.dark.high-contrast [class*="to-[#030a16]"],
-html.dark.high-contrast [class*="to-[#044CD0]"],
-html.dark.high-contrast .catalog-grid-card,
-html.dark.high-contrast .catalog-table-container,
-html.dark.high-contrast header,
-html.dark.high-contrast footer,
-html.dark.high-contrast main,
-html.dark.high-contrast section,
-html.dark.high-contrast [role="dialog"],
-html.high-contrast:not(.light) [class*="bg-[#030a16]"],
-html.high-contrast:not(.light) [class*="bg-[#051329]"],
-html.high-contrast:not(.light) [class*="bg-[#071938]"],
-html.high-contrast:not(.light) [class*="bg-[#021838]"],
-html.high-contrast:not(.light) [class*="bg-[#02224D]"],
-html.high-contrast:not(.light) [class*="bg-[#020b18]"],
-html.high-contrast:not(.light) [class*="bg-[#030c1c]"],
-html.high-contrast:not(.light) [class*="bg-slate-900"],
-html.high-contrast:not(.light) [class*="bg-slate-950"],
-html.high-contrast:not(.light) [class*="bg-slate-800"],
-html.high-contrast:not(.light) [class*="from-[#071938]"],
-html.high-contrast:not(.light) [class*="from-[#02224D]"],
-html.high-contrast:not(.light) [class*="to-[#030a16]"],
-html.high-contrast:not(.light) [class*="to-[#044CD0]"],
-html.high-contrast:not(.light) .catalog-grid-card,
-html.high-contrast:not(.light) .catalog-table-container,
-html.high-contrast:not(.light) header,
-html.high-contrast:not(.light) footer,
-html.high-contrast:not(.light) main,
-html.high-contrast:not(.light) section,
-html.high-contrast:not(.light) [role="dialog"] {
+html.high-contrast [class*="bg-[#021838]"] * {
+  color: #ffff00 !important;
+}
+
+/* Brand Logo Container */
+html.high-contrast [class*="from-[#02224D]"][class*="to-[#044CD0]"] {
+  background-color: #000000 !important;
+  background-image: none !important;
+  border: 2px solid #ffff00 !important;
+  color: #ffff00 !important;
+}
+
+html.high-contrast [class*="from-[#02224D]"][class*="to-[#044CD0]"] svg {
+  color: #ffff00 !important;
+  stroke: #ffff00 !important;
+}
+
+/* 3. Containers, Cards, Sections & Panels */
+html.high-contrast [class*="bg-[#030a16]"],
+html.high-contrast [class*="bg-[#051329]"],
+html.high-contrast [class*="bg-[#071938]"],
+html.high-contrast [class*="bg-[#02224D]"],
+html.high-contrast [class*="bg-[#020b18]"],
+html.high-contrast [class*="bg-[#030c1c]"],
+html.high-contrast [class*="bg-slate-900"],
+html.high-contrast [class*="bg-slate-950"],
+html.high-contrast [class*="bg-slate-800"],
+html.high-contrast [class*="from-[#071938]"],
+html.high-contrast [class*="from-[#051329]"],
+html.high-contrast [class*="to-[#030a16]"],
+html.high-contrast [class*="to-[#044CD0]"],
+html.high-contrast [class*="bg-blue-"],
+html.high-contrast [class*="bg-[#f0f7ff]"],
+html.high-contrast [class*="bg-[#eff6ff]"],
+html.high-contrast [class*="bg-[#f8fbff]"],
+html.high-contrast [class*="bg-[#f4f8fe]"],
+html.high-contrast .catalog-grid-card,
+html.high-contrast .catalog-table-container,
+html.high-contrast footer,
+html.high-contrast main,
+html.high-contrast section,
+html.high-contrast [role="dialog"],
+html.high-contrast [class*="rounded-2xl"],
+html.high-contrast [class*="rounded-3xl"] {
   background-color: #000000 !important;
   background-image: none !important;
   border-color: #ffff00 !important;
 }
 
-html.dark.high-contrast [class*="border-[#0e274d]"],
-html.dark.high-contrast [class*="border-blue-"],
-html.dark.high-contrast [class*="border-slate-"],
-html.dark.high-contrast [class*="divide-[#0e274d]"] > * + *,
-html.dark.high-contrast [class*="divide-slate-"] > * + *,
-html.dark.high-contrast [class*="divide-[#bfdbfe]"] > * + *,
-html.dark.high-contrast [class*="divide-[#d0e2f7]"] > * + *,
-html.dark.high-contrast hr,
-html.high-contrast:not(.light) [class*="border-[#0e274d]"],
-html.high-contrast:not(.light) [class*="border-blue-"],
-html.high-contrast:not(.light) [class*="border-slate-"],
-html.high-contrast:not(.light) [class*="divide-[#0e274d]"] > * + *,
-html.high-contrast:not(.light) [class*="divide-slate-"] > * + *,
-html.high-contrast:not(.light) [class*="divide-[#bfdbfe]"] > * + *,
-html.high-contrast:not(.light) [class*="divide-[#d0e2f7]"] > * + *,
-html.high-contrast:not(.light) hr {
+/* 4. Borders, Lines and Dividers */
+html.high-contrast [class*="border-[#0e274d]"],
+html.high-contrast [class*="border-blue-"],
+html.high-contrast [class*="border-slate-"],
+html.high-contrast [class*="divide-[#0e274d]"] > * + *,
+html.high-contrast [class*="divide-slate-"] > * + *,
+html.high-contrast [class*="divide-[#bfdbfe]"] > * + *,
+html.high-contrast [class*="divide-[#d0e2f7]"] > * + *,
+html.high-contrast hr {
   border-color: #ffff00 !important;
 }
 
-html.dark.high-contrast .catalog-grid-card,
-html.dark.high-contrast .catalog-table-container,
-html.dark.high-contrast [role="dialog"],
-html.dark.high-contrast header,
-html.dark.high-contrast footer,
-html.high-contrast:not(.light) .catalog-grid-card,
-html.high-contrast:not(.light) .catalog-table-container,
-html.high-contrast:not(.light) [role="dialog"],
-html.high-contrast:not(.light) header,
-html.high-contrast:not(.light) footer {
+html.high-contrast .catalog-grid-card,
+html.high-contrast .catalog-table-container,
+html.high-contrast [role="dialog"],
+html.high-contrast footer {
   border: 2px solid #ffff00 !important;
 }
 
-html.dark.high-contrast p,
-html.dark.high-contrast h1,
-html.dark.high-contrast h2,
-html.dark.high-contrast h3,
-html.dark.high-contrast h4,
-html.dark.high-contrast h5,
-html.dark.high-contrast h6,
-html.dark.high-contrast span:not([data-active]),
-html.dark.high-contrast label,
-html.dark.high-contrast strong,
-html.dark.high-contrast b,
-html.dark.high-contrast time,
-html.dark.high-contrast [class*="text-slate-"],
-html.dark.high-contrast [class*="text-blue-"],
-html.dark.high-contrast [class*="text-[#044CD0]"],
-html.dark.high-contrast [class*="text-[#3b82f6]"],
-html.dark.high-contrast [class*="text-[#60a5fa]"],
-html.dark.high-contrast [class*="text-emerald-"],
-html.dark.high-contrast [class*="text-rose-"],
-html.dark.high-contrast [class*="text-amber-"],
-html.dark.high-contrast [class*="text-teal-"],
-html.dark.high-contrast [class*="text-cyan-"],
-html.dark.high-contrast [class*="text-orange-"],
-html.dark.high-contrast [class*="text-red-"],
-html.high-contrast:not(.light) p,
-html.high-contrast:not(.light) h1,
-html.high-contrast:not(.light) h2,
-html.high-contrast:not(.light) h3,
-html.high-contrast:not(.light) h4,
-html.high-contrast:not(.light) h5,
-html.high-contrast:not(.light) h6,
-html.high-contrast:not(.light) span:not([data-active]),
-html.high-contrast:not(.light) label,
-html.high-contrast:not(.light) strong,
-html.high-contrast:not(.light) b,
-html.high-contrast:not(.light) time,
-html.high-contrast:not(.light) [class*="text-slate-"],
-html.high-contrast:not(.light) [class*="text-blue-"],
-html.high-contrast:not(.light) [class*="text-[#044CD0]"],
-html.high-contrast:not(.light) [class*="text-[#3b82f6]"],
-html.high-contrast:not(.light) [class*="text-[#60a5fa]"],
-html.high-contrast:not(.light) [class*="text-emerald-"],
-html.high-contrast:not(.light) [class*="text-rose-"],
-html.high-contrast:not(.light) [class*="text-amber-"],
-html.high-contrast:not(.light) [class*="text-teal-"],
-html.high-contrast:not(.light) [class*="text-cyan-"],
-html.high-contrast:not(.light) [class*="text-orange-"],
-html.high-contrast:not(.light) [class*="text-red-"] {
+/* 5. Typography and Icons */
+html.high-contrast p,
+html.high-contrast h1,
+html.high-contrast h2,
+html.high-contrast h3,
+html.high-contrast h4,
+html.high-contrast h5,
+html.high-contrast h6,
+html.high-contrast span:not([data-active]),
+html.high-contrast label,
+html.high-contrast strong,
+html.high-contrast b,
+html.high-contrast time,
+html.high-contrast [class*="text-slate-"],
+html.high-contrast [class*="text-blue-"],
+html.high-contrast [class*="text-[#044CD0]"],
+html.high-contrast [class*="text-[#3b82f6]"],
+html.high-contrast [class*="text-[#60a5fa]"],
+html.high-contrast [class*="text-emerald-"],
+html.high-contrast [class*="text-rose-"],
+html.high-contrast [class*="text-amber-"],
+html.high-contrast [class*="text-teal-"],
+html.high-contrast [class*="text-cyan-"],
+html.high-contrast [class*="text-orange-"],
+html.high-contrast [class*="text-red-"] {
   color: #ffff00 !important;
 }
 
-html.dark.high-contrast svg,
-html.high-contrast:not(.light) svg {
+html.high-contrast svg {
   color: #ffff00 !important;
   stroke: currentColor !important;
 }
 
-html.dark.high-contrast a,
-html.dark.high-contrast button,
-html.high-contrast:not(.light) a,
-html.high-contrast:not(.light) button {
+/* 6. Interactive Controls: Buttons, Links, Tabs */
+html.high-contrast a,
+html.high-contrast button {
   color: #ffff00 !important;
   border-color: #ffff00 !important;
 }
 
-html.dark.high-contrast a:hover,
-html.dark.high-contrast a:focus,
-html.dark.high-contrast button:hover:not(:disabled),
-html.dark.high-contrast button:focus:not(:disabled),
-html.high-contrast:not(.light) a:hover,
-html.high-contrast:not(.light) a:focus,
-html.high-contrast:not(.light) button:hover:not(:disabled),
-html.high-contrast:not(.light) button:focus:not(:disabled) {
+/* Hover and Focus: Solid Yellow with Black text */
+html.high-contrast a:hover,
+html.high-contrast a:focus,
+html.high-contrast button:hover:not(:disabled),
+html.high-contrast button:focus:not(:disabled) {
   background-color: #ffff00 !important;
   color: #000000 !important;
   border-color: #ffff00 !important;
   outline: 2px solid #ffffff !important;
 }
 
-html.dark.high-contrast a:hover *,
-html.dark.high-contrast a:focus *,
-html.dark.high-contrast button:hover:not(:disabled) *,
-html.dark.high-contrast button:focus:not(:disabled) *,
-html.high-contrast:not(.light) a:hover *,
-html.high-contrast:not(.light) a:focus *,
-html.high-contrast:not(.light) button:hover:not(:disabled) *,
-html.high-contrast:not(.light) button:focus:not(:disabled) * {
+html.high-contrast a:hover *,
+html.high-contrast a:focus *,
+html.high-contrast button:hover:not(:disabled) *,
+html.high-contrast button:focus:not(:disabled) * {
   color: #000000 !important;
+  stroke: #000000 !important;
 }
 
-html.dark.high-contrast [aria-pressed="true"],
-html.dark.high-contrast [aria-checked="true"]:not([role="switch"]),
-html.dark.high-contrast [aria-current="page"],
-html.dark.high-contrast button[class*="bg-[#044CD0]"]:not(:hover),
-html.dark.high-contrast a[class*="bg-[#044CD0]"]:not(:hover),
-html.high-contrast:not(.light) [aria-pressed="true"],
-html.high-contrast:not(.light) [aria-checked="true"]:not([role="switch"]),
-html.high-contrast:not(.light) [aria-current="page"],
-html.high-contrast:not(.light) button[class*="bg-[#044CD0]"]:not(:hover),
-html.high-contrast:not(.light) a[class*="bg-[#044CD0]"]:not(:hover) {
+/* Active & Selected items (Filter pills, active tabs, active page nav, selected view mode) */
+html.high-contrast [aria-pressed="true"],
+html.high-contrast [aria-checked="true"]:not([role="switch"]),
+html.high-contrast [aria-current="page"],
+html.high-contrast button[class*="bg-[#044CD0]"]:not(:hover),
+html.high-contrast a[class*="bg-[#044CD0]"]:not(:hover),
+html.high-contrast .active {
   background-color: #ffff00 !important;
   color: #000000 !important;
   border: 2px solid #ffff00 !important;
   font-weight: 800 !important;
 }
 
-html.dark.high-contrast [aria-pressed="true"] *,
-html.dark.high-contrast [aria-checked="true"]:not([role="switch"]) *,
-html.dark.high-contrast [aria-current="page"] *,
-html.dark.high-contrast button[class*="bg-[#044CD0]"]:not(:hover) *,
-html.dark.high-contrast a[class*="bg-[#044CD0]"]:not(:hover) *,
-html.high-contrast:not(.light) [aria-pressed="true"] *,
-html.high-contrast:not(.light) [aria-checked="true"]:not([role="switch"]) *,
-html.high-contrast:not(.light) [aria-current="page"] *,
-html.high-contrast:not(.light) button[class*="bg-[#044CD0]"]:not(:hover) *,
-html.high-contrast:not(.light) a[class*="bg-[#044CD0]"]:not(:hover) * {
+html.high-contrast [aria-pressed="true"] *,
+html.high-contrast [aria-checked="true"]:not([role="switch"]) *,
+html.high-contrast [aria-current="page"] *,
+html.high-contrast button[class*="bg-[#044CD0]"]:not(:hover) *,
+html.high-contrast a[class*="bg-[#044CD0]"]:not(:hover) * {
   color: #000000 !important;
+  stroke: #000000 !important;
 }
 
-html.dark.high-contrast button:disabled,
-html.high-contrast:not(.light) button:disabled {
+/* Disabled buttons */
+html.high-contrast button:disabled {
   opacity: 0.35 !important;
   cursor: not-allowed !important;
   background-color: #000000 !important;
   color: #888800 !important;
   border-color: #555500 !important;
 }
-html.dark.high-contrast button:disabled *,
-html.high-contrast:not(.light) button:disabled * {
+html.high-contrast button:disabled * {
   color: #888800 !important;
 }
 
-html.dark.high-contrast input,
-html.dark.high-contrast select,
-html.dark.high-contrast textarea,
-html.high-contrast:not(.light) input,
-html.high-contrast:not(.light) select,
-html.high-contrast:not(.light) textarea {
+/* 7. Form Inputs & Selects */
+html.high-contrast input,
+html.high-contrast select,
+html.high-contrast textarea {
   background-color: #000000 !important;
   color: #ffff00 !important;
   border: 2px solid #ffff00 !important;
 }
 
-html.dark.high-contrast input::placeholder,
-html.high-contrast:not(.light) input::placeholder {
+html.high-contrast input::placeholder {
   color: #ffff00 !important;
   opacity: 0.75 !important;
 }
 
-html.dark.high-contrast select option,
-html.high-contrast:not(.light) select option {
+html.high-contrast select option {
   background-color: #000000 !important;
   color: #ffff00 !important;
 }
 
-html.dark.high-contrast [role="switch"],
-html.high-contrast:not(.light) [role="switch"] {
+html.high-contrast input:focus,
+html.high-contrast select:focus,
+html.high-contrast textarea:focus {
+  outline: 3px solid #ffffff !important;
+  outline-offset: 2px !important;
+}
+
+/* Switch Toggle (High Contrast / Reduced Motion) */
+html.high-contrast [role="switch"] {
   border: 2px solid #ffff00 !important;
 }
-html.dark.high-contrast [role="switch"][aria-checked="true"],
-html.high-contrast:not(.light) [role="switch"][aria-checked="true"] {
+html.high-contrast [role="switch"][aria-checked="true"] {
   background-color: #ffff00 !important;
 }
-html.dark.high-contrast [role="switch"][aria-checked="true"] > div,
-html.high-contrast:not(.light) [role="switch"][aria-checked="true"] > div {
+html.high-contrast [role="switch"][aria-checked="true"] > div {
   background-color: #000000 !important;
 }
-html.dark.high-contrast [role="switch"][aria-checked="false"],
-html.high-contrast:not(.light) [role="switch"][aria-checked="false"] {
+html.high-contrast [role="switch"][aria-checked="false"] {
   background-color: #000000 !important;
 }
-html.dark.high-contrast [role="switch"][aria-checked="false"] > div,
-html.high-contrast:not(.light) [role="switch"][aria-checked="false"] > div {
+html.high-contrast [role="switch"][aria-checked="false"] > div {
   background-color: #ffff00 !important;
 }
 
-html.dark.high-contrast .catalog-table-container,
-html.high-contrast:not(.light) .catalog-table-container {
+/* 8. Catalog Table View */
+html.high-contrast .catalog-table-container {
   background-color: #000000 !important;
   border: 2px solid #ffff00 !important;
 }
 
-html.dark.high-contrast .catalog-table-container table,
-html.high-contrast:not(.light) .catalog-table-container table {
+html.high-contrast .catalog-table-container table {
   border-collapse: collapse !important;
   background-color: #000000 !important;
 }
 
-html.dark.high-contrast .catalog-table-container thead th,
-html.high-contrast:not(.light) .catalog-table-container thead th {
+html.high-contrast .catalog-table-container thead th {
   background-color: #000000 !important;
   color: #ffff00 !important;
   border-bottom: 2px solid #ffff00 !important;
@@ -698,413 +667,122 @@ html.high-contrast:not(.light) .catalog-table-container thead th {
   font-weight: 800 !important;
 }
 
-html.dark.high-contrast .catalog-table-container thead th *,
-html.high-contrast:not(.light) .catalog-table-container thead th * {
+html.high-contrast .catalog-table-container thead th * {
   color: #ffff00 !important;
 }
 
-html.dark.high-contrast .catalog-table-container tbody tr,
-html.high-contrast:not(.light) .catalog-table-container tbody tr {
+html.high-contrast .catalog-table-container tbody tr {
   background-color: #000000 !important;
   border-bottom: 1px solid #ffff00 !important;
 }
 
-html.dark.high-contrast .catalog-table-container tbody tr td,
-html.high-contrast:not(.light) .catalog-table-container tbody tr td {
+html.high-contrast .catalog-table-container tbody tr td {
   color: #ffff00 !important;
   border-bottom: 1px solid #ffff00 !important;
   border-top: none !important;
 }
 
-html.dark.high-contrast .catalog-table-container tbody tr td *,
-html.high-contrast:not(.light) .catalog-table-container tbody tr td * {
+html.high-contrast .catalog-table-container tbody tr td * {
   color: #ffff00 !important;
 }
 
-html.dark.high-contrast .catalog-table-container tbody tr:hover,
-html.high-contrast:not(.light) .catalog-table-container tbody tr:hover {
+html.high-contrast .catalog-table-container tbody tr:hover {
   background-color: #ffff00 !important;
   color: #000000 !important;
 }
 
-html.dark.high-contrast .catalog-table-container tbody tr:hover td,
-html.dark.high-contrast .catalog-table-container tbody tr:hover td *,
-html.high-contrast:not(.light) .catalog-table-container tbody tr:hover td,
-html.high-contrast:not(.light) .catalog-table-container tbody tr:hover td * {
+html.high-contrast .catalog-table-container tbody tr:hover td,
+html.high-contrast .catalog-table-container tbody tr:hover td * {
   color: #000000 !important;
 }
 
-html.dark.high-contrast [data-component="risk-badge"],
-html.dark.high-contrast [data-component="risk-badge-na"],
-html.high-contrast:not(.light) [data-component="risk-badge"],
-html.high-contrast:not(.light) [data-component="risk-badge-na"] {
+html.high-contrast .catalog-table-container tbody tr:hover button,
+html.high-contrast .catalog-table-container tbody tr:hover a {
+  border-color: #000000 !important;
+  color: #000000 !important;
+}
+
+/* 9. Badges: Risk & Status */
+html.high-contrast [data-component="risk-badge"],
+html.high-contrast [data-component="risk-badge-na"] {
   background-color: #000000 !important;
   border: 2px solid #ffff00 !important;
   color: #ffff00 !important;
 }
 
-html.dark.high-contrast [data-component="risk-badge"] span,
-html.dark.high-contrast [data-component="risk-badge-na"] span,
-html.high-contrast:not(.light) [data-component="risk-badge"] span,
-html.high-contrast:not(.light) [data-component="risk-badge-na"] span {
+html.high-contrast [data-component="risk-badge"] span,
+html.high-contrast [data-component="risk-badge-na"] span {
   color: #ffff00 !important;
 }
 
-html.dark.high-contrast [data-component="risk-badge"] [data-active="true"],
-html.high-contrast:not(.light) [data-component="risk-badge"] [data-active="true"] {
+html.high-contrast [data-component="risk-badge"] [data-active="true"] {
   background-color: #ffff00 !important;
   border: 1px solid #ffff00 !important;
 }
 
-html.dark.high-contrast [data-component="risk-badge"] [data-active="false"],
-html.high-contrast:not(.light) [data-component="risk-badge"] [data-active="false"] {
+html.high-contrast [data-component="risk-badge"] [data-active="false"] {
   background-color: #000000 !important;
   border: 1px solid #ffff00 !important;
 }
 
-html.dark.high-contrast [data-component="status-badge"],
-html.dark.high-contrast [class*="bg-emerald-500/15"],
-html.dark.high-contrast [class*="bg-amber-500/15"],
-html.high-contrast:not(.light) [data-component="status-badge"],
-html.high-contrast:not(.light) [class*="bg-emerald-500/15"],
-html.high-contrast:not(.light) [class*="bg-amber-500/15"] {
+html.high-contrast [data-component="status-badge"],
+html.high-contrast [class*="bg-emerald-500/15"],
+html.high-contrast [class*="bg-amber-500/15"] {
   background-color: #000000 !important;
   border: 2px solid #ffff00 !important;
   color: #ffff00 !important;
 }
 
-html.dark.high-contrast [data-component="status-badge"] svg,
-html.dark.high-contrast [class*="bg-emerald-500/15"] svg,
-html.dark.high-contrast [class*="bg-amber-500/15"] svg,
-html.high-contrast:not(.light) [data-component="status-badge"] svg,
-html.high-contrast:not(.light) [class*="bg-emerald-500/15"] svg,
-html.high-contrast:not(.light) [class*="bg-amber-500/15"] svg {
+html.high-contrast [data-component="status-badge"] svg,
+html.high-contrast [class*="bg-emerald-500/15"] svg,
+html.high-contrast [class*="bg-amber-500/15"] svg {
   color: #ffff00 !important;
 }
 
-html.dark.high-contrast [class*="bg-white"]:not(button):not(a):not(input),
-html.high-contrast:not(.light) [class*="bg-white"]:not(button):not(a):not(input) {
+/* Neutral chips and tags */
+html.high-contrast [class*="bg-white"]:not(button):not(a):not(input) {
   background-color: #000000 !important;
   border: 1px solid #ffff00 !important;
   color: #ffff00 !important;
 }
 
-html.dark.high-contrast .recharts-cartesian-grid line,
-html.high-contrast:not(.light) .recharts-cartesian-grid line {
+/* 10. Floating Comparator Bar */
+html.high-contrast [class*="bg-[#051329]/95"] {
+  background-color: #000000 !important;
+  border: 2px solid #ffff00 !important;
+}
+
+/* 11. Charts & Data Visualizations (Recharts) */
+html.high-contrast .recharts-cartesian-grid line {
   stroke: #ffff00 !important;
   stroke-opacity: 0.4 !important;
 }
-html.dark.high-contrast .recharts-text,
-html.dark.high-contrast .recharts-cartesian-axis-tick text,
-html.high-contrast:not(.light) .recharts-text,
-html.high-contrast:not(.light) .recharts-cartesian-axis-tick text {
+html.high-contrast .recharts-text,
+html.high-contrast .recharts-cartesian-axis-tick text {
   fill: #ffff00 !important;
 }
-html.dark.high-contrast .recharts-default-tooltip,
-html.high-contrast:not(.light) .recharts-default-tooltip {
+html.high-contrast .recharts-default-tooltip {
   background-color: #000000 !important;
   border: 2px solid #ffff00 !important;
   color: #ffff00 !important;
 }
-html.dark.high-contrast .recharts-tooltip-item,
-html.high-contrast:not(.light) .recharts-tooltip-item {
+html.high-contrast .recharts-tooltip-item {
   color: #ffff00 !important;
 }
-html.dark.high-contrast path.recharts-curve,
-html.high-contrast:not(.light) path.recharts-curve {
+html.high-contrast path.recharts-curve {
   stroke: #ffff00 !important;
 }
 
-
-/* ==========================================================================
-   2. LIGHT HIGH CONTRAST (WCAG AAA White & Black)
-   ========================================================================== */
-html.light.high-contrast,
-html.light.high-contrast body {
-  background-color: #ffffff !important;
-  background-image: none !important;
-  color: #000000 !important;
-}
-
-html.light.high-contrast [class*="bg-[#030a16]"],
-html.light.high-contrast [class*="bg-[#051329]"],
-html.light.high-contrast [class*="bg-[#071938]"],
-html.light.high-contrast [class*="bg-[#021838]"],
-html.light.high-contrast [class*="bg-[#02224D]"],
-html.light.high-contrast [class*="bg-[#020b18]"],
-html.light.high-contrast [class*="bg-[#030c1c]"],
-html.light.high-contrast [class*="bg-slate-900"],
-html.light.high-contrast [class*="bg-slate-950"],
-html.light.high-contrast [class*="bg-slate-800"],
-html.light.high-contrast [class*="from-[#071938]"],
-html.light.high-contrast [class*="from-[#02224D]"],
-html.light.high-contrast [class*="to-[#030a16]"],
-html.light.high-contrast [class*="to-[#044CD0]"],
-html.light.high-contrast [class*="bg-blue-"],
-html.light.high-contrast [class*="bg-[#f0f7ff]"],
-html.light.high-contrast [class*="bg-[#eff6ff]"],
-html.light.high-contrast [class*="bg-[#f8fbff]"],
-html.light.high-contrast [class*="bg-[#f4f8fe]"],
-html.light.high-contrast .catalog-grid-card,
-html.light.high-contrast .catalog-table-container,
-html.light.high-contrast header,
-html.light.high-contrast footer,
-html.light.high-contrast main,
-html.light.high-contrast section,
-html.light.high-contrast [role="dialog"] {
-  background-color: #ffffff !important;
-  background-image: none !important;
-  border-color: #000000 !important;
-}
-
-html.light.high-contrast [class*="border-[#0e274d]"],
-html.light.high-contrast [class*="border-blue-"],
-html.light.high-contrast [class*="border-slate-"],
-html.light.high-contrast [class*="divide-[#0e274d]"] > * + *,
-html.light.high-contrast [class*="divide-slate-"] > * + *,
-html.light.high-contrast [class*="divide-[#bfdbfe]"] > * + *,
-html.light.high-contrast [class*="divide-[#d0e2f7]"] > * + *,
-html.light.high-contrast hr {
-  border-color: #000000 !important;
-}
-
-html.light.high-contrast .catalog-grid-card,
-html.light.high-contrast .catalog-table-container,
-html.light.high-contrast [role="dialog"],
-html.light.high-contrast header,
-html.light.high-contrast footer {
-  border: 2px solid #000000 !important;
-}
-
-html.light.high-contrast p,
-html.light.high-contrast h1,
-html.light.high-contrast h2,
-html.light.high-contrast h3,
-html.light.high-contrast h4,
-html.light.high-contrast h5,
-html.light.high-contrast h6,
-html.light.high-contrast span:not([data-active]),
-html.light.high-contrast label,
-html.light.high-contrast strong,
-html.light.high-contrast b,
-html.light.high-contrast time,
-html.light.high-contrast [class*="text-slate-"],
-html.light.high-contrast [class*="text-blue-"],
-html.light.high-contrast [class*="text-[#044CD0]"],
-html.light.high-contrast [class*="text-[#3b82f6]"],
-html.light.high-contrast [class*="text-[#60a5fa]"],
-html.light.high-contrast [class*="text-emerald-"],
-html.light.high-contrast [class*="text-rose-"],
-html.light.high-contrast [class*="text-amber-"],
-html.light.high-contrast [class*="text-teal-"],
-html.light.high-contrast [class*="text-cyan-"],
-html.light.high-contrast [class*="text-orange-"],
-html.light.high-contrast [class*="text-red-"] {
-  color: #000000 !important;
-}
-
-html.light.high-contrast svg {
-  color: #000000 !important;
-  stroke: currentColor !important;
-}
-
-html.light.high-contrast a,
-html.light.high-contrast button {
-  color: #000000 !important;
-  border-color: #000000 !important;
-}
-
-html.light.high-contrast a:hover,
-html.light.high-contrast a:focus,
-html.light.high-contrast button:hover:not(:disabled),
-html.light.high-contrast button:focus:not(:disabled) {
+/* 12. Skip Link & Focus Outline */
+html.high-contrast .skip-link {
   background-color: #000000 !important;
-  color: #ffffff !important;
-  border-color: #000000 !important;
-  outline: 2px solid #000000 !important;
+  color: #ffff00 !important;
+  border: 3px solid #ffff00 !important;
 }
 
-html.light.high-contrast a:hover *,
-html.light.high-contrast a:focus *,
-html.light.high-contrast button:hover:not(:disabled) *,
-html.light.high-contrast button:focus:not(:disabled) * {
-  color: #ffffff !important;
-  stroke: #ffffff !important;
-}
-
-html.light.high-contrast [aria-pressed="true"],
-html.light.high-contrast [aria-checked="true"]:not([role="switch"]),
-html.light.high-contrast [aria-current="page"],
-html.light.high-contrast button[class*="bg-[#044CD0]"]:not(:hover),
-html.light.high-contrast a[class*="bg-[#044CD0]"]:not(:hover) {
-  background-color: #000000 !important;
-  color: #ffffff !important;
-  border: 2px solid #000000 !important;
-  font-weight: 800 !important;
-}
-
-html.light.high-contrast [aria-pressed="true"] *,
-html.light.high-contrast [aria-checked="true"]:not([role="switch"]) *,
-html.light.high-contrast [aria-current="page"] *,
-html.light.high-contrast button[class*="bg-[#044CD0]"]:not(:hover) *,
-html.light.high-contrast a[class*="bg-[#044CD0]"]:not(:hover) * {
-  color: #ffffff !important;
-  stroke: #ffffff !important;
-}
-
-html.light.high-contrast button:disabled {
-  opacity: 0.35 !important;
-  cursor: not-allowed !important;
-  background-color: #ffffff !important;
-  color: #777777 !important;
-  border-color: #777777 !important;
-}
-html.light.high-contrast button:disabled * {
-  color: #777777 !important;
-}
-
-html.light.high-contrast input,
-html.light.high-contrast select,
-html.light.high-contrast textarea {
-  background-color: #ffffff !important;
-  color: #000000 !important;
-  border: 2px solid #000000 !important;
-  font-weight: 600 !important;
-}
-
-html.light.high-contrast input::placeholder {
-  color: #222222 !important;
-  opacity: 0.8 !important;
-}
-
-html.light.high-contrast select option {
-  background-color: #ffffff !important;
-  color: #000000 !important;
-}
-
-html.light.high-contrast [role="switch"] {
-  border: 2px solid #000000 !important;
-}
-html.light.high-contrast [role="switch"][aria-checked="true"] {
-  background-color: #000000 !important;
-}
-html.light.high-contrast [role="switch"][aria-checked="true"] > div {
-  background-color: #ffffff !important;
-}
-html.light.high-contrast [role="switch"][aria-checked="false"] {
-  background-color: #ffffff !important;
-}
-html.light.high-contrast [role="switch"][aria-checked="false"] > div {
-  background-color: #000000 !important;
-}
-
-html.light.high-contrast .catalog-table-container {
-  background-color: #ffffff !important;
-  border: 2px solid #000000 !important;
-}
-
-html.light.high-contrast .catalog-table-container table {
-  border-collapse: collapse !important;
-  background-color: #ffffff !important;
-}
-
-html.light.high-contrast .catalog-table-container thead th {
-  background-color: #ffffff !important;
-  color: #000000 !important;
-  border-bottom: 2px solid #000000 !important;
-  border-top: none !important;
-  font-weight: 800 !important;
-}
-
-html.light.high-contrast .catalog-table-container thead th * {
-  color: #000000 !important;
-}
-
-html.light.high-contrast .catalog-table-container tbody tr {
-  background-color: #ffffff !important;
-  border-bottom: 1px solid #000000 !important;
-}
-
-html.light.high-contrast .catalog-table-container tbody tr td {
-  color: #000000 !important;
-  border-bottom: 1px solid #000000 !important;
-  border-top: none !important;
-}
-
-html.light.high-contrast .catalog-table-container tbody tr td * {
-  color: #000000 !important;
-}
-
-html.light.high-contrast .catalog-table-container tbody tr:hover {
-  background-color: #ffff00 !important;
-  color: #000000 !important;
-}
-
-html.light.high-contrast .catalog-table-container tbody tr:hover td,
-html.light.high-contrast .catalog-table-container tbody tr:hover td * {
-  color: #000000 !important;
-}
-
-html.light.high-contrast [data-component="risk-badge"],
-html.light.high-contrast [data-component="risk-badge-na"] {
-  background-color: #ffffff !important;
-  border: 2px solid #000000 !important;
-  color: #000000 !important;
-}
-
-html.light.high-contrast [data-component="risk-badge"] span,
-html.light.high-contrast [data-component="risk-badge-na"] span {
-  color: #000000 !important;
-}
-
-html.light.high-contrast [data-component="risk-badge"] [data-active="true"] {
-  background-color: #000000 !important;
-  border: 1px solid #000000 !important;
-}
-
-html.light.high-contrast [data-component="risk-badge"] [data-active="false"] {
-  background-color: #ffffff !important;
-  border: 1px solid #000000 !important;
-}
-
-html.light.high-contrast [data-component="status-badge"],
-html.light.high-contrast [class*="bg-emerald-500/15"],
-html.light.high-contrast [class*="bg-amber-500/15"] {
-  background-color: #ffffff !important;
-  border: 2px solid #000000 !important;
-  color: #000000 !important;
-}
-
-html.light.high-contrast [data-component="status-badge"] svg,
-html.light.high-contrast [class*="bg-emerald-500/15"] svg,
-html.light.high-contrast [class*="bg-amber-500/15"] svg {
-  color: #000000 !important;
-}
-
-html.light.high-contrast [class*="bg-white"]:not(button):not(a):not(input) {
-  background-color: #ffffff !important;
-  border: 1px solid #000000 !important;
-  color: #000000 !important;
-}
-
-html.light.high-contrast .recharts-cartesian-grid line {
-  stroke: #000000 !important;
-  stroke-opacity: 0.3 !important;
-}
-html.light.high-contrast .recharts-text,
-html.light.high-contrast .recharts-cartesian-axis-tick text {
-  fill: #000000 !important;
-}
-html.light.high-contrast .recharts-default-tooltip {
-  background-color: #ffffff !important;
-  border: 2px solid #000000 !important;
-  color: #000000 !important;
-}
-html.light.high-contrast .recharts-tooltip-item {
-  color: #000000 !important;
-}
-html.light.high-contrast path.recharts-curve {
-  stroke: #000000 !important;
+html.high-contrast :focus-visible {
+  outline: 3px solid #ffffff !important;
+  outline-offset: 2px !important;
 }
 
 /* Accessibility: Skip Link */
