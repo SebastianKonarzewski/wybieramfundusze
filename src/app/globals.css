@@ -641,6 +641,64 @@ html.high-contrast [data-component="theme-toggle"]:focus-visible svg {
   stroke: #000000 !important;
 }
 
+/* Mobile Hamburger Button */
+html.high-contrast [data-component="navbar-hamburger"] {
+  background-color: #000000 !important;
+  border: 2px solid #ffff00 !important;
+  color: #ffff00 !important;
+}
+
+html.high-contrast [data-component="navbar-hamburger"] svg {
+  color: #ffff00 !important;
+  stroke: #ffff00 !important;
+}
+
+html.high-contrast [data-component="navbar-hamburger"]:hover,
+html.high-contrast [data-component="navbar-hamburger"]:focus-visible {
+  background-color: #ffff00 !important;
+  border-color: #ffff00 !important;
+  color: #000000 !important;
+}
+
+html.high-contrast [data-component="navbar-hamburger"]:hover svg,
+html.high-contrast [data-component="navbar-hamburger"]:focus-visible svg {
+  color: #000000 !important;
+  stroke: #000000 !important;
+}
+
+/* Mobile Navigation Drawer */
+html.high-contrast [data-component="mobile-nav"] {
+  background-color: #000000 !important;
+  border-bottom: 2px solid #ffff00 !important;
+}
+
+html.high-contrast [data-component="mobile-nav"] a,
+html.high-contrast [data-component="mobile-nav"] button {
+  border-color: #ffff00 !important;
+  color: #ffff00 !important;
+}
+
+html.high-contrast [data-component="mobile-nav"] nav a[aria-current="page"] {
+  background-color: #ffff00 !important;
+  color: #000000 !important;
+  font-weight: 800 !important;
+}
+
+html.high-contrast [data-component="mobile-nav"] nav a[aria-current="page"] * {
+  color: #000000 !important;
+  stroke: #000000 !important;
+}
+
+/* Language Switcher */
+html.high-contrast [data-component="language-switcher"] {
+  background-color: #000000 !important;
+  border: 2px solid #ffff00 !important;
+}
+
+html.high-contrast [data-component="language-switcher"] button {
+  border: none !important;
+}
+
 /* Active & Selected items (Filter pills, active tabs, active page nav, selected view mode) */
 html.high-contrast [aria-pressed="true"],
 html.high-contrast [aria-checked="true"]:not([role="switch"]),

@@ -7,14 +7,17 @@ export function LanguageSwitcher() {
   const { locale, setLocale } = useTranslation();
 
   return (
-    <div className="flex items-center bg-[#030a16] p-0.5 rounded-lg border border-[#0e274d] text-[10px] sm:text-[11px] font-semibold shrink-0">
+    <div
+      data-component="language-switcher"
+      className="flex items-center bg-white dark:bg-[#030a16] p-0.5 rounded-lg border border-slate-300 dark:border-[#0e274d] text-[10px] sm:text-[11px] font-semibold shrink-0"
+    >
       <button
         type="button"
         onClick={() => setLocale("pl")}
         className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded transition-all cursor-pointer ${
           locale === "pl"
             ? "bg-[#044CD0] text-white shadow-xs font-bold"
-            : "text-slate-400 hover:text-slate-200"
+            : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
         }`}
         title="Język polski"
         aria-label="Wersja polska"
@@ -27,7 +30,7 @@ export function LanguageSwitcher() {
         className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded transition-all cursor-pointer ${
           locale === "en"
             ? "bg-[#044CD0] text-white shadow-xs font-bold"
-            : "text-slate-400 hover:text-slate-200"
+            : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
         }`}
         title="English language"
         aria-label="English version"

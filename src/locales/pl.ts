@@ -52,6 +52,10 @@ export const pl = {
     devBannerTitle: "Wersja poglądowa / testowa",
     devBannerDesc: "Portal w trybie deweloperskim — dane pobierane w czasie rzeczywistym z API UKNF.",
     officialSiteLabel: "Oficjalny serwis produkcyjny UKNF:",
+    openMenu: "Otwórz menu nawigacji",
+    closeMenu: "Zamknij menu",
+    menu: "Menu nawigacji",
+    portalLanguage: "Język portalu / Language:",
   },
   hero: {
     title: "Katalog i Porównywarka Funduszy Inwestycyjnych",

@@ -54,6 +54,10 @@ export const en: Translations = {
     devBannerTitle: "Preview / Test Version",
     devBannerDesc: "Demonstration portal under active development — live data from official UKNF API.",
     officialSiteLabel: "Official UKNF production portal:",
+    openMenu: "Open navigation menu",
+    closeMenu: "Close menu",
+    menu: "Navigation menu",
+    portalLanguage: "Portal language:",
   },
   hero: {
     title: "Investment Funds Registry & Comparison Tool",
