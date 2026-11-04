@@ -612,7 +612,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   return (
                     <tr
                       key={item.subfundId}
-                      className="bg-[#edf5fe] odd:bg-[#e6f1fd] dark:bg-transparent dark:odd:bg-transparent hover:bg-[#dbeafe] dark:hover:bg-[#071938]/60 transition-colors group"
+                      className="bg-[#edf5fe] dark:bg-transparent hover:bg-[#dbeafe] dark:hover:bg-[#071938]/60 transition-colors group"
                     >
                       <td className="py-3 px-4 whitespace-nowrap">
                         <span className="font-bold text-xs bg-white dark:bg-[#030a16] border border-blue-200 dark:border-[#0e274d] px-2 py-0.5 rounded text-[#044CD0] dark:text-blue-300 shadow-2xs">

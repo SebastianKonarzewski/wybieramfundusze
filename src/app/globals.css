@@ -138,9 +138,11 @@ html.light [class*="bg-blue-50"] {
   background-color: #f0f7ff !important;
 }
 
-/* Hero banner gradient: diagonal soft UKNF blue originating from top right corner */
+/* Hero banner gradient: mirrors dark mode layout (top-to-bottom with top-right accent), smoothly reaching pure white */
 html.light [class*="from-[#071938]"][class*="to-[#030a16]"] {
-  background: radial-gradient(ellipse 70% 60% at 100% 0%, #e3effd 0%, #f4f8fe 35%, #ffffff 75%) !important;
+  background: 
+    radial-gradient(ellipse 65% 55% at 100% 0%, rgba(4, 76, 208, 0.08) 0%, rgba(227, 239, 253, 0.5) 35%, transparent 70%),
+    linear-gradient(180deg, #eaf2fd 0%, #f4f8fe 30%, #ffffff 65%, #ffffff 100%) !important;
   border-color: #d0e2f7 !important;
 }
 
@@ -178,10 +180,6 @@ html.light .catalog-table-container thead th {
 html.light .catalog-table-container tbody tr {
   background-color: #edf5fe !important;
   border-color: #bfdbfe !important;
-}
-
-html.light .catalog-table-container tbody tr:nth-child(even) {
-  background-color: #e6f1fd !important;
 }
 
 html.light .catalog-table-container tbody tr:hover {
