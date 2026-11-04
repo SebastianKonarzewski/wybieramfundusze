@@ -60,14 +60,14 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
   const [hasUserToggledView, setHasUserToggledView] = useState(false);
 
-  // Set default view: "table" on desktop (>=1024px), "grid" on mobile & tablet (<1024px)
+  // Set default view: "table" on full desktop (>=1280px), "grid" on mobile, tablet & intermediate (<1280px)
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     const updateDefaultView = () => {
       if (!hasUserToggledView) {
-        const isDesktop = window.innerWidth >= 1024;
-        setViewMode(isDesktop ? "table" : "grid");
+        const isFullDesktop = window.innerWidth >= 1280;
+        setViewMode(isFullDesktop ? "table" : "grid");
       }
     };
 
@@ -544,7 +544,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
         /* View Mode: Interactive Table with Clickable Column Headers */
         <div className="bg-[#051329] border border-[#0e274d] rounded-2xl overflow-hidden shadow-xl">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
+            <table className="w-full text-left text-sm min-w-[720px]">
               <thead className="bg-[#030a16] text-xs uppercase tracking-wider text-slate-400 border-b border-[#0e274d]">
                 <tr>
                   <th className="py-3.5 px-3 sm:px-4 font-semibold whitespace-nowrap">{t.catalog.table.typeCode}</th>
