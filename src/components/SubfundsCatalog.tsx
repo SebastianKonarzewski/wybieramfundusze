@@ -436,7 +436,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
             return (
               <div
                 key={item.subfundId}
-                className="catalog-grid-card group relative bg-[#f4f8fe] dark:bg-[#051329]/90 hover:bg-[#e2effd] dark:hover:bg-[#071938] border border-blue-200/80 dark:border-[#0e274d] hover:border-[#044CD0]/60 rounded-2xl p-4 sm:p-5 transition-all flex flex-col justify-between shadow-xs hover:shadow-md dark:shadow-md dark:hover:shadow-xl"
+                className="catalog-grid-card group relative bg-[#f4f8fe]/80 dark:bg-[#051329]/90 hover:bg-[#e2effd] dark:hover:bg-[#071938] border border-blue-200/80 dark:border-[#0e274d] hover:border-[#044CD0]/60 rounded-2xl p-4 sm:p-5 transition-all flex flex-col justify-between shadow-xs hover:shadow-md dark:shadow-md dark:hover:shadow-xl"
               >
                 <div>
                   {/* Top tags & status */}
@@ -542,9 +542,9 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
         </div>
       ) : (
         /* View Mode: Interactive Table with Clickable Column Headers */
-        <div className="catalog-table-container bg-[#f4f8fe] dark:bg-[#051329] border border-blue-200/80 dark:border-[#0e274d] rounded-2xl overflow-hidden shadow-xs dark:shadow-xl">
+        <div className="catalog-table-container bg-[#f4f8fe]/80 dark:bg-[#051329] border border-blue-200/80 dark:border-[#0e274d] rounded-2xl overflow-hidden shadow-xs dark:shadow-xl">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm min-w-[720px] border-collapse bg-[#f4f8fe] dark:bg-transparent">
+            <table className="w-full text-left text-sm min-w-[720px] border-collapse bg-transparent">
               <thead className="bg-[#dbeafe] dark:bg-[#030a16] text-xs uppercase tracking-wider text-[#1e40af] dark:text-slate-400 border-b border-[#bfdbfe] dark:border-[#0e274d]">
                 <tr>
                   <th className="py-3.5 px-3 sm:px-4 font-semibold whitespace-nowrap">{t.catalog.table.typeCode}</th>
@@ -612,7 +612,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   return (
                     <tr
                       key={item.subfundId}
-                      className="bg-[#f4f8fe] dark:bg-transparent hover:bg-[#e2effd] dark:hover:bg-[#071938]/60 transition-colors group"
+                      className="bg-[#f4f8fe]/75 dark:bg-transparent hover:bg-[#e2effd] dark:hover:bg-[#071938]/60 transition-colors group"
                     >
                       <td className="py-3 px-4 whitespace-nowrap">
                         <span className="font-bold text-xs bg-white dark:bg-[#030a16] border border-blue-200 dark:border-[#0e274d] px-2 py-0.5 rounded text-[#044CD0] dark:text-blue-300 shadow-2xs">
