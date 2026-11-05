@@ -650,85 +650,88 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                     role="listbox"
                     aria-labelledby="detailed-category-label"
                     aria-multiselectable="true"
-                    className="absolute top-full left-0 mt-1.5 w-full sm:w-[420px] max-h-80 overflow-y-auto bg-[#030c1c] border border-[#0e274d] rounded-xl shadow-2xl z-50 p-1.5 space-y-1 animate-in fade-in zoom-in-95 duration-100"
+                    className="absolute top-full left-0 mt-1.5 w-full sm:w-[420px] bg-[#030c1c] border border-[#0e274d] rounded-xl shadow-2xl z-50 flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-100"
                   >
-                    {/* Option: All categories (resets multi-selection) */}
-                    <button
-                      type="button"
-                      role="option"
-                      aria-selected={selectedCategories.length === 0}
-                      onClick={() => {
-                        setSelectedCategories([]);
-                        setCurrentPage(0);
-                      }}
-                      className={`w-full text-left px-3 py-2 text-xs sm:text-sm rounded-lg flex items-center justify-between transition-colors cursor-pointer ${
-                        selectedCategories.length === 0
-                          ? "bg-[#044CD0]/25 text-blue-300 font-semibold"
-                          : "text-slate-200 hover:bg-[#071938] hover:text-white"
-                      }`}
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <div
-                          className={`w-4 h-4 rounded-sm flex items-center justify-center transition-colors ${
-                            selectedCategories.length === 0
-                              ? "bg-[#044CD0] border border-blue-400 text-white"
-                              : "border border-slate-600 bg-[#051329]"
-                          }`}
-                        >
-                          {selectedCategories.length === 0 && <Check className="w-3 h-3 stroke-[3]" />}
+                    {/* Scrollable Items Container */}
+                    <div className="max-h-72 overflow-y-auto p-1.5 space-y-1">
+                      {/* Option: All categories (resets multi-selection) */}
+                      <button
+                        type="button"
+                        role="option"
+                        aria-selected={selectedCategories.length === 0}
+                        onClick={() => {
+                          setSelectedCategories([]);
+                          setCurrentPage(0);
+                        }}
+                        className={`w-full text-left px-3 py-2 text-xs sm:text-sm rounded-lg flex items-center justify-between transition-colors cursor-pointer ${
+                          selectedCategories.length === 0
+                            ? "bg-[#044CD0]/25 text-blue-300 font-semibold"
+                            : "text-slate-200 hover:bg-[#071938] hover:text-white"
+                        }`}
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <div
+                            className={`w-4 h-4 rounded-sm flex items-center justify-center transition-colors ${
+                              selectedCategories.length === 0
+                                ? "bg-[#044CD0] border border-blue-400 text-white"
+                                : "border border-slate-600 bg-[#051329]"
+                            }`}
+                          >
+                            {selectedCategories.length === 0 && <Check className="w-3 h-3 stroke-[3]" />}
+                          </div>
+                          <span>{t.catalog.allCategories}</span>
                         </div>
-                        <span>{t.catalog.allCategories}</span>
-                      </div>
-                    </button>
+                      </button>
 
-                    {/* Grouped categories */}
-                    {visibleCategoryGroups.map((grp) => (
-                      <div key={grp.classId} className="pt-1.5 border-t border-[#0e274d]/50 first:border-t-0">
-                        {/* Group Header - unclickable, highlighted and distinct for eye scanning */}
-                        <div className="px-3 py-1.5 text-[11px] font-bold text-[#60a5fa] uppercase tracking-wider select-none">
-                          ── {locale === "en" ? grp.groupEn : grp.groupPl} ──
-                        </div>
+                      {/* Grouped categories */}
+                      {visibleCategoryGroups.map((grp) => (
+                        <div key={grp.classId} className="pt-1.5 border-t border-[#0e274d]/50 first:border-t-0">
+                          {/* Group Header - unclickable, highlighted and distinct for eye scanning */}
+                          <div className="px-3 py-1.5 text-[11px] font-bold text-[#60a5fa] uppercase tracking-wider select-none">
+                            ── {locale === "en" ? grp.groupEn : grp.groupPl} ──
+                          </div>
 
-                        {/* Options under this group */}
-                        <div className="space-y-0.5">
-                          {grp.options.map((opt) => {
-                            const isSelected = selectedCategories.includes(opt.id);
-                            const label = locale === "en" ? opt.labelEn : opt.labelPl;
+                          {/* Options under this group */}
+                          <div className="space-y-0.5">
+                            {grp.options.map((opt) => {
+                              const isSelected = selectedCategories.includes(opt.id);
+                              const label = locale === "en" ? opt.labelEn : opt.labelPl;
 
-                            return (
-                              <button
-                                key={opt.id}
-                                type="button"
-                                role="option"
-                                aria-selected={isSelected}
-                                onClick={() => toggleCategory(opt.id)}
-                                className={`w-full text-left pl-3 pr-3 py-1.5 text-xs sm:text-sm rounded-lg flex items-center justify-between transition-colors cursor-pointer select-none ${
-                                  isSelected
-                                    ? "bg-[#044CD0]/20 text-blue-200 font-medium"
-                                    : "text-slate-300 hover:bg-[#071938] hover:text-white"
-                                }`}
-                              >
-                                <div className="flex items-center gap-2.5 min-w-0 flex-1 mr-2">
-                                  <div
-                                    className={`w-4 h-4 rounded-sm flex items-center justify-center shrink-0 transition-colors ${
-                                      isSelected
-                                        ? "bg-[#044CD0] border border-blue-400 text-white"
-                                        : "border border-slate-600 bg-[#051329]"
-                                    }`}
-                                  >
-                                    {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
+                              return (
+                                <button
+                                  key={opt.id}
+                                  type="button"
+                                  role="option"
+                                  aria-selected={isSelected}
+                                  onClick={() => toggleCategory(opt.id)}
+                                  className={`w-full text-left pl-3 pr-3 py-1.5 text-xs sm:text-sm rounded-lg flex items-center justify-between transition-colors cursor-pointer select-none ${
+                                    isSelected
+                                      ? "bg-[#044CD0]/20 text-blue-200 font-medium"
+                                      : "text-slate-300 hover:bg-[#071938] hover:text-white"
+                                  }`}
+                                >
+                                  <div className="flex items-center gap-2.5 min-w-0 flex-1 mr-2">
+                                    <div
+                                      className={`w-4 h-4 rounded-sm flex items-center justify-center shrink-0 transition-colors ${
+                                        isSelected
+                                          ? "bg-[#044CD0] border border-blue-400 text-white"
+                                          : "border border-slate-600 bg-[#051329]"
+                                      }`}
+                                    >
+                                      {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
+                                    </div>
+                                    <span className="truncate">{label}</span>
                                   </div>
-                                  <span className="truncate">{label}</span>
-                                </div>
-                              </button>
-                            );
-                          })}
+                                </button>
+                              );
+                            })}
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
 
-                    {/* Popover sticky footer with counter and Done button */}
-                    <div className="pt-2 px-2 pb-1 border-t border-[#0e274d] flex items-center justify-between text-xs sticky bottom-0 bg-[#030c1c]/95 backdrop-blur-xs">
+                    {/* Popover solid footer pinned to bottom (no gap, no bleed) */}
+                    <div className="px-3 py-2 bg-[#051329] border-t border-[#0e274d] flex items-center justify-between text-xs shrink-0 select-none">
                       <span className="text-slate-400">
                         {locale === "en" ? "Selected:" : "Wybrano:"}{" "}
                         <strong className="text-white">
