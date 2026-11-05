@@ -10,6 +10,7 @@ import {
   formatPercent,
   formatDate,
   formatLargeNumber,
+  formatLargeNumberParts,
 } from "@/lib/utils";
 
 interface I18nContextType {
@@ -21,6 +22,7 @@ interface I18nContextType {
   formatPercent: (value: number | null | undefined, digits?: number) => string;
   formatDate: (dateString: string | null | undefined) => string;
   formatLargeNumber: (value: number | null | undefined) => string;
+  formatLargeNumberParts: (value: number | null | undefined) => { value: string; unit: string };
 }
 
 const I18nContext = createContext<I18nContextType | null>(null);
@@ -64,6 +66,7 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
         formatPercent: (val, dig) => formatPercent(val, dig, locale),
         formatDate: (d) => formatDate(d, locale),
         formatLargeNumber: (val) => formatLargeNumber(val, locale),
+        formatLargeNumberParts: (val) => formatLargeNumberParts(val, locale),
       }}
     >
       {children}
@@ -84,6 +87,7 @@ export function useTranslation() {
       formatPercent: (val: number | null | undefined, dig?: number) => formatPercent(val, dig, "pl"),
       formatDate: (d: string | null | undefined) => formatDate(d, "pl"),
       formatLargeNumber: (val: number | null | undefined) => formatLargeNumber(val, "pl"),
+      formatLargeNumberParts: (val: number | null | undefined) => formatLargeNumberParts(val, "pl"),
     };
   }
   return ctx;

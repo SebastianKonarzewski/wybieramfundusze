@@ -152,3 +152,52 @@ export function formatLargeNumber(
   }
   return `${formatNumber(value, 2, "pl")} zł`;
 }
+
+/**
+ * Format large numbers into value and unit parts:
+ * - PL: { value: "399,60", unit: "mld zł" }
+ * - EN: { value: "399.60", unit: "bn PLN" }
+ */
+export function formatLargeNumberParts(
+  value: number | null | undefined,
+  locale: Locale = "pl"
+): { value: string; unit: string } {
+  if (value === null || value === undefined || isNaN(value)) {
+    return { value: "—", unit: "" };
+  }
+
+  if (locale === "en") {
+    if (value >= 1_000_000_000_000) {
+      return { value: formatNumber(value / 1_000_000_000_000, 2, "en"), unit: "trn PLN" };
+    }
+    if (value >= 1_000_000_000) {
+      return { value: formatNumber(value / 1_000_000_000, 2, "en"), unit: "bn PLN" };
+    }
+    if (value >= 1_000_000) {
+      return { value: formatNumber(value / 1_000_000, 2, "en"), unit: "m PLN" };
+    }
+    if (value >= 1_000) {
+      return { value: formatNumber(value / 1_000, 2, "en"), unit: "k PLN" };
+    }
+    return { value: formatNumber(value, 2, "en"), unit: "PLN" };
+  }
+
+  // Polish formatting
+  if (value >= 1_000_000_000_000) {
+    const val = value / 1_000_000_000_000;
+    return { value: formatNumber(val, 2, "pl"), unit: "bln zł" };
+  }
+  if (value >= 1_000_000_000) {
+    const val = value / 1_000_000_000;
+    return { value: formatNumber(val, 2, "pl"), unit: "mld zł" };
+  }
+  if (value >= 1_000_000) {
+    const val = value / 1_000_000;
+    return { value: formatNumber(val, 2, "pl"), unit: "mln zł" };
+  }
+  if (value >= 1_000) {
+    const val = value / 1_000;
+    return { value: formatNumber(val, 2, "pl"), unit: "tys. zł" };
+  }
+  return { value: formatNumber(value, 2, "pl"), unit: "zł" };
+}

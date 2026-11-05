@@ -25,7 +25,7 @@ import { useTheme } from "@/lib/theme";
 import { useAccessibility } from "@/lib/accessibility";
 
 export function MarketHero({ stats }: { stats: MarketStatistics }) {
-  const { t, formatLargeNumber, formatDate, formatNumber, formatPercent } = useTranslation();
+  const { t, formatLargeNumber, formatLargeNumberParts, formatDate, formatNumber, formatPercent } = useTranslation();
   const { theme } = useTheme();
   const { highContrast } = useAccessibility();
   const isLight = theme === "light";
@@ -58,6 +58,11 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
       yMax: maxVal + yPadding,
     };
   }, [stats.assetsHistory]);
+
+  const netAssetsParts = useMemo(
+    () => formatLargeNumberParts(stats.totalAssetsNet),
+    [stats.totalAssetsNet, formatLargeNumberParts]
+  );
 
   return (
     <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-b from-[#071938] via-[#051329] to-[#030a16] border border-[#0e274d] p-4 sm:p-8 lg:p-10 mb-6 sm:mb-8 shadow-2xl">
@@ -96,8 +101,11 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
                 </span>
                 <Coins className="w-4 h-4 sm:w-5 sm:h-5 text-[#044CD0] group-hover:scale-110 transition-transform shrink-0 mt-0.5" />
               </div>
-              <div className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 dark:text-slate-100 truncate">
-                {formatLargeNumber(stats.totalAssetsNet)}
+              <div className="flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 dark:text-slate-100">
+                <span>{netAssetsParts.value}</span>
+                <span className="text-base sm:text-lg lg:text-xl font-bold text-slate-600 dark:text-slate-400 whitespace-nowrap">
+                  {netAssetsParts.unit}
+                </span>
               </div>
             </div>
             <div className="text-xs text-slate-500 dark:text-slate-400 mt-1.5 line-clamp-2 leading-snug">
