@@ -89,10 +89,10 @@ export const pl = {
     classes: {
       ALL: "Wszystkie",
       akcji: "Akcyjne",
-      dłużn: "Dłużne / Obligacji",
+      dłużn: "Dłużne",
       mieszan: "Mieszane",
       PPK: "PPK",
-      alternatyw: "Alternatywne / Surowce",
+      alternatyw: "Alternatywne",
     },
     advancedFilters: "Filtry zaawansowane",
     legalRegistry: "Rejestr i status prawny:",
