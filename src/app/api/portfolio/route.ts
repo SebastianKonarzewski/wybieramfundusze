@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
   const ids = idsParam
     .split(",")
     .map((id) => parseInt(id.trim(), 10))
-    .filter((id) => !isNaN(id))
+    .filter((id) => !isNaN(id) && id > 0 && id < 100_000_000)
     .slice(0, 15); // max 15 funds for portfolio analysis
 
   if (ids.length === 0) {

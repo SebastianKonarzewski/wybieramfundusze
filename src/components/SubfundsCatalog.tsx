@@ -10,8 +10,6 @@ import {
   Check,
   ChevronLeft,
   ChevronRight,
-  TrendingUp,
-  Percent,
   Compass,
   LayoutGrid,
   Table as TableIcon,
@@ -187,11 +185,28 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
     setCurrentPage(0);
     if (id === "ALL") {
       setSelectedClassifications([]);
+      setSelectedCategories([]);
       return;
     }
-    setSelectedClassifications((prev) =>
-      prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]
-    );
+    setSelectedClassifications((prev) => {
+      const next = prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id];
+      if (next.length > 0) {
+        const nextGroups = CATEGORY_GROUPS.filter((grp) => next.includes(grp.classId));
+        setSelectedCategories((prevCats) =>
+          prevCats.filter((cat) =>
+            nextGroups.some((grp) => grp.options.some((opt) => opt.id === cat))
+          )
+        );
+      }
+      return next;
+    });
+  };
+
+  const toggleAdvancedFilters = () => {
+    setShowAdvancedFilters((prev) => {
+      if (prev) setIsCategoryOpen(false);
+      return !prev;
+    });
   };
 
   const toggleType = (type: string) => {
@@ -231,20 +246,6 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
     return selectedCategories.map((c) => getCategoryLabel(c, locale === "en")).join(", ");
   }, [selectedCategories, t.catalog.allCategories, locale]);
 
-  // Reset selectedCategories if parent classification is deselected
-  useEffect(() => {
-    if (selectedCategories.length > 0 && selectedClassifications.length > 0) {
-      const validCategories = selectedCategories.filter((cat) =>
-        visibleCategoryGroups.some((grp) =>
-          grp.options.some((opt) => opt.id === cat)
-        )
-      );
-      if (validCategories.length !== selectedCategories.length) {
-        setSelectedCategories(validCategories);
-      }
-    }
-  }, [selectedClassifications, visibleCategoryGroups, selectedCategories]);
-
   // Close category dropdown on click outside or Escape
   useEffect(() => {
     if (!isCategoryOpen) return;
@@ -271,13 +272,6 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [isCategoryOpen]);
-
-  // Close category dropdown when advanced filters are collapsed
-  useEffect(() => {
-    if (!showAdvancedFilters) {
-      setIsCategoryOpen(false);
-    }
-  }, [showAdvancedFilters]);
 
   const hasActiveAdvancedFilters =
     selectedCategories.length > 0 || includeInactive || includeLiquidating;
@@ -372,7 +366,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
 
   // Custom sort for enriched columns on the fetched page
   const processedItems = useMemo(() => {
-    let result = [...items];
+    const result = [...items];
 
     if (sortField === "fee") {
       result.sort((a, b) => {
@@ -464,7 +458,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                 <ArrowUpDown className="w-3.5 h-3.5 text-[#044CD0] shrink-0" />
                 <select
                   value={sortField}
-                  onChange={(e) => setSortField(e.target.value as any)}
+                  onChange={(e) => setSortField(e.target.value as "name" | "fee" | "risk" | "valuation")}
                   aria-label={t.catalog.sort.field}
                   className="bg-transparent text-slate-800 dark:text-slate-200 font-sans font-medium text-xs sm:text-sm focus:outline-hidden cursor-pointer w-full truncate"
                 >
@@ -591,7 +585,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
 
               {/* Toggle Button for Advanced Options */}
               <button
-                onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
+                onClick={toggleAdvancedFilters}
                 className={`h-[38px] inline-flex items-center gap-1.5 text-xs sm:text-sm py-1.5 px-3 sm:px-3.5 rounded-xl border transition-all cursor-pointer ${
                   hasActiveAdvancedFilters
                     ? "text-[#044CD0] dark:text-blue-300 border-blue-400 dark:border-blue-500/50 bg-blue-50/90 dark:bg-[#044CD0]/15 hover:bg-blue-100/90 dark:hover:bg-[#044CD0]/25 font-semibold shadow-2xs"

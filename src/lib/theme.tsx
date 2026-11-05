@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, startTransition } from "react";
 
 export type ThemeMode = "dark" | "light";
 
@@ -19,7 +19,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     try {
       const saved = localStorage.getItem("theme_mode");
       if (saved === "light" || saved === "dark") {
-        setThemeState(saved);
+        startTransition(() => {
+          setThemeState(saved);
+        });
         const root = document.documentElement;
         if (saved === "light") {
           root.classList.remove("dark");

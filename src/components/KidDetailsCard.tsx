@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { FileText, Download, ShieldCheck, Target, Percent } from "lucide-react";
+import { FileText, Download, Target, Percent } from "lucide-react";
 import { KNFKeyInformationDetail } from "@/types/knf";
 import { RiskBadge } from "./RiskBadge";
 import { useTranslation } from "@/lib/i18n";

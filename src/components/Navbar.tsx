@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, startTransition } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -26,14 +26,16 @@ export function Navbar() {
   const pathname = usePathname();
   const { selectedFunds } = useCompare();
   const { portfolioFunds } = usePortfolio();
-  const { t, locale } = useTranslation();
+  const { t } = useTranslation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isA11yOpen, setIsA11yOpen] = useState(false);
 
   // Auto-close mobile menu and WCAG menu on route change
   useEffect(() => {
-    setIsMobileMenuOpen(false);
-    setIsA11yOpen(false);
+    startTransition(() => {
+      setIsMobileMenuOpen(false);
+      setIsA11yOpen(false);
+    });
   }, [pathname]);
 
   // Lock document and body scroll when mobile menu is open

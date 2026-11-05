@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { ExternalLink, ShieldCheck, Lock, Accessibility } from "lucide-react";
+import { ExternalLink, ShieldCheck, Lock } from "lucide-react";
 import { useTranslation } from "@/lib/i18n";
 import { useAccessibility } from "@/lib/accessibility";
 

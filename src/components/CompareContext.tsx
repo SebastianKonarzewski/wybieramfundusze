@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState, startTransition } from "react";
 
 export interface SelectedFund {
   subfundId: number;
@@ -27,7 +27,15 @@ export function CompareProvider({ children }: { children: React.ReactNode }) {
     try {
       const stored = localStorage.getItem("knf_compare_funds");
       if (stored) {
-        setSelectedFunds(JSON.parse(stored));
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) {
+          const valid = parsed.filter(
+            (f) => f && typeof f.subfundId === "number" && typeof f.name === "string"
+          );
+          startTransition(() => {
+            setSelectedFunds(valid);
+          });
+        }
       }
     } catch {
       // ignore storage errors

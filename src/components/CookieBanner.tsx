@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { Shield, Cookie, ChevronRight, X } from "lucide-react";
+import React, { useState, useEffect, startTransition } from "react";
+import { Cookie, X } from "lucide-react";
 import { useAccessibility } from "@/lib/accessibility";
 import { useTranslation } from "@/lib/i18n";
 
@@ -14,7 +14,9 @@ export function CookieBanner() {
     try {
       const consent = localStorage.getItem("cookie_consent");
       if (!consent) {
-        setIsVisible(true);
+        startTransition(() => {
+          setIsVisible(true);
+        });
       }
     } catch {
       // ignore

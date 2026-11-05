@@ -123,6 +123,7 @@ async function knfFetch<T>(
       headers: {
         Accept: "application/json",
       },
+      signal: AbortSignal.timeout(10000),
     };
 
     if (options.revalidate !== undefined) {
@@ -552,10 +553,10 @@ export const knfApi = {
     const validSubfunds = listRes.content.filter((sf) => !UNQUOTED_SUBFUND_IDS.has(sf.subfundId));
 
     // Prepare standalone funds if general query (no specific umbrella fundId specified)
-    let standalonePool: (KNFSubfund & { isFundOnly?: boolean; companyId?: number })[] = [];
+    let standalonePool: KNFSubfund[] = [];
     if (!params?.fundId) {
       const sTerm = (params?.search || "").toLowerCase().trim();
-      standalonePool = (standaloneFundsData as any[]).filter((f) => {
+      standalonePool = (standaloneFundsData as unknown as KNFSubfund[]).filter((f) => {
         if (!sTerm) return true;
         return (
           (f.name || "").toLowerCase().includes(sTerm) ||
@@ -574,7 +575,7 @@ export const knfApi = {
         ...sf,
         classification: sf.classification || meta?.c || fallback.classification,
         category: sf.category || meta?.cat || fallback.category,
-        fullName: (sf as any).fullName || meta?.fn || sf.name,
+        fullName: sf.fullName || meta?.fn || sf.name,
       };
     });
 
@@ -678,7 +679,7 @@ export const knfApi = {
     const enrichedItems: SubfundCardModel[] = await Promise.all(
       subfundsToEnrich.map(async (sf) => {
         try {
-          if ((sf as any).isFundOnly) {
+          if (sf.isFundOnly) {
             // Standalone fund without segregated subfunds (e.g. Beta ETF, PZU ETF, standalone FIO/SFIO)
             const [fundDetail, kidRes, valuationsRes] = await Promise.all([
               this.getFund(sf.fundId),

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, startTransition } from "react";
 import {
   AreaChart,
   Area,
@@ -13,8 +13,8 @@ import {
   Legend,
 } from "recharts";
 import { KNFValuation } from "@/types/knf";
-import { TrendingUp, TrendingDown, Calendar, LineChart as ChartIcon } from "lucide-react";
-import { BenchmarkPoint, BenchmarkSeries } from "@/lib/benchmark-api";
+import { TrendingUp, TrendingDown, Calendar, LineChart as ChartIcon, RefreshCw } from "lucide-react";
+import { BenchmarkSeries } from "@/lib/benchmark-api";
 import { useTranslation } from "@/lib/i18n";
 
 interface ValuationChartProps {
@@ -37,7 +37,9 @@ export function ValuationChart({
   // Fetch benchmark data when benchmark changes
   useEffect(() => {
     if (activeBenchmark === "NONE") {
-      setBenchmarkData(null);
+      startTransition(() => {
+        setBenchmarkData(null);
+      });
       return;
     }
 
@@ -223,11 +225,15 @@ export function ValuationChart({
         <div className="flex flex-wrap items-center gap-2 self-start lg:self-auto">
           {/* Benchmark selector */}
           <div className="flex items-center gap-1.5 bg-[#030a16] border border-[#0e274d] px-2.5 py-1 rounded-xl text-xs">
-            <ChartIcon className="w-3.5 h-3.5 text-[#044CD0]" />
+            {benchmarkLoading ? (
+              <RefreshCw className="w-3.5 h-3.5 text-[#044CD0] animate-spin" />
+            ) : (
+              <ChartIcon className="w-3.5 h-3.5 text-[#044CD0]" />
+            )}
             <span className="text-slate-400 font-medium">{t.chart.benchmarkLabel}</span>
             <select
               value={activeBenchmark}
-              onChange={(e) => setActiveBenchmark(e.target.value as any)}
+              onChange={(e) => setActiveBenchmark(e.target.value as "NONE" | "WIG" | "TBSP")}
               className="bg-transparent text-slate-200 font-semibold focus:outline-hidden cursor-pointer"
             >
               <option value="NONE" className="bg-[#030a16]">{t.chart.noBenchmarkOption}</option>

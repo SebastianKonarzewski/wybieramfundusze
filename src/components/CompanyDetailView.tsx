@@ -17,7 +17,7 @@ import { useTranslation } from "@/lib/i18n";
 
 interface CompanyDetailViewProps {
   company: KNFCompanyDetail;
-  history: KNFHistoryItem<any>[];
+  history: KNFHistoryItem<KNFCompanyDetail>[];
   funds: KNFFund[];
 }
 

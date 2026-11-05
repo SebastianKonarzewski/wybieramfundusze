@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, startTransition } from "react";
 
 export type FontSize = "normal" | "large" | "xlarge";
 
@@ -31,15 +31,17 @@ export function AccessibilityProvider({ children }: { children: React.ReactNode 
       const saved = localStorage.getItem("a11y_preferences");
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (parsed.fontSize === "normal" || parsed.fontSize === "large" || parsed.fontSize === "xlarge") {
-          setFontSizeState(parsed.fontSize);
-        }
-        if (typeof parsed.highContrast === "boolean") {
-          setHighContrast(parsed.highContrast);
-        }
-        if (typeof parsed.reducedMotion === "boolean") {
-          setReducedMotion(parsed.reducedMotion);
-        }
+        startTransition(() => {
+          if (parsed.fontSize === "normal" || parsed.fontSize === "large" || parsed.fontSize === "xlarge") {
+            setFontSizeState(parsed.fontSize);
+          }
+          if (typeof parsed.highContrast === "boolean") {
+            setHighContrast(parsed.highContrast);
+          }
+          if (typeof parsed.reducedMotion === "boolean") {
+            setReducedMotion(parsed.reducedMotion);
+          }
+        });
       }
     } catch {
       // ignore

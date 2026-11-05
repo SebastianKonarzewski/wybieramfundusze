@@ -6,32 +6,35 @@ export const dynamic = "force-dynamic";
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
 
-  const search = searchParams.get("search") || undefined;
+  const rawSearch = searchParams.get("search");
+  const search = rawSearch ? rawSearch.slice(0, 100).trim() || undefined : undefined;
   
   // Support both multi 'classifications' and single 'classification'
   const classParam = searchParams.get("classifications") || searchParams.get("classification") || undefined;
   const classifications = classParam
-    ? classParam.split(",").map((s) => s.trim()).filter((s) => s && s !== "ALL")
+    ? classParam.split(",").map((s) => s.slice(0, 50).trim()).filter((s) => s && s !== "ALL")
     : undefined;
 
   // Support both multi 'fundTypes' and single 'fundType'
   const typeParam = searchParams.get("fundTypes") || searchParams.get("fundType") || undefined;
   const fundTypes = typeParam
-    ? typeParam.split(",").map((s) => s.trim()).filter((s) => s && s !== "ALL")
+    ? typeParam.split(",").map((s) => s.slice(0, 20).trim()).filter((s) => s && s !== "ALL")
     : undefined;
 
   // Support both multi 'categories' and single 'category'
   const categoryParam = searchParams.get("categories") || searchParams.get("category") || undefined;
   const categories = categoryParam
-    ? categoryParam.split(",").map((s) => s.trim()).filter((s) => s && s !== "ALL")
+    ? categoryParam.split(",").map((s) => s.slice(0, 80).trim()).filter((s) => s && s !== "ALL")
     : undefined;
 
-  const page = parseInt(searchParams.get("page") || "0", 10);
-  const size = Math.min(parseInt(searchParams.get("size") || "24", 10), 100);
-  const sort = searchParams.get("sort") || "name,asc";
+  const page = Math.max(0, parseInt(searchParams.get("page") || "0", 10) || 0);
+  const size = Math.max(1, Math.min(parseInt(searchParams.get("size") || "24", 10) || 24, 100));
+  const rawSort = searchParams.get("sort") || "name,asc";
+  const sort = ["name,asc", "name,desc"].includes(rawSort) ? rawSort : "name,asc";
   const includeInactive = searchParams.get("includeInactive") === "true";
   const includeLiquidating = searchParams.get("includeLiquidating") === "true";
-  const fundId = searchParams.get("fundId") ? parseInt(searchParams.get("fundId")!, 10) : undefined;
+  const rawFundId = searchParams.get("fundId");
+  const fundId = rawFundId && !isNaN(parseInt(rawFundId, 10)) && parseInt(rawFundId, 10) > 0 ? parseInt(rawFundId, 10) : undefined;
   const enriched = searchParams.get("enriched") !== "false";
 
   try {

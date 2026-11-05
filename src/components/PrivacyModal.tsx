@@ -7,7 +7,6 @@ import {
   Database,
   Lock,
   Trash2,
-  ExternalLink,
   Check,
   FileCheck,
 } from "lucide-react";

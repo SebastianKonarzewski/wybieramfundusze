@@ -10,23 +10,31 @@ export interface BenchmarkSeries {
   points: BenchmarkPoint[];
 }
 
+export const VALID_BENCHMARK_RANGES = ["1mo", "3mo", "6mo", "1y", "3y", "5y", "max"] as const;
+export type BenchmarkRange = (typeof VALID_BENCHMARK_RANGES)[number];
+
 const BENCHMARK_MAP: Record<string, { ticker: string; name: string; category: "akcji" | "dłużne" }> = {
   WIG: { ticker: "ETFBW20TR.WA", name: "WIG20 TR (Polskie Akcje)", category: "akcji" },
   MWIG40: { ticker: "ETFBM40TR.WA", name: "mWIG40 TR (Średnie Spółki)", category: "akcji" },
   TBSP: { ticker: "ETFBTBSP.WA", name: "TBSP (Polskie Obligacje Skarbowe)", category: "dłużne" },
 };
 
-// In-memory cache for benchmark points (12 hours)
+// In-memory cache for benchmark points (12 hours) with max entries protection
 const cache: Record<string, { timestamp: number; data: BenchmarkSeries }> = {};
 const CACHE_TTL = 12 * 3600 * 1000;
+const MAX_CACHE_ENTRIES = 50;
 
 export async function getBenchmarkData(
   symbol: string,
-  range: "1mo" | "3mo" | "6mo" | "1y" | "3y" | "5y" | "max" = "3y"
+  rawRange: string = "3y"
 ): Promise<BenchmarkSeries | null> {
-  const normKey = symbol.toUpperCase();
+  const normKey = (symbol || "").toUpperCase().trim();
   const benchmarkConfig = BENCHMARK_MAP[normKey] || BENCHMARK_MAP["WIG"];
   if (!benchmarkConfig) return null;
+
+  const range: BenchmarkRange = VALID_BENCHMARK_RANGES.includes(rawRange as BenchmarkRange)
+    ? (rawRange as BenchmarkRange)
+    : "3y";
 
   const cacheKey = `${normKey}_${range}`;
   const now = Date.now();
@@ -41,6 +49,7 @@ export async function getBenchmarkData(
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)",
         Accept: "application/json",
       },
+      signal: AbortSignal.timeout(8000),
       next: { revalidate: 3600 * 6 },
     });
 
@@ -78,6 +87,12 @@ export async function getBenchmarkData(
       category: benchmarkConfig.category,
       points,
     };
+
+    // Purge stale or excessive cache entries if limit reached
+    const keys = Object.keys(cache);
+    if (keys.length >= MAX_CACHE_ENTRIES) {
+      delete cache[keys[0]];
+    }
 
     cache[cacheKey] = {
       timestamp: now,

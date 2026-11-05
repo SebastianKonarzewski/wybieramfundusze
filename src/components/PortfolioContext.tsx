@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState, startTransition } from "react";
 
 export interface PortfolioFund {
   subfundId: number;
@@ -36,7 +36,12 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
       if (stored) {
         const parsed = JSON.parse(stored);
         if (Array.isArray(parsed)) {
-          setPortfolioFunds(parsed);
+          const valid = parsed.filter(
+            (f) => f && typeof f.subfundId === "number" && typeof f.name === "string"
+          );
+          startTransition(() => {
+            setPortfolioFunds(valid);
+          });
         }
       }
     } catch {

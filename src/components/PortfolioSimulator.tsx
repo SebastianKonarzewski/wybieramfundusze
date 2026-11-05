@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, startTransition } from "react";
 import Link from "next/link";
 import {
   Briefcase,
@@ -8,27 +8,21 @@ import {
   Trash2,
   X,
   Search,
-  Check,
   TrendingUp,
-  Percent,
-  Calendar,
   AlertCircle,
   HelpCircle,
   Layers,
   PieChart as PieIcon,
-  DollarSign,
   Scale,
   Sparkles,
   ArrowRight,
   ShieldAlert,
   Coins,
-  ChevronRight,
 } from "lucide-react";
 import {
   ResponsiveContainer,
   ComposedChart,
   Area,
-  Line,
   XAxis,
   YAxis,
   Tooltip,
@@ -38,12 +32,9 @@ import {
   Cell,
 } from "recharts";
 import { SubfundFullProfile } from "@/types/knf";
-import { usePortfolio, PortfolioFund } from "./PortfolioContext";
-import { StatusBadge } from "./StatusBadge";
+import { usePortfolio } from "./PortfolioContext";
 import { RiskBadge } from "./RiskBadge";
 import { useTranslation } from "@/lib/i18n";
-import { useTheme } from "@/lib/theme";
-import { useAccessibility } from "@/lib/accessibility";
 
 // Palette for fund lines & donut chart slices
 const FUND_PALETTE = [
@@ -102,17 +93,12 @@ export function PortfolioSimulator() {
     setFunds,
   } = usePortfolio();
 
-  const { t, locale, formatCurrency, formatPercent, formatDate, formatNumber } = useTranslation();
-  const { theme } = useTheme();
-  const { highContrast } = useAccessibility();
-  const isLight = theme === "light";
+  const { t, formatCurrency, formatDate } = useTranslation();
 
   const [profiles, setProfiles] = useState<SubfundFullProfile[]>([]);
-  const [loading, setLoading] = useState(false);
 
-  // Capital & allocation mode
+  // Capital & display options
   const [initialCapital, setInitialCapital] = useState<number>(10000);
-  const [allocationMode, setAllocationMode] = useState<"percentage" | "amount" | "units">("percentage");
   const [showFeeDrag, setShowFeeDrag] = useState<boolean>(true);
   const [chartUnit, setChartUnit] = useState<"amount" | "percent">("amount");
 
@@ -130,12 +116,13 @@ export function PortfolioSimulator() {
   // 1. Fetch full profiles for all portfolio funds
   useEffect(() => {
     if (portfolioFunds.length === 0) {
-      setProfiles([]);
+      startTransition(() => {
+        setProfiles([]);
+      });
       return;
     }
 
     const loadData = async () => {
-      setLoading(true);
       try {
         const ids = portfolioFunds.map((f) => f.subfundId).join(",");
         const res = await fetch(`/api/portfolio?ids=${ids}`);
@@ -145,8 +132,6 @@ export function PortfolioSimulator() {
         }
       } catch (err) {
         console.error("Error loading portfolio data:", err);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -156,7 +141,9 @@ export function PortfolioSimulator() {
   // 2. Fund live search
   useEffect(() => {
     if (!searchQuery || searchQuery.trim().length < 2) {
-      setSearchResults([]);
+      startTransition(() => {
+        setSearchResults([]);
+      });
       return;
     }
 
@@ -226,8 +213,12 @@ export function PortfolioSimulator() {
 
     startTs = Math.max(startTs, dateBounds.minTimestamp);
 
-    setCustomStartDate(new Date(startTs).toISOString().split("T")[0]);
-    setCustomEndDate(dateBounds.maxDate);
+    const nextStart = new Date(startTs).toISOString().split("T")[0];
+    const nextEnd = dateBounds.maxDate;
+    startTransition(() => {
+      setCustomStartDate(nextStart);
+      setCustomEndDate(nextEnd);
+    });
   }, [selectedPeriod, dateBounds]);
 
   // 4. Calculate total weights
@@ -336,7 +327,7 @@ export function PortfolioSimulator() {
       feeDrag: number;
       netReturnPct: number;
       grossReturnPct: number;
-      [key: string]: any;
+      [key: string]: string | number;
     }[] = [];
 
     let peakNetValue = initialCapital;
@@ -348,7 +339,7 @@ export function PortfolioSimulator() {
 
       let totalNetVal = 0;
       let totalGrossVal = 0;
-      const rowItem: any = { date: dStr };
+      const rowItem: Record<string, string | number> = { date: dStr };
 
       fundDataMap.forEach(({ sortedVals, annualFeeRate }, subfundId) => {
         // Find latest available valuation up to curTs
@@ -424,7 +415,8 @@ export function PortfolioSimulator() {
     // Breakdown per fund at the end of period
     const fundBreakdown = Array.from(fundDataMap.entries()).map(([subfundId, data], idx) => {
       const metric = initialFundMetrics[subfundId];
-      const endVal = latestPoint[`fund_${subfundId}`] ?? metric.initialCapitalAllocated;
+      const rawEndVal = latestPoint?.[`fund_${subfundId}`];
+      const endVal: number = typeof rawEndVal === "number" ? rawEndVal : metric.initialCapitalAllocated;
       const returnPct =
         metric.initialCapitalAllocated > 0
           ? ((endVal - metric.initialCapitalAllocated) / metric.initialCapitalAllocated) * 100
@@ -1042,7 +1034,7 @@ export function PortfolioSimulator() {
                     ))}
                   </Pie>
                   <Tooltip
-                    formatter={(value: any, name: any) => [`${value}%`, name]}
+                    formatter={(value, name) => [`${value}%`, String(name)]}
                     contentStyle={{
                       backgroundColor: "#030a16",
                       borderColor: "#0e274d",

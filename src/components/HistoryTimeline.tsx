@@ -5,12 +5,18 @@ import { Calendar } from "lucide-react";
 import { KNFHistoryItem } from "@/types/knf";
 import { useTranslation } from "@/lib/i18n";
 
+interface DefaultHistoryData {
+  name?: string | null;
+  fullName?: string | null;
+  classification?: string | null;
+}
+
 interface HistoryTimelineProps<T> {
   history: KNFHistoryItem<T>[];
   renderDetails?: (item: T, prevItem?: T) => React.ReactNode;
 }
 
-export function HistoryTimeline<T extends Record<string, any>>({
+export function HistoryTimeline<T extends object>({
   history,
   renderDetails,
 }: HistoryTimelineProps<T>) {
@@ -74,40 +80,44 @@ export function HistoryTimeline<T extends Record<string, any>>({
               {/* Dynamic details for Subfund */}
               {renderDetails ? (
                 renderDetails(currentData, nextItem)
-              ) : (
-                <div className="space-y-2 text-sm">
-                  {currentData.name && (
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-xs uppercase tracking-wider text-slate-500 font-medium">
-                        {t.common.nameLabel}
-                      </span>
-                      <span className="font-semibold text-slate-100">
-                        {currentData.name}
-                      </span>
-                      {nextItem && nextItem.name && nextItem.name !== currentData.name && (
-                        <span className="text-xs text-amber-400 italic">
-                          ({t.common.previously} {nextItem.name})
+              ) : (() => {
+                const defaultData = currentData as unknown as DefaultHistoryData;
+                const nextDefaultData = nextItem as unknown as DefaultHistoryData | undefined;
+                return (
+                  <div className="space-y-2 text-sm">
+                    {defaultData.name && (
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-xs uppercase tracking-wider text-slate-500 font-medium">
+                          {t.common.nameLabel}
                         </span>
-                      )}
-                    </div>
-                  )}
+                        <span className="font-semibold text-slate-100">
+                          {defaultData.name}
+                        </span>
+                        {nextDefaultData?.name && nextDefaultData.name !== defaultData.name && (
+                          <span className="text-xs text-amber-400 italic">
+                            ({t.common.previously} {nextDefaultData.name})
+                          </span>
+                        )}
+                      </div>
+                    )}
 
-                  {currentData.fullName && currentData.fullName !== currentData.name && (
-                    <div className="text-xs text-slate-400">
-                      {t.common.fullNameLabel} {currentData.fullName}
-                    </div>
-                  )}
+                    {defaultData.fullName && defaultData.fullName !== defaultData.name && (
+                      <div className="text-xs text-slate-400">
+                        {t.common.fullNameLabel} {defaultData.fullName}
+                      </div>
+                    )}
 
-                  {currentData.classification && (
-                    <div className="flex items-center gap-2 text-xs text-slate-300">
-                      <span className="text-slate-500">{t.common.classificationCategory}</span>
-                      <span className="px-2 py-0.5 rounded bg-[#051329] border border-[#0e274d] font-medium">
-                        {currentData.classification}
-                      </span>
-                    </div>
-                  )}
-                </div>
-              )}
+                    {defaultData.classification && (
+                      <div className="flex items-center gap-2 text-xs text-slate-300">
+                        <span className="text-slate-500">{t.common.classificationCategory}</span>
+                        <span className="px-2 py-0.5 rounded bg-[#051329] border border-[#0e274d] font-medium">
+                          {defaultData.classification}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
             </div>
           </div>
         );

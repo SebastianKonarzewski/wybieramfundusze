@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, startTransition } from "react";
 import { pl, Translations } from "@/locales/pl";
 import { en } from "@/locales/en";
 import {
@@ -35,7 +35,9 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
     try {
       const saved = localStorage.getItem("preferred_locale") as Locale | null;
       if (saved === "pl" || saved === "en") {
-        setLocaleState(saved);
+        startTransition(() => {
+          setLocaleState(saved);
+        });
         document.documentElement.lang = saved;
       }
     } catch {

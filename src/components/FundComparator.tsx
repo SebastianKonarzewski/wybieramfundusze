@@ -1,18 +1,14 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, startTransition } from "react";
 import Link from "next/link";
 import {
   Scale,
   Plus,
   Trash2,
   X,
-  ExternalLink,
-  ShieldCheck,
   TrendingUp,
-  Percent,
   Search,
-  Check,
   FileText,
 } from "lucide-react";
 import {
@@ -49,7 +45,9 @@ export function FundComparator() {
   // Load profiles when selectedFunds changes
   useEffect(() => {
     if (selectedFunds.length === 0) {
-      setProfiles([]);
+      startTransition(() => {
+        setProfiles([]);
+      });
       return;
     }
 
@@ -75,7 +73,9 @@ export function FundComparator() {
   // Handle fund search
   useEffect(() => {
     if (!searchQuery || searchQuery.trim().length < 2) {
-      setSearchResults([]);
+      startTransition(() => {
+        setSearchResults([]);
+      });
       return;
     }
 
@@ -115,7 +115,7 @@ export function FundComparator() {
 
       sortedVals.forEach((val) => {
         if (!datesMap[val.date]) {
-          datesMap[val.date] = { date: new Date(val.date).getTime() } as any;
+          datesMap[val.date] = { date: new Date(val.date).getTime() };
         }
         const pctReturn = baseVal > 0 ? ((val.valuation - baseVal) / baseVal) * 100 : 0;
         datesMap[val.date][fundKey] = parseFloat(pctReturn.toFixed(2));
@@ -585,8 +585,9 @@ export function FundComparator() {
                               <div className="text-slate-400 font-semibold mb-1">
                                 {formatDate(String(label))}
                               </div>
-                              {payload.map((item: any, i: number) => {
+                              {payload.map((item, i: number) => {
                                 const profile = profiles[i];
+                                const numVal = typeof item.value === "number" ? item.value : Number(item.value) || 0;
                                 return (
                                   <div key={i} className="flex items-center justify-between gap-4">
                                     <span className="flex items-center gap-1.5 text-slate-300">
@@ -599,8 +600,8 @@ export function FundComparator() {
                                       </span>
                                     </span>
                                     <span className="font-bold text-slate-100">
-                                      {item.value >= 0 ? "+" : ""}
-                                      {formatPercent(item.value / 100)}
+                                      {numVal >= 0 ? "+" : ""}
+                                      {formatPercent(numVal / 100)}
                                     </span>
                                   </div>
                                 );

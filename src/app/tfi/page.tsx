@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Building2, Search, Calendar, ArrowRight } from "lucide-react";
+import { Search, Calendar, ArrowRight } from "lucide-react";
 import { KNFCompany } from "@/types/knf";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";

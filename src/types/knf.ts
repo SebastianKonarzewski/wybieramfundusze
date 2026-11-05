@@ -95,6 +95,7 @@ export interface KNFSubfund {
   fundId: number;
   nationalCode: string;
   name: string;
+  fullName?: string | null;
   type: string;
   classification?: string | null;
   category?: string | null;
@@ -104,6 +105,8 @@ export interface KNFSubfund {
   fromDate?: string | null;
   toDate?: string | null;
   isActive?: boolean;
+  isFundOnly?: boolean;
+  companyId?: number;
   _links?: KNFLink[];
 }
 

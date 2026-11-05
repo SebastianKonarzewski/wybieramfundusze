@@ -1,15 +1,13 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import {
   Accessibility,
   Sun,
-  Eye,
   Zap,
   RotateCcw,
   X,
   Type,
-  Check,
 } from "lucide-react";
 import { useAccessibility, FontSize } from "@/lib/accessibility";
 import { useTranslation } from "@/lib/i18n";
@@ -27,14 +25,17 @@ export function AccessibilityToolbar({
   const isControlled = controlledIsOpen !== undefined;
   const isOpen = isControlled ? controlledIsOpen : internalIsOpen;
 
-  const setIsOpen = (open: boolean) => {
-    if (onOpenChange) {
-      onOpenChange(open);
-    }
-    if (!isControlled) {
-      setInternalIsOpen(open);
-    }
-  };
+  const setIsOpen = useCallback(
+    (open: boolean) => {
+      if (onOpenChange) {
+        onOpenChange(open);
+      }
+      if (!isControlled) {
+        setInternalIsOpen(open);
+      }
+    },
+    [onOpenChange, isControlled]
+  );
 
   const {
     fontSize,
@@ -72,7 +73,7 @@ export function AccessibilityToolbar({
       document.removeEventListener("touchstart", handleClickOutside);
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen]);
+  }, [isOpen, setIsOpen]);
 
   const fontSizes: { size: FontSize; label: string; iconLabel: string }[] = [
     { size: "normal", label: t.a11y.textSizeNormal, iconLabel: "A" },
