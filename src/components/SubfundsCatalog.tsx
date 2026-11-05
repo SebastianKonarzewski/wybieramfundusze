@@ -416,14 +416,14 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
           </div>
         </div>
 
-        {/* Filter Badges: Type & Asset Class */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[#0e274d]">
-          <div className="flex flex-wrap items-center gap-2">
-            {/* Asset Class Multi-Select Filter */}
-            <div className="flex items-center gap-1 text-xs flex-wrap">
-              <span className="text-slate-400 mr-1 font-semibold flex items-center gap-1 shrink-0">
-                <Compass className="w-3.5 h-3.5 text-[#3b82f6]" /> {t.catalog.assetClass}
-              </span>
+        {/* Filter Rows: Asset Class & Legal Type */}
+        <div className="pt-3 border-t border-[#0e274d] space-y-2.5">
+          {/* Row 1: Asset Class */}
+          <div className="flex items-center gap-1.5 text-xs flex-wrap">
+            <span className="text-slate-400 sm:w-[92px] shrink-0 font-medium font-sans">
+              {t.catalog.assetClass}
+            </span>
+            <div className="flex items-center gap-1 flex-wrap">
               {classificationOptions.map((cls) => {
                 const isSelected =
                   cls.id === "ALL"
@@ -449,55 +449,59 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                 );
               })}
             </div>
-
-            <div className="hidden sm:block w-px h-4 bg-[#0e274d] mx-1" />
-
-            {/* Fund Legal Type Multi-Select Filter */}
-            <div className="flex items-center gap-1 text-xs flex-wrap">
-              <span className="text-slate-400 mr-1 font-medium shrink-0">{t.catalog.legalType}</span>
-              {["ALL", "SFIO", "FIO", "FIZ", "ETF"].map((type) => {
-                const isSelected =
-                  type === "ALL"
-                    ? selectedTypes.length === 0
-                    : selectedTypes.includes(type);
-
-                return (
-                  <button
-                    key={type}
-                    onClick={() => toggleType(type)}
-                    aria-pressed={isSelected}
-                    className={`inline-flex items-center gap-1 px-2 sm:px-2.5 py-1 rounded-lg text-[11px] sm:text-xs font-medium transition-all cursor-pointer ${
-                      isSelected
-                        ? "bg-[#044CD0] text-white shadow-xs font-bold border border-blue-400/60"
-                        : "bg-[#030a16] text-slate-400 border border-[#0e274d] hover:text-slate-200"
-                    }`}
-                  >
-                    {isSelected && type !== "ALL" && (
-                      <Check className="w-3 h-3 stroke-[3]" />
-                    )}
-                    {type === "ALL" ? t.catalog.allTypes : type}
-                  </button>
-                );
-              })}
-            </div>
           </div>
 
-          {/* Toggle Button for Advanced Options */}
-          <button
-            onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
-            className={`inline-flex items-center gap-1.5 text-xs py-1 px-2.5 rounded-lg border transition-colors cursor-pointer ${
-              hasActiveAdvancedFilters
-                ? "text-blue-300 border-blue-500/50 bg-[#044CD0]/15 hover:bg-[#044CD0]/25 font-medium"
-                : "text-slate-400 hover:text-slate-200 border-[#0e274d] hover:border-slate-600"
-            }`}
-          >
-            <SlidersHorizontal className="w-3.5 h-3.5 text-[#3b82f6]" />
-            <span>{t.catalog.advancedFilters}</span>
-            {hasActiveAdvancedFilters && (
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
-            )}
-            {showAdvancedFilters ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
-          </button>
+          {/* Row 2: Legal Type & Advanced Filters toggle */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+            <div className="flex items-center gap-1.5 flex-wrap">
+              <span className="text-slate-400 sm:w-[92px] shrink-0 font-medium font-sans">
+                {t.catalog.legalType}
+              </span>
+              <div className="flex items-center gap-1 flex-wrap">
+                {["ALL", "SFIO", "FIO", "FIZ", "ETF"].map((type) => {
+                  const isSelected =
+                    type === "ALL"
+                      ? selectedTypes.length === 0
+                      : selectedTypes.includes(type);
+
+                  return (
+                    <button
+                      key={type}
+                      onClick={() => toggleType(type)}
+                      aria-pressed={isSelected}
+                      className={`inline-flex items-center gap-1 px-2.5 sm:px-3 py-1 rounded-lg text-[11px] sm:text-xs font-medium transition-all cursor-pointer ${
+                        isSelected
+                          ? "bg-[#044CD0] text-white shadow-xs font-bold border border-blue-400/60"
+                          : "bg-[#030a16] text-slate-300 border border-[#0e274d] hover:text-white hover:border-[#044CD0]/60"
+                      }`}
+                    >
+                      {isSelected && type !== "ALL" && (
+                        <Check className="w-3 h-3 stroke-[3]" />
+                      )}
+                      {type === "ALL" ? t.catalog.allTypes : type}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Toggle Button for Advanced Options */}
+            <button
+              onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
+              className={`inline-flex items-center gap-1.5 text-xs py-1 px-2.5 rounded-lg border transition-colors cursor-pointer self-start sm:self-auto shrink-0 ${
+                hasActiveAdvancedFilters
+                  ? "text-blue-300 border-blue-500/50 bg-[#044CD0]/15 hover:bg-[#044CD0]/25 font-medium"
+                  : "text-slate-400 hover:text-slate-200 border-[#0e274d] hover:border-slate-600"
+              }`}
+            >
+              <SlidersHorizontal className="w-3.5 h-3.5 text-[#3b82f6]" />
+              <span>{t.catalog.advancedFilters}</span>
+              {hasActiveAdvancedFilters && (
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+              )}
+              {showAdvancedFilters ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+            </button>
+          </div>
         </div>
 
         {/* Collapsible Advanced Filters Section */}
