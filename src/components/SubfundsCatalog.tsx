@@ -374,18 +374,18 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
             {/* Sort Controls: Field Dropdown + 1-Click Direction Toggle */}
             <div className="flex items-center gap-1.5 flex-1 sm:flex-initial min-w-0">
               {/* Field Select */}
-              <div className="flex-1 sm:flex-initial flex items-center gap-1.5 bg-[#030a16] border border-[#0e274d] px-2.5 sm:px-3 py-2 rounded-xl text-xs sm:text-sm min-w-0">
+              <div className="h-[38px] flex-1 sm:flex-initial flex items-center gap-1.5 bg-[#030a16] border border-[#0e274d] px-2.5 sm:px-3 rounded-xl text-xs sm:text-sm min-w-0">
                 <ArrowUpDown className="w-3.5 h-3.5 text-[#044CD0] shrink-0" />
                 <select
                   value={sortField}
                   onChange={(e) => setSortField(e.target.value as any)}
                   aria-label={t.catalog.sort.field}
-                  className="bg-transparent text-slate-200 font-medium focus:outline-hidden cursor-pointer w-full truncate"
+                  className="bg-transparent text-slate-200 font-sans font-medium text-xs sm:text-sm focus:outline-hidden cursor-pointer w-full truncate"
                 >
-                  <option value="name" className="bg-[#030a16]">{t.catalog.sort.fields.name}</option>
-                  <option value="fee" className="bg-[#030a16]">{t.catalog.sort.fields.fee}</option>
-                  <option value="risk" className="bg-[#030a16]">{t.catalog.sort.fields.risk}</option>
-                  <option value="valuation" className="bg-[#030a16]">{t.catalog.sort.fields.valuation}</option>
+                  <option value="name" className="bg-[#030a16] text-slate-200">{t.catalog.sort.fields.name}</option>
+                  <option value="fee" className="bg-[#030a16] text-slate-200">{t.catalog.sort.fields.fee}</option>
+                  <option value="risk" className="bg-[#030a16] text-slate-200">{t.catalog.sort.fields.risk}</option>
+                  <option value="valuation" className="bg-[#030a16] text-slate-200">{t.catalog.sort.fields.valuation}</option>
                 </select>
               </div>
 
@@ -395,17 +395,17 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                 onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
                 aria-label={sortOrder === "asc" ? t.catalog.sort.toggleDirectionAsc : t.catalog.sort.toggleDirectionDesc}
                 title={sortOrder === "asc" ? t.catalog.sort.toggleDirectionAsc : t.catalog.sort.toggleDirectionDesc}
-                className="h-[38px] px-2.5 sm:px-3 flex items-center justify-center gap-1.5 bg-[#030a16] hover:bg-[#071938] border border-[#0e274d] hover:border-[#044CD0]/60 text-slate-200 rounded-xl transition-all cursor-pointer shadow-2xs shrink-0 select-none group"
+                className="h-[38px] px-2.5 sm:px-3 flex items-center justify-center gap-1.5 bg-[#030a16] hover:bg-[#071938] border border-[#0e274d] hover:border-[#044CD0]/60 text-slate-200 font-sans font-medium text-xs sm:text-sm rounded-xl transition-all cursor-pointer shadow-2xs shrink-0 select-none group"
               >
                 {sortOrder === "asc" ? (
                   <>
                     <ArrowUp className="w-3.5 h-3.5 text-[#044CD0] group-hover:scale-110 transition-transform" />
-                    <span className="text-xs font-semibold hidden md:inline">{t.catalog.sort.ascending}</span>
+                    <span className="text-xs sm:text-sm font-medium hidden md:inline">{t.catalog.sort.ascending}</span>
                   </>
                 ) : (
                   <>
                     <ArrowDown className="w-3.5 h-3.5 text-[#044CD0] group-hover:scale-110 transition-transform" />
-                    <span className="text-xs font-semibold hidden md:inline">{t.catalog.sort.descending}</span>
+                    <span className="text-xs sm:text-sm font-medium hidden md:inline">{t.catalog.sort.descending}</span>
                   </>
                 )}
               </button>
