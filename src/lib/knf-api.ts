@@ -504,6 +504,7 @@ export const knfApi = {
     classification?: string;
     classifications?: string[];
     category?: string;
+    categories?: string[];
     includeInactive?: boolean;
     includeLiquidating?: boolean;
     search?: string;
@@ -641,12 +642,23 @@ export const knfApi = {
       });
     }
 
-    // Filter by specific category if provided
-    if (params?.category && params.category !== "ALL") {
-      const targetCat = params.category.toLowerCase().replace(/\s+/g, " ").trim();
+    // Filter by specific category/categories if provided
+    const activeCategories = (
+      params?.categories && params.categories.length > 0
+        ? params.categories
+        : params?.category && params.category !== "ALL"
+        ? [params.category]
+        : []
+    )
+      .filter((c) => c && c !== "ALL")
+      .map((c) => c.toLowerCase().replace(/\s+/g, " ").trim());
+
+    if (activeCategories.length > 0) {
       filtered = filtered.filter((sf) => {
         const cat = (sf.category || "").toLowerCase().replace(/\s+/g, " ").trim();
-        return cat.includes(targetCat) || targetCat.includes(cat);
+        return activeCategories.some(
+          (targetCat) => cat.includes(targetCat) || targetCat.includes(cat)
+        );
       });
     }
 

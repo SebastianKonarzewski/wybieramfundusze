@@ -148,7 +148,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
   // Multi-select state for fund types and asset classes
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedClassifications, setSelectedClassifications] = useState<string[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const categoryDropdownRef = useRef<HTMLDivElement>(null);
   const [sortField, setSortField] = useState<"name" | "fee" | "risk" | "valuation">("name");
@@ -212,17 +212,37 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
     return CATEGORY_GROUPS.filter((grp) => selectedClassifications.includes(grp.classId));
   }, [selectedClassifications]);
 
-  // Reset selectedCategory if parent classification is deselected
+  // Helper to toggle a category in multi-select
+  const toggleCategory = (catId: string) => {
+    if (catId === "ALL") {
+      setSelectedCategories([]);
+      setCurrentPage(0);
+      return;
+    }
+    setSelectedCategories((prev) =>
+      prev.includes(catId) ? prev.filter((id) => id !== catId) : [...prev, catId]
+    );
+    setCurrentPage(0);
+  };
+
+  const categoryTriggerTitle = useMemo(() => {
+    if (selectedCategories.length === 0) return t.catalog.allCategories;
+    return selectedCategories.map((c) => getCategoryLabel(c, locale === "en")).join(", ");
+  }, [selectedCategories, t.catalog.allCategories, locale]);
+
+  // Reset selectedCategories if parent classification is deselected
   useEffect(() => {
-    if (selectedCategory !== "ALL" && selectedClassifications.length > 0) {
-      const isCategoryStillValid = visibleCategoryGroups.some((grp) =>
-        grp.options.some((opt) => opt.id === selectedCategory)
+    if (selectedCategories.length > 0 && selectedClassifications.length > 0) {
+      const validCategories = selectedCategories.filter((cat) =>
+        visibleCategoryGroups.some((grp) =>
+          grp.options.some((opt) => opt.id === cat)
+        )
       );
-      if (!isCategoryStillValid) {
-        setSelectedCategory("ALL");
+      if (validCategories.length !== selectedCategories.length) {
+        setSelectedCategories(validCategories);
       }
     }
-  }, [selectedClassifications, visibleCategoryGroups, selectedCategory]);
+  }, [selectedClassifications, visibleCategoryGroups, selectedCategories]);
 
   // Close category dropdown on click outside or Escape
   useEffect(() => {
@@ -259,7 +279,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
   }, [showAdvancedFilters]);
 
   const hasActiveAdvancedFilters =
-    selectedCategory !== "ALL" || includeInactive || includeLiquidating;
+    selectedCategories.length > 0 || includeInactive || includeLiquidating;
 
   // Fetch data on filter changes
   useEffect(() => {
@@ -274,8 +294,8 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
           if (selectedTypes.length > 0) {
             params.set("fundTypes", selectedTypes.join(","));
           }
-          if (selectedCategory && selectedCategory !== "ALL") {
-            params.set("category", selectedCategory);
+          if (selectedCategories.length > 0) {
+            params.set("categories", selectedCategories.join(","));
           }
           if (includeInactive) params.set("includeInactive", "true");
           if (includeLiquidating) params.set("includeLiquidating", "true");
@@ -305,7 +325,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
     searchTerm,
     selectedClassifications,
     selectedTypes,
-    selectedCategory,
+    selectedCategories,
     includeInactive,
     includeLiquidating,
     currentPage,
@@ -567,35 +587,37 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   className={`h-[38px] w-full bg-[#051329] border ${
                     isCategoryOpen
                       ? "border-[#044CD0] ring-1 ring-[#044CD0]/30"
+                      : selectedCategories.length > 0
+                      ? "border-[#044CD0]/60 bg-[#044CD0]/10"
                       : "border-[#0e274d] hover:border-[#19407a]"
                   } text-slate-200 font-sans font-medium text-xs sm:text-sm rounded-xl pl-3 pr-2.5 py-1.5 flex items-center justify-between gap-2 transition-all cursor-pointer text-left select-none`}
                 >
-                  <span
-                    className="truncate flex-1"
-                    title={
-                      selectedCategory === "ALL"
+                  <div className="flex items-center gap-1.5 min-w-0 flex-1">
+                    <span className="truncate" title={categoryTriggerTitle}>
+                      {selectedCategories.length === 0
                         ? t.catalog.allCategories
-                        : getCategoryLabel(selectedCategory, locale === "en")
-                    }
-                  >
-                    {selectedCategory === "ALL"
-                      ? t.catalog.allCategories
-                      : getCategoryLabel(selectedCategory, locale === "en")}
-                  </span>
+                        : getCategoryLabel(selectedCategories[0], locale === "en")}
+                    </span>
+                    {selectedCategories.length > 1 && (
+                      <span className="px-1.5 py-0.5 rounded-full bg-[#044CD0] text-white text-[10px] font-bold shrink-0">
+                        +{selectedCategories.length - 1}
+                      </span>
+                    )}
+                  </div>
                   <div className="flex items-center gap-1.5 shrink-0 text-slate-400">
-                    {selectedCategory !== "ALL" && (
+                    {selectedCategories.length > 0 && (
                       <span
                         role="button"
                         tabIndex={0}
                         onClick={(e) => {
                           e.stopPropagation();
-                          setSelectedCategory("ALL");
+                          setSelectedCategories([]);
                           setCurrentPage(0);
                         }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter" || e.key === " ") {
                             e.stopPropagation();
-                            setSelectedCategory("ALL");
+                            setSelectedCategories([]);
                             setCurrentPage(0);
                           }
                         }}
@@ -619,28 +641,36 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   <div
                     role="listbox"
                     aria-labelledby="detailed-category-label"
-                    className="absolute top-full left-0 mt-1.5 w-full sm:w-[320px] max-h-72 sm:max-h-80 overflow-y-auto bg-[#030c1c] border border-[#0e274d] rounded-xl shadow-2xl z-50 p-1.5 space-y-1 animate-in fade-in zoom-in-95 duration-100"
+                    aria-multiselectable="true"
+                    className="absolute top-full left-0 mt-1.5 w-full sm:w-[340px] max-h-80 overflow-y-auto bg-[#030c1c] border border-[#0e274d] rounded-xl shadow-2xl z-50 p-1.5 space-y-1 animate-in fade-in zoom-in-95 duration-100"
                   >
-                    {/* Option: All categories */}
+                    {/* Option: All categories (resets multi-selection) */}
                     <button
                       type="button"
                       role="option"
-                      aria-selected={selectedCategory === "ALL"}
+                      aria-selected={selectedCategories.length === 0}
                       onClick={() => {
-                        setSelectedCategory("ALL");
+                        setSelectedCategories([]);
                         setCurrentPage(0);
-                        setIsCategoryOpen(false);
                       }}
                       className={`w-full text-left px-3 py-2 text-xs sm:text-sm rounded-lg flex items-center justify-between transition-colors cursor-pointer ${
-                        selectedCategory === "ALL"
+                        selectedCategories.length === 0
                           ? "bg-[#044CD0]/25 text-blue-300 font-semibold"
                           : "text-slate-200 hover:bg-[#071938] hover:text-white"
                       }`}
                     >
-                      <span>{t.catalog.allCategories}</span>
-                      {selectedCategory === "ALL" && (
-                        <Check className="w-3.5 h-3.5 text-[#3b82f6] shrink-0" />
-                      )}
+                      <div className="flex items-center gap-2.5">
+                        <div
+                          className={`w-4 h-4 rounded-sm flex items-center justify-center transition-colors ${
+                            selectedCategories.length === 0
+                              ? "bg-[#044CD0] border border-blue-400 text-white"
+                              : "border border-slate-600 bg-[#051329]"
+                          }`}
+                        >
+                          {selectedCategories.length === 0 && <Check className="w-3 h-3 stroke-[3]" />}
+                        </div>
+                        <span>{t.catalog.allCategories}</span>
+                      </div>
                     </button>
 
                     {/* Grouped categories */}
@@ -654,7 +684,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                         {/* Options under this group */}
                         <div className="space-y-0.5">
                           {grp.options.map((opt) => {
-                            const isSelected = selectedCategory === opt.id;
+                            const isSelected = selectedCategories.includes(opt.id);
                             const label = locale === "en" ? opt.labelEn : opt.labelPl;
 
                             return (
@@ -663,44 +693,86 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                                 type="button"
                                 role="option"
                                 aria-selected={isSelected}
-                                onClick={() => {
-                                  setSelectedCategory(opt.id);
-                                  setCurrentPage(0);
-                                  setIsCategoryOpen(false);
-                                }}
-                                className={`w-full text-left pl-4 pr-3 py-1.5 text-xs sm:text-sm rounded-lg flex items-center justify-between transition-colors cursor-pointer ${
+                                onClick={() => toggleCategory(opt.id)}
+                                className={`w-full text-left pl-3 pr-3 py-1.5 text-xs sm:text-sm rounded-lg flex items-center justify-between transition-colors cursor-pointer select-none ${
                                   isSelected
-                                    ? "bg-[#044CD0]/25 text-blue-200 font-semibold"
+                                    ? "bg-[#044CD0]/20 text-blue-200 font-medium"
                                     : "text-slate-300 hover:bg-[#071938] hover:text-white"
                                 }`}
                               >
-                                <span className="truncate mr-2">{label}</span>
-                                {isSelected && (
-                                  <Check className="w-3.5 h-3.5 text-[#3b82f6] shrink-0" />
-                                )}
+                                <div className="flex items-center gap-2.5 min-w-0 flex-1 mr-2">
+                                  <div
+                                    className={`w-4 h-4 rounded-sm flex items-center justify-center shrink-0 transition-colors ${
+                                      isSelected
+                                        ? "bg-[#044CD0] border border-blue-400 text-white"
+                                        : "border border-slate-600 bg-[#051329]"
+                                    }`}
+                                  >
+                                    {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
+                                  </div>
+                                  <span className="truncate">{label}</span>
+                                </div>
                               </button>
                             );
                           })}
                         </div>
                       </div>
                     ))}
+
+                    {/* Popover sticky footer with counter and Done button */}
+                    <div className="pt-2 px-2 pb-1 border-t border-[#0e274d] flex items-center justify-between text-xs sticky bottom-0 bg-[#030c1c]/95 backdrop-blur-xs">
+                      <span className="text-slate-400">
+                        {locale === "en" ? "Selected:" : "Wybrano:"}{" "}
+                        <strong className="text-white">
+                          {selectedCategories.length === 0
+                            ? locale === "en"
+                              ? "All"
+                              : "Wszystkie"
+                            : selectedCategories.length}
+                        </strong>
+                      </span>
+                      <div className="flex items-center gap-1.5">
+                        {selectedCategories.length > 0 && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setSelectedCategories([]);
+                              setCurrentPage(0);
+                            }}
+                            className="px-2 py-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+                          >
+                            {t.common.clear}
+                          </button>
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => setIsCategoryOpen(false)}
+                          className="px-3 py-1 rounded-lg bg-[#044CD0] hover:bg-blue-600 text-white font-medium transition-colors cursor-pointer shadow-xs"
+                        >
+                          {locale === "en" ? "Done" : "Gotowe"}
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
 
               {/* Explicit Clear Button next to input */}
-              {selectedCategory !== "ALL" && (
+              {selectedCategories.length > 0 && (
                 <button
                   type="button"
                   onClick={() => {
-                    setSelectedCategory("ALL");
+                    setSelectedCategories([]);
                     setCurrentPage(0);
                   }}
                   title={t.catalog.clearCategory}
                   className="h-[38px] inline-flex items-center gap-1.5 text-xs font-medium text-slate-300 hover:text-white px-3 rounded-xl bg-[#0e274d] hover:bg-slate-700 transition-colors cursor-pointer shrink-0"
                 >
                   <X className="w-3.5 h-3.5" />
-                  <span>{t.common.clear}</span>
+                  <span>
+                    {t.common.clear}
+                    {selectedCategories.length > 1 ? ` (${selectedCategories.length})` : ""}
+                  </span>
                 </button>
               )}
             </div>
@@ -749,7 +821,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
       <div className="flex items-center justify-between text-xs sm:text-sm text-slate-400 px-1">
         <div>
           {t.catalog.foundCount} <strong className="text-slate-200">{formatNumber(pageInfo.totalElements, 0)}</strong> {t.catalog.subfundsCount}
-          {(selectedClassifications.length > 0 || selectedTypes.length > 0 || selectedCategory !== "ALL") && (
+          {(selectedClassifications.length > 0 || selectedTypes.length > 0 || selectedCategories.length > 0) && (
             <span className="ml-1 text-[#60a5fa]">
               ({[
                 selectedClassifications.length > 0
@@ -770,8 +842,10 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                 selectedTypes.length > 0
                   ? `${t.catalog.typesTagLabel} ${selectedTypes.join(", ")}`
                   : null,
-                selectedCategory !== "ALL"
-                  ? `${t.catalog.categoryTagLabel} ${getCategoryLabel(selectedCategory, locale === "en")}`
+                selectedCategories.length > 0
+                  ? `${selectedCategories.length > 1 ? (locale === "en" ? "categories:" : "kategorie:") : t.catalog.categoryTagLabel} ${selectedCategories
+                      .map((c) => getCategoryLabel(c, locale === "en"))
+                      .join(", ")}`
                   : null,
               ]
                 .filter(Boolean)
