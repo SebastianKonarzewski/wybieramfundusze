@@ -382,7 +382,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
   return (
     <div className="space-y-6">
       {/* Search & Filter Toolbar */}
-      <div className="bg-[#051329] border border-[#0e274d] rounded-2xl p-4 sm:p-6 shadow-xl space-y-4">
+      <div className="bg-white dark:bg-[#051329] border border-slate-200 dark:border-[#0e274d] rounded-2xl p-4 sm:p-6 shadow-sm dark:shadow-xl space-y-4">
         {/* Top line: Search input & View mode toggle & Sort select */}
         <div className="flex flex-col lg:flex-row gap-3 items-stretch lg:items-center justify-between">
           <div className="relative flex-1">
@@ -395,20 +395,20 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                 setSearchTerm(e.target.value);
                 setCurrentPage(0);
               }}
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#030a16] border border-[#0e274d] text-sm text-slate-100 placeholder:text-slate-500 focus:outline-hidden focus:border-[#044CD0] transition-colors"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-hidden focus:border-[#044CD0] focus:ring-2 focus:ring-[#044CD0]/15 transition-all"
             />
           </div>
 
           <div className="flex items-center gap-2 justify-between sm:justify-end">
             {/* View Mode Toggle */}
-            <div className="flex items-center bg-[#030a16] p-1 rounded-xl border border-[#0e274d] shrink-0">
+            <div className="flex items-center bg-slate-50 dark:bg-[#030a16] p-1 rounded-xl border border-slate-300 dark:border-[#0e274d] shrink-0">
               <button
                 onClick={() => handleViewModeChange("grid")}
                 aria-pressed={viewMode === "grid"}
                 className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
                   viewMode === "grid"
                     ? "bg-[#044CD0] text-white shadow-xs"
-                    : "text-slate-400 hover:text-slate-200"
+                    : "text-slate-500 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-slate-200 hover:bg-white dark:hover:bg-[#071938]"
                 }`}
                 title={t.catalog.viewModeGrid}
                 aria-label={t.catalog.viewModeGrid}
@@ -421,7 +421,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                 className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
                   viewMode === "table"
                     ? "bg-[#044CD0] text-white shadow-xs"
-                    : "text-slate-400 hover:text-slate-200"
+                    : "text-slate-500 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-slate-200 hover:bg-white dark:hover:bg-[#071938]"
                 }`}
                 title={t.catalog.viewModeTable}
                 aria-label={t.catalog.viewModeTable}
@@ -433,18 +433,18 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
             {/* Sort Controls: Field Dropdown + 1-Click Direction Toggle */}
             <div className="flex items-center gap-1.5 flex-1 sm:flex-initial min-w-0">
               {/* Field Select */}
-              <div className="h-[38px] flex-1 sm:flex-initial flex items-center gap-1.5 bg-[#030a16] border border-[#0e274d] px-2.5 sm:px-3 rounded-xl text-xs sm:text-sm min-w-0">
+              <div className="h-[38px] flex-1 sm:flex-initial flex items-center gap-1.5 bg-slate-50 dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] hover:border-slate-400 dark:hover:border-slate-600 px-2.5 sm:px-3 rounded-xl text-xs sm:text-sm min-w-0 transition-colors">
                 <ArrowUpDown className="w-3.5 h-3.5 text-[#044CD0] shrink-0" />
                 <select
                   value={sortField}
                   onChange={(e) => setSortField(e.target.value as any)}
                   aria-label={t.catalog.sort.field}
-                  className="bg-transparent text-slate-200 font-sans font-medium text-xs sm:text-sm focus:outline-hidden cursor-pointer w-full truncate"
+                  className="bg-transparent text-slate-800 dark:text-slate-200 font-sans font-medium text-xs sm:text-sm focus:outline-hidden cursor-pointer w-full truncate"
                 >
-                  <option value="name" className="bg-[#030a16] text-slate-200">{t.catalog.sort.fields.name}</option>
-                  <option value="fee" className="bg-[#030a16] text-slate-200">{t.catalog.sort.fields.fee}</option>
-                  <option value="risk" className="bg-[#030a16] text-slate-200">{t.catalog.sort.fields.risk}</option>
-                  <option value="valuation" className="bg-[#030a16] text-slate-200">{t.catalog.sort.fields.valuation}</option>
+                  <option value="name" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">{t.catalog.sort.fields.name}</option>
+                  <option value="fee" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">{t.catalog.sort.fields.fee}</option>
+                  <option value="risk" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">{t.catalog.sort.fields.risk}</option>
+                  <option value="valuation" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">{t.catalog.sort.fields.valuation}</option>
                 </select>
               </div>
 
@@ -454,7 +454,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                 onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
                 aria-label={sortOrder === "asc" ? t.catalog.sort.toggleDirectionAsc : t.catalog.sort.toggleDirectionDesc}
                 title={sortOrder === "asc" ? t.catalog.sort.toggleDirectionAsc : t.catalog.sort.toggleDirectionDesc}
-                className="h-[38px] px-2.5 sm:px-3 flex items-center justify-center gap-1.5 bg-[#030a16] hover:bg-[#071938] border border-[#0e274d] hover:border-[#044CD0]/60 text-slate-200 font-sans font-medium text-xs sm:text-sm rounded-xl transition-all cursor-pointer shadow-2xs shrink-0 select-none group"
+                className="h-[38px] px-2.5 sm:px-3 flex items-center justify-center gap-1.5 bg-slate-50 dark:bg-[#030a16] hover:bg-blue-50/70 dark:hover:bg-[#071938] border border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-[#044CD0]/60 text-slate-700 dark:text-slate-200 hover:text-[#044CD0] dark:hover:text-white font-sans font-medium text-xs sm:text-sm rounded-xl transition-all cursor-pointer shadow-2xs shrink-0 select-none group"
               >
                 {sortOrder === "asc" ? (
                   <>
@@ -473,11 +473,11 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
         </div>
 
         {/* Filter Rows: Asset Class & Legal Type */}
-        <div className="pt-3 border-t border-[#0e274d] space-y-3">
+        <div className="pt-3 border-t border-slate-200 dark:border-[#0e274d] space-y-3">
           {/* Row 1: Asset Class */}
           <div className="flex items-center gap-2 text-xs sm:text-sm flex-wrap">
-            <span className="text-slate-400 sm:w-[116px] shrink-0 font-medium font-sans flex items-center gap-1.5">
-              <Compass className="w-4 h-4 text-[#3b82f6] shrink-0" />
+            <span className="text-slate-600 dark:text-slate-400 sm:w-[116px] shrink-0 font-medium font-sans flex items-center gap-1.5">
+              <Compass className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
               {t.catalog.assetClass}
             </span>
             <div className="flex items-center gap-1.5 flex-wrap">
@@ -495,7 +495,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                     className={`inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-medium transition-all cursor-pointer ${
                       isSelected
                         ? "bg-[#044CD0] text-white shadow-md font-bold scale-102 border border-blue-400/50"
-                        : "bg-[#030a16] text-slate-300 border border-[#0e274d] hover:text-white hover:border-[#044CD0]/60"
+                        : "bg-white dark:bg-[#030a16] text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-white hover:border-[#044CD0] dark:hover:border-[#044CD0]/60 hover:bg-blue-50/70 dark:hover:bg-[#071938]"
                     }`}
                   >
                     {isSelected && cls.id !== "ALL" && (
@@ -511,8 +511,8 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
           {/* Row 2: Legal Type & Advanced Filters toggle */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs sm:text-sm">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-slate-400 sm:w-[116px] shrink-0 font-medium font-sans flex items-center gap-1.5">
-                <Scale className="w-4 h-4 text-[#3b82f6] shrink-0" />
+              <span className="text-slate-600 dark:text-slate-400 sm:w-[116px] shrink-0 font-medium font-sans flex items-center gap-1.5">
+                <Scale className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
                 {t.catalog.legalType}
               </span>
               <div className="flex items-center gap-1.5 flex-wrap">
@@ -530,7 +530,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                       className={`inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-medium transition-all cursor-pointer ${
                         isSelected
                           ? "bg-[#044CD0] text-white shadow-xs font-bold border border-blue-400/60"
-                          : "bg-[#030a16] text-slate-300 border border-[#0e274d] hover:text-white hover:border-[#044CD0]/60"
+                          : "bg-white dark:bg-[#030a16] text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-white hover:border-[#044CD0] dark:hover:border-[#044CD0]/60 hover:bg-blue-50/70 dark:hover:bg-[#071938]"
                       }`}
                     >
                       {isSelected && type !== "ALL" && (
@@ -546,16 +546,16 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
             {/* Toggle Button for Advanced Options */}
             <button
               onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
-              className={`h-[38px] inline-flex items-center gap-1.5 text-xs sm:text-sm py-1.5 px-3 sm:px-3.5 rounded-xl border transition-colors cursor-pointer self-start sm:self-auto shrink-0 ${
+              className={`h-[38px] inline-flex items-center gap-1.5 text-xs sm:text-sm py-1.5 px-3 sm:px-3.5 rounded-xl border transition-all cursor-pointer self-start sm:self-auto shrink-0 ${
                 hasActiveAdvancedFilters
-                  ? "text-blue-300 border-blue-500/50 bg-[#044CD0]/15 hover:bg-[#044CD0]/25 font-medium"
-                  : "text-slate-400 hover:text-slate-200 border-[#0e274d] hover:border-slate-600"
+                  ? "text-[#044CD0] dark:text-blue-300 border-blue-400 dark:border-blue-500/50 bg-blue-50/90 dark:bg-[#044CD0]/15 hover:bg-blue-100/90 dark:hover:bg-[#044CD0]/25 font-semibold shadow-2xs"
+                  : "text-slate-600 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-slate-200 border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-slate-600 bg-white dark:bg-transparent hover:bg-blue-50/70 dark:hover:bg-[#071938]"
               }`}
             >
-              <SlidersHorizontal className="w-4 h-4 text-[#3b82f6]" />
+              <SlidersHorizontal className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6]" />
               <span>{t.catalog.advancedFilters}</span>
               {hasActiveAdvancedFilters && (
-                <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#044CD0] dark:bg-blue-400 animate-pulse" />
               )}
               {showAdvancedFilters ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
             </button>
@@ -564,27 +564,27 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
 
         {/* Collapsible Advanced Filters Section */}
         {showAdvancedFilters && (
-          <div className="p-4 sm:p-5 rounded-xl bg-[#030a16] border border-[#0e274d] space-y-3.5 text-xs sm:text-sm text-slate-300 animate-in fade-in duration-150 relative z-20">
+          <div className="p-4 sm:p-5 rounded-xl bg-slate-50/80 dark:bg-[#030a16] border border-slate-200 dark:border-[#0e274d] space-y-3.5 text-xs sm:text-sm text-slate-700 dark:text-slate-300 animate-in fade-in duration-150 relative z-20">
             {/* Line 1: Detailed Category */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-3.5 min-w-0">
               <label
                 id="detailed-category-label"
-                className="text-slate-400 font-medium font-sans flex items-center gap-1.5 shrink-0 whitespace-nowrap select-none"
+                className="text-slate-600 dark:text-slate-400 font-medium font-sans flex items-center gap-1.5 shrink-0 whitespace-nowrap select-none"
               >
-                <Layers className="w-4 h-4 text-[#3b82f6] shrink-0" />
+                <Layers className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
                 <span>{t.catalog.detailedCategory}</span>
               </label>
 
               <div ref={categoryDropdownRef} className="relative min-w-0 w-full sm:w-[380px] md:w-[420px]">
                 {/* Custom Trigger Container */}
                 <div
-                  className={`h-[38px] w-full bg-[#051329] border ${
+                  className={`h-[38px] w-full bg-white dark:bg-[#051329] border ${
                     isCategoryOpen
-                      ? "border-[#044CD0] ring-1 ring-[#044CD0]/30"
+                      ? "border-[#044CD0] ring-2 ring-[#044CD0]/20"
                       : selectedCategories.length > 0
-                      ? "border-[#044CD0]/60 bg-[#044CD0]/10"
-                      : "border-[#0e274d] hover:border-[#19407a]"
-                  } text-slate-200 font-sans font-medium text-xs sm:text-sm rounded-xl pl-3 pr-2.5 flex items-center justify-between gap-1 transition-all select-none`}
+                      ? "border-blue-400 dark:border-[#044CD0]/60 bg-blue-50/70 dark:bg-[#044CD0]/10"
+                      : "border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-[#19407a]"
+                  } text-slate-800 dark:text-slate-200 font-sans font-medium text-xs sm:text-sm rounded-xl pl-3 pr-2.5 flex items-center justify-between gap-1 transition-all select-none shadow-2xs`}
                 >
                   {/* Left Clickable Area: Opens/Closes Dropdown */}
                   <button
@@ -622,12 +622,12 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                             setIsCategoryOpen(false);
                           }}
                           title={t.catalog.clearCategory}
-                          className="p-1 hover:text-white hover:bg-slate-700/60 active:bg-slate-600 rounded-lg transition-colors cursor-pointer flex items-center justify-center focus:outline-none"
+                          className="p-1 text-slate-400 hover:text-slate-800 dark:hover:text-white hover:bg-slate-200/80 dark:hover:bg-slate-700/60 active:bg-slate-300 dark:active:bg-slate-600 rounded-lg transition-colors cursor-pointer flex items-center justify-center focus:outline-none"
                           aria-label={t.catalog.clearCategory}
                         >
                           <X className="w-3.5 h-3.5" />
                         </button>
-                        <div className="w-px h-3.5 bg-[#0e274d]" />
+                        <div className="w-px h-3.5 bg-slate-300 dark:bg-[#0e274d]" />
                       </>
                     )}
                     <button
@@ -635,11 +635,11 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                       tabIndex={-1}
                       aria-hidden="true"
                       onClick={() => setIsCategoryOpen((prev) => !prev)}
-                      className="p-1 hover:text-slate-200 cursor-pointer flex items-center justify-center focus:outline-none"
+                      className="p-1 hover:text-slate-700 dark:hover:text-slate-200 cursor-pointer flex items-center justify-center focus:outline-none"
                     >
                       <ChevronDown
                         className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                          isCategoryOpen ? "rotate-180 text-blue-400" : ""
+                          isCategoryOpen ? "rotate-180 text-blue-600 dark:text-blue-400" : ""
                         }`}
                       />
                     </button>
@@ -652,7 +652,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                     role="listbox"
                     aria-labelledby="detailed-category-label"
                     aria-multiselectable="true"
-                    className="absolute top-full left-0 mt-1.5 w-full sm:w-[420px] bg-[#030c1c] border border-[#0e274d] rounded-xl shadow-2xl z-50 flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-100"
+                    className="absolute top-full left-0 mt-1.5 w-full sm:w-[420px] bg-white dark:bg-[#030c1c] border border-slate-200 dark:border-[#0e274d] rounded-xl shadow-2xl z-50 flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-100"
                   >
                     {/* Scrollable Items Container */}
                     <div className="max-h-72 overflow-y-auto p-1.5 space-y-1">
@@ -665,18 +665,18 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                           setSelectedCategories([]);
                           setCurrentPage(0);
                         }}
-                        className={`w-full text-left px-3 py-2 text-xs sm:text-sm rounded-lg flex items-center justify-between transition-colors cursor-pointer ${
+                        className={`w-full text-left px-3 py-2 text-xs sm:text-sm rounded-lg flex items-center justify-between transition-colors cursor-pointer select-none ${
                           selectedCategories.length === 0
-                            ? "bg-[#044CD0]/25 text-blue-300 font-semibold"
-                            : "text-slate-200 hover:bg-[#071938] hover:text-white"
+                            ? "bg-blue-50 dark:bg-[#044CD0]/25 text-[#044CD0] dark:text-blue-300 font-semibold"
+                            : "text-slate-700 dark:text-slate-200 hover:bg-blue-50/70 dark:hover:bg-[#071938] hover:text-[#044CD0] dark:hover:text-white"
                         }`}
                       >
                         <div className="flex items-center gap-2.5">
                           <div
                             className={`w-4 h-4 rounded-sm flex items-center justify-center transition-colors ${
                               selectedCategories.length === 0
-                                ? "bg-[#044CD0] border border-blue-400 text-white"
-                                : "border border-slate-600 bg-[#051329]"
+                                ? "bg-[#044CD0] border border-[#044CD0] text-white"
+                                : "border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#051329]"
                             }`}
                           >
                             {selectedCategories.length === 0 && <Check className="w-3 h-3 stroke-[3]" />}
@@ -687,9 +687,9 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
 
                       {/* Grouped categories */}
                       {visibleCategoryGroups.map((grp) => (
-                        <div key={grp.classId} className="pt-1.5 border-t border-[#0e274d]/50 first:border-t-0">
+                        <div key={grp.classId} className="pt-1.5 border-t border-slate-100 dark:border-[#0e274d]/50 first:border-t-0">
                           {/* Group Header - unclickable, highlighted and distinct for eye scanning */}
-                          <div className="px-3 py-1.5 text-[11px] font-bold text-[#60a5fa] uppercase tracking-wider select-none">
+                          <div className="px-3 py-1.5 text-[11px] font-bold text-[#044CD0] dark:text-[#60a5fa] uppercase tracking-wider select-none">
                             ── {locale === "en" ? grp.groupEn : grp.groupPl} ──
                           </div>
 
@@ -708,16 +708,16 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                                   onClick={() => toggleCategory(opt.id)}
                                   className={`w-full text-left pl-3 pr-3 py-1.5 text-xs sm:text-sm rounded-lg flex items-center justify-between transition-colors cursor-pointer select-none ${
                                     isSelected
-                                      ? "bg-[#044CD0]/20 text-blue-200 font-medium"
-                                      : "text-slate-300 hover:bg-[#071938] hover:text-white"
+                                      ? "bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-200 font-semibold"
+                                      : "text-slate-700 dark:text-slate-300 hover:bg-blue-50/70 dark:hover:bg-[#071938] hover:text-[#044CD0] dark:hover:text-white"
                                   }`}
                                 >
                                   <div className="flex items-center gap-2.5 min-w-0 flex-1 mr-2">
                                     <div
                                       className={`w-4 h-4 rounded-sm flex items-center justify-center shrink-0 transition-colors ${
                                         isSelected
-                                          ? "bg-[#044CD0] border border-blue-400 text-white"
-                                          : "border border-slate-600 bg-[#051329]"
+                                          ? "bg-[#044CD0] border border-[#044CD0] text-white"
+                                          : "border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#051329]"
                                       }`}
                                     >
                                       {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
@@ -733,10 +733,10 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                     </div>
 
                     {/* Popover solid footer pinned to bottom (no gap, no bleed) */}
-                    <div className="px-3 py-2 bg-[#051329] border-t border-[#0e274d] flex items-center justify-between text-xs shrink-0 select-none">
-                      <span className="text-slate-400">
+                    <div className="px-3 py-2 bg-slate-50 dark:bg-[#051329] border-t border-slate-200 dark:border-[#0e274d] flex items-center justify-between text-xs shrink-0 select-none">
+                      <span className="text-slate-500 dark:text-slate-400 font-medium">
                         {locale === "en" ? "Selected:" : "Wybrano:"}{" "}
-                        <strong className="text-white">
+                        <strong className="text-slate-900 dark:text-white font-bold">
                           {selectedCategories.length === 0
                             ? locale === "en"
                               ? "All"
@@ -752,7 +752,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                               setSelectedCategories([]);
                               setCurrentPage(0);
                             }}
-                            className="px-2 py-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+                            className="px-2 py-1 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/80 dark:hover:bg-slate-800 transition-colors cursor-pointer font-medium"
                           >
                             {t.common.clear}
                           </button>
@@ -772,12 +772,12 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
             </div>
 
             {/* Subtle Divider between Line 1 and Line 2 */}
-            <div className="border-t border-[#0e274d]/60" />
+            <div className="border-t border-slate-200 dark:border-[#0e274d]/60" />
 
             {/* Line 2: Legal Registry Checkboxes */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-3.5 min-w-0">
-              <span className="text-slate-400 font-medium font-sans flex items-center gap-1.5 shrink-0 whitespace-nowrap select-none">
-                <Briefcase className="w-4 h-4 text-[#3b82f6] shrink-0" />
+              <span className="text-slate-600 dark:text-slate-400 font-medium font-sans flex items-center gap-1.5 shrink-0 whitespace-nowrap select-none">
+                <Briefcase className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
                 <span>{t.catalog.legalRegistry}</span>
               </span>
 
@@ -790,9 +790,9 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                       setIncludeInactive(e.target.checked);
                       setCurrentPage(0);
                     }}
-                    className="w-4 h-4 rounded bg-[#051329] border-slate-700 text-[#044CD0] accent-[#044CD0] cursor-pointer"
+                    className="w-4 h-4 rounded bg-white dark:bg-[#051329] border border-slate-300 dark:border-slate-700 text-[#044CD0] accent-[#044CD0] cursor-pointer"
                   />
-                  <span className="group-hover:text-slate-100 transition-colors">
+                  <span className="text-slate-700 dark:text-slate-300 group-hover:text-[#044CD0] dark:group-hover:text-slate-100 transition-colors">
                     {t.catalog.showInactive}
                   </span>
                 </label>
@@ -805,9 +805,9 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                       setIncludeLiquidating(e.target.checked);
                       setCurrentPage(0);
                     }}
-                    className="w-4 h-4 rounded bg-[#051329] border-slate-700 text-amber-500 accent-amber-500 cursor-pointer"
+                    className="w-4 h-4 rounded bg-white dark:bg-[#051329] border border-slate-300 dark:border-slate-700 text-amber-500 accent-amber-500 cursor-pointer"
                   />
-                  <span className="group-hover:text-slate-100 transition-colors">
+                  <span className="text-slate-700 dark:text-slate-300 group-hover:text-amber-600 dark:group-hover:text-slate-100 transition-colors">
                     {t.catalog.showLiquidating}
                   </span>
                 </label>
@@ -1184,9 +1184,10 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
       )}
 
       {/* Pagination Controls */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-[#0e274d]">
-        <div className="text-xs text-slate-400">
-          {t.catalog.displayingPage} {pageInfo.number + 1} {t.common.of} {Math.max(1, pageInfo.totalPages)} ({t.catalog.totalItems}{" "}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-200 dark:border-[#0e274d]">
+        <div className="text-xs text-slate-500 dark:text-slate-400">
+          {t.catalog.displayingPage} <strong className="text-slate-800 dark:text-slate-200">{pageInfo.number + 1}</strong> {t.common.of}{" "}
+          <strong className="text-slate-800 dark:text-slate-200">{Math.max(1, pageInfo.totalPages)}</strong> ({t.catalog.totalItems}{" "}
           {formatNumber(pageInfo.totalElements, 0)} {t.common.items})
         </div>
 
@@ -1194,20 +1195,20 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
           <button
             onClick={() => setCurrentPage((p) => Math.max(0, p - 1))}
             disabled={pageInfo.number === 0 || isPending}
-            className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-[#030a16] border border-[#0e274d] text-slate-300 hover:bg-[#071938] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-white dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] text-slate-700 dark:text-slate-300 hover:bg-blue-50/70 dark:hover:bg-[#071938] hover:text-[#044CD0] dark:hover:text-white hover:border-[#044CD0] dark:hover:border-[#044CD0]/60 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-2xs cursor-pointer"
           >
             <ChevronLeft className="w-4 h-4" />
             {t.common.previous}
           </button>
 
-          <span className="text-xs font-bold text-slate-300 px-2">
+          <span className="text-xs font-bold text-slate-700 dark:text-slate-300 px-2">
             {pageInfo.number + 1} / {Math.max(1, pageInfo.totalPages)}
           </span>
 
           <button
             onClick={() => setCurrentPage((p) => p + 1)}
             disabled={pageInfo.number + 1 >= pageInfo.totalPages || isPending}
-            className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-[#030a16] border border-[#0e274d] text-slate-300 hover:bg-[#071938] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-white dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] text-slate-700 dark:text-slate-300 hover:bg-blue-50/70 dark:hover:bg-[#071938] hover:text-[#044CD0] dark:hover:text-white hover:border-[#044CD0] dark:hover:border-[#044CD0]/60 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-2xs cursor-pointer"
           >
             {t.common.next}
             <ChevronRight className="w-4 h-4" />

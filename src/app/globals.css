@@ -90,8 +90,15 @@ html.reduced-motion *::after {
 
 html.light:not(.high-contrast),
 html.light:not(.high-contrast) body {
-  background-color: #f8fafc !important;
+  background-color: #f0f4f8 !important;
   color: #0f172a !important;
+}
+
+/* Force light canvas background on full-page wrappers and main container */
+html.light:not(.high-contrast) .min-h-screen,
+html.light:not(.high-contrast) div[class*="min-h-screen"],
+html.light:not(.high-contrast) main {
+  background-color: #f0f4f8 !important;
 }
 
 /* Scrollbars in light mode */
@@ -105,10 +112,19 @@ html.light:not(.high-contrast) ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8 !important;
 }
 
-/* Light mode backgrounds: Card containers */
+/* Light mode backgrounds: Card containers (Hero, Table, Toolbar, Grid Cards) */
 html.light:not(.high-contrast) [class*="bg-[#051329]"],
 html.light:not(.high-contrast) .bg-\[\#051329\] {
   background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* Light mode backgrounds: Inset / recessed panels inside cards (e.g. advanced filters container) */
+html.light:not(.high-contrast) [class*="bg-[#051329]"] div[class*="bg-[#030a16]"],
+html.light:not(.high-contrast) [class*="bg-[#051329]"] div.bg-\[\#030a16\],
+html.light:not(.high-contrast) .catalog-grid-card [class*="bg-[#030a16]"] {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
 }
 
 /* Light mode backgrounds: Inner boxes, secondary panels, tags */
@@ -118,23 +134,27 @@ html.light:not(.high-contrast) .bg-\[\#071938\] {
 }
 
 /* Light mode backgrounds: Sub-chips, tags, inner inputs, search bar */
-html.light:not(.high-contrast) [class*="bg-[#030a16]"]:not(body),
-html.light:not(.high-contrast) .bg-\[\#030a16\]:not(body),
+html.light:not(.high-contrast) [class*="bg-[#030a16]"]:not(body):not([class*="min-h-screen"]):not(div[class*="min-h-screen"]):not(footer),
+html.light:not(.high-contrast) .bg-\[\#030a16\]:not(body):not([class*="min-h-screen"]):not(div[class*="min-h-screen"]):not(footer),
 html.light:not(.high-contrast) [class*="bg-[#030c1c]"],
 html.light:not(.high-contrast) .bg-\[\#030c1c\] {
   background-color: #ffffff !important;
 }
 
 /* Deep page / footer elements */
+html.light:not(.high-contrast) footer,
+html.light:not(.high-contrast) footer[class*="bg-[#030a16]"],
 html.light:not(.high-contrast) [class*="bg-[#020b18]"],
 html.light:not(.high-contrast) .bg-\[\#020b18\] {
   background-color: #f8fafc !important;
+  border-top-color: #e2e8f0 !important;
 }
 
 /* Navbar top announcement banner */
 html.light:not(.high-contrast) [class*="bg-[#021838]"],
 html.light:not(.high-contrast) .bg-\[\#021838\] {
   background-color: #eff6ff !important;
+  border-bottom-color: #dbeafe !important;
 }
 
 /* Light navy accents / badges */
@@ -154,11 +174,14 @@ html.light:not(.high-contrast) header[class*="bg-[#030a16]"],
 html.light:not(.high-contrast) header.bg-\[\#030a16\]\/95,
 html.light:not(.high-contrast) [class*="bg-[#030a16]/95"] {
   background-color: rgba(255, 255, 255, 0.95) !important;
+  border-bottom-color: #e2e8f0 !important;
 }
 
 /* Floating comparator bar */
 html.light:not(.high-contrast) [class*="bg-[#051329]/95"] {
   background-color: rgba(255, 255, 255, 0.98) !important;
+  border-color: #93c5fd !important;
+  box-shadow: 0 10px 25px -5px rgba(4, 76, 208, 0.15), 0 8px 10px -6px rgba(15, 23, 42, 0.08) !important;
 }
 
 /* UKNF API Badge in Navbar (crisp bright soft blue) */
@@ -171,6 +194,7 @@ html.light:not(.high-contrast) [class*="bg-blue-50"] {
 html.light:not(.high-contrast) [class*="from-[#071938]"][class*="to-[#030a16]"] {
   background: #ffffff !important;
   border-color: #e2e8f0 !important;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.06), 0 1px 2px -1px rgba(15, 23, 42, 0.04) !important;
 }
 
 /* Catalog Grid Cards in light mode: clean white cards matching the table & filter bar */
@@ -182,8 +206,8 @@ html.light:not(.high-contrast) .catalog-grid-card {
 
 html.light:not(.high-contrast) .catalog-grid-card:hover {
   background-color: #ffffff !important;
-  border-color: #93c5fd !important;
-  box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.05) !important;
+  border-color: #044CD0 !important;
+  box-shadow: 0 4px 14px -2px rgba(4, 76, 208, 0.12), 0 2px 4px -2px rgba(15, 23, 42, 0.05) !important;
 }
 
 /* Catalog Table styling in light mode: clean white card with subtle slate header and clean rows */
@@ -191,7 +215,7 @@ html.light:not(.high-contrast) .catalog-table-container,
 html.light:not(.high-contrast) .catalog-table-container [class*="bg-[#051329]"] {
   background-color: #ffffff !important;
   border-color: #e2e8f0 !important;
-  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.08), 0 1px 2px -1px rgba(15, 23, 42, 0.04) !important;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.06), 0 1px 2px -1px rgba(15, 23, 42, 0.04) !important;
 }
 
 html.light:not(.high-contrast) .catalog-table-container table {
@@ -238,11 +262,102 @@ html.light:not(.high-contrast) .catalog-table-container [class*="divide-[#0e274d
   border-color: #f1f5f9 !important;
 }
 
-/* Hover background states in light mode */
-html.light:not(.high-contrast) [class*="hover:bg-[#071938]"]:hover:not(.catalog-grid-card),
-html.light:not(.high-contrast) [class*="hover:bg-[#0e274d]"]:hover,
-html.light:not(.high-contrast) tbody:not(.catalog-table-container tbody) tr:hover {
-  background-color: #f1f5f9 !important;
+/* Interactive button & pill hover states in light mode */
+html.light:not(.high-contrast) button[aria-pressed="false"]:not(:disabled):hover,
+html.light:not(.high-contrast) button[class*="hover:border-[#044CD0]"]:not([aria-pressed="true"]):not(:disabled):hover,
+html.light:not(.high-contrast) button[class*="hover:bg-[#071938]"]:not([aria-pressed="true"]):not(:disabled):hover,
+html.light:not(.high-contrast) [class*="hover:bg-[#071938]"]:not(.catalog-grid-card):not(:disabled):hover,
+html.light:not(.high-contrast) [class*="hover:bg-[#0e274d]"]:not(:disabled):hover {
+  background-color: #eff6ff !important;
+  border-color: #044CD0 !important;
+  color: #044CD0 !important;
+}
+
+html.light:not(.high-contrast) button[aria-pressed="false"]:hover svg,
+html.light:not(.high-contrast) button[class*="hover:border-[#044CD0]"]:not([aria-pressed="true"]):hover svg {
+  color: #044CD0 !important;
+}
+
+/* Active / semi-transparent blue highlights in light mode */
+html.light:not(.high-contrast) [class*="bg-[#044CD0]/10"],
+html.light:not(.high-contrast) [class*="bg-[#044CD0]/15"],
+html.light:not(.high-contrast) [class*="bg-[#044CD0]/20"],
+html.light:not(.high-contrast) [class*="bg-[#044CD0]/25"] {
+  background-color: #eff6ff !important;
+  color: #044CD0 !important;
+  border-color: #93c5fd !important;
+}
+
+html.light:not(.high-contrast) [class*="bg-[#044CD0]/10"]:hover,
+html.light:not(.high-contrast) [class*="bg-[#044CD0]/15"]:hover,
+html.light:not(.high-contrast) [class*="bg-[#044CD0]/20"]:hover,
+html.light:not(.high-contrast) [class*="bg-[#044CD0]/25"]:hover {
+  background-color: #dbeafe !important;
+  color: #044CD0 !important;
+  border-color: #044CD0 !important;
+}
+
+/* Detailed category dropdown popover */
+html.light:not(.high-contrast) [role="listbox"] {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.14), 0 8px 10px -6px rgba(15, 23, 42, 0.08) !important;
+}
+
+/* Category group dividers and headers */
+html.light:not(.high-contrast) [role="listbox"] [class*="text-[#60a5fa]"],
+html.light:not(.high-contrast) [role="listbox"] [class*="text-[#044CD0]"] {
+  color: #044CD0 !important;
+}
+
+/* Unselected options in popover */
+html.light:not(.high-contrast) [role="listbox"] [role="option"]:not([aria-selected="true"]) {
+  background-color: transparent !important;
+  color: #1e293b !important;
+}
+
+html.light:not(.high-contrast) [role="listbox"] [role="option"]:not([aria-selected="true"]):hover {
+  background-color: #eff6ff !important;
+  color: #044CD0 !important;
+}
+
+/* Selected options in popover - High contrast UKNF Blue text and soft blue fill */
+html.light:not(.high-contrast) [role="listbox"] [role="option"][aria-selected="true"] {
+  background-color: #eff6ff !important;
+  color: #044CD0 !important;
+  font-weight: 600 !important;
+}
+
+html.light:not(.high-contrast) [role="listbox"] [role="option"][aria-selected="true"]:hover {
+  background-color: #dbeafe !important;
+  color: #044CD0 !important;
+}
+
+/* Option checkbox squares */
+html.light:not(.high-contrast) [role="listbox"] [role="option"]:not([aria-selected="true"]) [class*="border-slate-"] {
+  border-color: #94a3b8 !important;
+  background-color: #ffffff !important;
+}
+
+html.light:not(.high-contrast) [role="listbox"] [role="option"][aria-selected="true"] [class*="bg-[#044CD0]"] {
+  background-color: #044CD0 !important;
+  border-color: #044CD0 !important;
+  color: #ffffff !important;
+}
+
+/* Listbox solid footer */
+html.light:not(.high-contrast) [role="listbox"] > div:last-child {
+  background-color: #f8fafc !important;
+  border-top-color: #e2e8f0 !important;
+}
+
+html.light:not(.high-contrast) [role="listbox"] > div:last-child span {
+  color: #475569 !important;
+}
+
+html.light:not(.high-contrast) [role="listbox"] > div:last-child strong {
+  color: #0f172a !important;
+  font-weight: 700 !important;
 }
 
 /* Table thead in light mode (default/fallback) */
@@ -250,7 +365,7 @@ html.light:not(.high-contrast) thead,
 html.light:not(.high-contrast) thead [class*="bg-[#030a16]"],
 html.light:not(.high-contrast) thead.bg-\[\#030a16\] {
   background-color: #f8fafc !important;
-  color: #64748b !important;
+  color: #475569 !important;
   border-color: #d0e2f7 !important;
 }
 
@@ -285,13 +400,18 @@ html.light:not(.high-contrast) [class*="text-slate-400"],
 html.light:not(.high-contrast) .text-slate-400,
 html.light:not(.high-contrast) [class*="text-slate-500"],
 html.light:not(.high-contrast) .text-slate-500 {
-  color: #64748b !important;
+  color: #475569 !important;
 }
 
+/* Blue text colors in light mode: All map to accessible UKNF blue */
+html.light:not(.high-contrast) [class*="text-blue-100"],
+html.light:not(.high-contrast) [class*="text-blue-200"],
 html.light:not(.high-contrast) [class*="text-blue-300"],
 html.light:not(.high-contrast) [class*="text-blue-400"],
 html.light:not(.high-contrast) [class*="text-[#60a5fa]"],
 html.light:not(.high-contrast) [class*="text-[#3b82f6]"],
+html.light:not(.high-contrast) .text-blue-100,
+html.light:not(.high-contrast) .text-blue-200,
 html.light:not(.high-contrast) .text-blue-300,
 html.light:not(.high-contrast) .text-blue-400,
 html.light:not(.high-contrast) .text-\[\#60a5fa\],
@@ -315,8 +435,23 @@ html.light:not(.high-contrast) .text-rose-400 {
 }
 
 /* Hover text links in light mode */
-html.light:not(.high-contrast) [class*="hover:text-white"]:hover:not([class*="bg-[#044CD0]"]) {
+html.light:not(.high-contrast) [class*="hover:text-white"]:hover:not([class*="bg-[#044CD0]"]):not([class*="bg-emerald-600"]):not(.bg-emerald-600) {
   color: #044CD0 !important;
+}
+
+html.light:not(.high-contrast) [class*="hover:text-slate-200"]:hover {
+  color: #044CD0 !important;
+}
+
+/* Focus outlines for accessible navigation in light mode */
+html.light:not(.high-contrast) button:focus-visible,
+html.light:not(.high-contrast) a:focus-visible,
+html.light:not(.high-contrast) input:focus-visible,
+html.light:not(.high-contrast) select:focus-visible,
+html.light:not(.high-contrast) textarea:focus-visible,
+html.light:not(.high-contrast) [tabindex]:focus-visible {
+  outline: 2px solid #044CD0 !important;
+  outline-offset: 2px !important;
 }
 
 /* Primary buttons and CTAs with UKNF Blue - KEEP WHITE TEXT */
