@@ -1034,7 +1034,8 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                 <div className="flex items-center gap-2 pt-3 border-t border-blue-200/80 dark:border-[#0e274d]/80 mt-auto">
                   <Link
                     href={`/fundusze/${item.subfundId}`}
-                    className="flex-1 text-center py-2 px-3 rounded-xl text-xs font-semibold bg-white hover:bg-blue-50 dark:bg-[#030a16] dark:hover:bg-[#044CD0] text-slate-800 dark:text-slate-200 hover:text-[#044CD0] dark:hover:text-white border border-blue-200 dark:border-[#0e274d] hover:border-blue-400 dark:hover:border-transparent transition-all shadow-2xs"
+                    data-component="fund-details-btn"
+                    className="flex-1 text-center py-2 px-3 rounded-xl text-xs font-semibold bg-white hover:bg-blue-50 dark:bg-[#030a16] dark:hover:bg-[#071938] text-slate-800 dark:text-slate-200 hover:text-[#044CD0] dark:hover:text-white border border-blue-200 dark:border-[#0e274d] hover:border-blue-400 dark:hover:border-slate-600 transition-all shadow-2xs"
                   >
                     {t.catalog.card.fundDetails}
                   </Link>
@@ -1252,6 +1253,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                           </button>
                           <Link
                             href={`/fundusze/${item.subfundId}`}
+                            data-component="fund-details-btn"
                             className="px-2.5 py-1 text-xs rounded-lg bg-white hover:bg-blue-50 dark:bg-[#030a16] dark:hover:bg-[#071938] border border-blue-200 dark:border-[#0e274d] text-slate-700 dark:text-slate-200 font-medium transition-colors shadow-2xs"
                           >
                             {t.common.profile}

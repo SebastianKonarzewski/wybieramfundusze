@@ -455,14 +455,27 @@ html.light:not(.high-contrast) [tabindex]:focus-visible {
 }
 
 /* Primary buttons and CTAs with UKNF Blue - KEEP WHITE TEXT */
-html.light:not(.high-contrast) [class*="bg-[#044CD0]"]:not([class*="/20"]):not([class*="/10"]) {
+html.light:not(.high-contrast) [class*="bg-[#044CD0]"]:not([class*="/20"]):not([class*="/10"]):not([class*="/15"]):not([class*="/25"]):not([class*="dark:hover:"]):not([class*="dark:bg-"]):not([class*="hover:bg-[#044CD0]"]) {
   background-color: #044CD0 !important;
   color: #ffffff !important;
 }
 
-html.light:not(.high-contrast) [class*="bg-[#044CD0]"]:not([class*="/20"]):not([class*="/10"]) span,
-html.light:not(.high-contrast) [class*="bg-[#044CD0]"]:not([class*="/20"]):not([class*="/10"]) svg {
+html.light:not(.high-contrast) [class*="bg-[#044CD0]"]:not([class*="/20"]):not([class*="/10"]):not([class*="/15"]):not([class*="/25"]):not([class*="dark:hover:"]):not([class*="dark:bg-"]):not([class*="hover:bg-[#044CD0]"]) span,
+html.light:not(.high-contrast) [class*="bg-[#044CD0]"]:not([class*="/20"]):not([class*="/10"]):not([class*="/15"]):not([class*="/25"]):not([class*="dark:hover:"]):not([class*="dark:bg-"]):not([class*="hover:bg-[#044CD0]"]) svg {
   color: #ffffff !important;
+}
+
+/* Fund details / profile button in card and table view */
+html.light:not(.high-contrast) [data-component="fund-details-btn"] {
+  background-color: #ffffff !important;
+  color: #1e293b !important;
+  border-color: #bfdbfe !important;
+}
+
+html.light:not(.high-contrast) [data-component="fund-details-btn"]:hover {
+  background-color: #eff6ff !important;
+  color: #044CD0 !important;
+  border-color: #60a5fa !important;
 }
 
 html.light:not(.high-contrast) [class*="bg-[#033eb0]"] {
@@ -917,8 +930,8 @@ html.high-contrast [aria-pressed="true"],
 html.high-contrast [aria-checked="true"]:not([role="switch"]),
 html.high-contrast [aria-current="page"],
 html.high-contrast [aria-selected="true"]:not([role="option"]),
-html.high-contrast button[class*="bg-[#044CD0]"]:not(:hover),
-html.high-contrast a[class*="bg-[#044CD0]"]:not(:hover),
+html.high-contrast button[class*="bg-[#044CD0]"]:not(:hover):not([class*="dark:hover:"]):not([class*="dark:bg-"]),
+html.high-contrast a[class*="bg-[#044CD0]"]:not(:hover):not([class*="dark:hover:"]):not([class*="dark:bg-"]),
 html.high-contrast button[class*="bg-emerald-600"]:not(:hover),
 html.high-contrast a[class*="bg-emerald-600"]:not(:hover),
 html.high-contrast .active {
@@ -932,8 +945,8 @@ html.high-contrast [aria-pressed="true"] *,
 html.high-contrast [aria-checked="true"]:not([role="switch"]) *,
 html.high-contrast [aria-current="page"] *,
 html.high-contrast [aria-selected="true"]:not([role="option"]) *,
-html.high-contrast button[class*="bg-[#044CD0]"]:not(:hover) *,
-html.high-contrast a[class*="bg-[#044CD0]"]:not(:hover) *,
+html.high-contrast button[class*="bg-[#044CD0]"]:not(:hover):not([class*="dark:hover:"]):not([class*="dark:bg-"]) *,
+html.high-contrast a[class*="bg-[#044CD0]"]:not(:hover):not([class*="dark:hover:"]):not([class*="dark:bg-"]) *,
 html.high-contrast button[class*="bg-emerald-600"]:not(:hover) *,
 html.high-contrast a[class*="bg-emerald-600"]:not(:hover) * {
   color: #000000 !important;
