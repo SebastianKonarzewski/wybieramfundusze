@@ -36,13 +36,18 @@ export function Navbar() {
     setIsA11yOpen(false);
   }, [pathname]);
 
-  // Lock body scroll when mobile menu is open
+  // Lock document and body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
-      const originalOverflow = document.body.style.overflow;
+      const originalHtmlOverflow = document.documentElement.style.overflow;
+      const originalBodyOverflow = document.body.style.overflow;
+
+      document.documentElement.style.overflow = "hidden";
       document.body.style.overflow = "hidden";
+
       return () => {
-        document.body.style.overflow = originalOverflow;
+        document.documentElement.style.overflow = originalHtmlOverflow;
+        document.body.style.overflow = originalBodyOverflow;
       };
     }
   }, [isMobileMenuOpen]);
@@ -243,7 +248,7 @@ export function Navbar() {
           <div
             id="mobile-nav-drawer"
             data-component="mobile-nav"
-            className="lg:hidden border-b border-slate-200 dark:border-[#0e274d] bg-white dark:bg-[#030a16] text-slate-800 dark:text-slate-200 shadow-2xl relative z-50 max-h-[calc(100vh-4.5rem)] overflow-y-auto animate-in slide-in-from-top-2 duration-150"
+            className="lg:hidden border-b border-slate-200 dark:border-[#0e274d] bg-white dark:bg-[#030a16] text-slate-800 dark:text-slate-200 shadow-2xl relative z-50 max-h-[calc(100vh-4.5rem)] overflow-y-auto overscroll-contain animate-in slide-in-from-top-2 duration-150"
           >
             <div className="max-w-7xl mx-auto px-3.5 py-3">
               {/* Portal Subpages Navigation Links Only */}
@@ -291,8 +296,9 @@ export function Navbar() {
       {/* Full-viewport Mobile Backdrop Overlay with blur & darkening */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md z-40 lg:hidden animate-in fade-in duration-150"
+          className="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md z-40 lg:hidden animate-in fade-in duration-150 touch-none overscroll-none"
           onClick={() => setIsMobileMenuOpen(false)}
+          onTouchMove={(e) => e.preventDefault()}
           aria-hidden="true"
         />
       )}
