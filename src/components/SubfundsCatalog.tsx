@@ -566,10 +566,10 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
         {showAdvancedFilters && (
           <div className="p-4 sm:p-5 rounded-xl bg-[#030a16] border border-[#0e274d] space-y-3.5 text-xs sm:text-sm text-slate-300 animate-in fade-in duration-150 relative z-20">
             {/* Line 1: Detailed Category */}
-            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 min-w-0">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-3.5 min-w-0">
               <label
                 id="detailed-category-label"
-                className="text-slate-400 sm:w-[170px] font-medium font-sans flex items-center gap-1.5 shrink-0 select-none"
+                className="text-slate-400 font-medium font-sans flex items-center gap-1.5 shrink-0 whitespace-nowrap select-none"
               >
                 <Layers className="w-4 h-4 text-[#3b82f6] shrink-0" />
                 <span>{t.catalog.detailedCategory}</span>
@@ -770,8 +770,8 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
             <div className="border-t border-[#0e274d]/60" />
 
             {/* Line 2: Legal Registry Checkboxes */}
-            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 min-w-0">
-              <span className="text-slate-400 sm:w-[170px] font-medium font-sans flex items-center gap-1.5 shrink-0 select-none">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-3.5 min-w-0">
+              <span className="text-slate-400 font-medium font-sans flex items-center gap-1.5 shrink-0 whitespace-nowrap select-none">
                 <Briefcase className="w-4 h-4 text-[#3b82f6] shrink-0" />
                 <span>{t.catalog.legalRegistry}</span>
               </span>
