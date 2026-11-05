@@ -460,7 +460,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                 {t.catalog.legalType}
               </span>
               <div className="flex items-center gap-1.5 flex-wrap">
-                {["ALL", "SFIO", "FIO", "FIZ", "ETF"].map((type) => {
+                {["ALL", "FIO", "SFIO", "FIZ", "ETF"].map((type) => {
                   const isSelected =
                     type === "ALL"
                       ? selectedTypes.length === 0
