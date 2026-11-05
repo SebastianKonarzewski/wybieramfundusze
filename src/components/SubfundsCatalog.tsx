@@ -325,7 +325,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
       {/* Search & Filter Toolbar */}
       <div className="bg-[#051329] border border-[#0e274d] rounded-2xl p-4 sm:p-6 shadow-xl space-y-4">
         {/* Top line: Search input & View mode toggle & Sort select */}
-        <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
+        <div className="flex flex-col lg:flex-row gap-3 items-stretch lg:items-center justify-between">
           <div className="relative flex-1">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input
@@ -400,12 +400,12 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                 {sortOrder === "asc" ? (
                   <>
                     <ArrowUp className="w-3.5 h-3.5 text-[#044CD0] group-hover:scale-110 transition-transform" />
-                    <span className="text-xs sm:text-sm font-medium hidden md:inline">{t.catalog.sort.ascending}</span>
+                    <span className="text-xs sm:text-sm font-medium hidden sm:inline">{t.catalog.sort.ascending}</span>
                   </>
                 ) : (
                   <>
                     <ArrowDown className="w-3.5 h-3.5 text-[#044CD0] group-hover:scale-110 transition-transform" />
-                    <span className="text-xs sm:text-sm font-medium hidden md:inline">{t.catalog.sort.descending}</span>
+                    <span className="text-xs sm:text-sm font-medium hidden sm:inline">{t.catalog.sort.descending}</span>
                   </>
                 )}
               </button>
