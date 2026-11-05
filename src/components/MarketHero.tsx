@@ -88,49 +88,55 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
         {/* 3 Key Stat Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
           {/* Card 1: Net Assets in Funds (AUM) */}
-          <div className="bg-slate-50/70 dark:bg-[#030a16]/85 border border-slate-200/80 dark:border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl px-4 pt-3.5 pb-3 sm:px-5 sm:pt-4 sm:pb-3.5 transition-all shadow-xs dark:shadow-md group">
-            <div className="flex items-center justify-between text-slate-400 mb-1 sm:mb-1.5">
-              <span className="text-xs sm:text-sm font-semibold truncate text-slate-700 dark:text-slate-300">
-                {t.hero.netAssets}
-              </span>
-              <Coins className="w-4 h-4 sm:w-5 sm:h-5 text-[#044CD0] group-hover:scale-110 transition-transform shrink-0" />
+          <div className="bg-slate-50/70 dark:bg-[#030a16]/85 border border-slate-200/80 dark:border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl px-4 pt-3.5 pb-3 sm:px-5 sm:pt-4 sm:pb-3.5 transition-all shadow-xs dark:shadow-md group flex flex-col justify-between">
+            <div>
+              <div className="flex items-start justify-between gap-1.5 sm:gap-2 mb-1 sm:mb-1.5 min-h-[2rem] sm:min-h-[2.5rem]">
+                <span className="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 leading-snug line-clamp-2">
+                  {t.hero.netAssets}
+                </span>
+                <Coins className="w-4 h-4 sm:w-5 sm:h-5 text-[#044CD0] group-hover:scale-110 transition-transform shrink-0 mt-0.5" />
+              </div>
+              <div className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 dark:text-slate-100 truncate">
+                {formatLargeNumber(stats.totalAssetsNet)}
+              </div>
             </div>
-            <div className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 dark:text-slate-100 truncate">
-              {formatLargeNumber(stats.totalAssetsNet)}
-            </div>
-            <div className="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-snug">
+            <div className="text-xs text-slate-500 dark:text-slate-400 mt-1.5 line-clamp-2 leading-snug">
               {t.hero.grossAssets}: <span className="text-blue-600 dark:text-blue-400 font-semibold">{formatLargeNumber(stats.totalAssetsGross)}</span>
             </div>
           </div>
 
           {/* Card 2: Investable Products (Subfunds + Standalone Funds) */}
-          <div className="bg-slate-50/70 dark:bg-[#030a16]/85 border border-slate-200/80 dark:border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl px-4 pt-3.5 pb-3 sm:px-5 sm:pt-4 sm:pb-3.5 transition-all shadow-xs dark:shadow-md group">
-            <div className="flex items-center justify-between text-slate-400 mb-1 sm:mb-1.5">
-              <span className="text-xs sm:text-sm font-semibold truncate text-slate-700 dark:text-slate-300">
-                {t.hero.investableProducts}
-              </span>
-              <Layers className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform shrink-0" />
+          <div className="bg-slate-50/70 dark:bg-[#030a16]/85 border border-slate-200/80 dark:border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl px-4 pt-3.5 pb-3 sm:px-5 sm:pt-4 sm:pb-3.5 transition-all shadow-xs dark:shadow-md group flex flex-col justify-between">
+            <div>
+              <div className="flex items-start justify-between gap-1.5 sm:gap-2 mb-1 sm:mb-1.5 min-h-[2rem] sm:min-h-[2.5rem]">
+                <span className="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 leading-snug line-clamp-2">
+                  {t.hero.investableProducts}
+                </span>
+                <Layers className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform shrink-0 mt-0.5" />
+              </div>
+              <div className="text-xl sm:text-2xl lg:text-3xl font-black text-blue-600 dark:text-blue-400">
+                {formatNumber(stats.investableProductsCount || 688, 0)}
+              </div>
             </div>
-            <div className="text-xl sm:text-2xl lg:text-3xl font-black text-blue-600 dark:text-blue-400">
-              {formatNumber(stats.investableProductsCount || 688, 0)}
-            </div>
-            <div className="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-snug">
+            <div className="text-xs text-slate-500 dark:text-slate-400 mt-1.5 line-clamp-2 leading-snug">
               {t.hero.investableProductsDesc}
             </div>
           </div>
 
           {/* Card 3: Fund Managers (TFI) */}
-          <div className="bg-slate-50/70 dark:bg-[#030a16]/85 border border-slate-200/80 dark:border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl px-4 pt-3.5 pb-3 sm:px-5 sm:pt-4 sm:pb-3.5 transition-all shadow-xs dark:shadow-md group">
-            <div className="flex items-center justify-between text-slate-400 mb-1 sm:mb-1.5">
-              <span className="text-xs sm:text-sm font-semibold truncate text-slate-700 dark:text-slate-300">
-                {t.hero.companies}
-              </span>
-              <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-[#044CD0] group-hover:scale-110 transition-transform shrink-0" />
+          <div className="bg-slate-50/70 dark:bg-[#030a16]/85 border border-slate-200/80 dark:border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl px-4 pt-3.5 pb-3 sm:px-5 sm:pt-4 sm:pb-3.5 transition-all shadow-xs dark:shadow-md group flex flex-col justify-between">
+            <div>
+              <div className="flex items-start justify-between gap-1.5 sm:gap-2 mb-1 sm:mb-1.5 min-h-[2rem] sm:min-h-[2.5rem]">
+                <span className="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 leading-snug line-clamp-2">
+                  {t.hero.companies}
+                </span>
+                <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-[#044CD0] group-hover:scale-110 transition-transform shrink-0 mt-0.5" />
+              </div>
+              <div className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 dark:text-slate-100">
+                {formatNumber(stats.companiesCount, 0)}
+              </div>
             </div>
-            <div className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 dark:text-slate-100">
-              {formatNumber(stats.companiesCount, 0)}
-            </div>
-            <div className="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-snug">
+            <div className="text-xs text-slate-500 dark:text-slate-400 mt-1.5 line-clamp-2 leading-snug">
               {t.hero.companiesDesc}
             </div>
           </div>
