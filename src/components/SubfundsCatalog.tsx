@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useTransition, useMemo } from "react";
+import React, { useState, useEffect, useTransition, useMemo, useRef } from "react";
 import Link from "next/link";
 import {
   Search,
@@ -149,6 +149,8 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedClassifications, setSelectedClassifications] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+  const categoryDropdownRef = useRef<HTMLDivElement>(null);
   const [sortField, setSortField] = useState<"name" | "fee" | "risk" | "valuation">("name");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [currentPage, setCurrentPage] = useState(0);
@@ -221,6 +223,40 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
       }
     }
   }, [selectedClassifications, visibleCategoryGroups, selectedCategory]);
+
+  // Close category dropdown on click outside or Escape
+  useEffect(() => {
+    if (!isCategoryOpen) return;
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        categoryDropdownRef.current &&
+        !categoryDropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsCategoryOpen(false);
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsCategoryOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isCategoryOpen]);
+
+  // Close category dropdown when advanced filters are collapsed
+  useEffect(() => {
+    if (!showAdvancedFilters) {
+      setIsCategoryOpen(false);
+    }
+  }, [showAdvancedFilters]);
 
   const hasActiveAdvancedFilters =
     selectedCategory !== "ALL" || includeInactive || includeLiquidating;
@@ -508,46 +544,154 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
 
         {/* Collapsible Advanced Filters Section */}
         {showAdvancedFilters && (
-          <div className="p-4 sm:p-5 rounded-xl bg-[#030a16] border border-[#0e274d] flex flex-col xl:flex-row xl:items-center justify-between gap-4 text-xs sm:text-sm text-slate-300 animate-in fade-in duration-150">
-            {/* Detailed Category Select */}
+          <div className="p-4 sm:p-5 rounded-xl bg-[#030a16] border border-[#0e274d] flex flex-col xl:flex-row xl:items-center justify-between gap-4 text-xs sm:text-sm text-slate-300 animate-in fade-in duration-150 relative z-20">
+            {/* Detailed Category Custom Dropdown */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 min-w-0">
-              <label htmlFor="detailed-category-select" className="text-slate-400 sm:w-[155px] font-medium font-sans flex items-center gap-1.5 shrink-0">
+              <label
+                id="detailed-category-label"
+                className="text-slate-400 sm:w-[155px] font-medium font-sans flex items-center gap-1.5 shrink-0"
+              >
                 <Layers className="w-4 h-4 text-[#3b82f6] shrink-0" />
                 <span>{t.catalog.detailedCategory}</span>
               </label>
-              <div className="relative flex items-center min-w-0 max-w-full sm:max-w-xs md:max-w-sm">
-                <select
+
+              <div ref={categoryDropdownRef} className="relative min-w-0 w-full sm:w-[280px]">
+                {/* Custom Trigger Button */}
+                <button
+                  type="button"
                   id="detailed-category-select"
-                  value={selectedCategory}
-                  onChange={(e) => {
-                    setSelectedCategory(e.target.value);
-                    setCurrentPage(0);
-                  }}
-                  className="h-[38px] bg-[#051329] border border-[#0e274d] text-slate-200 font-sans font-medium text-xs sm:text-sm rounded-xl pl-3 pr-8 py-1.5 focus:border-[#044CD0] focus:outline-none appearance-none cursor-pointer w-full sm:w-[280px] truncate"
+                  aria-labelledby="detailed-category-label"
+                  aria-haspopup="listbox"
+                  aria-expanded={isCategoryOpen}
+                  onClick={() => setIsCategoryOpen((prev) => !prev)}
+                  className={`h-[38px] w-full bg-[#051329] border ${
+                    isCategoryOpen
+                      ? "border-[#044CD0] ring-1 ring-[#044CD0]/30"
+                      : "border-[#0e274d] hover:border-[#19407a]"
+                  } text-slate-200 font-sans font-medium text-xs sm:text-sm rounded-xl pl-3 pr-2.5 py-1.5 flex items-center justify-between gap-2 transition-all cursor-pointer text-left select-none`}
                 >
-                  <option value="ALL" className="bg-[#051329] text-slate-200">{t.catalog.allCategories}</option>
-                  {visibleCategoryGroups.map((grp) => (
-                    <optgroup
-                      key={grp.classId}
-                      label={`── ${(locale === "en" ? grp.groupEn : grp.groupPl).toUpperCase()} ──`}
-                      className="font-bold text-[#60a5fa] not-italic bg-[#030c1c] tracking-wider"
+                  <span
+                    className="truncate flex-1"
+                    title={
+                      selectedCategory === "ALL"
+                        ? t.catalog.allCategories
+                        : getCategoryLabel(selectedCategory, locale === "en")
+                    }
+                  >
+                    {selectedCategory === "ALL"
+                      ? t.catalog.allCategories
+                      : getCategoryLabel(selectedCategory, locale === "en")}
+                  </span>
+                  <div className="flex items-center gap-1.5 shrink-0 text-slate-400">
+                    {selectedCategory !== "ALL" && (
+                      <span
+                        role="button"
+                        tabIndex={0}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedCategory("ALL");
+                          setCurrentPage(0);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            e.stopPropagation();
+                            setSelectedCategory("ALL");
+                            setCurrentPage(0);
+                          }
+                        }}
+                        title={t.catalog.clearCategory}
+                        className="p-0.5 hover:text-white hover:bg-slate-700/60 rounded transition-colors cursor-pointer"
+                        aria-label={t.catalog.clearCategory}
+                      >
+                        <X className="w-3.5 h-3.5" />
+                      </span>
+                    )}
+                    <ChevronDown
+                      className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                        isCategoryOpen ? "rotate-180 text-blue-400" : ""
+                      }`}
+                    />
+                  </div>
+                </button>
+
+                {/* Dropdown Menu Popover */}
+                {isCategoryOpen && (
+                  <div
+                    role="listbox"
+                    aria-labelledby="detailed-category-label"
+                    className="absolute top-full left-0 mt-1.5 w-full sm:w-[320px] max-h-72 sm:max-h-80 overflow-y-auto bg-[#030c1c] border border-[#0e274d] rounded-xl shadow-2xl z-50 p-1.5 space-y-1 animate-in fade-in zoom-in-95 duration-100"
+                  >
+                    {/* Option: All categories */}
+                    <button
+                      type="button"
+                      role="option"
+                      aria-selected={selectedCategory === "ALL"}
+                      onClick={() => {
+                        setSelectedCategory("ALL");
+                        setCurrentPage(0);
+                        setIsCategoryOpen(false);
+                      }}
+                      className={`w-full text-left px-3 py-2 text-xs sm:text-sm rounded-lg flex items-center justify-between transition-colors cursor-pointer ${
+                        selectedCategory === "ALL"
+                          ? "bg-[#044CD0]/25 text-blue-300 font-semibold"
+                          : "text-slate-200 hover:bg-[#071938] hover:text-white"
+                      }`}
                     >
-                      {grp.options.map((opt) => (
-                        <option
-                          key={opt.id}
-                          value={opt.id}
-                          className="font-normal text-slate-100 bg-[#051329]"
-                        >
-                          {locale === "en" ? opt.labelEn : opt.labelPl}
-                        </option>
-                      ))}
-                    </optgroup>
-                  ))}
-                </select>
-                <ChevronDown className="w-3.5 h-3.5 text-slate-400 absolute right-2.5 pointer-events-none" />
+                      <span>{t.catalog.allCategories}</span>
+                      {selectedCategory === "ALL" && (
+                        <Check className="w-3.5 h-3.5 text-[#3b82f6] shrink-0" />
+                      )}
+                    </button>
+
+                    {/* Grouped categories */}
+                    {visibleCategoryGroups.map((grp) => (
+                      <div key={grp.classId} className="pt-1.5 border-t border-[#0e274d]/50 first:border-t-0">
+                        {/* Group Header - unclickable, highlighted and distinct for eye scanning */}
+                        <div className="px-3 py-1.5 text-[11px] font-bold text-[#60a5fa] uppercase tracking-wider select-none">
+                          ── {locale === "en" ? grp.groupEn : grp.groupPl} ──
+                        </div>
+
+                        {/* Options under this group */}
+                        <div className="space-y-0.5">
+                          {grp.options.map((opt) => {
+                            const isSelected = selectedCategory === opt.id;
+                            const label = locale === "en" ? opt.labelEn : opt.labelPl;
+
+                            return (
+                              <button
+                                key={opt.id}
+                                type="button"
+                                role="option"
+                                aria-selected={isSelected}
+                                onClick={() => {
+                                  setSelectedCategory(opt.id);
+                                  setCurrentPage(0);
+                                  setIsCategoryOpen(false);
+                                }}
+                                className={`w-full text-left pl-4 pr-3 py-1.5 text-xs sm:text-sm rounded-lg flex items-center justify-between transition-colors cursor-pointer ${
+                                  isSelected
+                                    ? "bg-[#044CD0]/25 text-blue-200 font-semibold"
+                                    : "text-slate-300 hover:bg-[#071938] hover:text-white"
+                                }`}
+                              >
+                                <span className="truncate mr-2">{label}</span>
+                                {isSelected && (
+                                  <Check className="w-3.5 h-3.5 text-[#3b82f6] shrink-0" />
+                                )}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
+
+              {/* Explicit Clear Button next to input */}
               {selectedCategory !== "ALL" && (
                 <button
+                  type="button"
                   onClick={() => {
                     setSelectedCategory("ALL");
                     setCurrentPage(0);
