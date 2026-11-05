@@ -74,7 +74,7 @@ const CATEGORY_GROUPS: CategoryGroup[] = [
       { id: "mieszane aktywnej alokacji", labelPl: "Mieszane aktywnej alokacji", labelEn: "Active allocation mixed" },
       { id: "mieszane ograniczonej alokacji", labelPl: "Mieszane ograniczonej alokacji", labelEn: "Conservative / balanced mixed" },
       { id: "mieszane pozostałe", labelPl: "Mieszane pozostałe", labelEn: "Other mixed" },
-      { id: "mieszane cyklu życia", labelPl: "Mieszane cyklu życia (wszystkie)", labelEn: "Lifecycle mixed (all)" },
+      { id: "mieszane cyklu życia", labelPl: "Mieszane cyklu życia", labelEn: "Lifecycle mixed" },
     ],
   },
   {
@@ -94,7 +94,7 @@ const CATEGORY_GROUPS: CategoryGroup[] = [
     groupPl: "Pracownicze Plany Kapitałowe (PPK)",
     groupEn: "Employee Capital Plans (PPK)",
     options: [
-      { id: "PPK zdefiniowanej daty", labelPl: "Wszystkie roczniki PPK", labelEn: "All PPK target dates" },
+      { id: "PPK zdefiniowanej daty 2020", labelPl: "PPK 2020", labelEn: "PPK 2020" },
       { id: "PPK zdefiniowanej daty 2025", labelPl: "PPK 2025", labelEn: "PPK 2025" },
       { id: "PPK zdefiniowanej daty 2030", labelPl: "PPK 2030", labelEn: "PPK 2030" },
       { id: "PPK zdefiniowanej daty 2035", labelPl: "PPK 2035", labelEn: "PPK 2035" },
