@@ -761,11 +761,11 @@ html.high-contrast button {
   border-color: #ffff00 !important;
 }
 
-/* Hover and Focus-visible: Solid Yellow with Black text */
+/* Hover and Focus-visible: Solid Yellow with Black text (excluding toggle switches) */
 html.high-contrast a:hover,
 html.high-contrast a:focus-visible,
-html.high-contrast button:hover:not(:disabled),
-html.high-contrast button:focus-visible:not(:disabled) {
+html.high-contrast button:not([role="switch"]):hover:not(:disabled),
+html.high-contrast button:not([role="switch"]):focus-visible:not(:disabled) {
   background-color: #ffff00 !important;
   color: #000000 !important;
   border-color: #ffff00 !important;
@@ -774,8 +774,8 @@ html.high-contrast button:focus-visible:not(:disabled) {
 
 html.high-contrast a:hover *,
 html.high-contrast a:focus-visible *,
-html.high-contrast button:hover:not(:disabled) *,
-html.high-contrast button:focus-visible:not(:disabled) * {
+html.high-contrast button:not([role="switch"]):hover:not(:disabled) *,
+html.high-contrast button:not([role="switch"]):focus-visible:not(:disabled) * {
   color: #000000 !important;
   stroke: #000000 !important;
 }
@@ -882,8 +882,11 @@ html.high-contrast [data-component="language-toggle"]:focus-visible svg {
 html.high-contrast [aria-pressed="true"],
 html.high-contrast [aria-checked="true"]:not([role="switch"]),
 html.high-contrast [aria-current="page"],
+html.high-contrast [aria-selected="true"]:not([role="option"]),
 html.high-contrast button[class*="bg-[#044CD0]"]:not(:hover),
 html.high-contrast a[class*="bg-[#044CD0]"]:not(:hover),
+html.high-contrast button[class*="bg-emerald-600"]:not(:hover),
+html.high-contrast a[class*="bg-emerald-600"]:not(:hover),
 html.high-contrast .active {
   background-color: #ffff00 !important;
   color: #000000 !important;
@@ -894,8 +897,31 @@ html.high-contrast .active {
 html.high-contrast [aria-pressed="true"] *,
 html.high-contrast [aria-checked="true"]:not([role="switch"]) *,
 html.high-contrast [aria-current="page"] *,
+html.high-contrast [aria-selected="true"]:not([role="option"]) *,
 html.high-contrast button[class*="bg-[#044CD0]"]:not(:hover) *,
-html.high-contrast a[class*="bg-[#044CD0]"]:not(:hover) * {
+html.high-contrast a[class*="bg-[#044CD0]"]:not(:hover) *,
+html.high-contrast button[class*="bg-emerald-600"]:not(:hover) *,
+html.high-contrast a[class*="bg-emerald-600"]:not(:hover) * {
+  color: #000000 !important;
+  stroke: #000000 !important;
+}
+
+/* When an ALREADY ACTIVE item is hovered: sharp black border + white focus ring */
+html.high-contrast button[aria-pressed="true"]:hover:not(:disabled),
+html.high-contrast button[aria-pressed="true"]:focus-visible:not(:disabled),
+html.high-contrast button[class*="bg-[#044CD0]"]:hover:not(:disabled),
+html.high-contrast button[class*="bg-emerald-600"]:hover:not(:disabled) {
+  background-color: #ffff00 !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+  outline: 3px solid #ffffff !important;
+  outline-offset: 1px !important;
+}
+
+html.high-contrast button[aria-pressed="true"]:hover:not(:disabled) *,
+html.high-contrast button[aria-pressed="true"]:focus-visible:not(:disabled) *,
+html.high-contrast button[class*="bg-[#044CD0]"]:hover:not(:disabled) *,
+html.high-contrast button[class*="bg-emerald-600"]:hover:not(:disabled) * {
   color: #000000 !important;
   stroke: #000000 !important;
 }
@@ -938,21 +964,80 @@ html.high-contrast textarea:focus {
   outline-offset: 2px !important;
 }
 
+/* Checkboxes, Radios and Range Sliders */
+html.high-contrast input[type="checkbox"],
+html.high-contrast input[type="radio"] {
+  accent-color: #ffff00 !important;
+  outline: 1px solid #ffff00 !important;
+  cursor: pointer !important;
+}
+html.high-contrast input[type="checkbox"]:hover,
+html.high-contrast input[type="radio"]:hover {
+  outline: 2px solid #ffffff !important;
+}
+
+html.high-contrast input[type="range"] {
+  accent-color: #ffff00 !important;
+}
+
 /* Switch Toggle (High Contrast / Reduced Motion) */
 html.high-contrast [role="switch"] {
   border: 2px solid #ffff00 !important;
+  cursor: pointer !important;
 }
+
+/* OFF state: Black track with yellow thumb */
+html.high-contrast [role="switch"][aria-checked="false"],
+html.high-contrast [role="switch"]:not([aria-checked="true"]) {
+  background-color: #000000 !important;
+  border-color: #ffff00 !important;
+}
+html.high-contrast [role="switch"][aria-checked="false"] > div,
+html.high-contrast [role="switch"]:not([aria-checked="true"]) > div {
+  background-color: #ffff00 !important;
+  border: 1px solid #000000 !important;
+}
+
+/* OFF state HOVER / FOCUS: Track stays black, thumb stays yellow, highlight with white ring */
+html.high-contrast [role="switch"][aria-checked="false"]:hover,
+html.high-contrast [role="switch"][aria-checked="false"]:focus-visible,
+html.high-contrast [role="switch"]:not([aria-checked="true"]):hover,
+html.high-contrast [role="switch"]:not([aria-checked="true"]):focus-visible {
+  background-color: #000000 !important;
+  border-color: #ffffff !important;
+  outline: 2px solid #ffffff !important;
+  outline-offset: 2px !important;
+}
+html.high-contrast [role="switch"][aria-checked="false"]:hover > div,
+html.high-contrast [role="switch"][aria-checked="false"]:focus-visible > div,
+html.high-contrast [role="switch"]:not([aria-checked="true"]):hover > div,
+html.high-contrast [role="switch"]:not([aria-checked="true"]):focus-visible > div {
+  background-color: #ffff00 !important;
+  border: 1px solid #000000 !important;
+}
+
+/* ON state: Yellow track with black thumb */
 html.high-contrast [role="switch"][aria-checked="true"] {
   background-color: #ffff00 !important;
+  border-color: #ffff00 !important;
 }
 html.high-contrast [role="switch"][aria-checked="true"] > div {
   background-color: #000000 !important;
+  border: 1px solid #ffff00 !important;
 }
-html.high-contrast [role="switch"][aria-checked="false"] {
-  background-color: #000000 !important;
-}
-html.high-contrast [role="switch"][aria-checked="false"] > div {
+
+/* ON state HOVER / FOCUS: Track stays yellow, thumb stays black, highlight with white ring */
+html.high-contrast [role="switch"][aria-checked="true"]:hover,
+html.high-contrast [role="switch"][aria-checked="true"]:focus-visible {
   background-color: #ffff00 !important;
+  border-color: #ffffff !important;
+  outline: 2px solid #ffffff !important;
+  outline-offset: 2px !important;
+}
+html.high-contrast [role="switch"][aria-checked="true"]:hover > div,
+html.high-contrast [role="switch"][aria-checked="true"]:focus-visible > div {
+  background-color: #000000 !important;
+  border: 1px solid #ffff00 !important;
 }
 
 /* 8. Catalog Table View */
@@ -1003,10 +1088,124 @@ html.high-contrast .catalog-table-container tbody tr:hover td * {
   color: #000000 !important;
 }
 
+/* Buttons inside a hovered row stay distinct with black borders */
 html.high-contrast .catalog-table-container tbody tr:hover button,
 html.high-contrast .catalog-table-container tbody tr:hover a {
-  border-color: #000000 !important;
+  border: 2px solid #000000 !important;
+  background-color: transparent !important;
   color: #000000 !important;
+}
+
+/* Buttons directly hovered inside a hovered row: Invert to black pill with yellow text & icon */
+html.high-contrast .catalog-table-container tbody tr:hover button:hover,
+html.high-contrast .catalog-table-container tbody tr:hover a:hover {
+  background-color: #000000 !important;
+  color: #ffff00 !important;
+  border: 2px solid #000000 !important;
+  outline: 2px solid #000000 !important;
+}
+html.high-contrast .catalog-table-container tbody tr:hover button:hover *,
+html.high-contrast .catalog-table-container tbody tr:hover a:hover * {
+  color: #ffff00 !important;
+  stroke: #ffff00 !important;
+}
+
+/* Detailed category dropdown popover in High Contrast */
+html.high-contrast [role="listbox"] {
+  background-color: #000000 !important;
+  border: 2px solid #ffff00 !important;
+}
+
+/* Category group headers */
+html.high-contrast [role="listbox"] [class*="text-[#044CD0]"],
+html.high-contrast [role="listbox"] [class*="text-[#60a5fa]"] {
+  color: #ffff00 !important;
+  border-bottom: 1px solid #ffff00 !important;
+  padding-bottom: 2px !important;
+  margin-bottom: 4px !important;
+}
+
+/* All options default */
+html.high-contrast [role="listbox"] [role="option"] {
+  background-color: #000000 !important;
+  color: #ffff00 !important;
+  border: 1px solid transparent !important;
+}
+
+/* Option checkbox square (unselected) */
+html.high-contrast [role="listbox"] [role="option"] div[class*="border"] {
+  border: 2px solid #ffff00 !important;
+  background-color: #000000 !important;
+}
+
+/* Selected option: distinct yellow indicator and solid checkbox */
+html.high-contrast [role="listbox"] [role="option"][aria-selected="true"] {
+  background-color: #1a1a00 !important;
+  border-left: 4px solid #ffff00 !important;
+  color: #ffff00 !important;
+  font-weight: 800 !important;
+}
+html.high-contrast [role="listbox"] [role="option"][aria-selected="true"] div[class*="bg-[#044CD0]"],
+html.high-contrast [role="listbox"] [role="option"][aria-selected="true"] div[class*="border"] {
+  background-color: #ffff00 !important;
+  border: 2px solid #ffff00 !important;
+}
+html.high-contrast [role="listbox"] [role="option"][aria-selected="true"] svg {
+  color: #000000 !important;
+  stroke: #000000 !important;
+}
+
+/* Option Hover state: solid yellow with black text, inverted checkbox */
+html.high-contrast [role="listbox"] [role="option"]:hover,
+html.high-contrast [role="listbox"] [role="option"]:focus-visible {
+  background-color: #ffff00 !important;
+  color: #000000 !important;
+  border-color: #ffff00 !important;
+  outline: 2px solid #ffffff !important;
+}
+html.high-contrast [role="listbox"] [role="option"]:hover *,
+html.high-contrast [role="listbox"] [role="option"]:focus-visible * {
+  color: #000000 !important;
+  stroke: #000000 !important;
+}
+html.high-contrast [role="listbox"] [role="option"]:hover div[class*="border"],
+html.high-contrast [role="listbox"] [role="option"]:focus-visible div[class*="border"] {
+  background-color: #ffff00 !important;
+  border-color: #000000 !important;
+}
+html.high-contrast [role="listbox"] [role="option"][aria-selected="true"]:hover div[class*="bg-[#044CD0]"],
+html.high-contrast [role="listbox"] [role="option"][aria-selected="true"]:hover div[class*="border"] {
+  background-color: #000000 !important;
+  border-color: #000000 !important;
+}
+html.high-contrast [role="listbox"] [role="option"][aria-selected="true"]:hover svg {
+  color: #ffff00 !important;
+  stroke: #ffff00 !important;
+}
+
+/* Popover solid footer in High Contrast */
+html.high-contrast [role="listbox"] > div:last-child {
+  background-color: #000000 !important;
+  border-top: 2px solid #ffff00 !important;
+}
+html.high-contrast [role="listbox"] > div:last-child span,
+html.high-contrast [role="listbox"] > div:last-child strong {
+  color: #ffff00 !important;
+}
+
+/* Badge counter in Category Dropdown Trigger */
+html.high-contrast span[class*="bg-[#044CD0]"].rounded-full {
+  background-color: #ffff00 !important;
+  color: #000000 !important;
+  border: 1px solid #000000 !important;
+  font-weight: 800 !important;
+}
+
+/* Catalog Grid Card Hover in High Contrast */
+html.high-contrast .catalog-grid-card:hover {
+  border-color: #ffffff !important;
+  outline: 2px solid #ffffff !important;
+  outline-offset: 1px !important;
 }
 
 /* 9. Badges: Risk & Status */
