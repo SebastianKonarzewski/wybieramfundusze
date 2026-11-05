@@ -106,6 +106,18 @@ export const pl = {
     totalItems: "łącznie",
     sort: {
       label: "Sortowanie",
+      field: "Kryterium sortowania",
+      direction: "Kierunek",
+      ascending: "Rosnąco",
+      descending: "Malejąco",
+      toggleDirectionAsc: "Kierunek: Rosnąco (kliknij, aby zmienić na malejąco)",
+      toggleDirectionDesc: "Kierunek: Malejąco (kliknij, aby zmienić na rosnąco)",
+      fields: {
+        name: "Nazwa subfunduszu",
+        fee: "Opłata za zarządzanie",
+        risk: "Poziom ryzyka (SRI)",
+        valuation: "Ostatnia wycena",
+      },
       nameAsc: "Nazwa (A do Z)",
       nameDesc: "Nazwa (Z do A)",
       feeAsc: "Najniższa opłata stała",

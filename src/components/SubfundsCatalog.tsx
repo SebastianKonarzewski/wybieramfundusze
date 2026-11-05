@@ -252,27 +252,44 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
               </button>
             </div>
 
-            {/* Sort Select */}
-            <div className="flex-1 sm:flex-initial flex items-center gap-1.5 bg-[#030a16] border border-[#0e274d] px-2.5 sm:px-3 py-2 rounded-xl text-xs sm:text-sm min-w-0">
-              <ArrowUpDown className="w-3.5 h-3.5 text-[#044CD0] shrink-0" />
-              <select
-                value={`${sortField},${sortOrder}`}
-                onChange={(e) => {
-                  const [field, order] = e.target.value.split(",") as [any, any];
-                  setSortField(field);
-                  setSortOrder(order);
-                }}
-                aria-label={t.catalog.sort.label}
-                className="bg-transparent text-slate-200 font-medium focus:outline-hidden cursor-pointer w-full truncate"
+            {/* Sort Controls: Field Dropdown + 1-Click Direction Toggle */}
+            <div className="flex items-center gap-1.5 flex-1 sm:flex-initial min-w-0">
+              {/* Field Select */}
+              <div className="flex-1 sm:flex-initial flex items-center gap-1.5 bg-[#030a16] border border-[#0e274d] px-2.5 sm:px-3 py-2 rounded-xl text-xs sm:text-sm min-w-0">
+                <ArrowUpDown className="w-3.5 h-3.5 text-[#044CD0] shrink-0" />
+                <select
+                  value={sortField}
+                  onChange={(e) => setSortField(e.target.value as any)}
+                  aria-label={t.catalog.sort.field}
+                  className="bg-transparent text-slate-200 font-medium focus:outline-hidden cursor-pointer w-full truncate"
+                >
+                  <option value="name" className="bg-[#030a16]">{t.catalog.sort.fields.name}</option>
+                  <option value="fee" className="bg-[#030a16]">{t.catalog.sort.fields.fee}</option>
+                  <option value="risk" className="bg-[#030a16]">{t.catalog.sort.fields.risk}</option>
+                  <option value="valuation" className="bg-[#030a16]">{t.catalog.sort.fields.valuation}</option>
+                </select>
+              </div>
+
+              {/* Direction Toggle Button */}
+              <button
+                type="button"
+                onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
+                aria-label={sortOrder === "asc" ? t.catalog.sort.toggleDirectionAsc : t.catalog.sort.toggleDirectionDesc}
+                title={sortOrder === "asc" ? t.catalog.sort.toggleDirectionAsc : t.catalog.sort.toggleDirectionDesc}
+                className="h-[38px] px-2.5 sm:px-3 flex items-center justify-center gap-1.5 bg-[#030a16] hover:bg-[#071938] border border-[#0e274d] hover:border-[#044CD0]/60 text-slate-200 rounded-xl transition-all cursor-pointer shadow-2xs shrink-0 select-none group"
               >
-                <option value="name,asc" className="bg-[#030a16]">{t.catalog.sort.nameAsc}</option>
-                <option value="name,desc" className="bg-[#030a16]">{t.catalog.sort.nameDesc}</option>
-                <option value="fee,asc" className="bg-[#030a16]">{t.catalog.sort.feeAsc}</option>
-                <option value="fee,desc" className="bg-[#030a16]">{t.catalog.sort.feeDesc}</option>
-                <option value="risk,asc" className="bg-[#030a16]">{t.catalog.sort.riskAsc}</option>
-                <option value="risk,desc" className="bg-[#030a16]">{t.catalog.sort.riskDesc}</option>
-                <option value="valuation,desc" className="bg-[#030a16]">{t.catalog.sort.valuationDesc}</option>
-              </select>
+                {sortOrder === "asc" ? (
+                  <>
+                    <ArrowUp className="w-3.5 h-3.5 text-[#044CD0] group-hover:scale-110 transition-transform" />
+                    <span className="text-xs font-semibold hidden md:inline">{t.catalog.sort.ascending}</span>
+                  </>
+                ) : (
+                  <>
+                    <ArrowDown className="w-3.5 h-3.5 text-[#044CD0] group-hover:scale-110 transition-transform" />
+                    <span className="text-xs font-semibold hidden md:inline">{t.catalog.sort.descending}</span>
+                  </>
+                )}
+              </button>
             </div>
           </div>
         </div>

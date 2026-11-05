@@ -108,6 +108,18 @@ export const en: Translations = {
     totalItems: "total",
     sort: {
       label: "Sort by",
+      field: "Sort field",
+      direction: "Direction",
+      ascending: "Ascending",
+      descending: "Descending",
+      toggleDirectionAsc: "Order: Ascending (click to switch to descending)",
+      toggleDirectionDesc: "Order: Descending (click to switch to ascending)",
+      fields: {
+        name: "Subfund name",
+        fee: "Management fee",
+        risk: "Risk level (SRI)",
+        valuation: "Latest NAV",
+      },
       nameAsc: "Name (A to Z)",
       nameDesc: "Name (Z to A)",
       feeAsc: "Lowest Management Fee",
