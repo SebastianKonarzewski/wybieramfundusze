@@ -780,6 +780,12 @@ html.high-contrast button:not([role="switch"]):focus-visible:not(:disabled) * {
   stroke: #000000 !important;
 }
 
+/* Badge counts inside buttons in High Contrast */
+html.high-contrast button span[class*="rounded-full"] {
+  background-color: transparent !important;
+  border-color: currentColor !important;
+}
+
 /* Theme Toggle Button explicit contract */
 html.high-contrast [data-component="theme-toggle"] {
   background-color: #000000 !important;

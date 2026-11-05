@@ -22,6 +22,7 @@ import {
   ChevronDown,
   ChevronUp,
   Layers,
+  RotateCcw,
   X,
 } from "lucide-react";
 import { SubfundCardModel } from "@/types/knf";
@@ -280,6 +281,32 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
 
   const hasActiveAdvancedFilters =
     selectedCategories.length > 0 || includeInactive || includeLiquidating;
+
+  const hasAnyActiveFilters =
+    searchTerm.trim() !== "" ||
+    selectedClassifications.length > 0 ||
+    selectedTypes.length > 0 ||
+    selectedCategories.length > 0 ||
+    includeInactive ||
+    includeLiquidating;
+
+  const activeFiltersCount =
+    (searchTerm.trim() !== "" ? 1 : 0) +
+    selectedClassifications.length +
+    selectedTypes.length +
+    selectedCategories.length +
+    (includeInactive ? 1 : 0) +
+    (includeLiquidating ? 1 : 0);
+
+  const resetAllFilters = () => {
+    setSearchTerm("");
+    setSelectedClassifications([]);
+    setSelectedTypes([]);
+    setSelectedCategories([]);
+    setIncludeInactive(false);
+    setIncludeLiquidating(false);
+    setCurrentPage(0);
+  };
 
   // Fetch data on filter changes
   useEffect(() => {
@@ -543,22 +570,41 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
               </div>
             </div>
 
-            {/* Toggle Button for Advanced Options */}
-            <button
-              onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
-              className={`h-[38px] inline-flex items-center gap-1.5 text-xs sm:text-sm py-1.5 px-3 sm:px-3.5 rounded-xl border transition-all cursor-pointer self-start sm:self-auto shrink-0 ${
-                hasActiveAdvancedFilters
-                  ? "text-[#044CD0] dark:text-blue-300 border-blue-400 dark:border-blue-500/50 bg-blue-50/90 dark:bg-[#044CD0]/15 hover:bg-blue-100/90 dark:hover:bg-[#044CD0]/25 font-semibold shadow-2xs"
-                  : "text-slate-600 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-slate-200 border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-slate-600 bg-white dark:bg-transparent hover:bg-blue-50/70 dark:hover:bg-[#071938]"
-              }`}
-            >
-              <SlidersHorizontal className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6]" />
-              <span>{t.catalog.advancedFilters}</span>
-              {hasActiveAdvancedFilters && (
-                <span className="w-1.5 h-1.5 rounded-full bg-[#044CD0] dark:bg-blue-400 animate-pulse" />
+            {/* Actions: Clear All Filters & Advanced Options Toggle */}
+            <div className="flex items-center gap-2 self-start sm:self-auto shrink-0 flex-wrap">
+              {hasAnyActiveFilters && (
+                <button
+                  type="button"
+                  onClick={resetAllFilters}
+                  className="h-[38px] inline-flex items-center gap-1.5 text-xs sm:text-sm py-1.5 px-3 sm:px-3.5 rounded-xl border border-rose-300/90 dark:border-rose-900/60 bg-rose-50/80 dark:bg-rose-950/30 text-rose-700 dark:text-rose-300 hover:bg-rose-100 dark:hover:bg-rose-900/50 hover:border-rose-400 dark:hover:border-rose-700 font-medium transition-all cursor-pointer shadow-2xs group"
+                  title={t.catalog.clearAllFilters}
+                  aria-label={t.catalog.clearAllFilters}
+                >
+                  <RotateCcw className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400 group-hover:-rotate-45 transition-transform" />
+                  <span>{t.catalog.clearAllFilters}</span>
+                  <span className="px-1.5 py-0.5 rounded-full bg-rose-200/90 dark:bg-rose-900/80 text-rose-800 dark:text-rose-200 text-[11px] font-bold border border-rose-300/80 dark:border-rose-800">
+                    {activeFiltersCount}
+                  </span>
+                </button>
               )}
-              {showAdvancedFilters ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-            </button>
+
+              {/* Toggle Button for Advanced Options */}
+              <button
+                onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
+                className={`h-[38px] inline-flex items-center gap-1.5 text-xs sm:text-sm py-1.5 px-3 sm:px-3.5 rounded-xl border transition-all cursor-pointer ${
+                  hasActiveAdvancedFilters
+                    ? "text-[#044CD0] dark:text-blue-300 border-blue-400 dark:border-blue-500/50 bg-blue-50/90 dark:bg-[#044CD0]/15 hover:bg-blue-100/90 dark:hover:bg-[#044CD0]/25 font-semibold shadow-2xs"
+                    : "text-slate-600 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-slate-200 border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-slate-600 bg-white dark:bg-transparent hover:bg-blue-50/70 dark:hover:bg-[#071938]"
+                }`}
+              >
+                <SlidersHorizontal className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6]" />
+                <span>{t.catalog.advancedFilters}</span>
+                {hasActiveAdvancedFilters && (
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#044CD0] dark:bg-blue-400 animate-pulse" />
+                )}
+                {showAdvancedFilters ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -818,11 +864,13 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
       </div>
 
       {/* Results Header */}
-      <div className="flex items-center justify-between text-xs sm:text-sm text-slate-400 px-1">
-        <div>
-          {t.catalog.foundCount} <strong className="text-slate-200">{formatNumber(pageInfo.totalElements, 0)}</strong> {t.catalog.subfundsCount}
+      <div className="flex items-center justify-between text-xs sm:text-sm text-slate-500 dark:text-slate-400 px-1">
+        <div className="flex items-center flex-wrap gap-x-1.5 gap-y-1">
+          <span>
+            {t.catalog.foundCount} <strong className="text-slate-800 dark:text-slate-200">{formatNumber(pageInfo.totalElements, 0)}</strong> {t.catalog.subfundsCount}
+          </span>
           {(selectedClassifications.length > 0 || selectedTypes.length > 0 || selectedCategories.length > 0) && (
-            <span className="ml-1 text-[#60a5fa]">
+            <span className="text-[#044CD0] dark:text-[#60a5fa]">
               ({[
                 selectedClassifications.length > 0
                   ? `${t.catalog.classesTagLabel} ${selectedClassifications
@@ -852,20 +900,55 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                 .join(" • ")})
             </span>
           )}
+          {hasAnyActiveFilters && (
+            <button
+              type="button"
+              onClick={resetAllFilters}
+              className="inline-flex items-center gap-1 text-xs text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 font-medium hover:underline cursor-pointer ml-1.5 select-none"
+              title={t.catalog.clearAllFilters}
+            >
+              <RotateCcw className="w-3 h-3" />
+              <span>{t.catalog.clearAllFilters}</span>
+            </button>
+          )}
           {isPending && (
-            <span className="ml-2 inline-flex items-center gap-1 text-[#3b82f6]">
+            <span className="ml-1.5 inline-flex items-center gap-1 text-[#3b82f6]">
               <RefreshCw className="w-3 h-3 animate-spin" /> {t.common.filtering}
             </span>
           )}
         </div>
-        <div>
-          {t.common.page} <strong className="text-slate-200">{pageInfo.number + 1}</strong> {t.common.of}{" "}
-          <strong className="text-slate-200">{Math.max(1, pageInfo.totalPages)}</strong>
+        <div className="shrink-0 text-slate-500 dark:text-slate-400">
+          {t.common.page} <strong className="text-slate-800 dark:text-slate-200">{pageInfo.number + 1}</strong> {t.common.of}{" "}
+          <strong className="text-slate-800 dark:text-slate-200">{Math.max(1, pageInfo.totalPages)}</strong>
         </div>
       </div>
 
-      {/* View Mode: Cards Grid */}
-      {viewMode === "grid" ? (
+      {/* View Mode: Empty State / Cards Grid / Interactive Table */}
+      {processedItems.length === 0 ? (
+        <div className="bg-white dark:bg-[#051329] border border-slate-200 dark:border-[#0e274d] rounded-2xl p-8 sm:p-12 text-center space-y-4 shadow-xs">
+          <div className="w-12 h-12 mx-auto rounded-full bg-slate-100 dark:bg-[#071938] flex items-center justify-center text-slate-400 dark:text-slate-500">
+            <Search className="w-6 h-6" />
+          </div>
+          <div className="space-y-1.5 max-w-md mx-auto">
+            <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
+              {t.catalog.noResultsTitle}
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+              {t.catalog.noResultsDesc}
+            </p>
+          </div>
+          {hasAnyActiveFilters && (
+            <button
+              type="button"
+              onClick={resetAllFilters}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#044CD0] hover:bg-blue-600 text-white font-medium text-xs sm:text-sm shadow-xs transition-colors cursor-pointer"
+            >
+              <RotateCcw className="w-4 h-4" />
+              <span>{t.catalog.clearAllFilters}</span>
+            </button>
+          )}
+        </div>
+      ) : viewMode === "grid" ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {processedItems.map((item) => {
             const inCompare = isSelected(item.subfundId);
