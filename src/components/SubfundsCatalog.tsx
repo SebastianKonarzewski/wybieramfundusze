@@ -417,13 +417,14 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
         </div>
 
         {/* Filter Rows: Asset Class & Legal Type */}
-        <div className="pt-3 border-t border-[#0e274d] space-y-2.5">
+        <div className="pt-3 border-t border-[#0e274d] space-y-3">
           {/* Row 1: Asset Class */}
-          <div className="flex items-center gap-1.5 text-xs flex-wrap">
-            <span className="text-slate-400 sm:w-[92px] shrink-0 font-medium font-sans">
+          <div className="flex items-center gap-2 text-xs sm:text-sm flex-wrap">
+            <span className="text-slate-400 sm:w-[116px] shrink-0 font-medium font-sans flex items-center gap-1.5">
+              <Compass className="w-4 h-4 text-[#3b82f6] shrink-0" />
               {t.catalog.assetClass}
             </span>
-            <div className="flex items-center gap-1 flex-wrap">
+            <div className="flex items-center gap-1.5 flex-wrap">
               {classificationOptions.map((cls) => {
                 const isSelected =
                   cls.id === "ALL"
@@ -435,14 +436,14 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                     key={cls.id}
                     onClick={() => toggleClassification(cls.id)}
                     aria-pressed={isSelected}
-                    className={`inline-flex items-center gap-1 px-2.5 sm:px-3 py-1 rounded-lg text-[11px] sm:text-xs font-medium transition-all cursor-pointer ${
+                    className={`inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-medium transition-all cursor-pointer ${
                       isSelected
                         ? "bg-[#044CD0] text-white shadow-md font-bold scale-102 border border-blue-400/50"
                         : "bg-[#030a16] text-slate-300 border border-[#0e274d] hover:text-white hover:border-[#044CD0]/60"
                     }`}
                   >
                     {isSelected && cls.id !== "ALL" && (
-                      <Check className="w-3 h-3 stroke-[3]" />
+                      <Check className="w-3.5 h-3.5 stroke-[3]" />
                     )}
                     {cls.label}
                   </button>
@@ -452,12 +453,13 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
           </div>
 
           {/* Row 2: Legal Type & Advanced Filters toggle */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-            <div className="flex items-center gap-1.5 flex-wrap">
-              <span className="text-slate-400 sm:w-[92px] shrink-0 font-medium font-sans">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs sm:text-sm">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-slate-400 sm:w-[116px] shrink-0 font-medium font-sans flex items-center gap-1.5">
+                <Scale className="w-4 h-4 text-[#3b82f6] shrink-0" />
                 {t.catalog.legalType}
               </span>
-              <div className="flex items-center gap-1 flex-wrap">
+              <div className="flex items-center gap-1.5 flex-wrap">
                 {["ALL", "SFIO", "FIO", "FIZ", "ETF"].map((type) => {
                   const isSelected =
                     type === "ALL"
@@ -469,14 +471,14 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                       key={type}
                       onClick={() => toggleType(type)}
                       aria-pressed={isSelected}
-                      className={`inline-flex items-center gap-1 px-2.5 sm:px-3 py-1 rounded-lg text-[11px] sm:text-xs font-medium transition-all cursor-pointer ${
+                      className={`inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-medium transition-all cursor-pointer ${
                         isSelected
                           ? "bg-[#044CD0] text-white shadow-xs font-bold border border-blue-400/60"
                           : "bg-[#030a16] text-slate-300 border border-[#0e274d] hover:text-white hover:border-[#044CD0]/60"
                       }`}
                     >
                       {isSelected && type !== "ALL" && (
-                        <Check className="w-3 h-3 stroke-[3]" />
+                        <Check className="w-3.5 h-3.5 stroke-[3]" />
                       )}
                       {type === "ALL" ? t.catalog.allTypes : type}
                     </button>
@@ -488,18 +490,18 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
             {/* Toggle Button for Advanced Options */}
             <button
               onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
-              className={`inline-flex items-center gap-1.5 text-xs py-1 px-2.5 rounded-lg border transition-colors cursor-pointer self-start sm:self-auto shrink-0 ${
+              className={`h-[38px] inline-flex items-center gap-1.5 text-xs sm:text-sm py-1.5 px-3 sm:px-3.5 rounded-xl border transition-colors cursor-pointer self-start sm:self-auto shrink-0 ${
                 hasActiveAdvancedFilters
                   ? "text-blue-300 border-blue-500/50 bg-[#044CD0]/15 hover:bg-[#044CD0]/25 font-medium"
                   : "text-slate-400 hover:text-slate-200 border-[#0e274d] hover:border-slate-600"
               }`}
             >
-              <SlidersHorizontal className="w-3.5 h-3.5 text-[#3b82f6]" />
+              <SlidersHorizontal className="w-4 h-4 text-[#3b82f6]" />
               <span>{t.catalog.advancedFilters}</span>
               {hasActiveAdvancedFilters && (
                 <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
               )}
-              {showAdvancedFilters ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+              {showAdvancedFilters ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
             </button>
           </div>
         </div>
