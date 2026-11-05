@@ -91,12 +91,12 @@ export function Navbar() {
 
       <header
         data-component="navbar-header"
-        className="sticky top-0 z-50 w-full border-b border-[#0e274d] bg-[#030a16]/95 backdrop-blur-md"
+        className="sticky top-0 z-50 w-full min-w-fit border-b border-[#0e274d] bg-[#030a16]/95 backdrop-blur-md"
       >
         {/* Dev / Preview Mode Top Announcement Banner */}
         <div
           data-component="announcement-banner"
-          className="w-full bg-[#021838] border-b border-[#0e274d] text-[10px] sm:text-xs py-1 sm:py-1.5 px-2.5 sm:px-4 lg:px-5 xl:px-8"
+          className="w-full min-w-fit bg-[#021838] border-b border-[#0e274d] text-[10px] sm:text-xs py-1 sm:py-1.5 px-2.5 sm:px-4 lg:px-5 xl:px-8"
         >
           <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-x-4 gap-y-0.5 sm:gap-y-1 text-center sm:text-left">
             <div className="flex items-center gap-1.5 sm:gap-2 justify-center sm:justify-start">
@@ -126,7 +126,7 @@ export function Navbar() {
 
         <div
           data-component="navbar-content"
-          className="max-w-7xl mx-auto px-2.5 sm:px-4 lg:px-5 xl:px-8 h-13 sm:h-16 flex items-center justify-between gap-1.5 sm:gap-2 lg:gap-3"
+          className="max-w-7xl mx-auto px-2.5 sm:px-4 lg:px-5 xl:px-8 h-13 sm:h-16 flex items-center justify-between gap-1.5 sm:gap-2 lg:gap-3 min-w-fit"
         >
           {/* Brand with UKNF Navy Blue styling */}
           <Link href="/" className="flex items-center gap-1.5 sm:gap-2.5 group shrink-0 min-w-0">

@@ -21,6 +21,11 @@
 }
 
 /* Custom scrollbars in UKNF navy theme */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #0e274d #030c1c;
+}
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -45,6 +50,21 @@ html.text-scale-large {
 }
 html.text-scale-xlarge {
   font-size: 130%;
+}
+
+/* Allow horizontal scrollbar when text is enlarged (+115% or +130%) */
+html.text-scale-large,
+html.text-scale-xlarge {
+  overflow-x: auto !important;
+  max-width: none !important;
+}
+
+html.text-scale-large body,
+html.text-scale-xlarge body {
+  overflow-x: visible !important;
+  max-width: none !important;
+  min-width: fit-content !important;
+  width: 100% !important;
 }
 
 /* Accessibility: Reduced Motion */
@@ -404,6 +424,15 @@ html.high-contrast body {
   background-color: #000000 !important;
   background-image: none !important;
   color: #ffff00 !important;
+  scrollbar-color: #ffff00 #000000;
+}
+
+html.high-contrast ::-webkit-scrollbar-track {
+  background: #000000 !important;
+}
+html.high-contrast ::-webkit-scrollbar-thumb {
+  background: #ffff00 !important;
+  border-radius: 4px;
 }
 
 html.high-contrast * {
@@ -435,6 +464,7 @@ html.high-contrast [data-component="navbar-header"] {
   top: 0 !important;
   z-index: 50 !important;
   width: 100% !important;
+  min-width: fit-content !important;
   height: auto !important;
   min-height: auto !important;
   max-height: none !important;
