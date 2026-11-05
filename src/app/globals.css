@@ -508,42 +508,70 @@ html.light:not(.high-contrast) [class*="shadow-2xl"] {
 
 /* SRI Risk Badges in light mode: completely transparent background, crisp colored border & text */
 html.light:not(.high-contrast) [data-component="risk-badge"],
-html.light:not(.high-contrast) [data-component="risk-badge-na"],
-html.light:not(.high-contrast) [class*="bg-emerald-950"],
-html.light:not(.high-contrast) [class*="bg-teal-950"],
-html.light:not(.high-contrast) [class*="bg-cyan-950"],
-html.light:not(.high-contrast) [class*="bg-amber-950"],
-html.light:not(.high-contrast) [class*="bg-orange-950"],
-html.light:not(.high-contrast) [class*="bg-rose-950"],
-html.light:not(.high-contrast) [class*="bg-red-950"] {
+html.light:not(.high-contrast) [data-component="risk-badge-na"] {
   background: transparent !important;
   background-color: transparent !important;
 }
 
-html.light:not(.high-contrast) [class*="bg-emerald-950"] {
+html.light:not(.high-contrast) [data-component="risk-badge"][class*="bg-emerald-950"] {
   border-color: #059669 !important;
   color: #047857 !important;
 }
-html.light:not(.high-contrast) [class*="bg-teal-950"] {
+html.light:not(.high-contrast) [data-component="risk-badge"][class*="bg-teal-950"] {
   border-color: #0d9488 !important;
   color: #0f766e !important;
 }
-html.light:not(.high-contrast) [class*="bg-cyan-950"] {
+html.light:not(.high-contrast) [data-component="risk-badge"][class*="bg-cyan-950"] {
   border-color: #0891b2 !important;
   color: #0e7490 !important;
 }
-html.light:not(.high-contrast) [class*="bg-amber-950"] {
+html.light:not(.high-contrast) [data-component="risk-badge"][class*="bg-amber-950"] {
   border-color: #d97706 !important;
   color: #b45309 !important;
 }
-html.light:not(.high-contrast) [class*="bg-orange-950"] {
+html.light:not(.high-contrast) [data-component="risk-badge"][class*="bg-orange-950"] {
   border-color: #ea580c !important;
   color: #c2410c !important;
 }
-html.light:not(.high-contrast) [class*="bg-rose-950"],
-html.light:not(.high-contrast) [class*="bg-red-950"] {
+html.light:not(.high-contrast) [data-component="risk-badge"][class*="bg-rose-950"],
+html.light:not(.high-contrast) [data-component="risk-badge"][class*="bg-red-950"] {
   border-color: #e11d48 !important;
   color: #be123c !important;
+}
+
+/* Clear filters button in light mode */
+html.light:not(.high-contrast) [data-component="clear-filters-btn"] {
+  background-color: #fff1f2 !important;
+  border-color: #fecdd3 !important;
+  color: #be123c !important;
+  box-shadow: 0 1px 2px 0 rgba(225, 29, 72, 0.05) !important;
+}
+
+html.light:not(.high-contrast) [data-component="clear-filters-btn"] svg {
+  color: #e11d48 !important;
+}
+
+html.light:not(.high-contrast) [data-component="clear-filters-btn"]:hover {
+  background-color: #ffe4e6 !important;
+  border-color: #fb7185 !important;
+  color: #9f1239 !important;
+  box-shadow: 0 1px 4px 0 rgba(225, 29, 72, 0.16) !important;
+}
+
+html.light:not(.high-contrast) [data-component="clear-filters-btn"]:hover svg {
+  color: #be123c !important;
+}
+
+html.light:not(.high-contrast) [data-component="clear-filters-btn"] span[class*="rounded-full"] {
+  background-color: #ffe4e6 !important;
+  border-color: #fecdd3 !important;
+  color: #9f1239 !important;
+}
+
+html.light:not(.high-contrast) [data-component="clear-filters-btn"]:hover span[class*="rounded-full"] {
+  background-color: #fecdd3 !important;
+  border-color: #fda4af !important;
+  color: #881337 !important;
 }
 
 /* ==========================================================================

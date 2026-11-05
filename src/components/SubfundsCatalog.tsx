@@ -575,14 +575,15 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
               {hasAnyActiveFilters && (
                 <button
                   type="button"
+                  data-component="clear-filters-btn"
                   onClick={resetAllFilters}
-                  className="h-[38px] inline-flex items-center gap-1.5 text-xs sm:text-sm py-1.5 px-3 sm:px-3.5 rounded-xl border border-rose-300/90 dark:border-rose-900/60 bg-rose-50/80 dark:bg-rose-950/30 text-rose-700 dark:text-rose-300 hover:bg-rose-100 dark:hover:bg-rose-900/50 hover:border-rose-400 dark:hover:border-rose-700 font-medium transition-all cursor-pointer shadow-2xs group"
+                  className="h-[38px] inline-flex items-center gap-1.5 text-xs sm:text-sm py-1.5 px-3 sm:px-3.5 rounded-xl border border-rose-300/80 dark:border-rose-900/60 bg-rose-50/80 dark:bg-rose-950/30 text-rose-700 dark:text-rose-300 hover:bg-rose-100/90 dark:hover:bg-rose-900/50 hover:border-rose-400 dark:hover:border-rose-700 hover:text-rose-800 dark:hover:text-rose-200 font-medium transition-all cursor-pointer shadow-2xs hover:shadow-xs group"
                   title={t.catalog.clearAllFilters}
                   aria-label={t.catalog.clearAllFilters}
                 >
                   <RotateCcw className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400 group-hover:-rotate-45 transition-transform" />
                   <span>{t.catalog.clearAllFilters}</span>
-                  <span className="px-1.5 py-0.5 rounded-full bg-rose-200/90 dark:bg-rose-900/80 text-rose-800 dark:text-rose-200 text-[11px] font-bold border border-rose-300/80 dark:border-rose-800">
+                  <span className="px-1.5 py-0.5 rounded-full bg-rose-200/80 dark:bg-rose-900/80 text-rose-800 dark:text-rose-200 text-[11px] font-bold border border-rose-300/80 dark:border-rose-800 transition-colors">
                     {activeFiltersCount}
                   </span>
                 </button>
