@@ -564,18 +564,18 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
 
         {/* Collapsible Advanced Filters Section */}
         {showAdvancedFilters && (
-          <div className="p-4 sm:p-5 rounded-xl bg-[#030a16] border border-[#0e274d] flex flex-col xl:flex-row xl:items-center justify-between gap-4 text-xs sm:text-sm text-slate-300 animate-in fade-in duration-150 relative z-20">
-            {/* Detailed Category Custom Dropdown */}
-            <div className="flex flex-col sm:flex-row sm:items-center gap-2 min-w-0">
+          <div className="p-4 sm:p-5 rounded-xl bg-[#030a16] border border-[#0e274d] space-y-3.5 text-xs sm:text-sm text-slate-300 animate-in fade-in duration-150 relative z-20">
+            {/* Line 1: Detailed Category */}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 min-w-0">
               <label
                 id="detailed-category-label"
-                className="text-slate-400 font-medium font-sans flex items-center gap-1.5 shrink-0"
+                className="text-slate-400 sm:w-[170px] font-medium font-sans flex items-center gap-1.5 shrink-0 select-none"
               >
                 <Layers className="w-4 h-4 text-[#3b82f6] shrink-0" />
                 <span>{t.catalog.detailedCategory}</span>
               </label>
 
-              <div ref={categoryDropdownRef} className="relative min-w-0 w-full sm:w-[300px]">
+              <div ref={categoryDropdownRef} className="relative min-w-0 w-full sm:w-[380px] md:w-[420px]">
                 {/* Custom Trigger Button */}
                 <button
                   type="button"
@@ -650,7 +650,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                     role="listbox"
                     aria-labelledby="detailed-category-label"
                     aria-multiselectable="true"
-                    className="absolute top-full left-0 mt-1.5 w-full sm:w-[340px] max-h-80 overflow-y-auto bg-[#030c1c] border border-[#0e274d] rounded-xl shadow-2xl z-50 p-1.5 space-y-1 animate-in fade-in zoom-in-95 duration-100"
+                    className="absolute top-full left-0 mt-1.5 w-full sm:w-[420px] max-h-80 overflow-y-auto bg-[#030c1c] border border-[#0e274d] rounded-xl shadow-2xl z-50 p-1.5 space-y-1 animate-in fade-in zoom-in-95 duration-100"
                   >
                     {/* Option: All categories (resets multi-selection) */}
                     <button
@@ -766,41 +766,47 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
               </div>
             </div>
 
-            <div className="hidden xl:block w-px h-6 bg-[#0e274d] shrink-0" />
+            {/* Subtle Divider between Line 1 and Line 2 */}
+            <div className="border-t border-[#0e274d]/60" />
 
-            {/* Legal Registry Checkboxes */}
-            <div className="flex items-center flex-wrap gap-3 sm:gap-4.5 pt-3 xl:pt-0 border-t xl:border-t-0 border-[#0e274d]">
-              <span className="text-slate-400 font-medium font-sans shrink-0">{t.catalog.legalRegistry}</span>
+            {/* Line 2: Legal Registry Checkboxes */}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 min-w-0">
+              <span className="text-slate-400 sm:w-[170px] font-medium font-sans flex items-center gap-1.5 shrink-0 select-none">
+                <Briefcase className="w-4 h-4 text-[#3b82f6] shrink-0" />
+                <span>{t.catalog.legalRegistry}</span>
+              </span>
 
-              <label className="flex items-center gap-2 cursor-pointer select-none group font-medium whitespace-nowrap">
-                <input
-                  type="checkbox"
-                  checked={includeInactive}
-                  onChange={(e) => {
-                    setIncludeInactive(e.target.checked);
-                    setCurrentPage(0);
-                  }}
-                  className="w-4 h-4 rounded bg-[#051329] border-slate-700 text-[#044CD0] accent-[#044CD0] cursor-pointer"
-                />
-                <span className="group-hover:text-slate-100 transition-colors">
-                  {t.catalog.showInactive}
-                </span>
-              </label>
+              <div className="flex items-center flex-wrap gap-4 sm:gap-6">
+                <label className="flex items-center gap-2 cursor-pointer select-none group font-medium whitespace-nowrap">
+                  <input
+                    type="checkbox"
+                    checked={includeInactive}
+                    onChange={(e) => {
+                      setIncludeInactive(e.target.checked);
+                      setCurrentPage(0);
+                    }}
+                    className="w-4 h-4 rounded bg-[#051329] border-slate-700 text-[#044CD0] accent-[#044CD0] cursor-pointer"
+                  />
+                  <span className="group-hover:text-slate-100 transition-colors">
+                    {t.catalog.showInactive}
+                  </span>
+                </label>
 
-              <label className="flex items-center gap-2 cursor-pointer select-none group font-medium whitespace-nowrap">
-                <input
-                  type="checkbox"
-                  checked={includeLiquidating}
-                  onChange={(e) => {
-                    setIncludeLiquidating(e.target.checked);
-                    setCurrentPage(0);
-                  }}
-                  className="w-4 h-4 rounded bg-[#051329] border-slate-700 text-amber-500 accent-amber-500 cursor-pointer"
-                />
-                <span className="group-hover:text-slate-100 transition-colors">
-                  {t.catalog.showLiquidating}
-                </span>
-              </label>
+                <label className="flex items-center gap-2 cursor-pointer select-none group font-medium whitespace-nowrap">
+                  <input
+                    type="checkbox"
+                    checked={includeLiquidating}
+                    onChange={(e) => {
+                      setIncludeLiquidating(e.target.checked);
+                      setCurrentPage(0);
+                    }}
+                    className="w-4 h-4 rounded bg-[#051329] border-slate-700 text-amber-500 accent-amber-500 cursor-pointer"
+                  />
+                  <span className="group-hover:text-slate-100 transition-colors">
+                    {t.catalog.showLiquidating}
+                  </span>
+                </label>
+              </div>
             </div>
           </div>
         )}
