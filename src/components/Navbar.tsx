@@ -148,9 +148,10 @@ export function Navbar() {
             </div>
           </Link>
 
-          {/* Desktop Navigation, Accessibility & Language Switcher (Visible on lg and wider) */}
-          <div className="hidden lg:flex items-center gap-1.5 xl:gap-2 shrink-0">
-            <nav className="flex items-center gap-1 xl:gap-1.5" aria-label={t.nav.menu}>
+          {/* Navigation & Controls Container */}
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            {/* Desktop Navigation Links (<nav>) - visible only on lg: */}
+            <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5" aria-label={t.nav.menu}>
               {navLinks.map((link) => {
                 const Icon = link.icon;
                 const isActive = pathname === link.href;
@@ -180,28 +181,14 @@ export function Navbar() {
               })}
             </nav>
 
-            <div className="w-px h-5 bg-[#0e274d] mx-1" />
+            {/* Desktop Divider - visible only on lg: */}
+            <div className="hidden lg:block w-px h-5 bg-[#0e274d] mx-1" />
 
-            {/* Dark / Light Theme Toggle */}
-            <ThemeToggle />
-
-            {/* Accessibility Toolbar */}
-            <AccessibilityToolbar
-              isOpen={isA11yOpen}
-              onOpenChange={handleA11yOpenChange}
-            />
-
-            {/* Language Switcher */}
-            <LanguageSwitcher />
-          </div>
-
-          {/* Mobile Navigation Controls (< lg) */}
-          <div className="flex lg:hidden items-center gap-1.5 sm:gap-2 shrink-0">
-            {/* Quick Comparator Badge Link (only when funds are selected for comparison) */}
+            {/* Quick Comparator Badge Link (Mobile only, when funds are selected) */}
             {selectedFunds.length > 0 && (
               <Link
                 href="/porownywarka"
-                className="relative w-8.5 h-8.5 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl border border-blue-500/50 bg-[#044CD0]/15 text-[#60a5fa] hover:text-white flex items-center justify-center shrink-0"
+                className="lg:hidden relative w-8.5 h-8.5 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl border border-blue-500/50 bg-[#044CD0]/15 text-[#60a5fa] hover:text-white flex items-center justify-center shrink-0"
                 title={`${t.nav.comparator} (${selectedFunds.length})`}
                 aria-label={`${t.nav.comparator} (${selectedFunds.length})`}
               >
@@ -218,18 +205,18 @@ export function Navbar() {
             {/* Dark / Light Theme Toggle */}
             <ThemeToggle />
 
-            {/* Accessibility Toolbar */}
+            {/* Accessibility Toolbar (Single instance for both mobile and desktop) */}
             <AccessibilityToolbar
               isOpen={isA11yOpen}
               onOpenChange={handleA11yOpenChange}
             />
 
-            {/* Hamburger Button with exact same dimensions and scaling as all other buttons */}
+            {/* Hamburger Button (Mobile only, < lg) */}
             <button
               type="button"
               onClick={toggleMobileMenu}
               data-component="navbar-hamburger"
-              className={`w-8.5 h-8.5 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl border transition-all flex items-center justify-center shrink-0 cursor-pointer shadow-xs ${
+              className={`lg:hidden w-8.5 h-8.5 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl border transition-all flex items-center justify-center shrink-0 cursor-pointer shadow-xs ${
                 isMobileMenuOpen
                   ? "bg-[#044CD0] text-white border-blue-400 shadow-md ring-2 ring-blue-400/30"
                   : "border-slate-300 dark:border-[#0e274d] bg-white dark:bg-[#030a16] text-slate-700 dark:text-slate-200 hover:text-[#044CD0] dark:hover:text-white"
