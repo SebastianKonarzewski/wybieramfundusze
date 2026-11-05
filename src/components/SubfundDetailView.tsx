@@ -11,6 +11,9 @@ import {
   Clock,
   Coins,
   TrendingUp,
+  Briefcase,
+  Scale,
+  Check,
 } from "lucide-react";
 import { SubfundFullProfile } from "@/types/knf";
 import { StatusBadge } from "./StatusBadge";
@@ -19,11 +22,18 @@ import { ValuationChart } from "./ValuationChart";
 import { AssetsChart } from "./AssetsChart";
 import { KidDetailsCard } from "./KidDetailsCard";
 import { HistoryTimeline } from "./HistoryTimeline";
+import { useCompare } from "./CompareContext";
+import { usePortfolio } from "./PortfolioContext";
 import { useTranslation } from "@/lib/i18n";
 
 export function SubfundDetailView({ profile }: { profile: SubfundFullProfile }) {
   const { t, formatCurrency, formatPercent, formatDate } = useTranslation();
+  const { toggleFund: toggleCompareFund, isSelected } = useCompare();
+  const { toggleFund: togglePortfolioFund, isInPortfolio } = usePortfolio();
   const { subfund, company, latestKid, valuations, assets, history } = profile;
+
+  const inCompare = isSelected(subfund.subfundId);
+  const inPortfolio = isInPortfolio(subfund.subfundId);
 
   return (
     <div className="space-y-8">
@@ -94,6 +104,47 @@ export function SubfundDetailView({ profile }: { profile: SubfundFullProfile }) 
                   <span>{t.subfundDetail.inRegistrySince} {formatDate(subfund.fromDate)}</span>
                 </div>
               )}
+            </div>
+
+            {/* Action buttons */}
+            <div className="flex items-center gap-2 pt-1.5 flex-wrap">
+              <button
+                onClick={() =>
+                  togglePortfolioFund({
+                    subfundId: subfund.subfundId,
+                    name: subfund.name,
+                    type: subfund.type,
+                    category: subfund.category,
+                  })
+                }
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer shadow-xs ${
+                  inPortfolio
+                    ? "bg-emerald-600 text-white border-emerald-400"
+                    : "bg-[#030a16] text-slate-300 border-[#0e274d] hover:text-emerald-400 hover:border-emerald-500"
+                }`}
+              >
+                {inPortfolio ? <Check className="w-3.5 h-3.5" /> : <Briefcase className="w-3.5 h-3.5" />}
+                {inPortfolio ? t.portfolio.inPortfolio : t.portfolio.addToPortfolio}
+              </button>
+
+              <button
+                onClick={() =>
+                  toggleCompareFund({
+                    subfundId: subfund.subfundId,
+                    name: subfund.name,
+                    type: subfund.type,
+                    category: subfund.category,
+                  })
+                }
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer shadow-xs ${
+                  inCompare
+                    ? "bg-[#044CD0] text-white border-blue-400"
+                    : "bg-[#030a16] text-slate-300 border-[#0e274d] hover:text-blue-400 hover:border-blue-500"
+                }`}
+              >
+                {inCompare ? <Check className="w-3.5 h-3.5" /> : <Scale className="w-3.5 h-3.5" />}
+                {inCompare ? t.compare.added : t.catalog.card.addToCompare}
+              </button>
             </div>
           </div>
 

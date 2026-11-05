@@ -3,6 +3,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/lib/theme";
 import { LocaleProvider } from "@/lib/i18n";
 import { AccessibilityProvider } from "@/lib/accessibility";
+import { CompareProvider } from "@/components/CompareContext";
+import { PortfolioProvider } from "@/components/PortfolioContext";
 import { CookieBanner } from "@/components/CookieBanner";
 import { PrivacyModal } from "@/components/PrivacyModal";
 
@@ -36,9 +38,13 @@ export default function RootLayout({
         <ThemeProvider>
           <LocaleProvider>
             <AccessibilityProvider>
-              {children}
-              <CookieBanner />
-              <PrivacyModal />
+              <CompareProvider>
+                <PortfolioProvider>
+                  {children}
+                  <CookieBanner />
+                  <PrivacyModal />
+                </PortfolioProvider>
+              </CompareProvider>
             </AccessibilityProvider>
           </LocaleProvider>
         </ThemeProvider>

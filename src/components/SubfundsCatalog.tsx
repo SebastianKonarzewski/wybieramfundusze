@@ -6,6 +6,7 @@ import {
   Search,
   SlidersHorizontal,
   Scale,
+  Briefcase,
   Check,
   ChevronLeft,
   ChevronRight,
@@ -25,6 +26,7 @@ import { SubfundCardModel } from "@/types/knf";
 import { StatusBadge } from "./StatusBadge";
 import { RiskBadge } from "./RiskBadge";
 import { useCompare } from "./CompareContext";
+import { usePortfolio } from "./PortfolioContext";
 import { useTranslation } from "@/lib/i18n";
 
 interface SubfundsCatalogProps {
@@ -39,6 +41,7 @@ interface SubfundsCatalogProps {
 
 export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogProps) {
   const { toggleFund, isSelected } = useCompare();
+  const { toggleFund: togglePortfolioFund, isInPortfolio } = usePortfolio();
   const { t, formatCurrency, formatPercent, formatDate, formatNumber } = useTranslation();
 
   const [items, setItems] = useState<SubfundCardModel[]>(initialItems);
@@ -436,6 +439,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {processedItems.map((item) => {
             const inCompare = isSelected(item.subfundId);
+            const inPortfolio = isInPortfolio(item.subfundId);
 
             return (
               <div
@@ -520,6 +524,25 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   >
                     {t.catalog.card.fundDetails}
                   </Link>
+
+                  <button
+                    onClick={() =>
+                      togglePortfolioFund({
+                        subfundId: item.subfundId,
+                        name: item.name,
+                        type: item.type,
+                        category: item.category,
+                      })
+                    }
+                    className={`p-2 rounded-xl text-xs font-medium border transition-all shadow-2xs ${
+                      inPortfolio
+                        ? "bg-emerald-600 text-white border-emerald-400 shadow-xs"
+                        : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-blue-200 dark:border-[#0e274d] hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-400"
+                    }`}
+                    title={inPortfolio ? t.portfolio.removeFromPortfolio : t.portfolio.addToPortfolio}
+                  >
+                    {inPortfolio ? <Check className="w-4 h-4" /> : <Briefcase className="w-4 h-4" />}
+                  </button>
 
                   <button
                     onClick={() =>
@@ -612,6 +635,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
               <tbody className="divide-y divide-slate-100 dark:divide-[#0e274d]/70 text-slate-800 dark:text-slate-300">
                 {processedItems.map((item) => {
                   const inCompare = isSelected(item.subfundId);
+                  const inPortfolio = isInPortfolio(item.subfundId);
 
                   return (
                     <tr
@@ -676,6 +700,24 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                       </td>
                       <td className="py-3 px-4 text-right whitespace-nowrap">
                         <div className="flex items-center justify-end gap-2">
+                          <button
+                            onClick={() =>
+                              togglePortfolioFund({
+                                subfundId: item.subfundId,
+                                name: item.name,
+                                type: item.type,
+                                category: item.category,
+                              })
+                            }
+                            className={`p-1.5 rounded-lg border text-xs transition-colors shadow-2xs ${
+                              inPortfolio
+                                ? "bg-emerald-600 text-white border-emerald-400"
+                                : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-blue-200 dark:border-[#0e274d] hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-400"
+                            }`}
+                            title={inPortfolio ? t.portfolio.removeFromPortfolio : t.portfolio.addToPortfolio}
+                          >
+                            {inPortfolio ? <Check className="w-3.5 h-3.5" /> : <Briefcase className="w-3.5 h-3.5" />}
+                          </button>
                           <button
                             onClick={() =>
                               toggleFund({

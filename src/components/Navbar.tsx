@@ -13,8 +13,10 @@ import {
   FlaskConical,
   Menu,
   X,
+  Briefcase,
 } from "lucide-react";
 import { useCompare } from "./CompareContext";
+import { usePortfolio } from "./PortfolioContext";
 import { useTranslation } from "@/lib/i18n";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { AccessibilityToolbar } from "./AccessibilityToolbar";
@@ -23,6 +25,7 @@ import { ThemeToggle } from "./ThemeToggle";
 export function Navbar() {
   const pathname = usePathname();
   const { selectedFunds } = useCompare();
+  const { portfolioFunds } = usePortfolio();
   const { t, locale } = useTranslation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isA11yOpen, setIsA11yOpen] = useState(false);
@@ -78,6 +81,7 @@ export function Navbar() {
   const navLinks = [
     { href: "/", label: t.nav.catalog, icon: Layers },
     { href: "/porownywarka", label: t.nav.comparator, icon: Scale, badge: selectedFunds.length },
+    { href: "/portfel", label: t.nav.portfolio, icon: Briefcase, badge: portfolioFunds.length },
     { href: "/tfi", label: t.nav.tfi, icon: Building2 },
     { href: "/statystyki", label: t.nav.stats, icon: BarChart2 },
   ];
