@@ -163,58 +163,57 @@ html.light:not(.high-contrast) [class*="bg-blue-50"] {
   background-color: #f0f7ff !important;
 }
 
-/* Hero banner background: pure white base with soft blue top-right, subtle grayish-blue bottom-left, and top-left brightening towards white */
+/* Hero banner background: pure clean white surface with matching border */
 html.light:not(.high-contrast) [class*="from-[#071938]"][class*="to-[#030a16]"] {
-  background: 
-    radial-gradient(ellipse 65% 55% at 100% 0%, rgba(4, 76, 208, 0.08) 0%, rgba(227, 239, 253, 0.45) 30%, transparent 65%),
-    radial-gradient(ellipse 50% 45% at 0% 0%, rgba(220, 234, 252, 0.4) 0%, rgba(240, 247, 254, 0.2) 25%, transparent 55%),
-    radial-gradient(ellipse 55% 50% at 0% 100%, rgba(195, 212, 232, 0.35) 0%, rgba(220, 232, 246, 0.22) 30%, transparent 60%),
-    #ffffff !important;
-  border-color: #d0e2f7 !important;
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
 }
 
-/* Catalog Grid Cards in light mode - lighter, slightly translucent delicate blue tint */
+/* Catalog Grid Cards in light mode: clean white cards matching the table & filter bar */
 html.light:not(.high-contrast) .catalog-grid-card {
-  background-color: rgba(248, 251, 255, 0.5) !important;
-  border-color: #d8e6f8 !important;
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.05), 0 1px 2px -1px rgba(15, 23, 42, 0.03) !important;
 }
 
 html.light:not(.high-contrast) .catalog-grid-card:hover {
-  background-color: rgba(234, 244, 254, 0.75) !important;
+  background-color: #ffffff !important;
   border-color: #93c5fd !important;
+  box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.05) !important;
 }
 
-/* Catalog Table styling in light mode - lighter, slightly translucent delicate blue tint and soft blue dividers */
+/* Catalog Table styling in light mode: clean white card with subtle slate header and clean rows */
 html.light:not(.high-contrast) .catalog-table-container,
 html.light:not(.high-contrast) .catalog-table-container [class*="bg-[#051329]"] {
-  background-color: rgba(248, 251, 255, 0.5) !important;
-  border-color: #d8e6f8 !important;
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.08), 0 1px 2px -1px rgba(15, 23, 42, 0.04) !important;
 }
 
 html.light:not(.high-contrast) .catalog-table-container table {
   border-collapse: collapse !important;
-  background-color: transparent !important;
+  background-color: #ffffff !important;
 }
 
 html.light:not(.high-contrast) .catalog-table-container thead,
 html.light:not(.high-contrast) .catalog-table-container thead [class*="bg-[#030a16]"],
 html.light:not(.high-contrast) .catalog-table-container thead th {
-  background-color: rgba(236, 244, 253, 0.7) !important;
-  color: #1e3a8a !important;
-  border-color: #d8e6f8 !important;
+  background-color: #f8fafc !important;
+  color: #475569 !important;
+  border-color: #e2e8f0 !important;
 }
 
 html.light:not(.high-contrast) .catalog-table-container tbody tr {
-  background-color: rgba(248, 251, 255, 0.45) !important;
-  border-color: #d8e6f8 !important;
+  background-color: #ffffff !important;
+  border-color: #f1f5f9 !important;
 }
 
 html.light:not(.high-contrast) .catalog-table-container tbody tr:hover {
-  background-color: rgba(219, 234, 254, 0.85) !important;
+  background-color: #f8fafc !important;
 }
 
 html.light:not(.high-contrast) .catalog-table-container tbody tr td {
-  border-color: #d8e6f8 !important;
+  border-color: #f1f5f9 !important;
 }
 
 /* Explicitly eliminate any black border on first row, below thead or between rows */
@@ -225,14 +224,14 @@ html.light:not(.high-contrast) .catalog-table-container tbody,
 html.light:not(.high-contrast) .catalog-table-container tbody tr,
 html.light:not(.high-contrast) .catalog-table-container tbody tr:first-child,
 html.light:not(.high-contrast) .catalog-table-container tbody tr:first-child td {
-  border-top-color: #d8e6f8 !important;
-  border-bottom-color: #d8e6f8 !important;
+  border-top-color: #e2e8f0 !important;
+  border-bottom-color: #e2e8f0 !important;
 }
 
 html.light:not(.high-contrast) .catalog-table-container [class*="divide-[#bfdbfe]"] > * + *,
 html.light:not(.high-contrast) .catalog-table-container [class*="divide-[#d0e2f7]"] > * + *,
 html.light:not(.high-contrast) .catalog-table-container [class*="divide-[#0e274d]"] > * + * {
-  border-color: #d8e6f8 !important;
+  border-color: #f1f5f9 !important;
 }
 
 /* Hover background states in light mode */
@@ -365,11 +364,11 @@ html.light:not(.high-contrast) select option {
   color: #0f172a !important;
 }
 
-/* Card elevations in light mode */
+/* Card elevations in light mode: subtle, uniform, clean elevation */
 html.light:not(.high-contrast) [class*="shadow-md"],
 html.light:not(.high-contrast) [class*="shadow-xl"],
 html.light:not(.high-contrast) [class*="shadow-2xl"] {
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px -1px rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.08), 0 1px 2px -1px rgba(15, 23, 42, 0.04) !important;
 }
 
 /* SRI Risk Badges in light mode: completely transparent background, crisp colored border & text */

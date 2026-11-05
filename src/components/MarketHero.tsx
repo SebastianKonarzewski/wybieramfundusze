@@ -77,7 +77,7 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
             </p>
           </div>
 
-          <div className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-600 dark:text-slate-400 bg-white/90 dark:bg-[#030a16]/80 border border-slate-200 dark:border-[#0e274d] px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl self-start lg:self-auto shrink-0 shadow-xs">
+          <div className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-[#030a16]/80 border border-slate-200 dark:border-[#0e274d] px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl self-start lg:self-auto shrink-0 shadow-xs">
             <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#044CD0]" />
             <span>
               {t.hero.marketDataDate} <strong className="text-slate-800 dark:text-slate-200">{formatDate(stats.statsDate)}</strong>
@@ -88,7 +88,7 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
         {/* 3 Key Stat Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
           {/* Card 1: Net Assets in Funds (AUM) */}
-          <div className="bg-white/95 dark:bg-[#030a16]/85 border border-blue-100 dark:border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl px-4 pt-3.5 pb-3 sm:px-5 sm:pt-4 sm:pb-3.5 transition-all shadow-sm dark:shadow-md group">
+          <div className="bg-slate-50/70 dark:bg-[#030a16]/85 border border-slate-200/80 dark:border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl px-4 pt-3.5 pb-3 sm:px-5 sm:pt-4 sm:pb-3.5 transition-all shadow-xs dark:shadow-md group">
             <div className="flex items-center justify-between text-slate-400 mb-1 sm:mb-1.5">
               <span className="text-xs sm:text-sm font-semibold truncate text-slate-700 dark:text-slate-300">
                 {t.hero.netAssets}
@@ -104,7 +104,7 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
           </div>
 
           {/* Card 2: Investable Products (Subfunds + Standalone Funds) */}
-          <div className="bg-white/95 dark:bg-[#030a16]/85 border border-blue-100 dark:border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl px-4 pt-3.5 pb-3 sm:px-5 sm:pt-4 sm:pb-3.5 transition-all shadow-sm dark:shadow-md group">
+          <div className="bg-slate-50/70 dark:bg-[#030a16]/85 border border-slate-200/80 dark:border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl px-4 pt-3.5 pb-3 sm:px-5 sm:pt-4 sm:pb-3.5 transition-all shadow-xs dark:shadow-md group">
             <div className="flex items-center justify-between text-slate-400 mb-1 sm:mb-1.5">
               <span className="text-xs sm:text-sm font-semibold truncate text-slate-700 dark:text-slate-300">
                 {t.hero.investableProducts}
@@ -120,7 +120,7 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
           </div>
 
           {/* Card 3: Fund Managers (TFI) */}
-          <div className="bg-white/95 dark:bg-[#030a16]/85 border border-blue-100 dark:border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl px-4 pt-3.5 pb-3 sm:px-5 sm:pt-4 sm:pb-3.5 transition-all shadow-sm dark:shadow-md group">
+          <div className="bg-slate-50/70 dark:bg-[#030a16]/85 border border-slate-200/80 dark:border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl px-4 pt-3.5 pb-3 sm:px-5 sm:pt-4 sm:pb-3.5 transition-all shadow-xs dark:shadow-md group">
             <div className="flex items-center justify-between text-slate-400 mb-1 sm:mb-1.5">
               <span className="text-xs sm:text-sm font-semibold truncate text-slate-700 dark:text-slate-300">
                 {t.hero.companies}
@@ -138,7 +138,7 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
 
         {/* Dynamic Market Assets Trend Strip with Scaled Domain */}
         {trendData && (
-          <div className="bg-white dark:bg-[#030a16]/75 border border-slate-200/90 dark:border-[#0e274d] rounded-xl sm:rounded-2xl p-3 sm:p-4 flex flex-col md:flex-row items-center justify-between gap-3 shadow-xs dark:shadow-md">
+          <div className="bg-slate-50/70 dark:bg-[#030a16]/75 border border-slate-200/80 dark:border-[#0e274d] rounded-xl sm:rounded-2xl p-3 sm:p-4 flex flex-col md:flex-row items-center justify-between gap-3 shadow-xs dark:shadow-md">
             {/* Left: Trend summary & concrete values */}
             <div className="flex items-center gap-3 shrink-0 self-start md:self-auto">
               <div
