@@ -363,6 +363,28 @@ html.light:not(.high-contrast) input::placeholder {
   color: #94a3b8 !important;
 }
 
+/* Style optgroup headers and options for clear category navigation */
+select optgroup {
+  font-weight: 700 !important;
+  font-style: normal !important;
+  color: #60a5fa !important;
+  background-color: #030c1c !important;
+  letter-spacing: 0.04em;
+  padding: 4px 0;
+}
+
+html.light:not(.high-contrast) select optgroup {
+  color: #044CD0 !important;
+  background-color: #f1f5f9 !important;
+}
+
+select option {
+  font-weight: 400 !important;
+  font-style: normal !important;
+  color: #f1f5f9 !important;
+  background-color: #051329 !important;
+}
+
 html.light:not(.high-contrast) select option {
   background-color: #ffffff !important;
   color: #0f172a !important;

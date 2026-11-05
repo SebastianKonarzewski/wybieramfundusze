@@ -525,11 +525,19 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   }}
                   className="h-[38px] bg-[#051329] border border-[#0e274d] text-slate-200 font-sans font-medium text-xs sm:text-sm rounded-xl pl-3 pr-8 py-1.5 focus:border-[#044CD0] focus:outline-none appearance-none cursor-pointer w-full sm:w-[280px] truncate"
                 >
-                  <option value="ALL">{t.catalog.allCategories}</option>
+                  <option value="ALL" className="bg-[#051329] text-slate-200">{t.catalog.allCategories}</option>
                   {visibleCategoryGroups.map((grp) => (
-                    <optgroup key={grp.classId} label={locale === "en" ? grp.groupEn : grp.groupPl}>
+                    <optgroup
+                      key={grp.classId}
+                      label={`── ${(locale === "en" ? grp.groupEn : grp.groupPl).toUpperCase()} ──`}
+                      className="font-bold text-[#60a5fa] not-italic bg-[#030c1c] tracking-wider"
+                    >
                       {grp.options.map((opt) => (
-                        <option key={opt.id} value={opt.id}>
+                        <option
+                          key={opt.id}
+                          value={opt.id}
+                          className="font-normal text-slate-100 bg-[#051329]"
+                        >
                           {locale === "en" ? opt.labelEn : opt.labelPl}
                         </option>
                       ))}
