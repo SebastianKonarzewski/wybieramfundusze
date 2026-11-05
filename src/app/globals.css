@@ -1078,17 +1078,97 @@ html.high-contrast .catalog-table-container tbody tr td * {
   color: #ffff00 !important;
 }
 
+html.high-contrast table tbody tr:hover,
 html.high-contrast .catalog-table-container tbody tr:hover {
   background-color: #ffff00 !important;
   color: #000000 !important;
 }
 
+html.high-contrast table tbody tr:hover td,
+html.high-contrast table tbody tr:hover td *,
 html.high-contrast .catalog-table-container tbody tr:hover td,
 html.high-contrast .catalog-table-container tbody tr:hover td * {
   color: #000000 !important;
 }
 
+/* Badges, tags, frames and status indicators inside a hovered table row */
+/* 1. Type (SFIO/FIO/ETF) and Classification (Akcji/Dłużne) tags */
+html.high-contrast table tbody tr:hover td span[class*="bg-"],
+html.high-contrast table tbody tr:hover td span[class*="border"],
+html.high-contrast table tbody tr:hover td span.rounded,
+html.high-contrast table tbody tr:hover td span.rounded-full,
+html.high-contrast .catalog-table-container tbody tr:hover td span[class*="bg-"],
+html.high-contrast .catalog-table-container tbody tr:hover td span[class*="border"],
+html.high-contrast .catalog-table-container tbody tr:hover td span.rounded,
+html.high-contrast .catalog-table-container tbody tr:hover td span.rounded-full {
+  background-color: transparent !important;
+  background: transparent !important;
+  border: 2px solid #000000 !important;
+  color: #000000 !important;
+  font-weight: 800 !important;
+}
+
+/* 2. Status Badge ("Aktywne" / "W likwidacji") inside hovered table rows */
+html.high-contrast table tbody tr:hover [data-component="status-badge"],
+html.high-contrast table tbody tr:hover td [class*="bg-emerald-500/15"],
+html.high-contrast table tbody tr:hover td [class*="bg-amber-500/15"],
+html.high-contrast .catalog-table-container tbody tr:hover [data-component="status-badge"],
+html.high-contrast .catalog-table-container tbody tr:hover td [class*="bg-emerald-500/15"],
+html.high-contrast .catalog-table-container tbody tr:hover td [class*="bg-amber-500/15"] {
+  background-color: transparent !important;
+  background: transparent !important;
+  border: 2px solid #000000 !important;
+  color: #000000 !important;
+  font-weight: 800 !important;
+}
+
+html.high-contrast table tbody tr:hover [data-component="status-badge"] svg,
+html.high-contrast table tbody tr:hover td [class*="bg-emerald-500/15"] svg,
+html.high-contrast table tbody tr:hover td [class*="bg-amber-500/15"] svg,
+html.high-contrast .catalog-table-container tbody tr:hover [data-component="status-badge"] svg,
+html.high-contrast .catalog-table-container tbody tr:hover td [class*="bg-emerald-500/15"] svg,
+html.high-contrast .catalog-table-container tbody tr:hover td [class*="bg-amber-500/15"] svg {
+  color: #000000 !important;
+  stroke: #000000 !important;
+}
+
+/* 3. SRI Risk Badge ("SRI 3/7") inside hovered table rows */
+html.high-contrast table tbody tr:hover [data-component="risk-badge"],
+html.high-contrast table tbody tr:hover [data-component="risk-badge-na"],
+html.high-contrast .catalog-table-container tbody tr:hover [data-component="risk-badge"],
+html.high-contrast .catalog-table-container tbody tr:hover [data-component="risk-badge-na"] {
+  background-color: transparent !important;
+  background: transparent !important;
+  border: 2px solid #000000 !important;
+  color: #000000 !important;
+  font-weight: 800 !important;
+}
+
+html.high-contrast table tbody tr:hover [data-component="risk-badge"] span,
+html.high-contrast table tbody tr:hover [data-component="risk-badge-na"] span,
+html.high-contrast .catalog-table-container tbody tr:hover [data-component="risk-badge"] span,
+html.high-contrast .catalog-table-container tbody tr:hover [data-component="risk-badge-na"] span {
+  color: #000000 !important;
+  font-weight: 800 !important;
+}
+
+/* SRI Active dots/bars on hovered rows: solid black */
+html.high-contrast table tbody tr:hover [data-component="risk-badge"] [data-active="true"],
+html.high-contrast .catalog-table-container tbody tr:hover [data-component="risk-badge"] [data-active="true"] {
+  background-color: #000000 !important;
+  border: 1px solid #000000 !important;
+}
+
+/* SRI Inactive dots/bars on hovered rows: hollow black border */
+html.high-contrast table tbody tr:hover [data-component="risk-badge"] [data-active="false"],
+html.high-contrast .catalog-table-container tbody tr:hover [data-component="risk-badge"] [data-active="false"] {
+  background-color: transparent !important;
+  border: 1px solid #000000 !important;
+}
+
 /* Buttons inside a hovered row stay distinct with black borders */
+html.high-contrast table tbody tr:hover button,
+html.high-contrast table tbody tr:hover a,
 html.high-contrast .catalog-table-container tbody tr:hover button,
 html.high-contrast .catalog-table-container tbody tr:hover a {
   border: 2px solid #000000 !important;
@@ -1097,6 +1177,8 @@ html.high-contrast .catalog-table-container tbody tr:hover a {
 }
 
 /* Buttons directly hovered inside a hovered row: Invert to black pill with yellow text & icon */
+html.high-contrast table tbody tr:hover button:hover,
+html.high-contrast table tbody tr:hover a:hover,
 html.high-contrast .catalog-table-container tbody tr:hover button:hover,
 html.high-contrast .catalog-table-container tbody tr:hover a:hover {
   background-color: #000000 !important;
@@ -1104,6 +1186,8 @@ html.high-contrast .catalog-table-container tbody tr:hover a:hover {
   border: 2px solid #000000 !important;
   outline: 2px solid #000000 !important;
 }
+html.high-contrast table tbody tr:hover button:hover *,
+html.high-contrast table tbody tr:hover a:hover *,
 html.high-contrast .catalog-table-container tbody tr:hover button:hover *,
 html.high-contrast .catalog-table-container tbody tr:hover a:hover * {
   color: #ffff00 !important;
