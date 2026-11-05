@@ -97,6 +97,10 @@ export const en: Translations = {
       alternatyw: "Alternatives",
     },
     advancedFilters: "Advanced Filters",
+    detailedCategory: "Detailed category:",
+    allCategories: "All detailed categories",
+    clearCategory: "Clear category",
+    activeFiltersCount: "active",
     legalRegistry: "Registry & Legal Status:",
     showInactive: "Show deregistered / inactive",
     showLiquidating: "Show funds in liquidation",
@@ -104,6 +108,7 @@ export const en: Translations = {
     subfundsCount: "subfunds",
     classesTagLabel: "classes:",
     typesTagLabel: "types:",
+    categoryTagLabel: "category:",
     displayingPage: "Showing page",
     totalItems: "total",
     sort: {

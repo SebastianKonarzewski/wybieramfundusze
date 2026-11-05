@@ -21,6 +21,8 @@ import {
   ArrowDown,
   ChevronDown,
   ChevronUp,
+  Layers,
+  X,
 } from "lucide-react";
 import { SubfundCardModel } from "@/types/knf";
 import { StatusBadge } from "./StatusBadge";
@@ -28,6 +30,95 @@ import { RiskBadge } from "./RiskBadge";
 import { useCompare } from "./CompareContext";
 import { usePortfolio } from "./PortfolioContext";
 import { useTranslation } from "@/lib/i18n";
+
+interface CategoryOption {
+  id: string;
+  labelPl: string;
+  labelEn: string;
+}
+
+interface CategoryGroup {
+  classId: string;
+  groupPl: string;
+  groupEn: string;
+  options: CategoryOption[];
+}
+
+const CATEGORY_GROUPS: CategoryGroup[] = [
+  {
+    classId: "akcji",
+    groupPl: "Fundusze akcyjne",
+    groupEn: "Equity funds",
+    options: [
+      { id: "akcji polskich", labelPl: "Akcji polskich", labelEn: "Polish equities" },
+      { id: "akcji zagranicznych", labelPl: "Akcji zagranicznych i globalnych", labelEn: "Foreign & global equities" },
+      { id: "akcji pozostałe", labelPl: "Akcji pozostałe", labelEn: "Other equities" },
+    ],
+  },
+  {
+    classId: "dłużn",
+    groupPl: "Fundusze dłużne (obligacji)",
+    groupEn: "Bond & fixed income funds",
+    options: [
+      { id: "obligacji skarbowych", labelPl: "Obligacji skarbowych", labelEn: "Treasury / government bonds" },
+      { id: "obligacji korporacyjnych", labelPl: "Obligacji korporacyjnych", labelEn: "Corporate bonds" },
+      { id: "obligacji uniwersalne", labelPl: "Obligacji uniwersalne", labelEn: "Universal bonds" },
+      { id: "obligacji pozostałe", labelPl: "Obligacji pozostałe", labelEn: "Other bonds" },
+    ],
+  },
+  {
+    classId: "mieszan",
+    groupPl: "Fundusze mieszane",
+    groupEn: "Mixed & balanced funds",
+    options: [
+      { id: "mieszane aktywnej alokacji", labelPl: "Mieszane aktywnej alokacji", labelEn: "Active allocation mixed" },
+      { id: "mieszane ograniczonej alokacji", labelPl: "Mieszane ograniczonej alokacji", labelEn: "Conservative / balanced mixed" },
+      { id: "mieszane pozostałe", labelPl: "Mieszane pozostałe", labelEn: "Other mixed" },
+      { id: "mieszane cyklu życia", labelPl: "Mieszane cyklu życia (wszystkie)", labelEn: "Lifecycle mixed (all)" },
+    ],
+  },
+  {
+    classId: "alternatyw",
+    groupPl: "Fundusze alternatywne i surowce",
+    groupEn: "Alternative & commodity funds",
+    options: [
+      { id: "rynku surowców", labelPl: "Rynku surowców i metali szlachetnych", labelEn: "Commodities & precious metals" },
+      { id: "absolutnej stopy zwrotu", labelPl: "Absolutnej stopy zwrotu (Absolute Return)", labelEn: "Absolute return" },
+      { id: "aktywów niepublicznych", labelPl: "Aktywów niepublicznych (Private Equity)", labelEn: "Private assets / PE" },
+      { id: "sekurytyzacyjne", labelPl: "Sekurytyzacyjne", labelEn: "Securitization" },
+      { id: "nieruchomościowe", labelPl: "Nieruchomościowe", labelEn: "Real estate" },
+    ],
+  },
+  {
+    classId: "PPK",
+    groupPl: "Pracownicze Plany Kapitałowe (PPK)",
+    groupEn: "Employee Capital Plans (PPK)",
+    options: [
+      { id: "PPK zdefiniowanej daty", labelPl: "Wszystkie roczniki PPK", labelEn: "All PPK target dates" },
+      { id: "PPK zdefiniowanej daty 2025", labelPl: "PPK 2025", labelEn: "PPK 2025" },
+      { id: "PPK zdefiniowanej daty 2030", labelPl: "PPK 2030", labelEn: "PPK 2030" },
+      { id: "PPK zdefiniowanej daty 2035", labelPl: "PPK 2035", labelEn: "PPK 2035" },
+      { id: "PPK zdefiniowanej daty 2040", labelPl: "PPK 2040", labelEn: "PPK 2040" },
+      { id: "PPK zdefiniowanej daty 2045", labelPl: "PPK 2045", labelEn: "PPK 2045" },
+      { id: "PPK zdefiniowanej daty 2050", labelPl: "PPK 2050", labelEn: "PPK 2050" },
+      { id: "PPK zdefiniowanej daty 2055", labelPl: "PPK 2055", labelEn: "PPK 2055" },
+      { id: "PPK zdefiniowanej daty 2060", labelPl: "PPK 2060", labelEn: "PPK 2060" },
+      { id: "PPK zdefiniowanej daty 2065", labelPl: "PPK 2065", labelEn: "PPK 2065" },
+      { id: "PPK zdefiniowanej daty 2070", labelPl: "PPK 2070", labelEn: "PPK 2070" },
+    ],
+  },
+];
+
+function getCategoryLabel(catId: string, isEn: boolean): string {
+  for (const grp of CATEGORY_GROUPS) {
+    for (const opt of grp.options) {
+      if (opt.id === catId) {
+        return isEn ? opt.labelEn : opt.labelPl;
+      }
+    }
+  }
+  return catId;
+}
 
 interface SubfundsCatalogProps {
   initialItems: SubfundCardModel[];
@@ -42,7 +133,7 @@ interface SubfundsCatalogProps {
 export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogProps) {
   const { toggleFund, isSelected } = useCompare();
   const { toggleFund: togglePortfolioFund, isInPortfolio } = usePortfolio();
-  const { t, formatCurrency, formatPercent, formatDate, formatNumber } = useTranslation();
+  const { t, locale, formatCurrency, formatPercent, formatDate, formatNumber } = useTranslation();
 
   const [items, setItems] = useState<SubfundCardModel[]>(initialItems);
   const [pageInfo, setPageInfo] = useState(initialPage);
@@ -57,6 +148,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
   // Multi-select state for fund types and asset classes
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedClassifications, setSelectedClassifications] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
   const [sortField, setSortField] = useState<"name" | "fee" | "risk" | "valuation">("name");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [currentPage, setCurrentPage] = useState(0);
@@ -107,6 +199,29 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
     );
   };
 
+  // Filter category groups by currently active asset classes if any are selected
+  const visibleCategoryGroups = useMemo(() => {
+    if (selectedClassifications.length === 0) {
+      return CATEGORY_GROUPS;
+    }
+    return CATEGORY_GROUPS.filter((grp) => selectedClassifications.includes(grp.classId));
+  }, [selectedClassifications]);
+
+  // Reset selectedCategory if parent classification is deselected
+  useEffect(() => {
+    if (selectedCategory !== "ALL" && selectedClassifications.length > 0) {
+      const isCategoryStillValid = visibleCategoryGroups.some((grp) =>
+        grp.options.some((opt) => opt.id === selectedCategory)
+      );
+      if (!isCategoryStillValid) {
+        setSelectedCategory("ALL");
+      }
+    }
+  }, [selectedClassifications, visibleCategoryGroups, selectedCategory]);
+
+  const hasActiveAdvancedFilters =
+    selectedCategory !== "ALL" || includeInactive || includeLiquidating;
+
   // Fetch data on filter changes
   useEffect(() => {
     const fetchFiltered = async () => {
@@ -119,6 +234,9 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
           }
           if (selectedTypes.length > 0) {
             params.set("fundTypes", selectedTypes.join(","));
+          }
+          if (selectedCategory && selectedCategory !== "ALL") {
+            params.set("category", selectedCategory);
           }
           if (includeInactive) params.set("includeInactive", "true");
           if (includeLiquidating) params.set("includeLiquidating", "true");
@@ -148,6 +266,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
     searchTerm,
     selectedClassifications,
     selectedTypes,
+    selectedCategory,
     includeInactive,
     includeLiquidating,
     currentPage,
@@ -363,48 +482,104 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
           {/* Toggle Button for Advanced Options */}
           <button
             onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
-            className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-200 py-1 px-2.5 rounded-lg border border-[#0e274d] hover:border-slate-600 transition-colors"
+            className={`inline-flex items-center gap-1.5 text-xs py-1 px-2.5 rounded-lg border transition-colors cursor-pointer ${
+              hasActiveAdvancedFilters
+                ? "text-blue-300 border-blue-500/50 bg-[#044CD0]/15 hover:bg-[#044CD0]/25 font-medium"
+                : "text-slate-400 hover:text-slate-200 border-[#0e274d] hover:border-slate-600"
+            }`}
           >
-            <SlidersHorizontal className="w-3.5 h-3.5" />
+            <SlidersHorizontal className="w-3.5 h-3.5 text-[#3b82f6]" />
             <span>{t.catalog.advancedFilters}</span>
+            {hasActiveAdvancedFilters && (
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+            )}
             {showAdvancedFilters ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
           </button>
         </div>
 
         {/* Collapsible Advanced Filters Section */}
         {showAdvancedFilters && (
-          <div className="p-4 rounded-xl bg-[#030a16] border border-[#0e274d] flex flex-wrap items-center gap-6 text-xs text-slate-300 animate-in fade-in duration-150">
-            <span className="font-semibold text-slate-400">{t.catalog.legalRegistry}</span>
+          <div className="p-4 rounded-xl bg-[#030a16] border border-[#0e274d] flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs text-slate-300 animate-in fade-in duration-150">
+            {/* Detailed Category Select */}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+              <label htmlFor="detailed-category-select" className="font-semibold text-slate-400 flex items-center gap-1.5 shrink-0">
+                <Layers className="w-3.5 h-3.5 text-[#3b82f6]" />
+                <span>{t.catalog.detailedCategory}</span>
+              </label>
+              <div className="relative flex items-center">
+                <select
+                  id="detailed-category-select"
+                  value={selectedCategory}
+                  onChange={(e) => {
+                    setSelectedCategory(e.target.value);
+                    setCurrentPage(0);
+                  }}
+                  className="bg-[#051329] border border-[#0e274d] text-slate-200 text-xs rounded-lg pl-3 pr-8 py-1.5 focus:border-[#044CD0] focus:outline-none appearance-none cursor-pointer w-full sm:w-auto"
+                >
+                  <option value="ALL">{t.catalog.allCategories}</option>
+                  {visibleCategoryGroups.map((grp) => (
+                    <optgroup key={grp.classId} label={locale === "en" ? grp.groupEn : grp.groupPl}>
+                      {grp.options.map((opt) => (
+                        <option key={opt.id} value={opt.id}>
+                          {locale === "en" ? opt.labelEn : opt.labelPl}
+                        </option>
+                      ))}
+                    </optgroup>
+                  ))}
+                </select>
+                <ChevronDown className="w-3.5 h-3.5 text-slate-400 absolute right-2.5 pointer-events-none" />
+              </div>
+              {selectedCategory !== "ALL" && (
+                <button
+                  onClick={() => {
+                    setSelectedCategory("ALL");
+                    setCurrentPage(0);
+                  }}
+                  title={t.catalog.clearCategory}
+                  className="inline-flex items-center gap-1 text-[11px] text-slate-400 hover:text-white px-2 py-1 rounded bg-[#0e274d] hover:bg-slate-700 transition-colors cursor-pointer shrink-0"
+                >
+                  <X className="w-3 h-3" />
+                  <span>{t.common.clear}</span>
+                </button>
+              )}
+            </div>
 
-            <label className="flex items-center gap-2 cursor-pointer select-none group">
-              <input
-                type="checkbox"
-                checked={includeInactive}
-                onChange={(e) => {
-                  setIncludeInactive(e.target.checked);
-                  setCurrentPage(0);
-                }}
-                className="w-4 h-4 rounded bg-[#051329] border-slate-700 text-[#044CD0] accent-[#044CD0] cursor-pointer"
-              />
-              <span className="group-hover:text-slate-100 transition-colors">
-                {t.catalog.showInactive}
-              </span>
-            </label>
+            <div className="hidden md:block w-px h-6 bg-[#0e274d]" />
 
-            <label className="flex items-center gap-2 cursor-pointer select-none group">
-              <input
-                type="checkbox"
-                checked={includeLiquidating}
-                onChange={(e) => {
-                  setIncludeLiquidating(e.target.checked);
-                  setCurrentPage(0);
-                }}
-                className="w-4 h-4 rounded bg-[#051329] border-slate-700 text-amber-500 accent-amber-500 cursor-pointer"
-              />
-              <span className="group-hover:text-slate-100 transition-colors">
-                {t.catalog.showLiquidating}
-              </span>
-            </label>
+            {/* Legal Registry Checkboxes */}
+            <div className="flex items-center flex-wrap gap-4 pt-2 md:pt-0 border-t md:border-t-0 border-[#0e274d]">
+              <span className="font-semibold text-slate-400 shrink-0">{t.catalog.legalRegistry}</span>
+
+              <label className="flex items-center gap-2 cursor-pointer select-none group">
+                <input
+                  type="checkbox"
+                  checked={includeInactive}
+                  onChange={(e) => {
+                    setIncludeInactive(e.target.checked);
+                    setCurrentPage(0);
+                  }}
+                  className="w-4 h-4 rounded bg-[#051329] border-slate-700 text-[#044CD0] accent-[#044CD0] cursor-pointer"
+                />
+                <span className="group-hover:text-slate-100 transition-colors">
+                  {t.catalog.showInactive}
+                </span>
+              </label>
+
+              <label className="flex items-center gap-2 cursor-pointer select-none group">
+                <input
+                  type="checkbox"
+                  checked={includeLiquidating}
+                  onChange={(e) => {
+                    setIncludeLiquidating(e.target.checked);
+                    setCurrentPage(0);
+                  }}
+                  className="w-4 h-4 rounded bg-[#051329] border-slate-700 text-amber-500 accent-amber-500 cursor-pointer"
+                />
+                <span className="group-hover:text-slate-100 transition-colors">
+                  {t.catalog.showLiquidating}
+                </span>
+              </label>
+            </div>
           </div>
         )}
       </div>
@@ -413,7 +588,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
       <div className="flex items-center justify-between text-xs text-slate-400 px-1">
         <div>
           {t.catalog.foundCount} <strong className="text-slate-200">{formatNumber(pageInfo.totalElements, 0)}</strong> {t.catalog.subfundsCount}
-          {(selectedClassifications.length > 0 || selectedTypes.length > 0) && (
+          {(selectedClassifications.length > 0 || selectedTypes.length > 0 || selectedCategory !== "ALL") && (
             <span className="ml-1 text-[#60a5fa]">
               ({[
                 selectedClassifications.length > 0
@@ -433,6 +608,9 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   : null,
                 selectedTypes.length > 0
                   ? `${t.catalog.typesTagLabel} ${selectedTypes.join(", ")}`
+                  : null,
+                selectedCategory !== "ALL"
+                  ? `${t.catalog.categoryTagLabel} ${getCategoryLabel(selectedCategory, locale === "en")}`
                   : null,
               ]
                 .filter(Boolean)

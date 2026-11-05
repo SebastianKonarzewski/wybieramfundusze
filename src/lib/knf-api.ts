@@ -503,6 +503,7 @@ export const knfApi = {
     fundTypes?: string[];
     classification?: string;
     classifications?: string[];
+    category?: string;
     includeInactive?: boolean;
     includeLiquidating?: boolean;
     search?: string;
@@ -637,6 +638,15 @@ export const knfApi = {
           }
           return cls.includes(classFilter.toLowerCase()) || cat.includes(classFilter.toLowerCase());
         });
+      });
+    }
+
+    // Filter by specific category if provided
+    if (params?.category && params.category !== "ALL") {
+      const targetCat = params.category.toLowerCase().replace(/\s+/g, " ").trim();
+      filtered = filtered.filter((sf) => {
+        const cat = (sf.category || "").toLowerCase().replace(/\s+/g, " ").trim();
+        return cat.includes(targetCat) || targetCat.includes(cat);
       });
     }
 

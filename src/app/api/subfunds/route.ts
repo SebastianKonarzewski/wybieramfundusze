@@ -20,6 +20,9 @@ export async function GET(request: NextRequest) {
     ? typeParam.split(",").map((s) => s.trim()).filter((s) => s && s !== "ALL")
     : undefined;
 
+  const categoryParam = searchParams.get("category");
+  const category = categoryParam && categoryParam !== "ALL" ? categoryParam : undefined;
+
   const page = parseInt(searchParams.get("page") || "0", 10);
   const size = Math.min(parseInt(searchParams.get("size") || "24", 10), 100);
   const sort = searchParams.get("sort") || "name,asc";
@@ -34,6 +37,7 @@ export async function GET(request: NextRequest) {
         search,
         classifications,
         fundTypes,
+        category,
         page,
         size,
         sort,

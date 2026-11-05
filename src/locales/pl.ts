@@ -95,6 +95,10 @@ export const pl = {
       alternatyw: "Alternatywne",
     },
     advancedFilters: "Filtry zaawansowane",
+    detailedCategory: "Kategoria szczegółowa:",
+    allCategories: "Wszystkie kategorie szczegółowe",
+    clearCategory: "Wyczyść kategorię",
+    activeFiltersCount: "aktywnych",
     legalRegistry: "Rejestr i status prawny:",
     showInactive: "Pokaż wykreślone / nieaktywne",
     showLiquidating: "Pokaż fundusze w likwidacji",
@@ -102,6 +106,7 @@ export const pl = {
     subfundsCount: "subfunduszy",
     classesTagLabel: "klasy:",
     typesTagLabel: "typy:",
+    categoryTagLabel: "kategoria:",
     displayingPage: "Wyświetlanie strony",
     totalItems: "łącznie",
     sort: {
