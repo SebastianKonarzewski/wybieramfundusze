@@ -7,7 +7,7 @@ import { CookieBanner } from "@/components/CookieBanner";
 import { PrivacyModal } from "@/components/PrivacyModal";
 
 export const metadata: Metadata = {
-  title: "Wybieram Fundusze — Porównywarka i Rejestr Funduszy KNF",
+  title: "Wybieram Fundusze — Porównywarka i katalog funduszy inwestycyjnych",
   description:
     "Kompleksowa przeglądarka i porównywarka funduszy inwestycyjnych (FIO, SFIO, FIZ, ETF) oparta o oficjalne publiczne API Urzędu Komisji Nadzoru Finansowego (UKNF).",
   icons: {

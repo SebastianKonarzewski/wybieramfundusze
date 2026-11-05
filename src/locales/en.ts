@@ -46,7 +46,7 @@ export const en: Translations = {
   nav: {
     brandName: "Wybieram",
     brandHighlight: "Fundusze",
-    brandSubtitle: "Polish Investment Funds Explorer & Comparator",
+    brandSubtitle: "Investment Funds Comparator and Catalog",
     catalog: "Fund Catalog",
     comparator: "Comparator",
     tfi: "Fund Managers (TFI)",
@@ -60,7 +60,7 @@ export const en: Translations = {
     portalLanguage: "Portal language:",
   },
   hero: {
-    title: "Investment Funds Registry & Comparison Tool",
+    title: "Investment Funds Comparator and Catalog",
     desc: "An analytical tool based on official UKNF regulatory records. Verify actual ongoing charges from KID documents, SRI risk profiles, and historical valuations across investment funds in Poland.",
     marketDataDate: "Market data as of:",
     grossAssets: "Gross",
