@@ -73,7 +73,7 @@ export const pl = {
     investableProductsDesc: "FIO, SFIO oraz publiczne FIZ (w tym ETF)",
     companies: "Towarzystwa (TFI)",
     companiesDesc: "Licencjonowane przez KNF",
-    educationalNote: "Katalog prezentuje bezpośrednie produkty inwestycyjne posiadające odrębną wycenę jednostki oraz dokument kluczowych informacji (KID). Zestawienie obejmuje subfundusze wydzielone w ramach funduszy parasolowych oraz fundusze bez wydzielonych subfunduszy.",
+    educationalNote: "Katalog prezentuje bezpośrednie produkty inwestycyjne posiadające odrębną wycenę oraz dokument kluczowych informacji (KID). Zestawienie obejmuje subfundusze wydzielone w ramach funduszy parasolowych oraz fundusze bez wydzielonych subfunduszy.",
     marketTrend: "Dynamika aktywów netto (12 mies.):",
     trendRange: "{start} → {end}",
     fullHistoryLink: "Pełna historia rynku",
