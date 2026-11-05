@@ -90,8 +90,8 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
           {/* Card 1: Net Assets in Funds (AUM) */}
           <div className="bg-slate-50/70 dark:bg-[#030a16]/85 border border-slate-200/80 dark:border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl px-4 pt-3.5 pb-3 sm:px-5 sm:pt-4 sm:pb-3.5 transition-all shadow-xs dark:shadow-md group flex flex-col justify-between">
             <div>
-              <div className="flex items-start justify-between gap-1.5 sm:gap-2 mb-1 sm:mb-1.5 min-h-[2rem] sm:min-h-[2.5rem]">
-                <span className="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 leading-snug line-clamp-2">
+              <div className="flex items-start justify-between gap-1.5 sm:gap-2 mb-1 sm:mb-1.5">
+                <span className="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 leading-snug">
                   {t.hero.netAssets}
                 </span>
                 <Coins className="w-4 h-4 sm:w-5 sm:h-5 text-[#044CD0] group-hover:scale-110 transition-transform shrink-0 mt-0.5" />
@@ -108,8 +108,8 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
           {/* Card 2: Investable Products (Subfunds + Standalone Funds) */}
           <div className="bg-slate-50/70 dark:bg-[#030a16]/85 border border-slate-200/80 dark:border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl px-4 pt-3.5 pb-3 sm:px-5 sm:pt-4 sm:pb-3.5 transition-all shadow-xs dark:shadow-md group flex flex-col justify-between">
             <div>
-              <div className="flex items-start justify-between gap-1.5 sm:gap-2 mb-1 sm:mb-1.5 min-h-[2rem] sm:min-h-[2.5rem]">
-                <span className="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 leading-snug line-clamp-2">
+              <div className="flex items-start justify-between gap-1.5 sm:gap-2 mb-1 sm:mb-1.5">
+                <span className="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 leading-snug">
                   {t.hero.investableProducts}
                 </span>
                 <Layers className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform shrink-0 mt-0.5" />
@@ -126,8 +126,8 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
           {/* Card 3: Fund Managers (TFI) */}
           <div className="bg-slate-50/70 dark:bg-[#030a16]/85 border border-slate-200/80 dark:border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl px-4 pt-3.5 pb-3 sm:px-5 sm:pt-4 sm:pb-3.5 transition-all shadow-xs dark:shadow-md group flex flex-col justify-between">
             <div>
-              <div className="flex items-start justify-between gap-1.5 sm:gap-2 mb-1 sm:mb-1.5 min-h-[2rem] sm:min-h-[2.5rem]">
-                <span className="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 leading-snug line-clamp-2">
+              <div className="flex items-start justify-between gap-1.5 sm:gap-2 mb-1 sm:mb-1.5">
+                <span className="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 leading-snug">
                   {t.hero.companies}
                 </span>
                 <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-[#044CD0] group-hover:scale-110 transition-transform shrink-0 mt-0.5" />
