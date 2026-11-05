@@ -730,8 +730,8 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                       {visibleCategoryGroups.map((grp) => (
                         <div key={grp.classId} className="pt-1.5 border-t border-slate-100 dark:border-[#0e274d]/50 first:border-t-0">
                           {/* Group Header - unclickable, highlighted and distinct for eye scanning */}
-                          <div className="px-3 py-1.5 text-[11px] font-bold text-[#044CD0] dark:text-[#60a5fa] uppercase tracking-wider select-none">
-                            ── {locale === "en" ? grp.groupEn : grp.groupPl} ──
+                          <div className="px-3 py-1.5 text-[11px] font-bold text-[#044CD0] dark:text-[#60a5fa] uppercase tracking-wide select-none">
+                            {locale === "en" ? grp.groupEn : grp.groupPl}
                           </div>
 
                           {/* Options under this group */}
