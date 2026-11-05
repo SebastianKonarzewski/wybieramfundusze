@@ -154,21 +154,24 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
   const [currentPage, setCurrentPage] = useState(0);
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
   const [hasUserToggledView, setHasUserToggledView] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   // Set default view: "table" on full desktop (>=1280px), "grid" on mobile, tablet & intermediate (<1280px)
+  // and track mobile viewport for responsive input placeholders
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const updateDefaultView = () => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 640);
       if (!hasUserToggledView) {
         const isFullDesktop = window.innerWidth >= 1280;
         setViewMode(isFullDesktop ? "table" : "grid");
       }
     };
 
-    updateDefaultView();
-    window.addEventListener("resize", updateDefaultView);
-    return () => window.removeEventListener("resize", updateDefaultView);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [hasUserToggledView]);
 
   const handleViewModeChange = (mode: "grid" | "table") => {
@@ -330,7 +333,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input
               type="text"
-              placeholder={t.catalog.searchPlaceholder}
+              placeholder={isMobile ? t.catalog.searchPlaceholderMobile : t.catalog.searchPlaceholder}
               value={searchTerm}
               onChange={(e) => {
                 setSearchTerm(e.target.value);

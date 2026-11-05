@@ -83,6 +83,7 @@ export const en: Translations = {
   },
   catalog: {
     searchPlaceholder: "Search fund by name, category, or code (e.g., Equity, Bonds, ETF, PLSFIO...)...",
+    searchPlaceholderMobile: "Search fund (e.g. Equity, ETF...)...",
     viewModeGrid: "Cards view",
     viewModeTable: "Table view",
     assetClass: "Asset Class:",

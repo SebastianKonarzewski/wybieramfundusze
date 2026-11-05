@@ -81,6 +81,7 @@ export const pl = {
   },
   catalog: {
     searchPlaceholder: "Szukaj funduszu po nazwie, kategorii lub kodzie (np. Akcji, Obligacji, ETF, PLSFIO...)...",
+    searchPlaceholderMobile: "Szukaj funduszu (np. Akcji, ETF...)...",
     viewModeGrid: "Widok kafelków",
     viewModeTable: "Widok tabeli",
     assetClass: "Klasa aktywów:",
