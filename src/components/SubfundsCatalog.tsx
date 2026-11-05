@@ -508,14 +508,14 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
 
         {/* Collapsible Advanced Filters Section */}
         {showAdvancedFilters && (
-          <div className="p-4 rounded-xl bg-[#030a16] border border-[#0e274d] flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs text-slate-300 animate-in fade-in duration-150">
+          <div className="p-4 rounded-xl bg-[#030a16] border border-[#0e274d] flex flex-col xl:flex-row xl:items-center justify-between gap-4 text-xs text-slate-300 animate-in fade-in duration-150">
             {/* Detailed Category Select */}
-            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 min-w-0">
               <label htmlFor="detailed-category-select" className="font-semibold text-slate-400 flex items-center gap-1.5 shrink-0">
                 <Layers className="w-3.5 h-3.5 text-[#3b82f6]" />
                 <span>{t.catalog.detailedCategory}</span>
               </label>
-              <div className="relative flex items-center">
+              <div className="relative flex items-center min-w-0 max-w-full sm:max-w-xs md:max-w-sm">
                 <select
                   id="detailed-category-select"
                   value={selectedCategory}
@@ -523,7 +523,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                     setSelectedCategory(e.target.value);
                     setCurrentPage(0);
                   }}
-                  className="bg-[#051329] border border-[#0e274d] text-slate-200 text-xs rounded-lg pl-3 pr-8 py-1.5 focus:border-[#044CD0] focus:outline-none appearance-none cursor-pointer w-full sm:w-auto"
+                  className="bg-[#051329] border border-[#0e274d] text-slate-200 text-xs rounded-lg pl-3 pr-8 py-1.5 focus:border-[#044CD0] focus:outline-none appearance-none cursor-pointer w-full sm:w-[280px] truncate"
                 >
                   <option value="ALL">{t.catalog.allCategories}</option>
                   {visibleCategoryGroups.map((grp) => (
@@ -553,10 +553,10 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
               )}
             </div>
 
-            <div className="hidden md:block w-px h-6 bg-[#0e274d]" />
+            <div className="hidden xl:block w-px h-6 bg-[#0e274d] shrink-0" />
 
             {/* Legal Registry Checkboxes */}
-            <div className="flex items-center flex-wrap gap-4 pt-2 md:pt-0 border-t md:border-t-0 border-[#0e274d]">
+            <div className="flex items-center flex-wrap gap-4 pt-3 xl:pt-0 border-t xl:border-t-0 border-[#0e274d]">
               <span className="font-semibold text-slate-400 shrink-0">{t.catalog.legalRegistry}</span>
 
               <label className="flex items-center gap-2 cursor-pointer select-none group">
