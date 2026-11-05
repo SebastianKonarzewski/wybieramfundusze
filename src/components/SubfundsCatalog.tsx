@@ -576,23 +576,26 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
               </label>
 
               <div ref={categoryDropdownRef} className="relative min-w-0 w-full sm:w-[380px] md:w-[420px]">
-                {/* Custom Trigger Button */}
-                <button
-                  type="button"
-                  id="detailed-category-select"
-                  aria-labelledby="detailed-category-label"
-                  aria-haspopup="listbox"
-                  aria-expanded={isCategoryOpen}
-                  onClick={() => setIsCategoryOpen((prev) => !prev)}
+                {/* Custom Trigger Container */}
+                <div
                   className={`h-[38px] w-full bg-[#051329] border ${
                     isCategoryOpen
                       ? "border-[#044CD0] ring-1 ring-[#044CD0]/30"
                       : selectedCategories.length > 0
                       ? "border-[#044CD0]/60 bg-[#044CD0]/10"
                       : "border-[#0e274d] hover:border-[#19407a]"
-                  } text-slate-200 font-sans font-medium text-xs sm:text-sm rounded-xl pl-3 pr-2.5 py-1.5 flex items-center justify-between gap-2 transition-all cursor-pointer text-left select-none`}
+                  } text-slate-200 font-sans font-medium text-xs sm:text-sm rounded-xl pl-3 pr-2.5 flex items-center justify-between gap-1 transition-all select-none`}
                 >
-                  <div className="flex items-center gap-1.5 min-w-0 flex-1">
+                  {/* Left Clickable Area: Opens/Closes Dropdown */}
+                  <button
+                    type="button"
+                    id="detailed-category-select"
+                    aria-labelledby="detailed-category-label"
+                    aria-haspopup="listbox"
+                    aria-expanded={isCategoryOpen}
+                    onClick={() => setIsCategoryOpen((prev) => !prev)}
+                    className="flex-1 min-w-0 h-full flex items-center gap-1.5 text-left cursor-pointer focus:outline-none"
+                  >
                     <span className="truncate" title={categoryTriggerTitle}>
                       {selectedCategories.length === 0
                         ? t.catalog.allCategories
@@ -603,46 +606,45 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                         +{selectedCategories.length - 1}
                       </span>
                     )}
-                  </div>
-                  <div className="flex items-center gap-1.5 shrink-0 text-slate-400">
+                  </button>
+
+                  {/* Right Actions Area: Separate Clear Button & Chevron */}
+                  <div className="flex items-center gap-1 shrink-0 text-slate-400">
                     {selectedCategories.length > 0 && (
                       <>
-                        <span
-                          role="button"
-                          tabIndex={0}
+                        <button
+                          type="button"
                           onClick={(e) => {
+                            e.preventDefault();
                             e.stopPropagation();
                             setSelectedCategories([]);
                             setCurrentPage(0);
-                          }}
-                          onTouchEnd={(e) => {
-                            e.stopPropagation();
-                            setSelectedCategories([]);
-                            setCurrentPage(0);
-                          }}
-                          onKeyDown={(e) => {
-                            if (e.key === "Enter" || e.key === " ") {
-                              e.stopPropagation();
-                              setSelectedCategories([]);
-                              setCurrentPage(0);
-                            }
+                            setIsCategoryOpen(false);
                           }}
                           title={t.catalog.clearCategory}
-                          className="p-1 hover:text-white hover:bg-slate-700/60 active:bg-slate-600 rounded-lg transition-colors cursor-pointer flex items-center justify-center"
+                          className="p-1 hover:text-white hover:bg-slate-700/60 active:bg-slate-600 rounded-lg transition-colors cursor-pointer flex items-center justify-center focus:outline-none"
                           aria-label={t.catalog.clearCategory}
                         >
                           <X className="w-3.5 h-3.5" />
-                        </span>
+                        </button>
                         <div className="w-px h-3.5 bg-[#0e274d]" />
                       </>
                     )}
-                    <ChevronDown
-                      className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                        isCategoryOpen ? "rotate-180 text-blue-400" : ""
-                      }`}
-                    />
+                    <button
+                      type="button"
+                      tabIndex={-1}
+                      aria-hidden="true"
+                      onClick={() => setIsCategoryOpen((prev) => !prev)}
+                      className="p-1 hover:text-slate-200 cursor-pointer flex items-center justify-center focus:outline-none"
+                    >
+                      <ChevronDown
+                        className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                          isCategoryOpen ? "rotate-180 text-blue-400" : ""
+                        }`}
+                      />
+                    </button>
                   </div>
-                </button>
+                </div>
 
                 {/* Dropdown Menu Popover */}
                 {isCategoryOpen && (
