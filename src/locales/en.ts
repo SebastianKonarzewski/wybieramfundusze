@@ -87,7 +87,7 @@ export const en: Translations = {
     viewModeTable: "Table view",
     assetClass: "Asset Class:",
     legalType: "Legal Type:",
-    allTypes: "All Types",
+    allTypes: "All",
     classes: {
       ALL: "All",
       akcji: "Equity",

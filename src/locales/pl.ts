@@ -85,7 +85,7 @@ export const pl = {
     viewModeTable: "Widok tabeli",
     assetClass: "Klasa aktywów:",
     legalType: "Typ prawny:",
-    allTypes: "Wszystkie typy",
+    allTypes: "Wszystkie",
     classes: {
       ALL: "Wszystkie",
       akcji: "Akcyjne",
