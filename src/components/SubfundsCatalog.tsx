@@ -57,7 +57,7 @@ const CATEGORY_GROUPS: CategoryGroup[] = [
   },
   {
     classId: "dłużn",
-    groupPl: "Fundusze dłużne (obligacji)",
+    groupPl: "Fundusze dłużne",
     groupEn: "Bond & fixed income funds",
     options: [
       { id: "obligacji skarbowych", labelPl: "Obligacji skarbowych", labelEn: "Treasury / government bonds" },
@@ -83,8 +83,8 @@ const CATEGORY_GROUPS: CategoryGroup[] = [
     groupEn: "Alternative & commodity funds",
     options: [
       { id: "rynku surowców", labelPl: "Rynku surowców i metali szlachetnych", labelEn: "Commodities & precious metals" },
-      { id: "absolutnej stopy zwrotu", labelPl: "Absolutnej stopy zwrotu (Absolute Return)", labelEn: "Absolute return" },
-      { id: "aktywów niepublicznych", labelPl: "Aktywów niepublicznych (Private Equity)", labelEn: "Private assets / PE" },
+      { id: "absolutnej stopy zwrotu", labelPl: "Absolutnej stopy zwrotu", labelEn: "Absolute return" },
+      { id: "aktywów niepublicznych", labelPl: "Aktywów niepublicznych", labelEn: "Private assets / PE" },
       { id: "sekurytyzacyjne", labelPl: "Sekurytyzacyjne", labelEn: "Securitization" },
       { id: "nieruchomościowe", labelPl: "Nieruchomościowe", labelEn: "Real estate" },
     ],
@@ -575,7 +575,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                 <span>{t.catalog.detailedCategory}</span>
               </label>
 
-              <div ref={categoryDropdownRef} className="relative min-w-0 w-full sm:w-[280px]">
+              <div ref={categoryDropdownRef} className="relative min-w-0 w-full sm:w-[320px] md:w-[360px]">
                 {/* Custom Trigger Button */}
                 <button
                   type="button"
@@ -606,27 +606,35 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   </div>
                   <div className="flex items-center gap-1.5 shrink-0 text-slate-400">
                     {selectedCategories.length > 0 && (
-                      <span
-                        role="button"
-                        tabIndex={0}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedCategories([]);
-                          setCurrentPage(0);
-                        }}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter" || e.key === " ") {
+                      <>
+                        <span
+                          role="button"
+                          tabIndex={0}
+                          onClick={(e) => {
                             e.stopPropagation();
                             setSelectedCategories([]);
                             setCurrentPage(0);
-                          }
-                        }}
-                        title={t.catalog.clearCategory}
-                        className="p-0.5 hover:text-white hover:bg-slate-700/60 rounded transition-colors cursor-pointer"
-                        aria-label={t.catalog.clearCategory}
-                      >
-                        <X className="w-3.5 h-3.5" />
-                      </span>
+                          }}
+                          onTouchEnd={(e) => {
+                            e.stopPropagation();
+                            setSelectedCategories([]);
+                            setCurrentPage(0);
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                              e.stopPropagation();
+                              setSelectedCategories([]);
+                              setCurrentPage(0);
+                            }
+                          }}
+                          title={t.catalog.clearCategory}
+                          className="p-1 hover:text-white hover:bg-slate-700/60 active:bg-slate-600 rounded-lg transition-colors cursor-pointer flex items-center justify-center"
+                          aria-label={t.catalog.clearCategory}
+                        >
+                          <X className="w-3.5 h-3.5" />
+                        </span>
+                        <div className="w-px h-3.5 bg-[#0e274d]" />
+                      </>
                     )}
                     <ChevronDown
                       className={`w-3.5 h-3.5 transition-transform duration-200 ${
@@ -642,7 +650,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                     role="listbox"
                     aria-labelledby="detailed-category-label"
                     aria-multiselectable="true"
-                    className="absolute top-full left-0 mt-1.5 w-full sm:w-[340px] max-h-80 overflow-y-auto bg-[#030c1c] border border-[#0e274d] rounded-xl shadow-2xl z-50 p-1.5 space-y-1 animate-in fade-in zoom-in-95 duration-100"
+                    className="absolute top-full left-0 mt-1.5 w-full sm:w-[360px] max-h-80 overflow-y-auto bg-[#030c1c] border border-[#0e274d] rounded-xl shadow-2xl z-50 p-1.5 space-y-1 animate-in fade-in zoom-in-95 duration-100"
                   >
                     {/* Option: All categories (resets multi-selection) */}
                     <button
@@ -756,25 +764,6 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   </div>
                 )}
               </div>
-
-              {/* Explicit Clear Button next to input */}
-              {selectedCategories.length > 0 && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSelectedCategories([]);
-                    setCurrentPage(0);
-                  }}
-                  title={t.catalog.clearCategory}
-                  className="h-[38px] inline-flex items-center gap-1.5 text-xs font-medium text-slate-300 hover:text-white px-3 rounded-xl bg-[#0e274d] hover:bg-slate-700 transition-colors cursor-pointer shrink-0"
-                >
-                  <X className="w-3.5 h-3.5" />
-                  <span>
-                    {t.common.clear}
-                    {selectedCategories.length > 1 ? ` (${selectedCategories.length})` : ""}
-                  </span>
-                </button>
-              )}
             </div>
 
             <div className="hidden xl:block w-px h-6 bg-[#0e274d] shrink-0" />
