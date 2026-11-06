@@ -111,6 +111,8 @@ export const pl = {
     classesTagLabel: "klasy:",
     typesTagLabel: "typy:",
     categoryTagLabel: "kategoria:",
+    horizontalScrollHint: "Przesuń tabelę w bok, aby zobaczyć wszystkie kolumny (SRI, opłata, wycena)",
+    backToTop: "Wróć na górę",
     displayingPage: "Wyświetlanie strony",
     totalItems: "łącznie",
     sort: {
@@ -213,6 +215,8 @@ export const pl = {
     addToPortfolio: "Dodaj do portfela",
     removeFromPortfolio: "Usuń z portfela",
     inPortfolio: "W portfelu",
+    toastAdded: "Dodano do Twojego portfela",
+    goToPortfolio: "Przejdź do portfela",
     summaryTitle: "Symulacja portfela",
     summarySubtitle: "Wybrano {count} funduszy. Skonfiguruj wagi, daty i zbadaj wyniki.",
     emptyTitle: "Twój portfel jest pusty",

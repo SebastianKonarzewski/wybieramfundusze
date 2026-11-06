@@ -113,6 +113,8 @@ export const en: Translations = {
     classesTagLabel: "classes:",
     typesTagLabel: "types:",
     categoryTagLabel: "category:",
+    horizontalScrollHint: "Scroll horizontally to view all columns (SRI, fee, NAV)",
+    backToTop: "Back to top",
     displayingPage: "Showing page",
     totalItems: "total",
     sort: {
@@ -215,6 +217,8 @@ export const en: Translations = {
     addToPortfolio: "Add to portfolio",
     removeFromPortfolio: "Remove from portfolio",
     inPortfolio: "In portfolio",
+    toastAdded: "Added to your portfolio",
+    goToPortfolio: "Go to portfolio",
     summaryTitle: "Portfolio Simulation",
     summarySubtitle: "{count} funds selected. Configure weights, dates, and explore performance.",
     emptyTitle: "Your portfolio is empty",

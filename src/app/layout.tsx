@@ -5,6 +5,8 @@ import { LocaleProvider } from "@/lib/i18n";
 import { AccessibilityProvider } from "@/lib/accessibility";
 import { CompareProvider } from "@/components/CompareContext";
 import { PortfolioProvider } from "@/components/PortfolioContext";
+import { PortfolioToast } from "@/components/PortfolioToast";
+import { BackToTop } from "@/components/BackToTop";
 import { CookieBanner } from "@/components/CookieBanner";
 import { PrivacyModal } from "@/components/PrivacyModal";
 
@@ -41,6 +43,8 @@ export default function RootLayout({
               <CompareProvider>
                 <PortfolioProvider>
                   {children}
+                  <PortfolioToast />
+                  <BackToTop />
                   <CookieBanner />
                   <PrivacyModal />
                 </PortfolioProvider>

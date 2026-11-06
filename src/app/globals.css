@@ -1452,3 +1452,27 @@ html.high-contrast :focus-visible {
   top: 0;
   outline: 3px solid #facc15;
 }
+
+/* High Contrast: Portfolio Toast & Back to Top */
+html.high-contrast [role="status"] > div {
+  background-color: #000000 !important;
+  border: 2px solid #ffff00 !important;
+  color: #ffff00 !important;
+}
+
+html.high-contrast [role="status"] span,
+html.high-contrast [role="status"] div,
+html.high-contrast [role="status"] svg {
+  color: #ffff00 !important;
+}
+
+html.high-contrast [role="status"] a {
+  background-color: #000000 !important;
+  border: 2px solid #ffff00 !important;
+  color: #ffff00 !important;
+}
+
+html.high-contrast [role="status"] a:hover {
+  background-color: #ffff00 !important;
+  color: #000000 !important;
+}

@@ -127,9 +127,14 @@ interface SubfundsCatalogProps {
     totalPages: number;
     number: number;
   };
+  initialSearch?: string;
 }
 
-export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogProps) {
+export function SubfundsCatalog({
+  initialItems,
+  initialPage,
+  initialSearch = "",
+}: SubfundsCatalogProps) {
   const { toggleFund, isSelected } = useCompare();
   const { toggleFund: togglePortfolioFund, isInPortfolio } = usePortfolio();
   const { t, locale, formatCurrency, formatPercent, formatDate, formatNumber } = useTranslation();
@@ -139,7 +144,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
   const [isPending, startTransition] = useTransition();
 
   // Filters state
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(initialSearch);
   const [includeInactive, setIncludeInactive] = useState(false);
   const [includeLiquidating, setIncludeLiquidating] = useState(false);
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
@@ -150,12 +155,23 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const categoryDropdownRef = useRef<HTMLDivElement>(null);
+  const resultsTopRef = useRef<HTMLDivElement>(null);
   const [sortField, setSortField] = useState<"name" | "fee" | "risk" | "valuation">("name");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [currentPage, setCurrentPage] = useState(0);
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
   const [hasUserToggledView, setHasUserToggledView] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+
+  // Sync if initialSearch prop changes (e.g. from TFI deep link navigation)
+  useEffect(() => {
+    if (initialSearch) {
+      startTransition(() => {
+        setSearchTerm(initialSearch);
+        setCurrentPage(0);
+      });
+    }
+  }, [initialSearch]);
 
   // Set default view: "table" on full desktop (>=1280px), "grid" on mobile, tablet & intermediate (<1280px)
   // and track mobile viewport for responsive input placeholders
@@ -373,6 +389,15 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
     if (field && order) {
       setSortField(field);
       setSortOrder(order);
+    }
+  };
+
+  // Handle page change with smooth scroll to results header
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+    if (resultsTopRef.current) {
+      const topOffset = resultsTopRef.current.getBoundingClientRect().top + window.scrollY - 100;
+      window.scrollTo({ top: Math.max(0, topOffset), behavior: "smooth" });
     }
   };
 
@@ -810,159 +835,214 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
       </div>
 
       {/* Results Header & Presentation Controls */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs sm:text-sm text-slate-500 dark:text-slate-400 px-1">
-        {/* Left: Results Count, Page Info, Active Tags & Filtering Status */}
-        <div className="flex items-center flex-wrap gap-x-2 gap-y-1.5">
-          <span>
-            {t.catalog.foundCount}{" "}
-            <strong className="text-slate-900 dark:text-slate-100 font-semibold">
-              {formatNumber(pageInfo.totalElements, 0)}
-            </strong>{" "}
-            {t.catalog.subfundsCount}
-          </span>
-          <span className="text-slate-300 dark:text-slate-700 hidden sm:inline">•</span>
-          <span className="text-slate-500 dark:text-slate-400 hidden sm:inline">
-            {t.common.page}{" "}
-            <strong className="text-slate-800 dark:text-slate-200 font-medium">
-              {pageInfo.number + 1}
-            </strong>{" "}
-            {t.common.of}{" "}
-            <strong className="text-slate-800 dark:text-slate-200 font-medium">
-              {Math.max(1, pageInfo.totalPages)}
-            </strong>
-          </span>
-          {(selectedClassifications.length > 0 ||
-            selectedTypes.length > 0 ||
-            selectedCategories.length > 0) && (
-            <span className="text-[#044CD0] dark:text-[#60a5fa] font-medium">
-              ({[
-                selectedClassifications.length > 0
-                  ? `${t.catalog.classesTagLabel} ${selectedClassifications
-                      .map((c) =>
-                        c === "akcji"
-                          ? t.catalog.classes.akcji
-                          : c === "dłużn"
-                          ? t.catalog.classes.dłużn
-                          : c === "mieszan"
-                          ? t.catalog.classes.mieszan
-                          : c === "PPK"
-                          ? t.catalog.classes.PPK
-                          : t.catalog.classes.alternatyw
-                      )
-                      .join(", ")}`
-                  : null,
-                selectedTypes.length > 0
-                  ? `${t.catalog.typesTagLabel} ${selectedTypes.join(", ")}`
-                  : null,
-                selectedCategories.length > 0
-                  ? `${
-                      selectedCategories.length > 1
-                        ? locale === "en"
-                          ? "categories:"
-                          : "kategorie:"
-                        : t.catalog.categoryTagLabel
-                    } ${selectedCategories
-                      .map((c) => getCategoryLabel(c, locale === "en"))
-                      .join(", ")}`
-                  : null,
-              ]
-                .filter(Boolean)
-                .join(" • ")})
+      <div ref={resultsTopRef} className="space-y-2.5 px-1 scroll-mt-24">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+          {/* Left: Results Count, Page Info & Filtering Status */}
+          <div className="flex items-center flex-wrap gap-x-2 gap-y-1">
+            <span>
+              {t.catalog.foundCount}{" "}
+              <strong className="text-slate-900 dark:text-slate-100 font-semibold">
+                {formatNumber(pageInfo.totalElements, 0)}
+              </strong>{" "}
+              {t.catalog.subfundsCount}
             </span>
-          )}
-          {hasAnyActiveFilters && (
+            <span className="text-slate-300 dark:text-slate-700 hidden sm:inline">•</span>
+            <span className="text-slate-500 dark:text-slate-400 hidden sm:inline">
+              {t.common.page}{" "}
+              <strong className="text-slate-800 dark:text-slate-200 font-medium">
+                {pageInfo.number + 1}
+              </strong>{" "}
+              {t.common.of}{" "}
+              <strong className="text-slate-800 dark:text-slate-200 font-medium">
+                {Math.max(1, pageInfo.totalPages)}
+              </strong>
+            </span>
+            {isPending && (
+              <span className="inline-flex items-center gap-1 text-[#3b82f6]">
+                <RefreshCw className="w-3 h-3 animate-spin" /> {t.common.filtering}
+              </span>
+            )}
+          </div>
+
+          {/* Right: Integrated Sort Dropdown & View Mode Switcher */}
+          <div className="flex items-center justify-between md:justify-end gap-2.5 shrink-0">
+            {/* Integrated Sort Dropdown */}
+            <div className="h-[38px] flex items-center gap-1.5 bg-white dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-[#044CD0]/60 px-2.5 sm:px-3 rounded-xl text-xs sm:text-sm transition-colors shadow-2xs">
+              <ArrowUpDown className="w-3.5 h-3.5 text-[#044CD0] shrink-0" />
+              <label
+                htmlFor="catalog-sort-select"
+                className="text-slate-500 dark:text-slate-400 font-medium hidden sm:inline select-none shrink-0"
+              >
+                {t.catalog.sort.label}:
+              </label>
+              <select
+                id="catalog-sort-select"
+                value={`${sortField}_${sortOrder}`}
+                onChange={(e) => handleCombinedSortChange(e.target.value)}
+                aria-label={t.catalog.sort.label}
+                className="bg-transparent text-slate-800 dark:text-slate-200 font-sans font-medium text-xs sm:text-sm focus:outline-hidden cursor-pointer pr-1"
+              >
+                <option value="name_asc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
+                  {t.catalog.sort.nameAsc}
+                </option>
+                <option value="name_desc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
+                  {t.catalog.sort.nameDesc}
+                </option>
+                <option value="fee_asc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
+                  {t.catalog.sort.feeAsc}
+                </option>
+                <option value="fee_desc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
+                  {t.catalog.sort.feeDesc}
+                </option>
+                <option value="risk_asc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
+                  {t.catalog.sort.riskAsc}
+                </option>
+                <option value="risk_desc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
+                  {t.catalog.sort.riskDesc}
+                </option>
+                <option value="valuation_desc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
+                  {t.catalog.sort.valuationDesc}
+                </option>
+                <option value="valuation_asc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
+                  {t.catalog.sort.valuationAsc}
+                </option>
+              </select>
+            </div>
+
+            {/* View Mode Toggle */}
+            <div className="flex items-center bg-white dark:bg-[#030a16] p-1 rounded-xl border border-slate-300 dark:border-[#0e274d] shrink-0 shadow-2xs">
+              <button
+                onClick={() => handleViewModeChange("grid")}
+                aria-pressed={viewMode === "grid"}
+                className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
+                  viewMode === "grid"
+                    ? "bg-[#044CD0] text-white shadow-xs"
+                    : "text-slate-500 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#071938]"
+                }`}
+                title={t.catalog.viewModeGrid}
+                aria-label={t.catalog.viewModeGrid}
+              >
+                <LayoutGrid className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => handleViewModeChange("table")}
+                aria-pressed={viewMode === "table"}
+                className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
+                  viewMode === "table"
+                    ? "bg-[#044CD0] text-white shadow-xs"
+                    : "text-slate-500 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#071938]"
+                }`}
+                title={t.catalog.viewModeTable}
+                aria-label={t.catalog.viewModeTable}
+              >
+                <TableIcon className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Active Filter Chips (one-click dismissible tags) */}
+        {hasAnyActiveFilters && (
+          <div className="flex items-center flex-wrap gap-1.5 pt-1">
+            {/* Classification chips */}
+            {selectedClassifications.map((clsId) => {
+              const label =
+                clsId === "akcji"
+                  ? t.catalog.classes.akcji
+                  : clsId === "dłużn"
+                  ? t.catalog.classes.dłużn
+                  : clsId === "mieszan"
+                  ? t.catalog.classes.mieszan
+                  : clsId === "PPK"
+                  ? t.catalog.classes.PPK
+                  : t.catalog.classes.alternatyw;
+              return (
+                <button
+                  key={clsId}
+                  type="button"
+                  onClick={() => toggleClassification(clsId)}
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-300 border border-blue-200 dark:border-[#044CD0]/40 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
+                  title={`Usuń: ${label}`}
+                >
+                  <span>{label}</span>
+                  <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
+                </button>
+              );
+            })}
+
+            {/* Legal Type chips */}
+            {selectedTypes.map((type) => (
+              <button
+                key={type}
+                type="button"
+                onClick={() => toggleType(type)}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-300 border border-blue-200 dark:border-[#044CD0]/40 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
+                title={`Usuń: ${type}`}
+              >
+                <span>{type}</span>
+                <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
+              </button>
+            ))}
+
+            {/* Category chips */}
+            {selectedCategories.map((catId) => (
+              <button
+                key={catId}
+                type="button"
+                onClick={() => toggleCategory(catId)}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-300 border border-blue-200 dark:border-[#044CD0]/40 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
+                title={`Usuń: ${getCategoryLabel(catId, locale === "en")}`}
+              >
+                <span className="truncate max-w-[140px] sm:max-w-[200px]">
+                  {getCategoryLabel(catId, locale === "en")}
+                </span>
+                <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
+              </button>
+            ))}
+
+            {/* Inactive & Liquidating chips */}
+            {includeInactive && (
+              <button
+                type="button"
+                onClick={() => {
+                  setIncludeInactive(false);
+                  setCurrentPage(0);
+                }}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
+                title={`Usuń: ${t.catalog.showInactive}`}
+              >
+                <span>{t.catalog.showInactive}</span>
+                <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
+              </button>
+            )}
+
+            {includeLiquidating && (
+              <button
+                type="button"
+                onClick={() => {
+                  setIncludeLiquidating(false);
+                  setCurrentPage(0);
+                }}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-amber-50 dark:bg-amber-950/30 text-amber-700 dark:text-amber-300 border border-amber-300 dark:border-amber-800 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
+                title={`Usuń: ${t.catalog.showLiquidating}`}
+              >
+                <span>{t.catalog.showLiquidating}</span>
+                <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
+              </button>
+            )}
+
+            {/* Reset All Filters button */}
             <button
               type="button"
               onClick={resetAllFilters}
-              className="inline-flex items-center gap-1 text-xs text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 font-medium hover:underline cursor-pointer select-none"
+              className="inline-flex items-center gap-1 text-xs text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 font-semibold hover:underline cursor-pointer ml-1 select-none py-1 px-1.5"
               title={t.catalog.clearAllFilters}
             >
               <RotateCcw className="w-3 h-3" />
               <span>{t.catalog.clearAllFilters}</span>
             </button>
-          )}
-          {isPending && (
-            <span className="inline-flex items-center gap-1 text-[#3b82f6]">
-              <RefreshCw className="w-3 h-3 animate-spin" /> {t.common.filtering}
-            </span>
-          )}
-        </div>
-
-        {/* Right: Integrated Sort Dropdown & View Mode Switcher */}
-        <div className="flex items-center justify-between md:justify-end gap-2.5 shrink-0">
-          {/* Integrated Sort Dropdown */}
-          <div className="h-[38px] flex items-center gap-1.5 bg-white dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-[#044CD0]/60 px-2.5 sm:px-3 rounded-xl text-xs sm:text-sm transition-colors shadow-2xs">
-            <ArrowUpDown className="w-3.5 h-3.5 text-[#044CD0] shrink-0" />
-            <label
-              htmlFor="catalog-sort-select"
-              className="text-slate-500 dark:text-slate-400 font-medium hidden sm:inline select-none shrink-0"
-            >
-              {t.catalog.sort.label}:
-            </label>
-            <select
-              id="catalog-sort-select"
-              value={`${sortField}_${sortOrder}`}
-              onChange={(e) => handleCombinedSortChange(e.target.value)}
-              aria-label={t.catalog.sort.label}
-              className="bg-transparent text-slate-800 dark:text-slate-200 font-sans font-medium text-xs sm:text-sm focus:outline-hidden cursor-pointer pr-1"
-            >
-              <option value="name_asc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
-                {t.catalog.sort.nameAsc}
-              </option>
-              <option value="name_desc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
-                {t.catalog.sort.nameDesc}
-              </option>
-              <option value="fee_asc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
-                {t.catalog.sort.feeAsc}
-              </option>
-              <option value="fee_desc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
-                {t.catalog.sort.feeDesc}
-              </option>
-              <option value="risk_asc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
-                {t.catalog.sort.riskAsc}
-              </option>
-              <option value="risk_desc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
-                {t.catalog.sort.riskDesc}
-              </option>
-              <option value="valuation_desc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
-                {t.catalog.sort.valuationDesc}
-              </option>
-              <option value="valuation_asc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
-                {t.catalog.sort.valuationAsc}
-              </option>
-            </select>
           </div>
-
-          {/* View Mode Toggle */}
-          <div className="flex items-center bg-white dark:bg-[#030a16] p-1 rounded-xl border border-slate-300 dark:border-[#0e274d] shrink-0 shadow-2xs">
-            <button
-              onClick={() => handleViewModeChange("grid")}
-              aria-pressed={viewMode === "grid"}
-              className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
-                viewMode === "grid"
-                  ? "bg-[#044CD0] text-white shadow-xs"
-                  : "text-slate-500 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#071938]"
-              }`}
-              title={t.catalog.viewModeGrid}
-              aria-label={t.catalog.viewModeGrid}
-            >
-              <LayoutGrid className="w-4 h-4" />
-            </button>
-            <button
-              onClick={() => handleViewModeChange("table")}
-              aria-pressed={viewMode === "table"}
-              className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
-                viewMode === "table"
-                  ? "bg-[#044CD0] text-white shadow-xs"
-                  : "text-slate-500 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#071938]"
-              }`}
-              title={t.catalog.viewModeTable}
-              aria-label={t.catalog.viewModeTable}
-            >
-              <TableIcon className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
+        )}
       </div>
 
       {/* View Mode: Empty State / Cards Grid / Interactive Table */}
@@ -1125,7 +1205,14 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
         </div>
       ) : (
         /* View Mode: Interactive Table with Clickable Column Headers */
-        <div className="catalog-table-container bg-white dark:bg-[#051329] border border-slate-200 dark:border-[#0e274d] rounded-2xl overflow-hidden shadow-sm dark:shadow-xl">
+        <div className="catalog-table-container relative bg-white dark:bg-[#051329] border border-slate-200 dark:border-[#0e274d] rounded-2xl overflow-hidden shadow-sm dark:shadow-xl">
+          {/* Mobile horizontal scroll hint */}
+          <div className="md:hidden px-3.5 py-2 bg-slate-50 dark:bg-[#030a16] border-b border-slate-200 dark:border-[#0e274d] flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 select-none">
+            <span className="flex items-center gap-1.5">
+              <span className="font-bold text-[#044CD0] dark:text-[#60a5fa]">↔</span>
+              <span>{t.catalog.horizontalScrollHint}</span>
+            </span>
+          </div>
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm min-w-[720px] border-collapse bg-transparent">
               <thead className="bg-slate-50 dark:bg-[#030a16] text-xs uppercase tracking-wider text-slate-600 dark:text-slate-400 border-b border-slate-200 dark:border-[#0e274d]">
@@ -1320,7 +1407,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
 
         <div className="flex items-center gap-2">
           <button
-            onClick={() => setCurrentPage((p) => Math.max(0, p - 1))}
+            onClick={() => handlePageChange(Math.max(0, pageInfo.number - 1))}
             disabled={pageInfo.number === 0 || isPending}
             className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-white dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] text-slate-700 dark:text-slate-300 hover:bg-blue-50/70 dark:hover:bg-[#071938] hover:text-[#044CD0] dark:hover:text-white hover:border-[#044CD0] dark:hover:border-[#044CD0]/60 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-2xs cursor-pointer"
           >
@@ -1333,7 +1420,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
           </span>
 
           <button
-            onClick={() => setCurrentPage((p) => p + 1)}
+            onClick={() => handlePageChange(pageInfo.number + 1)}
             disabled={pageInfo.number + 1 >= pageInfo.totalPages || isPending}
             className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-white dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] text-slate-700 dark:text-slate-300 hover:bg-blue-50/70 dark:hover:bg-[#071938] hover:text-[#044CD0] dark:hover:text-white hover:border-[#044CD0] dark:hover:border-[#044CD0]/60 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-2xs cursor-pointer"
           >

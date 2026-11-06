@@ -8,10 +8,21 @@ import { knfApi } from "@/lib/knf-api";
 
 export const dynamic = "force-dynamic";
 
-export default async function HomePage() {
+export default async function HomePage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ search?: string }>;
+}) {
+  const resolvedParams = await searchParams;
+  const initialSearch = typeof resolvedParams?.search === "string" ? resolvedParams.search : "";
+
   const [stats, initialSubfunds] = await Promise.all([
     knfApi.getMarketStats(),
-    knfApi.getEnrichedSubfunds({ size: 24, sort: "name,asc" }),
+    knfApi.getEnrichedSubfunds({
+      size: 24,
+      sort: "name,asc",
+      search: initialSearch || undefined,
+    }),
   ]);
 
   return (
@@ -26,6 +37,7 @@ export default async function HomePage() {
         <SubfundsCatalog
           initialItems={initialSubfunds.items}
           initialPage={initialSubfunds.page}
+          initialSearch={initialSearch}
         />
       </main>
 

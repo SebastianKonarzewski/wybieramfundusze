@@ -12,6 +12,8 @@ export interface PortfolioFund {
 
 interface PortfolioContextType {
   portfolioFunds: PortfolioFund[];
+  lastAddedFund: PortfolioFund | null;
+  clearLastAddedFund: () => void;
   addFund: (fund: PortfolioFund) => void;
   removeFund: (subfundId: number) => void;
   toggleFund: (fund: PortfolioFund) => void;
@@ -28,6 +30,7 @@ const MAX_PORTFOLIO_FUNDS = 15;
 
 export function PortfolioProvider({ children }: { children: React.ReactNode }) {
   const [portfolioFunds, setPortfolioFunds] = useState<PortfolioFund[]>([]);
+  const [lastAddedFund, setLastAddedFund] = useState<PortfolioFund | null>(null);
 
   // Load saved portfolio from localStorage on mount
   useEffect(() => {
@@ -72,10 +75,14 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
         { ...fund, allocation: equalWeight },
       ];
       saveFunds(updated);
+      setLastAddedFund(fund);
     }
   };
 
   const removeFund = (subfundId: number) => {
+    if (lastAddedFund?.subfundId === subfundId) {
+      setLastAddedFund(null);
+    }
     const remaining = portfolioFunds.filter((f) => f.subfundId !== subfundId);
     if (remaining.length > 0) {
       const equalWeight = Math.round((100 / remaining.length) * 10) / 10;
@@ -112,6 +119,11 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
 
   const clearPortfolio = () => {
     saveFunds([]);
+    setLastAddedFund(null);
+  };
+
+  const clearLastAddedFund = () => {
+    setLastAddedFund(null);
   };
 
   const isInPortfolio = (subfundId: number) => {
@@ -122,6 +134,8 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
     <PortfolioContext.Provider
       value={{
         portfolioFunds,
+        lastAddedFund,
+        clearLastAddedFund,
         addFund,
         removeFund,
         toggleFund,
