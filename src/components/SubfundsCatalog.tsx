@@ -364,6 +364,18 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
     }
   };
 
+  // Handle combined sort dropdown change
+  const handleCombinedSortChange = (combinedValue: string) => {
+    const [field, order] = combinedValue.split("_") as [
+      "name" | "fee" | "risk" | "valuation",
+      "asc" | "desc"
+    ];
+    if (field && order) {
+      setSortField(field);
+      setSortOrder(order);
+    }
+  };
+
   // Custom sort for enriched columns on the fetched page
   const processedItems = useMemo(() => {
     const result = [...items];
@@ -404,93 +416,32 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
     <div className="space-y-6">
       {/* Search & Filter Toolbar */}
       <div className="bg-white dark:bg-[#051329] border border-slate-200 dark:border-[#0e274d] rounded-2xl p-4 sm:p-6 shadow-sm dark:shadow-xl space-y-4">
-        {/* Top line: Search input & View mode toggle & Sort select */}
-        <div className="flex flex-col lg:flex-row gap-3 items-stretch lg:items-center justify-between">
-          <div className="relative flex-1">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-            <input
-              type="text"
-              placeholder={isMobile ? t.catalog.searchPlaceholderMobile : t.catalog.searchPlaceholder}
-              value={searchTerm}
-              onChange={(e) => {
-                setSearchTerm(e.target.value);
+        {/* Search input (full width) */}
+        <div className="relative w-full">
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <input
+            type="text"
+            placeholder={isMobile ? t.catalog.searchPlaceholderMobile : t.catalog.searchPlaceholder}
+            value={searchTerm}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              setCurrentPage(0);
+            }}
+            className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-50 dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-hidden focus:border-[#044CD0] focus:ring-2 focus:ring-[#044CD0]/15 transition-all"
+          />
+          {searchTerm && (
+            <button
+              type="button"
+              onClick={() => {
+                setSearchTerm("");
                 setCurrentPage(0);
               }}
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-hidden focus:border-[#044CD0] focus:ring-2 focus:ring-[#044CD0]/15 transition-all"
-            />
-          </div>
-
-          <div className="flex items-center gap-2 justify-between sm:justify-end">
-            {/* View Mode Toggle */}
-            <div className="flex items-center bg-slate-50 dark:bg-[#030a16] p-1 rounded-xl border border-slate-300 dark:border-[#0e274d] shrink-0">
-              <button
-                onClick={() => handleViewModeChange("grid")}
-                aria-pressed={viewMode === "grid"}
-                className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
-                  viewMode === "grid"
-                    ? "bg-[#044CD0] text-white shadow-xs"
-                    : "text-slate-500 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-slate-200 hover:bg-white dark:hover:bg-[#071938]"
-                }`}
-                title={t.catalog.viewModeGrid}
-                aria-label={t.catalog.viewModeGrid}
-              >
-                <LayoutGrid className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => handleViewModeChange("table")}
-                aria-pressed={viewMode === "table"}
-                className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
-                  viewMode === "table"
-                    ? "bg-[#044CD0] text-white shadow-xs"
-                    : "text-slate-500 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-slate-200 hover:bg-white dark:hover:bg-[#071938]"
-                }`}
-                title={t.catalog.viewModeTable}
-                aria-label={t.catalog.viewModeTable}
-              >
-                <TableIcon className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Sort Controls: Field Dropdown + 1-Click Direction Toggle */}
-            <div className="flex items-center gap-1.5 flex-1 sm:flex-initial min-w-0">
-              {/* Field Select */}
-              <div className="h-[38px] flex-1 sm:flex-initial flex items-center gap-1.5 bg-slate-50 dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] hover:border-slate-400 dark:hover:border-slate-600 px-2.5 sm:px-3 rounded-xl text-xs sm:text-sm min-w-0 transition-colors">
-                <ArrowUpDown className="w-3.5 h-3.5 text-[#044CD0] shrink-0" />
-                <select
-                  value={sortField}
-                  onChange={(e) => setSortField(e.target.value as "name" | "fee" | "risk" | "valuation")}
-                  aria-label={t.catalog.sort.field}
-                  className="bg-transparent text-slate-800 dark:text-slate-200 font-sans font-medium text-xs sm:text-sm focus:outline-hidden cursor-pointer w-full truncate"
-                >
-                  <option value="name" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">{t.catalog.sort.fields.name}</option>
-                  <option value="fee" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">{t.catalog.sort.fields.fee}</option>
-                  <option value="risk" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">{t.catalog.sort.fields.risk}</option>
-                  <option value="valuation" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">{t.catalog.sort.fields.valuation}</option>
-                </select>
-              </div>
-
-              {/* Direction Toggle Button */}
-              <button
-                type="button"
-                onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
-                aria-label={sortOrder === "asc" ? t.catalog.sort.toggleDirectionAsc : t.catalog.sort.toggleDirectionDesc}
-                title={sortOrder === "asc" ? t.catalog.sort.toggleDirectionAsc : t.catalog.sort.toggleDirectionDesc}
-                className="h-[38px] px-2.5 sm:px-3 flex items-center justify-center gap-1.5 bg-slate-50 dark:bg-[#030a16] hover:bg-blue-50/70 dark:hover:bg-[#071938] border border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-[#044CD0]/60 text-slate-700 dark:text-slate-200 hover:text-[#044CD0] dark:hover:text-white font-sans font-medium text-xs sm:text-sm rounded-xl transition-all cursor-pointer shadow-2xs shrink-0 select-none group"
-              >
-                {sortOrder === "asc" ? (
-                  <>
-                    <ArrowUp className="w-3.5 h-3.5 text-[#044CD0] group-hover:scale-110 transition-transform" />
-                    <span className="text-xs sm:text-sm font-medium hidden sm:inline">{t.catalog.sort.ascending}</span>
-                  </>
-                ) : (
-                  <>
-                    <ArrowDown className="w-3.5 h-3.5 text-[#044CD0] group-hover:scale-110 transition-transform" />
-                    <span className="text-xs sm:text-sm font-medium hidden sm:inline">{t.catalog.sort.descending}</span>
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 rounded-md transition-colors cursor-pointer"
+              aria-label="Wyczyść szukanie"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
         </div>
 
         {/* Filter Rows: Asset Class & Legal Type */}
@@ -858,14 +809,32 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
         )}
       </div>
 
-      {/* Results Header */}
-      <div className="flex items-center justify-between text-xs sm:text-sm text-slate-500 dark:text-slate-400 px-1">
-        <div className="flex items-center flex-wrap gap-x-1.5 gap-y-1">
+      {/* Results Header & Presentation Controls */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs sm:text-sm text-slate-500 dark:text-slate-400 px-1">
+        {/* Left: Results Count, Page Info, Active Tags & Filtering Status */}
+        <div className="flex items-center flex-wrap gap-x-2 gap-y-1.5">
           <span>
-            {t.catalog.foundCount} <strong className="text-slate-800 dark:text-slate-200">{formatNumber(pageInfo.totalElements, 0)}</strong> {t.catalog.subfundsCount}
+            {t.catalog.foundCount}{" "}
+            <strong className="text-slate-900 dark:text-slate-100 font-semibold">
+              {formatNumber(pageInfo.totalElements, 0)}
+            </strong>{" "}
+            {t.catalog.subfundsCount}
           </span>
-          {(selectedClassifications.length > 0 || selectedTypes.length > 0 || selectedCategories.length > 0) && (
-            <span className="text-[#044CD0] dark:text-[#60a5fa]">
+          <span className="text-slate-300 dark:text-slate-700 hidden sm:inline">•</span>
+          <span className="text-slate-500 dark:text-slate-400 hidden sm:inline">
+            {t.common.page}{" "}
+            <strong className="text-slate-800 dark:text-slate-200 font-medium">
+              {pageInfo.number + 1}
+            </strong>{" "}
+            {t.common.of}{" "}
+            <strong className="text-slate-800 dark:text-slate-200 font-medium">
+              {Math.max(1, pageInfo.totalPages)}
+            </strong>
+          </span>
+          {(selectedClassifications.length > 0 ||
+            selectedTypes.length > 0 ||
+            selectedCategories.length > 0) && (
+            <span className="text-[#044CD0] dark:text-[#60a5fa] font-medium">
               ({[
                 selectedClassifications.length > 0
                   ? `${t.catalog.classesTagLabel} ${selectedClassifications
@@ -886,7 +855,13 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
                   ? `${t.catalog.typesTagLabel} ${selectedTypes.join(", ")}`
                   : null,
                 selectedCategories.length > 0
-                  ? `${selectedCategories.length > 1 ? (locale === "en" ? "categories:" : "kategorie:") : t.catalog.categoryTagLabel} ${selectedCategories
+                  ? `${
+                      selectedCategories.length > 1
+                        ? locale === "en"
+                          ? "categories:"
+                          : "kategorie:"
+                        : t.catalog.categoryTagLabel
+                    } ${selectedCategories
                       .map((c) => getCategoryLabel(c, locale === "en"))
                       .join(", ")}`
                   : null,
@@ -899,7 +874,7 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
             <button
               type="button"
               onClick={resetAllFilters}
-              className="inline-flex items-center gap-1 text-xs text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 font-medium hover:underline cursor-pointer ml-1.5 select-none"
+              className="inline-flex items-center gap-1 text-xs text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 font-medium hover:underline cursor-pointer select-none"
               title={t.catalog.clearAllFilters}
             >
               <RotateCcw className="w-3 h-3" />
@@ -907,14 +882,86 @@ export function SubfundsCatalog({ initialItems, initialPage }: SubfundsCatalogPr
             </button>
           )}
           {isPending && (
-            <span className="ml-1.5 inline-flex items-center gap-1 text-[#3b82f6]">
+            <span className="inline-flex items-center gap-1 text-[#3b82f6]">
               <RefreshCw className="w-3 h-3 animate-spin" /> {t.common.filtering}
             </span>
           )}
         </div>
-        <div className="shrink-0 text-slate-500 dark:text-slate-400">
-          {t.common.page} <strong className="text-slate-800 dark:text-slate-200">{pageInfo.number + 1}</strong> {t.common.of}{" "}
-          <strong className="text-slate-800 dark:text-slate-200">{Math.max(1, pageInfo.totalPages)}</strong>
+
+        {/* Right: Integrated Sort Dropdown & View Mode Switcher */}
+        <div className="flex items-center justify-between md:justify-end gap-2.5 shrink-0">
+          {/* Integrated Sort Dropdown */}
+          <div className="h-[38px] flex items-center gap-1.5 bg-white dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-[#044CD0]/60 px-2.5 sm:px-3 rounded-xl text-xs sm:text-sm transition-colors shadow-2xs">
+            <ArrowUpDown className="w-3.5 h-3.5 text-[#044CD0] shrink-0" />
+            <label
+              htmlFor="catalog-sort-select"
+              className="text-slate-500 dark:text-slate-400 font-medium hidden sm:inline select-none shrink-0"
+            >
+              {t.catalog.sort.label}:
+            </label>
+            <select
+              id="catalog-sort-select"
+              value={`${sortField}_${sortOrder}`}
+              onChange={(e) => handleCombinedSortChange(e.target.value)}
+              aria-label={t.catalog.sort.label}
+              className="bg-transparent text-slate-800 dark:text-slate-200 font-sans font-medium text-xs sm:text-sm focus:outline-hidden cursor-pointer pr-1"
+            >
+              <option value="name_asc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
+                {t.catalog.sort.nameAsc}
+              </option>
+              <option value="name_desc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
+                {t.catalog.sort.nameDesc}
+              </option>
+              <option value="fee_asc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
+                {t.catalog.sort.feeAsc}
+              </option>
+              <option value="fee_desc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
+                {t.catalog.sort.feeDesc}
+              </option>
+              <option value="risk_asc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
+                {t.catalog.sort.riskAsc}
+              </option>
+              <option value="risk_desc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
+                {t.catalog.sort.riskDesc}
+              </option>
+              <option value="valuation_desc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
+                {t.catalog.sort.valuationDesc}
+              </option>
+              <option value="valuation_asc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
+                {t.catalog.sort.valuationAsc}
+              </option>
+            </select>
+          </div>
+
+          {/* View Mode Toggle */}
+          <div className="flex items-center bg-white dark:bg-[#030a16] p-1 rounded-xl border border-slate-300 dark:border-[#0e274d] shrink-0 shadow-2xs">
+            <button
+              onClick={() => handleViewModeChange("grid")}
+              aria-pressed={viewMode === "grid"}
+              className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
+                viewMode === "grid"
+                  ? "bg-[#044CD0] text-white shadow-xs"
+                  : "text-slate-500 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#071938]"
+              }`}
+              title={t.catalog.viewModeGrid}
+              aria-label={t.catalog.viewModeGrid}
+            >
+              <LayoutGrid className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => handleViewModeChange("table")}
+              aria-pressed={viewMode === "table"}
+              className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
+                viewMode === "table"
+                  ? "bg-[#044CD0] text-white shadow-xs"
+                  : "text-slate-500 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#071938]"
+              }`}
+              title={t.catalog.viewModeTable}
+              aria-label={t.catalog.viewModeTable}
+            >
+              <TableIcon className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       </div>
 

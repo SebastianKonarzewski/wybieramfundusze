@@ -134,6 +134,7 @@ export const pl = {
       riskAsc: "Najniższe ryzyko (SRI 1-7)",
       riskDesc: "Najwyższe ryzyko (SRI 7-1)",
       valuationDesc: "Najwyższa wycena",
+      valuationAsc: "Najniższa wycena",
     },
     card: {
       riskProfile: "Profil ryzyka",

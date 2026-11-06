@@ -136,6 +136,7 @@ export const en: Translations = {
       riskAsc: "Lowest Risk (SRI 1-7)",
       riskDesc: "Highest Risk (SRI 7-1)",
       valuationDesc: "Highest NAV / Valuation",
+      valuationAsc: "Lowest NAV / Valuation",
     },
     card: {
       riskProfile: "Risk Profile",
