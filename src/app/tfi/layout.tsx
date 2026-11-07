@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Towarzystwa",
+  title: {
+    default: "Towarzystwa",
+    template: "%s | Wybieram Fundusze",
+  },
   description: "Katalog licencjonowanych Towarzystw Funduszy Inwestycyjnych (TFI) zarejestrowanych w UKNF.",
 };
 
