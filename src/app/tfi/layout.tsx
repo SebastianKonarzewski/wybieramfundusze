@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Towarzystwa TFI",
+  title: "Towarzystwa",
   description: "Katalog licencjonowanych Towarzystw Funduszy Inwestycyjnych (TFI) zarejestrowanych w UKNF.",
 };
 
