@@ -27,7 +27,7 @@ import { useAccessibility } from "@/lib/accessibility";
 export function MarketHero({ stats }: { stats: MarketStatistics }) {
   const { t, formatLargeNumber, formatLargeNumberParts, formatDate, formatNumber, formatPercent } = useTranslation();
   const { theme } = useTheme();
-  const { highContrast } = useAccessibility();
+  const { highContrast, reducedMotion } = useAccessibility();
   const isLight = theme === "light";
 
   // Calculate 12-month asset trend dynamics with proper min/max scaling
@@ -220,6 +220,7 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
                   </defs>
                   <YAxis domain={[trendData.yMin, trendData.yMax]} hide />
                   <Tooltip
+                    isAnimationActive={!reducedMotion}
                     content={({ active, payload }) => {
                       if (active && payload && payload.length) {
                         const item = payload[0].payload;
@@ -242,6 +243,7 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
                     strokeWidth={2}
                     fillOpacity={highContrast ? 0 : 1}
                     fill={highContrast ? "none" : "url(#heroScaledGrad)"}
+                    isAnimationActive={!reducedMotion}
                   />
                 </AreaChart>
               </ResponsiveContainer>

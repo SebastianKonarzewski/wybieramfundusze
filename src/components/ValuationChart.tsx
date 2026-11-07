@@ -16,6 +16,7 @@ import { KNFValuation } from "@/types/knf";
 import { TrendingUp, TrendingDown, Calendar, LineChart as ChartIcon, RefreshCw } from "lucide-react";
 import { BenchmarkSeries } from "@/lib/benchmark-api";
 import { useTranslation } from "@/lib/i18n";
+import { useAccessibility } from "@/lib/accessibility";
 
 interface ValuationChartProps {
   valuations: KNFValuation[];
@@ -29,6 +30,7 @@ export function ValuationChart({
   defaultBenchmark = "NONE",
 }: ValuationChartProps) {
   const { t, locale, formatCurrency, formatDate, formatPercent } = useTranslation();
+  const { reducedMotion } = useAccessibility();
   const [selectedRange, setSelectedRange] = useState<"1M" | "3M" | "6M" | "1Y" | "3Y" | "MAX">("1Y");
   const [activeBenchmark, setActiveBenchmark] = useState<"NONE" | "WIG" | "TBSP">(defaultBenchmark);
   const [benchmarkData, setBenchmarkData] = useState<BenchmarkSeries | null>(null);
@@ -292,6 +294,7 @@ export function ValuationChart({
                 tickFormatter={(v) => v.toFixed(1)}
               />
               <Tooltip
+                isAnimationActive={!reducedMotion}
                 content={({ active, payload }) => {
                   if (active && payload && payload.length) {
                     const data = payload[0].payload;
@@ -314,6 +317,7 @@ export function ValuationChart({
                 strokeWidth={2.5}
                 fillOpacity={1}
                 fill="url(#valGradUknf)"
+                isAnimationActive={!reducedMotion}
               />
             </AreaChart>
           ) : (
@@ -337,6 +341,7 @@ export function ValuationChart({
                 tickFormatter={(v) => `${v}%`}
               />
               <Tooltip
+                isAnimationActive={!reducedMotion}
                 content={({ active, payload, label }) => {
                   if (active && payload && payload.length) {
                     const row = payload[0].payload;
@@ -385,6 +390,7 @@ export function ValuationChart({
                 stroke="#044CD0"
                 strokeWidth={2.5}
                 dot={false}
+                isAnimationActive={!reducedMotion}
               />
               <Line
                 type="monotone"
@@ -394,6 +400,7 @@ export function ValuationChart({
                 strokeWidth={2}
                 strokeDasharray="4 4"
                 dot={false}
+                isAnimationActive={!reducedMotion}
               />
             </LineChart>
           )}

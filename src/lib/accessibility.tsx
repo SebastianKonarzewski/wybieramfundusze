@@ -20,9 +20,25 @@ interface AccessibilityContextType {
 const AccessibilityContext = createContext<AccessibilityContextType | null>(null);
 
 export function AccessibilityProvider({ children }: { children: React.ReactNode }) {
-  const [fontSize, setFontSizeState] = useState<FontSize>("normal");
-  const [highContrast, setHighContrast] = useState<boolean>(false);
-  const [reducedMotion, setReducedMotion] = useState<boolean>(false);
+  const [fontSize, setFontSizeState] = useState<FontSize>(() => {
+    if (typeof document !== "undefined") {
+      if (document.documentElement.classList.contains("text-scale-xlarge")) return "xlarge";
+      if (document.documentElement.classList.contains("text-scale-large")) return "large";
+    }
+    return "normal";
+  });
+  const [highContrast, setHighContrast] = useState<boolean>(() => {
+    if (typeof document !== "undefined") {
+      return document.documentElement.classList.contains("high-contrast");
+    }
+    return false;
+  });
+  const [reducedMotion, setReducedMotion] = useState<boolean>(() => {
+    if (typeof document !== "undefined") {
+      return document.documentElement.classList.contains("reduced-motion");
+    }
+    return false;
+  });
   const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState<boolean>(false);
 
   // Load preferences from localStorage on mount
@@ -41,6 +57,10 @@ export function AccessibilityProvider({ children }: { children: React.ReactNode 
           if (typeof parsed.reducedMotion === "boolean") {
             setReducedMotion(parsed.reducedMotion);
           }
+        });
+      } else if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        startTransition(() => {
+          setReducedMotion(true);
         });
       }
     } catch {

@@ -25,6 +25,7 @@ import { useCompare } from "./CompareContext";
 import { StatusBadge } from "./StatusBadge";
 import { RiskBadge } from "./RiskBadge";
 import { useTranslation } from "@/lib/i18n";
+import { useAccessibility } from "@/lib/accessibility";
 
 // UKNF-inspired comparison line colors
 const COLORS = ["#044CD0", "#00b4d8", "#f59e0b", "#ec4899"];
@@ -32,6 +33,7 @@ const COLORS = ["#044CD0", "#00b4d8", "#f59e0b", "#ec4899"];
 export function FundComparator() {
   const { selectedFunds, removeFund, addFund, clearFunds } = useCompare();
   const { t, locale, formatCurrency, formatPercent, formatDate } = useTranslation();
+  const { reducedMotion } = useAccessibility();
 
   const [profiles, setProfiles] = useState<SubfundFullProfile[]>([]);
   const [loading, setLoading] = useState(false);
@@ -578,6 +580,7 @@ export function FundComparator() {
                       tickFormatter={(v) => `${v}%`}
                     />
                     <Tooltip
+                      isAnimationActive={!reducedMotion}
                       content={({ active, payload, label }) => {
                         if (active && payload && payload.length) {
                           return (
@@ -632,6 +635,7 @@ export function FundComparator() {
                         stroke={COLORS[idx % COLORS.length]}
                         strokeWidth={2.5}
                         dot={false}
+                        isAnimationActive={!reducedMotion}
                       />
                     ))}
                   </LineChart>

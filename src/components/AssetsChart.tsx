@@ -12,9 +12,11 @@ import {
 import { KNFAsset } from "@/types/knf";
 import { Coins } from "lucide-react";
 import { useTranslation } from "@/lib/i18n";
+import { useAccessibility } from "@/lib/accessibility";
 
 export function AssetsChart({ assets }: { assets: KNFAsset[] }) {
   const { t, locale, formatLargeNumber, formatDate } = useTranslation();
+  const { reducedMotion } = useAccessibility();
 
   const chronological = useMemo(() => {
     return [...assets]
@@ -82,6 +84,7 @@ export function AssetsChart({ assets }: { assets: KNFAsset[] }) {
               }}
             />
             <Tooltip
+              isAnimationActive={!reducedMotion}
               content={({ active, payload }) => {
                 if (active && payload && payload.length) {
                   const data = payload[0].payload as KNFAsset;
@@ -102,7 +105,7 @@ export function AssetsChart({ assets }: { assets: KNFAsset[] }) {
                 return null;
               }}
             />
-            <Bar dataKey="netAssets" fill="#044CD0" radius={[6, 6, 0, 0]} />
+            <Bar dataKey="netAssets" fill="#044CD0" radius={[6, 6, 0, 0]} isAnimationActive={!reducedMotion} />
           </BarChart>
         </ResponsiveContainer>
       </div>
