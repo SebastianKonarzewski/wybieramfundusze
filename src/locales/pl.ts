@@ -49,7 +49,7 @@ export const pl = {
     comparator: "Porównywarka",
     portfolio: "Portfel",
     tfi: "Towarzystwa",
-    stats: "Rynek",
+    stats: "Statystyki",
     devBannerTitle: "Wersja poglądowa / testowa",
     devBannerDesc: "Portal w trybie deweloperskim — dane pobierane w czasie rzeczywistym z API UKNF.",
     officialSiteLabel: "Oficjalny serwis produkcyjny UKNF:",

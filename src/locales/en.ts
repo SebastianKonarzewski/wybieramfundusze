@@ -51,7 +51,7 @@ export const en: Translations = {
     comparator: "Compare",
     portfolio: "Portfolio",
     tfi: "Companies",
-    stats: "Market",
+    stats: "Statistics",
     devBannerTitle: "Preview / Test Version",
     devBannerDesc: "Demonstration portal under active development — live data from official UKNF API.",
     officialSiteLabel: "Official UKNF production portal:",

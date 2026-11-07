@@ -10,7 +10,7 @@ import { knfApi } from "@/lib/knf-api";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Rynek",
+  title: "Statystyki",
   description: "Aktualne statystyki polskiego rynku funduszy inwestycyjnych UKNF.",
 };
 
