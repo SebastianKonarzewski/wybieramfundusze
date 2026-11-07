@@ -12,7 +12,7 @@ import { PrivacyModal } from "@/components/PrivacyModal";
 
 export const metadata: Metadata = {
   title: {
-    default: "Wybieram Fundusze | Porównywarka i katalog funduszy inwestycyjnych",
+    default: "Wybieram Fundusze",
     template: "%s | Wybieram Fundusze",
   },
   description:
