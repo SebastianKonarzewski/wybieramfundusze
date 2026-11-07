@@ -1,4 +1,5 @@
 import React from "react";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { knfApi } from "@/lib/knf-api";
 import { Navbar } from "@/components/Navbar";
@@ -7,6 +8,24 @@ import { CompareFloatingBar } from "@/components/CompareFloatingBar";
 import { SubfundDetailView } from "@/components/SubfundDetailView";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const subfundId = parseInt(id, 10);
+  if (isNaN(subfundId)) return { title: "Subfundusz" };
+
+  const subfund = await knfApi.getSubfund(subfundId);
+  if (!subfund) return { title: "Subfundusz" };
+
+  return {
+    title: subfund.name,
+    description: `Profil i wyceny subfunduszu ${subfund.name} (${subfund.type}) w rejestrze UKNF.`,
+  };
+}
 
 export default async function SubfundDetailPage({
   params,

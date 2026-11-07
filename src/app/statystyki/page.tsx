@@ -1,4 +1,5 @@
 import React from "react";
+import type { Metadata } from "next";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { CompareProvider } from "@/components/CompareContext";
@@ -7,6 +8,11 @@ import { StatsView } from "@/components/StatsView";
 import { knfApi } from "@/lib/knf-api";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Statystyki rynku",
+  description: "Aktualne statystyki polskiego rynku funduszy inwestycyjnych UKNF.",
+};
 
 export default async function StatisticsPage() {
   const [stats, totalAssetsHistoryRes] = await Promise.all([

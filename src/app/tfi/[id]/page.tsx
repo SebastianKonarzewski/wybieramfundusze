@@ -1,4 +1,5 @@
 import React from "react";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { knfApi } from "@/lib/knf-api";
 import { Navbar } from "@/components/Navbar";
@@ -8,6 +9,24 @@ import { CompareFloatingBar } from "@/components/CompareFloatingBar";
 import { CompanyDetailView } from "@/components/CompanyDetailView";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const companyId = parseInt(id, 10);
+  if (isNaN(companyId)) return { title: "Towarzystwo TFI" };
+
+  const company = await knfApi.getCompany(companyId);
+  if (!company) return { title: "Towarzystwo TFI" };
+
+  return {
+    title: company.name,
+    description: `Profil Towarzystwa Funduszy Inwestycyjnych ${company.name} w rejestrze UKNF.`,
+  };
+}
 
 export default async function CompanyDetailPage({
   params,
