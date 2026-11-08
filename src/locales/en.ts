@@ -82,8 +82,8 @@ export const en: Translations = {
     fullHistoryLink: "Full market history",
   },
   catalog: {
-    searchPlaceholder: "Search fund by name, category, or code (e.g., Equity, Bonds, ETF, PLSFIO...)...",
-    searchPlaceholderMobile: "Search fund (e.g. Equity, ETF...)...",
+    searchPlaceholder: "Search fund by name, category, or code (e.g., Equity, Bonds, ETF, PLSFIO)...",
+    searchPlaceholderMobile: "Search fund (e.g., Equity, ETF)...",
     viewModeGrid: "Cards view",
     viewModeTable: "Table view",
     assetClass: "Asset Class:",
@@ -340,7 +340,7 @@ export const en: Translations = {
   tfi: {
     title: "Investment Fund Management Companies (TFI)",
     desc: "Explore licensed fund management companies operating in Poland, their registry data, KRS, REGON numbers, and restructuring timeline.",
-    searchPlaceholder: "Search TFI by name or national code (e.g., PKO, PZU, Ipopema, PLTFI...)...",
+    searchPlaceholder: "Search TFI by name or national code (e.g., PKO, PZU, Ipopema, PLTFI)...",
     showInactive: "Include deregistered / inactive entities",
     loadingList: "Loading fund management companies from UKNF registry...",
     noResults: "No fund management companies found matching search criteria.",

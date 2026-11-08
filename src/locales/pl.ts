@@ -80,8 +80,8 @@ export const pl = {
     fullHistoryLink: "Pełna historia rynku",
   },
   catalog: {
-    searchPlaceholder: "Szukaj funduszu po nazwie, kategorii lub kodzie (np. Akcji, Obligacji, ETF, PLSFIO...)...",
-    searchPlaceholderMobile: "Szukaj funduszu (np. Akcji, ETF...)...",
+    searchPlaceholder: "Szukaj funduszu po nazwie, kategorii lub kodzie (np. Akcji, Obligacji, ETF, PLSFIO)...",
+    searchPlaceholderMobile: "Szukaj funduszu (np. Akcji, ETF)...",
     viewModeGrid: "Widok kafelków",
     viewModeTable: "Widok tabeli",
     assetClass: "Klasa aktywów:",
@@ -338,7 +338,7 @@ export const pl = {
   tfi: {
     title: "Towarzystwa funduszy inwestycyjnych (TFI)",
     desc: "Sprawdź podmioty zarządzające funduszami inwestycyjnymi w Polsce, ich dane rejestrowe, numery KRS, REGON oraz historię przekształceń.",
-    searchPlaceholder: "Szukaj TFI po nazwie lub kodzie krajowym (np. PKO, PZU, Ipopema, PLTFI...)...",
+    searchPlaceholder: "Szukaj TFI po nazwie lub kodzie krajowym (np. PKO, PZU, Ipopema, PLTFI)...",
     showInactive: "Uwzględnij podmioty wykreślone / nieaktywne",
     loadingList: "Wczytywanie listy towarzystw z rejestru UKNF...",
     noResults: "Nie znaleziono towarzystw odpowiadających kryteriom wyszukiwania.",
