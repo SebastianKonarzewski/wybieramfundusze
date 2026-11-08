@@ -63,6 +63,10 @@ export const en: Translations = {
   hero: {
     title: "Investment Funds Comparator and Catalog",
     desc: "An analytical tool based on official UKNF regulatory records. Verify actual ongoing charges from KID documents, SRI risk profiles, and historical valuations across investment funds in Poland.",
+    quickCompareTitle: "Comparator",
+    quickCompareDesc: "Compare up to 4 funds",
+    quickPortfolioTitle: "Portfolio",
+    quickPortfolioDesc: "Simulate fees & returns",
     marketMetricsTitle: "Market Overview",
     marketDataDate: "Market data as of:",
     grossAssets: "Gross",
