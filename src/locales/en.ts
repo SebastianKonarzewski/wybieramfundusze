@@ -66,7 +66,7 @@ export const en: Translations = {
     quickCompareTitle: "Comparator",
     quickCompareDesc: "Compare up to 4 funds",
     quickPortfolioTitle: "Portfolio",
-    quickPortfolioDesc: "Simulate fees & returns",
+    quickPortfolioDesc: "Test your own strategy",
     marketMetricsTitle: "Market Overview",
     marketDataDate: "Market data as of:",
     grossAssets: "Gross",

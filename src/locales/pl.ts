@@ -64,7 +64,7 @@ export const pl = {
     quickCompareTitle: "Porównywarka",
     quickCompareDesc: "Zestaw do 4 funduszy",
     quickPortfolioTitle: "Portfel funduszy",
-    quickPortfolioDesc: "Symulacja opłat i zysku",
+    quickPortfolioDesc: "Testuj własną strategię",
     marketMetricsTitle: "Wskaźniki rynku funduszy",
     marketDataDate: "Stan danych rynkowych:",
     grossAssets: "Brutto",
