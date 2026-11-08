@@ -65,32 +65,34 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
   );
 
   return (
-    <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-b from-[#071938] via-[#051329] to-[#030a16] border border-[#0e274d] p-4 sm:p-8 lg:p-10 mb-6 sm:mb-8 shadow-2xl">
-      {/* Background glow effects with UKNF blue - dark mode only */}
-      <div data-component="hero-glow-blob" className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-[#044CD0]/15 dark:block hidden blur-3xl pointer-events-none" />
-      <div data-component="hero-glow-blob" className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-[#02224D]/30 dark:block hidden blur-3xl pointer-events-none" />
-
-      <div className="relative z-10 space-y-6 sm:space-y-8">
-        {/* Top Header: Title & Market Data Date */}
-        <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
-          <div className="max-w-3xl">
-            <h1 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-slate-100 tracking-tight leading-tight">
-              {t.hero.title}
-            </h1>
-            <p className="text-slate-400 mt-2 text-xs sm:text-sm lg:text-base leading-relaxed">
-              {t.hero.desc}
-            </p>
-          </div>
-
-          <div className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-[#030a16]/80 border border-slate-200 dark:border-[#0e274d] px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl self-start lg:self-auto shrink-0 shadow-xs">
-            <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#044CD0]" />
-            <span>
-              {t.hero.marketDataDate} <strong className="text-slate-800 dark:text-slate-200">{formatDate(stats.statsDate)}</strong>
-            </span>
-          </div>
+    <div className="mb-6 sm:mb-8">
+      {/* Top Header: Title & Market Data Date (Unified layout with other subpages) */}
+      <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4 mb-6 sm:mb-8">
+        <div className="max-w-3xl">
+          <h1 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-slate-100 tracking-tight leading-tight">
+            {t.hero.title}
+          </h1>
+          <p className="text-slate-400 mt-2 text-xs sm:text-sm lg:text-base leading-relaxed">
+            {t.hero.desc}
+          </p>
         </div>
 
-        {/* 3 Key Stat Cards */}
+        <div className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-[#030a16]/80 border border-slate-200 dark:border-[#0e274d] px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl self-start lg:self-auto shrink-0 shadow-xs">
+          <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#044CD0]" />
+          <span>
+            {t.hero.marketDataDate} <strong className="text-slate-800 dark:text-slate-200">{formatDate(stats.statsDate)}</strong>
+          </span>
+        </div>
+      </div>
+
+      {/* Market Metrics Card Container */}
+      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-b from-[#071938] via-[#051329] to-[#030a16] border border-[#0e274d] p-4 sm:p-6 lg:p-8 shadow-2xl">
+        {/* Background glow effects with UKNF blue - dark mode only */}
+        <div data-component="hero-glow-blob" className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-[#044CD0]/15 dark:block hidden blur-3xl pointer-events-none" />
+        <div data-component="hero-glow-blob" className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-[#02224D]/30 dark:block hidden blur-3xl pointer-events-none" />
+
+        <div className="relative z-10 space-y-4 sm:space-y-6">
+          {/* 3 Key Stat Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
           {/* Card 1: Net Assets in Funds (AUM) */}
           <div className="bg-slate-50/70 dark:bg-[#030a16]/85 border border-slate-200/80 dark:border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl px-4 pt-3.5 pb-3 sm:px-5 sm:pt-4 sm:pb-3.5 transition-all shadow-xs dark:shadow-md group flex flex-col justify-between">
@@ -267,5 +269,6 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
         </div>
       </div>
     </div>
+  </div>
   );
 }
