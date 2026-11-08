@@ -79,21 +79,21 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
           </p>
         </div>
 
-        {/* Desktop-only quick action cards (Hidden on mobile/tablet to avoid vertical clutter) */}
-        <div className="hidden lg:flex items-center gap-3 shrink-0">
+        {/* Desktop-only quick action cards (Stacked vertically for full label readability) */}
+        <div className="hidden lg:flex flex-col gap-2.5 shrink-0 w-64 xl:w-72">
           <Link
             href="/porownywarka"
-            className="group flex items-center gap-3 px-3.5 py-3 rounded-2xl bg-white/70 dark:bg-[#051329]/90 hover:bg-white dark:hover:bg-[#071938] border border-slate-200/80 dark:border-[#0e274d] hover:border-[#044CD0]/60 dark:hover:border-blue-500/50 transition-all shadow-xs hover:shadow-md cursor-pointer w-48 xl:w-52"
+            className="group flex items-center gap-3 px-3.5 py-2.5 rounded-2xl bg-white/70 dark:bg-[#051329]/90 hover:bg-white dark:hover:bg-[#071938] border border-slate-200/80 dark:border-[#0e274d] hover:border-[#044CD0]/60 dark:hover:border-blue-500/50 transition-all shadow-xs hover:shadow-md cursor-pointer"
           >
-            <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-[#044CD0]/15 border border-blue-200/60 dark:border-[#044CD0]/30 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform text-[#044CD0] dark:text-[#60a5fa]">
-              <Scale className="w-5 h-5" />
+            <div className="w-9 h-9 rounded-xl bg-blue-50 dark:bg-[#044CD0]/15 border border-blue-200/60 dark:border-[#044CD0]/30 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform text-[#044CD0] dark:text-[#60a5fa]">
+              <Scale className="w-4.5 h-4.5" />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-[#044CD0] dark:group-hover:text-blue-400 transition-colors flex items-center gap-1">
-                <span className="truncate">{t.hero.quickCompareTitle}</span>
-                <ArrowRight className="w-3 h-3 shrink-0 opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all" />
+              <div className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-[#044CD0] dark:group-hover:text-blue-400 transition-colors flex items-center justify-between">
+                <span>{t.hero.quickCompareTitle}</span>
+                <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#044CD0] dark:group-hover:text-blue-400 group-hover:translate-x-0.5 transition-all" />
               </div>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
                 {t.hero.quickCompareDesc}
               </p>
             </div>
@@ -101,17 +101,17 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
 
           <Link
             href="/portfel"
-            className="group flex items-center gap-3 px-3.5 py-3 rounded-2xl bg-white/70 dark:bg-[#051329]/90 hover:bg-white dark:hover:bg-[#071938] border border-slate-200/80 dark:border-[#0e274d] hover:border-[#044CD0]/60 dark:hover:border-blue-500/50 transition-all shadow-xs hover:shadow-md cursor-pointer w-48 xl:w-52"
+            className="group flex items-center gap-3 px-3.5 py-2.5 rounded-2xl bg-white/70 dark:bg-[#051329]/90 hover:bg-white dark:hover:bg-[#071938] border border-slate-200/80 dark:border-[#0e274d] hover:border-[#044CD0]/60 dark:hover:border-blue-500/50 transition-all shadow-xs hover:shadow-md cursor-pointer"
           >
-            <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-500/15 border border-indigo-200/60 dark:border-indigo-500/30 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform text-indigo-600 dark:text-indigo-400">
-              <Briefcase className="w-5 h-5" />
+            <div className="w-9 h-9 rounded-xl bg-indigo-50 dark:bg-indigo-500/15 border border-indigo-200/60 dark:border-indigo-500/30 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform text-indigo-600 dark:text-indigo-400">
+              <Briefcase className="w-4.5 h-4.5" />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors flex items-center gap-1">
-                <span className="truncate">{t.hero.quickPortfolioTitle}</span>
-                <ArrowRight className="w-3 h-3 shrink-0 opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all" />
+              <div className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors flex items-center justify-between">
+                <span>{t.hero.quickPortfolioTitle}</span>
+                <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all" />
               </div>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
                 {t.hero.quickPortfolioDesc}
               </p>
             </div>
