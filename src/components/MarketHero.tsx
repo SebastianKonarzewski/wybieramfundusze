@@ -66,23 +66,14 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
 
   return (
     <div className="mb-6 sm:mb-8">
-      {/* Top Header: Title & Market Data Date (Unified layout with other subpages) */}
-      <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4 mb-6 sm:mb-8">
-        <div className="max-w-3xl">
-          <h1 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-slate-100 tracking-tight leading-tight">
-            {t.hero.title}
-          </h1>
-          <p className="text-slate-400 mt-2 text-xs sm:text-sm lg:text-base leading-relaxed">
-            {t.hero.desc}
-          </p>
-        </div>
-
-        <div className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-[#030a16]/80 border border-slate-200 dark:border-[#0e274d] px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl self-start lg:self-auto shrink-0 shadow-xs">
-          <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#044CD0]" />
-          <span>
-            {t.hero.marketDataDate} <strong className="text-slate-800 dark:text-slate-200">{formatDate(stats.statsDate)}</strong>
-          </span>
-        </div>
+      {/* Top Header: Title & Description (Unified layout with other subpages) */}
+      <div className="mb-6 sm:mb-8 max-w-3xl">
+        <h1 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-slate-100 tracking-tight leading-tight">
+          {t.hero.title}
+        </h1>
+        <p className="text-slate-400 mt-2 text-xs sm:text-sm lg:text-base leading-relaxed">
+          {t.hero.desc}
+        </p>
       </div>
 
       {/* Market Metrics Card Container */}
@@ -92,6 +83,20 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
         <div data-component="hero-glow-blob" className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-[#02224D]/30 dark:block hidden blur-3xl pointer-events-none" />
 
         <div className="relative z-10 space-y-4 sm:space-y-6">
+          {/* Header row inside card: Title & Market Data Date directly next to the data */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+              <span className="w-2 h-2 rounded-full bg-[#044CD0]" />
+              <span>{t.hero.marketMetricsTitle}</span>
+            </div>
+            <div className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-600 dark:text-slate-400 bg-white/70 dark:bg-[#030a16]/80 border border-slate-200/80 dark:border-[#0e274d] px-2.5 py-1 sm:px-3 sm:py-1 rounded-lg shrink-0 shadow-2xs self-start sm:self-auto">
+              <Calendar className="w-3.5 h-3.5 text-[#044CD0]" />
+              <span>
+                {t.hero.marketDataDate} <strong className="text-slate-800 dark:text-slate-200">{formatDate(stats.statsDate)}</strong>
+              </span>
+            </div>
+          </div>
+
           {/* 3 Key Stat Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
           {/* Card 1: Net Assets in Funds (AUM) */}

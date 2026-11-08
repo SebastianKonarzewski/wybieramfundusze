@@ -61,6 +61,7 @@ export const pl = {
   hero: {
     title: "Porównywarka i katalog funduszy inwestycyjnych",
     desc: "Narzędzie analityczne oparte o publiczne dane rejestrowe UKNF. Weryfikuj rzeczywiste opłaty bieżące z dokumentów KID, profile ryzyka SRI oraz historyczne wyceny i przekształcenia funduszy w Polsce.",
+    marketMetricsTitle: "Wskaźniki rynku funduszy",
     marketDataDate: "Stan danych rynkowych:",
     grossAssets: "Brutto",
     grossAssetsDesc: "Wartość brutto aktywów pod zarządzaniem",
