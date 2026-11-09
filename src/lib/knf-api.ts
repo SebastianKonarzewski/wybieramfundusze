@@ -129,8 +129,13 @@ function ensureClassificationsPopulated() {
       const id = parseInt(idStr, 10);
       if (!isNaN(id)) {
         const existing = runtimeClassifications.get(id);
-        // If not populated yet with return rates, merge baseline metrics
-        if (!existing || existing.returnRate1Y === undefined) {
+        // If not populated yet with return rates, net assets or fees, merge baseline metrics
+        if (
+          !existing ||
+          existing.returnRate1Y === undefined ||
+          existing.netAssets === undefined ||
+          existing.transactionCostsRate === undefined
+        ) {
           runtimeClassifications.set(id, {
             ...existing,
             returnRate1M: existing?.returnRate1M !== undefined ? existing.returnRate1M : m.r1m,
