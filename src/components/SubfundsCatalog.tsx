@@ -1302,13 +1302,20 @@ export function SubfundsCatalog({
 
                     <div>
                       <span className="text-slate-500 dark:text-slate-400 text-[11px] block truncate">{t.catalog.card.ongoingCharge}</span>
-                      <span className="font-semibold text-slate-800 dark:text-slate-200">
+                      <span
+                        className="font-semibold text-slate-800 dark:text-slate-200 cursor-help hover:text-[#044CD0] dark:hover:text-[#60a5fa] transition-colors inline-block"
+                        title={
+                          item.managementFee !== null && item.managementFee !== undefined
+                            ? t.catalog.table.ongoingFeeTooltip.replace("{rate}", formatPercent(item.managementFee))
+                            : undefined
+                        }
+                      >
                         {formatPercent(item.managementFee)}
                       </span>
                       {item.transactionCostsRate !== null && item.transactionCostsRate !== undefined && (
                         <span
-                          className="block text-[10px] text-slate-500 dark:text-slate-400 leading-tight"
-                          title={`${t.catalog.table.transactionCosts}: ${formatPercent(item.transactionCostsRate)}`}
+                          className="block text-[10px] text-slate-500 dark:text-slate-400 leading-tight cursor-help hover:text-slate-800 dark:hover:text-slate-200 transition-colors"
+                          title={t.catalog.table.transactionCostsTooltip.replace("{rate}", formatPercent(item.transactionCostsRate))}
                         >
                           +{formatPercent(item.transactionCostsRate)} tr.
                         </span>
@@ -1467,13 +1474,15 @@ export function SubfundsCatalog({
                   </th>
                   <th
                     onClick={() => handleSort("fee")}
-                    className="py-2 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group text-xs leading-tight"
+                    className="py-2 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group text-xs leading-tight whitespace-nowrap"
+                    title={
+                      locale === "en"
+                        ? "Fees: ongoing management fee + portfolio transaction costs"
+                        : "Opłaty: opłata stała za zarządzanie + koszty transakcyjne portfela"
+                    }
                   >
                     <div className="flex items-center gap-1">
-                      <div>
-                        <span>{locale === "en" ? "Ongoing" : "Opłata"}</span>
-                        <span className="block">{locale === "en" ? "Fee" : "stała"}</span>
-                      </div>
+                      <span>{t.catalog.table.fee}</span>
                       {sortField === "fee" ? (
                         sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0]" />
                       ) : (
@@ -1593,13 +1602,20 @@ export function SubfundsCatalog({
                         <RiskBadge level={item.riskLevel} showLabel={false} showSriPrefix={false} stacked={true} size="sm" />
                       </td>
                       <td className="py-2.5 px-2 sm:px-2.5 whitespace-nowrap">
-                        <div className="font-medium text-slate-800 dark:text-slate-200 text-xs sm:text-sm leading-tight">
+                        <div
+                          className="font-medium text-slate-800 dark:text-slate-200 text-xs sm:text-sm leading-tight cursor-help hover:text-[#044CD0] dark:hover:text-[#60a5fa] transition-colors"
+                          title={
+                            item.managementFee !== null && item.managementFee !== undefined
+                              ? t.catalog.table.ongoingFeeTooltip.replace("{rate}", formatPercent(item.managementFee))
+                              : undefined
+                          }
+                        >
                           {formatPercent(item.managementFee)}
                         </div>
                         {item.transactionCostsRate !== null && item.transactionCostsRate !== undefined && (
                           <div
-                            className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 whitespace-nowrap leading-tight"
-                            title={`${t.catalog.table.transactionCosts}: ${formatPercent(item.transactionCostsRate)}`}
+                            className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 whitespace-nowrap leading-tight cursor-help hover:text-slate-800 dark:hover:text-slate-200 transition-colors"
+                            title={t.catalog.table.transactionCostsTooltip.replace("{rate}", formatPercent(item.transactionCostsRate))}
                           >
                             +{formatPercent(item.transactionCostsRate)} tr.
                           </div>
