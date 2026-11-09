@@ -1525,17 +1525,29 @@ export function SubfundsCatalog({
                 className="catalog-grid-card group relative bg-white dark:bg-[#051329] hover:bg-slate-50/70 dark:hover:bg-[#071938] border border-slate-200 dark:border-[#0e274d] hover:border-[#044CD0]/60 rounded-2xl p-4 sm:p-5 transition-all flex flex-col justify-between shadow-xs hover:shadow-md dark:shadow-md dark:hover:shadow-xl"
               >
                 <div>
-                  {/* 1. Top: Fund Name */}
-                  <Link
-                    href={`/fundusze/${item.subfundId}`}
-                    title={item.name}
-                    className="block font-bold text-base text-slate-900 dark:text-slate-100 group-hover:text-[#044CD0] dark:group-hover:text-[#60a5fa] transition-colors line-clamp-2 leading-snug break-words mb-1.5"
-                  >
-                    {item.name}
-                  </Link>
+                  {/* Top Header: Fund Name + Status Badge in Top-Right Corner */}
+                  <div className="flex items-start justify-between gap-2.5 mb-1.5">
+                    <Link
+                      href={`/fundusze/${item.subfundId}`}
+                      title={item.name}
+                      className="font-bold text-base text-slate-900 dark:text-slate-100 group-hover:text-[#044CD0] dark:group-hover:text-[#60a5fa] transition-colors line-clamp-2 leading-snug break-words flex-1 min-w-0"
+                    >
+                      {item.name}
+                    </Link>
 
-                  {/* 2. Typ funduszu + Nazwa TFI + Parasol */}
-                  <div className="flex items-center gap-1.5 mb-2.5 leading-normal flex-wrap">
+                    <div className="shrink-0 pt-0.5">
+                      <StatusBadge
+                        compact={true}
+                        isActive={item.isActive}
+                        isLiquidating={item.isLiquidating}
+                        liquidationStartDate={item.liquidationStartDate}
+                        liquidationEndDate={item.liquidationEndDate}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Typ funduszu + Nazwa TFI + Parasol */}
+                  <div className="flex items-center gap-1.5 mb-2 leading-normal flex-wrap">
                     <span className="fund-type-badge inline-flex items-center font-bold text-[10px] leading-none bg-slate-100 dark:bg-[#030a16] border border-slate-300/80 dark:border-[#0e274d] px-1.5 py-0.5 rounded text-black dark:text-blue-300 shadow-2xs shrink-0 uppercase tracking-wider">
                       {item.name.toUpperCase().includes("ETF") ? "ETF" : item.type}
                     </span>
@@ -1560,45 +1572,27 @@ export function SubfundsCatalog({
                     )}
                   </div>
 
-                  {/* 3. Klasa aktywów + Status */}
-                  {(() => {
-                    const hasDetailedCategory = Boolean(
-                      item.category &&
-                      item.classification &&
-                      item.category.trim().toLowerCase() !== item.classification.trim().toLowerCase()
-                    );
-                    return (
+                  {/* Klasa aktywów i kategoria w jednej linii */}
+                  <div className="flex items-center gap-1.5 mb-3.5 leading-normal flex-wrap">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[11px] font-semibold bg-slate-100/90 dark:bg-[#030a16] text-slate-700 dark:text-slate-300 border border-slate-200/90 dark:border-[#0e274d] shadow-2xs shrink-0">
+                      <Compass className="w-3 h-3 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
+                      <span className="capitalize">
+                        {item.classification || item.category || (locale === "en" ? "Fund" : "Fundusz")}
+                      </span>
+                    </span>
+
+                    {item.category && item.classification && item.category.trim().toLowerCase() !== item.classification.trim().toLowerCase() && (
                       <>
-                        <div className={`flex items-center justify-between gap-2 ${hasDetailedCategory ? "mb-1.5" : "mb-3"}`}>
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[11px] font-semibold bg-slate-100/90 dark:bg-[#030a16] text-slate-700 dark:text-slate-300 border border-slate-200/90 dark:border-[#0e274d] shadow-2xs truncate max-w-[200px]">
-                            <Compass className="w-3 h-3 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
-                            <span className="truncate capitalize">
-                              {item.classification || item.category || (locale === "en" ? "Fund" : "Fundusz")}
-                            </span>
-                          </span>
-
-                          <StatusBadge
-                            compact={true}
-                            isActive={item.isActive}
-                            isLiquidating={item.isLiquidating}
-                            liquidationStartDate={item.liquidationStartDate}
-                            liquidationEndDate={item.liquidationEndDate}
-                          />
-                        </div>
-
-                        {/* 4. Szczegółowa klasa aktywów */}
-                        {hasDetailedCategory && (
-                          <div
-                            title={item.category || undefined}
-                            className="text-[11px] text-slate-500 dark:text-slate-400 mb-3 flex items-center gap-1.5 line-clamp-1"
-                          >
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#044CD0]/60 shrink-0" />
-                            <span className="truncate">{item.category}</span>
-                          </div>
-                        )}
+                        <span className="text-slate-300 dark:text-slate-600 text-xs select-none">•</span>
+                        <span
+                          title={item.category || undefined}
+                          className="text-[11px] sm:text-xs font-medium text-slate-500 dark:text-slate-400 truncate max-w-[190px] sm:max-w-[230px]"
+                        >
+                          {item.category}
+                        </span>
                       </>
-                    );
-                  })()}
+                    )}
+                  </div>
 
                   {/* Metrics Box: 3 Key Indicators + Valuation & AUM */}
                   <div className="bg-slate-50/70 dark:bg-[#030a16]/60 border border-slate-200/70 dark:border-[#0e274d]/70 rounded-xl p-3 mb-4 space-y-2.5">
