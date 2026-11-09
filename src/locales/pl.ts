@@ -86,8 +86,8 @@ export const pl = {
     fullHistoryLink: "Pełna historia rynku",
   },
   catalog: {
-    searchPlaceholder: "Szukaj funduszu po nazwie, kategorii lub kodzie (np. Akcji, Obligacji, ETF, PLSFIO)...",
-    searchPlaceholderMobile: "Szukaj funduszu (np. Akcji, ETF)...",
+    searchPlaceholder: "Szukaj funduszu po nazwie, TFI, kategorii lub kodzie (np. PKO, Obligacji, ETF, PLSFIO)...",
+    searchPlaceholderMobile: "Szukaj funduszu (np. PKO, ETF)...",
     viewModeGrid: "Widok kafelków",
     viewModeTable: "Widok tabeli",
     assetClass: "Klasa aktywów:",

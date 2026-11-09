@@ -1020,13 +1020,14 @@ export const knfApi = {
       };
     });
 
-    // Filter by search terms across name, fullName, nationalCode, classification, category, type, companyName, fundName
+    // Filter by search terms across name, fullName, subfundId, nationalCode, classification, category, type, companyName, fundName
     if (params?.search && params.search.trim()) {
       const searchTerms = params.search.toLowerCase().trim().split(/\s+/).filter(Boolean);
       filtered = filtered.filter((sf) => {
         const haystack = [
           sf.name,
           sf.fullName,
+          sf.subfundId ? String(sf.subfundId) : "",
           sf.nationalCode,
           sf.classification,
           sf.category,
