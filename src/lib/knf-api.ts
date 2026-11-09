@@ -20,6 +20,7 @@ import {
 import subfundsClassifications from "@/data/subfunds-classifications.json";
 import standaloneFundsData from "@/data/standalone-funds.json";
 import subfundsMetrics from "@/data/subfunds-metrics.json";
+import { getExchangeRates, convertToPln } from "./exchange-rates";
 
 const BASE_URL = "https://wybieramfundusze-api.knf.gov.pl";
 const DEFAULT_REVALIDATE = 3600; // 1 hour cache
@@ -868,6 +869,8 @@ export const knfApi = {
     classifications?: string[];
     category?: string;
     categories?: string[];
+    currency?: string;
+    currencies?: string[];
     includeInactive?: boolean;
     includeLiquidating?: boolean;
     search?: string;
@@ -946,9 +949,18 @@ export const knfApi = {
 
     const combinedPool = [...validSubfunds, ...standalonePool];
 
+    const ratesState = await getExchangeRates();
+    const rates = ratesState.rates;
+
     let filtered = combinedPool.map((sf) => {
       const meta = runtimeClassifications.get(sf.subfundId);
       const fallback = inferClassificationFromName(sf.name);
+      const currency = meta?.currency || sf.currency || "PLN";
+      const netAssets = meta?.netAssets ?? null;
+      const latestValuation = meta?.latestValuation ?? null;
+      const netAssetsPln = convertToPln(netAssets, currency, rates);
+      const latestValuationPln = convertToPln(latestValuation, currency, rates);
+
       return {
         ...sf,
         classification: sf.classification || meta?.classification || fallback.classification,
@@ -957,11 +969,13 @@ export const knfApi = {
         riskLevel: meta?.riskLevel ?? null,
         managementFee: meta?.managementFee ?? null,
         transactionCostsRate: meta?.transactionCostsRate ?? null,
-        netAssets: meta?.netAssets ?? null,
+        netAssets,
         netAssetsDate: meta?.netAssetsDate ?? null,
-        latestValuation: meta?.latestValuation ?? null,
+        latestValuation,
         latestValuationDate: meta?.latestValuationDate ?? null,
-        currency: meta?.currency || sf.currency || "PLN",
+        currency,
+        netAssetsPln,
+        latestValuationPln,
         returnRate1M: meta?.returnRate1M ?? null,
         returnRate3M: meta?.returnRate3M ?? null,
         returnRate1Y: meta?.returnRate1Y ?? null,
@@ -1077,6 +1091,22 @@ export const knfApi = {
       });
     }
 
+    // Filter by currency if provided (e.g. PLN, USD, EUR)
+    const activeCurrencies: string[] = [];
+    if (params?.currencies && params.currencies.length > 0) {
+      activeCurrencies.push(
+        ...params.currencies.filter((c) => c && c !== "ALL").map((c) => c.toUpperCase())
+      );
+    } else if (params?.currency && params.currency !== "ALL") {
+      activeCurrencies.push(params.currency.toUpperCase());
+    }
+
+    if (activeCurrencies.length > 0) {
+      filtered = filtered.filter((sf) =>
+        activeCurrencies.includes((sf.currency || "PLN").toUpperCase())
+      );
+    }
+
     // Handle sort if name,desc / return rates
     if (params?.sort === "name,desc") {
       filtered.sort((a, b) => b.name.localeCompare(a.name, "pl"));
@@ -1115,13 +1145,13 @@ export const knfApi = {
     } else if (params?.sort === "risk,desc") {
       filtered.sort((a, b) => (b.riskLevel ?? -1) - (a.riskLevel ?? -1));
     } else if (params?.sort === "valuation,asc") {
-      filtered.sort((a, b) => (a.latestValuation ?? 9999999) - (b.latestValuation ?? 9999999));
+      filtered.sort((a, b) => (a.latestValuationPln ?? 9999999) - (b.latestValuationPln ?? 9999999));
     } else if (params?.sort === "valuation,desc") {
-      filtered.sort((a, b) => (b.latestValuation ?? -1) - (a.latestValuation ?? -1));
+      filtered.sort((a, b) => (b.latestValuationPln ?? -1) - (a.latestValuationPln ?? -1));
     } else if (params?.sort === "assets,asc") {
-      filtered.sort((a, b) => (a.netAssets ?? 9999999999999) - (b.netAssets ?? 9999999999999));
+      filtered.sort((a, b) => (a.netAssetsPln ?? 9999999999999) - (b.netAssetsPln ?? 9999999999999));
     } else if (params?.sort === "assets,desc") {
-      filtered.sort((a, b) => (b.netAssets ?? -1) - (a.netAssets ?? -1));
+      filtered.sort((a, b) => (b.netAssetsPln ?? -1) - (a.netAssetsPln ?? -1));
     }
 
     const totalElements = filtered.length;
@@ -1279,6 +1309,14 @@ export const knfApi = {
     delayMs?: number;
   }): Promise<{ updatedCount: number; durationMs: number }> {
     const startTime = Date.now();
+
+    // 0. Force refresh exchange rates from NBP
+    try {
+      await getExchangeRates(true);
+    } catch {
+      // ignore
+    }
+
     const mode = options?.mode ?? "full";
     const delayMs = options?.delayMs ?? 25;
     const isFull = mode === "full";

@@ -95,6 +95,8 @@ export const en: Translations = {
     assetClass: "Asset Class:",
     legalType: "Legal Type:",
     allTypes: "All",
+    currencyLabel: "Currency:",
+    allCurrencies: "All",
     classes: {
       ALL: "All",
       akcji: "Equity",
@@ -118,6 +120,7 @@ export const en: Translations = {
     subfundsCount: "subfunds",
     classesTagLabel: "classes:",
     typesTagLabel: "types:",
+    currenciesTagLabel: "currencies:",
     categoryTagLabel: "category:",
     returnPeriodLabel: "Return rate:",
     horizontalScrollHint: "Scroll horizontally to view all columns (SRI, fee, return rate, NAV)",

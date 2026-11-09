@@ -93,6 +93,8 @@ export const pl = {
     assetClass: "Klasa aktywów:",
     legalType: "Typ prawny:",
     allTypes: "Wszystkie",
+    currencyLabel: "Waluta:",
+    allCurrencies: "Wszystkie",
     classes: {
       ALL: "Wszystkie",
       akcji: "Akcyjne",
@@ -116,6 +118,7 @@ export const pl = {
     subfundsCount: "subfunduszy",
     classesTagLabel: "klasy:",
     typesTagLabel: "typy:",
+    currenciesTagLabel: "waluty:",
     categoryTagLabel: "kategoria:",
     returnPeriodLabel: "Stopa zwrotu:",
     horizontalScrollHint: "Przesuń tabelę w bok, aby zobaczyć wszystkie kolumny (SRI, opłata, stopa zwrotu, wycena)",

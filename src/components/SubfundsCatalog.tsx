@@ -23,6 +23,7 @@ import {
   Layers,
   RotateCcw,
   TrendingUp,
+  Coins,
   X,
 } from "lucide-react";
 import { SubfundCardModel } from "@/types/knf";
@@ -170,6 +171,7 @@ export function SubfundsCatalog({
 
   // Multi-select state for fund types and asset classes
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [selectedCurrencies, setSelectedCurrencies] = useState<string[]>([]);
   const [selectedClassifications, setSelectedClassifications] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
@@ -320,6 +322,18 @@ export function SubfundsCatalog({
     );
   };
 
+  // Helper to toggle currency in multi-select (e.g. PLN, USD, EUR)
+  const toggleCurrency = (currency: string) => {
+    setCurrentPage(0);
+    if (currency === "ALL") {
+      setSelectedCurrencies([]);
+      return;
+    }
+    setSelectedCurrencies((prev) =>
+      prev.includes(currency) ? prev.filter((c) => c !== currency) : [...prev, currency]
+    );
+  };
+
   // Filter category groups by currently active asset classes if any are selected
   const visibleCategoryGroups = useMemo(() => {
     if (selectedClassifications.length === 0) {
@@ -380,6 +394,7 @@ export function SubfundsCatalog({
     searchTerm.trim() !== "" ||
     selectedClassifications.length > 0 ||
     selectedTypes.length > 0 ||
+    selectedCurrencies.length > 0 ||
     selectedCategories.length > 0 ||
     includeInactive ||
     includeLiquidating;
@@ -388,6 +403,7 @@ export function SubfundsCatalog({
     (searchTerm.trim() !== "" ? 1 : 0) +
     selectedClassifications.length +
     selectedTypes.length +
+    selectedCurrencies.length +
     selectedCategories.length +
     (includeInactive ? 1 : 0) +
     (includeLiquidating ? 1 : 0);
@@ -396,6 +412,7 @@ export function SubfundsCatalog({
     setSearchTerm("");
     setSelectedClassifications([]);
     setSelectedTypes([]);
+    setSelectedCurrencies([]);
     setSelectedCategories([]);
     setIncludeInactive(false);
     setIncludeLiquidating(false);
@@ -414,6 +431,9 @@ export function SubfundsCatalog({
           }
           if (selectedTypes.length > 0) {
             params.set("fundTypes", selectedTypes.join(","));
+          }
+          if (selectedCurrencies.length > 0) {
+            params.set("currencies", selectedCurrencies.join(","));
           }
           if (selectedCategories.length > 0) {
             params.set("categories", selectedCategories.join(","));
@@ -454,6 +474,7 @@ export function SubfundsCatalog({
     searchTerm,
     selectedClassifications,
     selectedTypes,
+    selectedCurrencies,
     selectedCategories,
     includeInactive,
     includeLiquidating,
@@ -522,14 +543,14 @@ export function SubfundsCatalog({
       });
     } else if (sortField === "valuation") {
       result.sort((a, b) => {
-        const va = a.latestValuation ?? -1;
-        const vb = b.latestValuation ?? -1;
+        const va = a.latestValuationPln ?? a.latestValuation ?? -1;
+        const vb = b.latestValuationPln ?? b.latestValuation ?? -1;
         return sortOrder === "asc" ? va - vb : vb - va;
       });
     } else if (sortField === "assets") {
       result.sort((a, b) => {
-        const aa = a.netAssets ?? (sortOrder === "asc" ? 9999999999999 : -1);
-        const ab = b.netAssets ?? (sortOrder === "asc" ? 9999999999999 : -1);
+        const aa = a.netAssetsPln ?? a.netAssets ?? (sortOrder === "asc" ? 9999999999999 : -1);
+        const ab = b.netAssetsPln ?? b.netAssets ?? (sortOrder === "asc" ? 9999999999999 : -1);
         return sortOrder === "asc" ? aa - ab : ab - aa;
       });
     } else if (sortField === "return") {
@@ -632,7 +653,7 @@ export function SubfundsCatalog({
             </div>
           </div>
 
-          {/* Row 2: Legal Type & Advanced Filters toggle */}
+          {/* Row 2: Legal Type */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs sm:text-sm">
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-slate-600 dark:text-slate-400 sm:w-[116px] shrink-0 font-medium font-sans flex items-center gap-1.5">
@@ -661,6 +682,42 @@ export function SubfundsCatalog({
                         <Check className="w-3.5 h-3.5 stroke-[3]" />
                       )}
                       {type === "ALL" ? t.catalog.allTypes : type}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          {/* Row 3: Currency & Actions */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs sm:text-sm">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-slate-600 dark:text-slate-400 sm:w-[116px] shrink-0 font-medium font-sans flex items-center gap-1.5">
+                <Coins className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
+                {t.catalog.currencyLabel}
+              </span>
+              <div className="flex items-center gap-1.5 flex-wrap">
+                {["ALL", "PLN", "USD", "EUR"].map((curr) => {
+                  const isSelected =
+                    curr === "ALL"
+                      ? selectedCurrencies.length === 0
+                      : selectedCurrencies.includes(curr);
+
+                  return (
+                    <button
+                      key={curr}
+                      onClick={() => toggleCurrency(curr)}
+                      aria-pressed={isSelected}
+                      className={`inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-medium transition-all cursor-pointer ${
+                        isSelected
+                          ? "bg-[#044CD0] text-white shadow-xs font-bold border border-blue-400/60"
+                          : "bg-white dark:bg-[#030a16] text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-white hover:border-[#044CD0] dark:hover:border-[#044CD0]/60 hover:bg-blue-50/70 dark:hover:bg-[#071938]"
+                      }`}
+                    >
+                      {isSelected && curr !== "ALL" && (
+                        <Check className="w-3.5 h-3.5 stroke-[3]" />
+                      )}
+                      {curr === "ALL" ? t.catalog.allCurrencies : curr}
                     </button>
                   );
                 })}
@@ -1157,6 +1214,20 @@ export function SubfundsCatalog({
               </button>
             ))}
 
+            {/* Currency chips */}
+            {selectedCurrencies.map((curr) => (
+              <button
+                key={curr}
+                type="button"
+                onClick={() => toggleCurrency(curr)}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-300 border border-blue-200 dark:border-[#044CD0]/40 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
+                title={`Usuń: ${curr}`}
+              >
+                <span>{curr}</span>
+                <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
+              </button>
+            ))}
+
             {/* Category chips */}
             {selectedCategories.map((catId) => (
               <button
@@ -1341,6 +1412,14 @@ export function SubfundsCatalog({
                               ({formatDate(item.latestValuationDate)})
                             </span>
                           )}
+                          {item.currency && item.currency !== "PLN" && item.latestValuationPln && (
+                            <span
+                              className="text-[10px] text-blue-600 dark:text-blue-400 font-medium ml-1 cursor-help"
+                              title={`Wycena w PLN wg kursu NBP: ${formatCurrency(item.latestValuationPln, "PLN")}`}
+                            >
+                              (≈ {formatCurrency(item.latestValuationPln, "PLN")})
+                            </span>
+                          )}
                         </span>
                       </div>
                     )}
@@ -1358,6 +1437,14 @@ export function SubfundsCatalog({
                           {item.netAssetsDate && (
                             <span className="text-[10px] text-slate-500 font-normal ml-0.5">
                               ({formatDate(item.netAssetsDate)})
+                            </span>
+                          )}
+                          {item.currency && item.currency !== "PLN" && item.netAssetsPln && (
+                            <span
+                              className="text-[10px] text-blue-600 dark:text-blue-400 font-medium ml-1 cursor-help"
+                              title={`Aktywa w PLN wg kursu NBP: ${formatCurrency(item.netAssetsPln, "PLN")}`}
+                            >
+                              (≈ {formatLargeNumber(item.netAssetsPln, "PLN")})
                             </span>
                           )}
                         </span>
@@ -1636,6 +1723,14 @@ export function SubfundsCatalog({
                               valueClassName="font-bold text-slate-900 dark:text-slate-200 text-xs sm:text-sm"
                               unitClassName="text-[10px] font-medium text-slate-500 dark:text-slate-400"
                             />
+                            {item.currency && item.currency !== "PLN" && item.latestValuationPln && (
+                              <div
+                                className="text-[10px] text-blue-600 dark:text-blue-400 font-medium cursor-help"
+                                title={`Wycena w PLN wg kursu NBP: ${formatCurrency(item.latestValuationPln, "PLN")}`}
+                              >
+                                ≈ {formatCurrency(item.latestValuationPln, "PLN")}
+                              </div>
+                            )}
                             {item.latestValuationDate && (
                               <div className="text-[10px] text-slate-500">
                                 {formatDate(item.latestValuationDate)}
@@ -1655,6 +1750,14 @@ export function SubfundsCatalog({
                               valueClassName="font-bold text-slate-900 dark:text-slate-200 text-xs sm:text-sm"
                               unitClassName="text-[10px] font-medium text-slate-500 dark:text-slate-400"
                             />
+                            {item.currency && item.currency !== "PLN" && item.netAssetsPln && (
+                              <div
+                                className="text-[10px] text-blue-600 dark:text-blue-400 font-medium cursor-help"
+                                title={`Aktywa w PLN wg kursu NBP: ${formatCurrency(item.netAssetsPln, "PLN")}`}
+                              >
+                                ≈ {formatLargeNumber(item.netAssetsPln, "PLN")}
+                              </div>
+                            )}
                             {item.netAssetsDate && (
                               <div className="text-[10px] text-slate-500">
                                 {formatDate(item.netAssetsDate)}

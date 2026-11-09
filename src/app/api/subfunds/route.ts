@@ -27,6 +27,12 @@ export async function GET(request: NextRequest) {
     ? categoryParam.split(",").map((s) => s.slice(0, 80).trim()).filter((s) => s && s !== "ALL")
     : undefined;
 
+  // Support both multi 'currencies' and single 'currency'
+  const currencyParam = searchParams.get("currencies") || searchParams.get("currency") || undefined;
+  const currencies = currencyParam
+    ? currencyParam.split(",").map((s) => s.slice(0, 10).trim().toUpperCase()).filter((s) => s && s !== "ALL")
+    : undefined;
+
   const page = Math.max(0, parseInt(searchParams.get("page") || "0", 10) || 0);
   const size = Math.max(1, Math.min(parseInt(searchParams.get("size") || "24", 10) || 24, 100));
   const rawSort = searchParams.get("sort") || "name,asc";
@@ -68,6 +74,7 @@ export async function GET(request: NextRequest) {
         classifications,
         fundTypes,
         categories,
+        currencies,
         page,
         size,
         sort,
