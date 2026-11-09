@@ -81,6 +81,7 @@ export const en: Translations = {
     investableProductsDesc: "FIO, SFIO, and public FIZ (incl. ETFs)",
     companies: "Investment Fund Managers",
     companiesDesc: "Licensed by the KNF",
+    companiesLink: "TFI Directory",
     educationalNote: "The catalog displays direct investment products with individual valuations and Key Information Documents (KID). The listing includes segregated subfunds from umbrella structures and funds without segregated subfunds.",
     marketTrend: "Net assets dynamics (12 mo.):",
     trendRange: "{start} → {end}",

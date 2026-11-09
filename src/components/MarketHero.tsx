@@ -181,11 +181,14 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
             </div>
           </div>
 
-          {/* Card 3: Fund Managers (TFI) */}
-          <div className="bg-slate-50/70 dark:bg-[#030a16]/85 border border-slate-200/80 dark:border-[#0e274d] hover:border-[#044CD0]/60 rounded-xl sm:rounded-2xl px-4 pt-3.5 pb-3 sm:px-5 sm:pt-4 sm:pb-3.5 transition-all shadow-xs dark:shadow-md group flex flex-col justify-between">
+          {/* Card 3: Fund Managers (TFI) - Link to /tfi */}
+          <Link
+            href="/tfi"
+            className="bg-slate-50/70 dark:bg-[#030a16]/85 border border-slate-200/80 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-[#044CD0]/80 hover:bg-white dark:hover:bg-[#071938] rounded-xl sm:rounded-2xl px-4 pt-3.5 pb-3 sm:px-5 sm:pt-4 sm:pb-3.5 transition-all shadow-xs dark:shadow-md hover:shadow-md group flex flex-col justify-between cursor-pointer"
+          >
             <div>
               <div className="flex items-start justify-between gap-1.5 sm:gap-2 mb-1 sm:mb-1.5">
-                <span className="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 leading-snug">
+                <span className="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 leading-snug group-hover:text-[#044CD0] dark:group-hover:text-blue-400 transition-colors">
                   {t.hero.companies}
                 </span>
                 <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-[#044CD0] group-hover:scale-110 transition-transform shrink-0 mt-0.5" />
@@ -194,10 +197,14 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
                 {formatNumber(stats.companiesCount, 0)}
               </div>
             </div>
-            <div className="text-xs text-slate-500 dark:text-slate-400 mt-1.5 line-clamp-2 leading-snug">
-              {t.hero.companiesDesc}
+            <div className="text-xs text-slate-500 dark:text-slate-400 mt-1.5 flex items-center justify-between gap-2 leading-snug">
+              <span className="truncate">{t.hero.companiesDesc}</span>
+              <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#044CD0] dark:text-[#60a5fa] group-hover:translate-x-0.5 transition-transform shrink-0">
+                <span>{t.hero.companiesLink}</span>
+                <ArrowRight className="w-3 h-3" />
+              </span>
             </div>
-          </div>
+          </Link>
         </div>
 
         {/* Dynamic Market Assets Trend Strip with Scaled Domain */}
