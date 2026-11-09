@@ -1383,7 +1383,7 @@ export function SubfundsCatalog({
                 <tr>
                   <th
                     onClick={() => handleSort("name")}
-                    className="py-2 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group whitespace-nowrap"
+                    className="py-2 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group whitespace-nowrap w-full min-w-[200px]"
                   >
                     <div className="flex items-center gap-1.5">
                       <span>{t.catalog.table.name}</span>
@@ -1412,7 +1412,7 @@ export function SubfundsCatalog({
                   <th className="py-2 px-1 sm:px-1.5 font-semibold whitespace-nowrap text-center text-xs w-[48px]">{t.catalog.table.status}</th>
                   <th
                     onClick={() => handleSort("risk")}
-                    className="py-2 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group text-xs leading-tight w-[58px]"
+                    className="py-2 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group text-xs leading-tight w-[68px]"
                   >
                     <div className="flex items-center justify-center gap-1">
                       <div className="text-center">
@@ -1477,7 +1477,7 @@ export function SubfundsCatalog({
                       )}
                     </div>
                   </th>
-                  <th className="py-2 px-2 sm:px-2.5 text-right font-semibold whitespace-nowrap text-xs w-[120px]">
+                  <th className="py-2 px-2 sm:px-2.5 text-right font-semibold whitespace-nowrap text-xs w-[145px]">
                     <span className="sr-only">{t.catalog.table.actions}</span>
                   </th>
                 </tr>
@@ -1492,7 +1492,7 @@ export function SubfundsCatalog({
                       key={item.subfundId}
                       className="bg-white dark:bg-transparent hover:bg-slate-50 dark:hover:bg-[#071938]/60 transition-colors group"
                     >
-                      <td className="py-2.5 px-2 sm:px-2.5 min-w-[160px] max-w-[280px] lg:max-w-[360px]">
+                      <td className="py-2.5 px-2 sm:px-2.5 min-w-[200px]">
                         <Link
                           href={`/fundusze/${item.subfundId}`}
                           title={item.name}
@@ -1533,7 +1533,7 @@ export function SubfundsCatalog({
                           liquidationEndDate={item.liquidationEndDate}
                         />
                       </td>
-                      <td className="py-2.5 px-2 sm:px-2.5 text-center whitespace-nowrap w-[58px]">
+                      <td className="py-2.5 px-2 sm:px-2.5 text-center whitespace-nowrap w-[68px]">
                         <RiskBadge level={item.riskLevel} showLabel={false} showSriPrefix={false} stacked={true} size="sm" />
                       </td>
                       <td className="py-2.5 px-2 sm:px-2.5 whitespace-nowrap font-medium text-slate-800 dark:text-slate-200 text-xs sm:text-sm">
@@ -1558,8 +1558,8 @@ export function SubfundsCatalog({
                           <span className="text-slate-400 dark:text-slate-600">—</span>
                         )}
                       </td>
-                      <td className="py-2.5 px-2 sm:px-2.5 text-right whitespace-nowrap w-[125px]">
-                        <div className="flex items-center justify-end gap-1">
+                      <td className="py-2.5 px-2 sm:px-2.5 text-right whitespace-nowrap w-[145px]">
+                        <div className="flex items-center justify-end gap-1.5">
                           <button
                             onClick={() =>
                               togglePortfolioFund({
@@ -1569,7 +1569,7 @@ export function SubfundsCatalog({
                                 category: item.category,
                               })
                             }
-                            className={`w-7 h-7 flex items-center justify-center rounded-lg border text-xs transition-colors shadow-2xs ${
+                            className={`w-8 h-8 flex items-center justify-center rounded-xl border text-xs transition-colors shadow-2xs ${
                               inPortfolio
                                 ? "bg-emerald-600 text-white border-emerald-400"
                                 : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-blue-200 dark:border-[#0e274d] hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-400"
@@ -1577,8 +1577,15 @@ export function SubfundsCatalog({
                             title={inPortfolio ? t.portfolio.removeFromPortfolio : t.portfolio.addToPortfolio}
                             aria-label={inPortfolio ? t.portfolio.removeFromPortfolio : t.portfolio.addToPortfolio}
                           >
-                            {inPortfolio ? <Check className="w-3.5 h-3.5" /> : <Briefcase className="w-3.5 h-3.5" />}
+                            {inPortfolio ? <Check className="w-4 h-4" /> : <Briefcase className="w-4 h-4" />}
                           </button>
+                          <Link
+                            href={`/fundusze/${item.subfundId}`}
+                            data-component="fund-details-btn"
+                            className="h-8 px-2.5 flex items-center text-xs rounded-xl bg-white hover:bg-blue-50 dark:bg-[#030a16] dark:hover:bg-[#071938] border border-blue-200 dark:border-[#0e274d] text-slate-700 dark:text-slate-200 font-medium transition-colors shadow-2xs"
+                          >
+                            {t.common.profile}
+                          </Link>
                           <button
                             onClick={() =>
                               toggleFund({
@@ -1588,7 +1595,7 @@ export function SubfundsCatalog({
                                 category: item.category,
                               })
                             }
-                            className={`w-7 h-7 flex items-center justify-center rounded-lg border text-xs transition-colors shadow-2xs ${
+                            className={`w-8 h-8 flex items-center justify-center rounded-xl border text-xs transition-colors shadow-2xs ${
                               inCompare
                                 ? "bg-[#044CD0] text-white border-blue-400"
                                 : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-blue-200 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-blue-400"
@@ -1596,15 +1603,8 @@ export function SubfundsCatalog({
                             title={inCompare ? t.catalog.card.removeFromCompare : t.common.compare}
                             aria-label={inCompare ? t.catalog.card.removeFromCompare : t.common.compare}
                           >
-                            <Scale className="w-3.5 h-3.5" />
+                            <Scale className="w-4 h-4" />
                           </button>
-                          <Link
-                            href={`/fundusze/${item.subfundId}`}
-                            data-component="fund-details-btn"
-                            className="h-7 px-2 flex items-center text-xs rounded-lg bg-white hover:bg-blue-50 dark:bg-[#030a16] dark:hover:bg-[#071938] border border-blue-200 dark:border-[#0e274d] text-slate-700 dark:text-slate-200 font-medium transition-colors shadow-2xs"
-                          >
-                            {t.common.profile}
-                          </Link>
                         </div>
                       </td>
                     </tr>

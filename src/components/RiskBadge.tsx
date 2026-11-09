@@ -98,10 +98,10 @@ export function RiskBadge({
         title={tooltipText}
       >
         <div className="flex items-baseline gap-0.5 leading-none">
-          <span className={`text-xs font-black tracking-tight ${info.textColor}`}>
+          <span className={`text-[15px] font-black tracking-tight ${info.textColor}`}>
             {showSriPrefix ? "SRI " : ""}{level}
           </span>
-          <span className="text-[10px] font-semibold text-slate-400 dark:text-slate-500">
+          <span className="text-xs font-semibold text-slate-400 dark:text-slate-500">
             /7
           </span>
         </div>
@@ -110,7 +110,7 @@ export function RiskBadge({
             <span
               key={num}
               data-active={num <= level ? "true" : "false"}
-              className={`w-1.5 h-1 rounded-full ${
+              className={`w-1.5 h-1.5 rounded-full ${
                 num <= level ? info.dotColor : "bg-slate-200 dark:bg-slate-800"
               }`}
             />
