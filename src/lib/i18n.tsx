@@ -21,8 +21,8 @@ interface I18nContextType {
   formatCurrency: (value: number | null | undefined, currency?: string) => string;
   formatPercent: (value: number | null | undefined, digits?: number) => string;
   formatDate: (dateString: string | null | undefined) => string;
-  formatLargeNumber: (value: number | null | undefined) => string;
-  formatLargeNumberParts: (value: number | null | undefined) => { value: string; unit: string };
+  formatLargeNumber: (value: number | null | undefined, currency?: string) => string;
+  formatLargeNumberParts: (value: number | null | undefined, currency?: string) => { value: string; unit: string };
 }
 
 const I18nContext = createContext<I18nContextType | null>(null);
@@ -67,8 +67,8 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
         formatCurrency: (val, curr) => formatCurrency(val, curr, locale),
         formatPercent: (val, dig) => formatPercent(val, dig, locale),
         formatDate: (d) => formatDate(d, locale),
-        formatLargeNumber: (val) => formatLargeNumber(val, locale),
-        formatLargeNumberParts: (val) => formatLargeNumberParts(val, locale),
+        formatLargeNumber: (val, curr) => formatLargeNumber(val, locale, curr),
+        formatLargeNumberParts: (val, curr) => formatLargeNumberParts(val, locale, curr),
       }}
     >
       {children}
@@ -88,8 +88,8 @@ export function useTranslation() {
       formatCurrency: (val: number | null | undefined, curr?: string) => formatCurrency(val, curr, "pl"),
       formatPercent: (val: number | null | undefined, dig?: number) => formatPercent(val, dig, "pl"),
       formatDate: (d: string | null | undefined) => formatDate(d, "pl"),
-      formatLargeNumber: (val: number | null | undefined) => formatLargeNumber(val, "pl"),
-      formatLargeNumberParts: (val: number | null | undefined) => formatLargeNumberParts(val, "pl"),
+      formatLargeNumber: (val: number | null | undefined, curr?: string) => formatLargeNumber(val, "pl", curr),
+      formatLargeNumberParts: (val: number | null | undefined, curr?: string) => formatLargeNumberParts(val, "pl", curr),
     };
   }
   return ctx;

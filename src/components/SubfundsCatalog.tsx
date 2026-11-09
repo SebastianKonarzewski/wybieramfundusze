@@ -1329,7 +1329,7 @@ export function SubfundsCatalog({
                       <div className="col-span-3 pt-2 flex items-center justify-between text-slate-500 dark:text-slate-400 text-[11px] border-t border-dashed border-blue-100 dark:border-[#0e274d]/80">
                         <span>{t.catalog.card.latestValuation}</span>
                         <span className="font-bold text-slate-900 dark:text-slate-200">
-                          {formatCurrency(item.latestValuation)}
+                          {formatCurrency(item.latestValuation, item.currency || "PLN")}
                           {item.latestValuationDate && (
                             <span className="text-[10px] text-slate-500 font-normal ml-1">
                               ({formatDate(item.latestValuationDate)})
@@ -1343,7 +1343,7 @@ export function SubfundsCatalog({
                       <div className="col-span-3 pt-1.5 flex items-center justify-between text-slate-500 dark:text-slate-400 text-[11px]">
                         <span>{t.catalog.card.netAssets}</span>
                         <span className="font-bold text-slate-900 dark:text-slate-200">
-                          {formatLargeNumber(item.netAssets)}
+                          {formatLargeNumber(item.netAssets, item.currency || "PLN")}
                           {item.netAssetsDate && (
                             <span className="text-[10px] text-slate-500 font-normal ml-1">
                               ({formatDate(item.netAssetsDate)})
@@ -1620,7 +1620,7 @@ export function SubfundsCatalog({
                         {item.latestValuation ? (
                           <div>
                             <span className="font-bold text-slate-900 dark:text-slate-200 text-xs sm:text-sm">
-                              {formatCurrency(item.latestValuation)}
+                              {formatCurrency(item.latestValuation, item.currency || "PLN")}
                             </span>
                             {item.latestValuationDate && (
                               <div className="text-[10px] text-slate-500">
@@ -1636,7 +1636,7 @@ export function SubfundsCatalog({
                         {item.netAssets !== null && item.netAssets !== undefined ? (
                           <div>
                             <span className="font-bold text-slate-900 dark:text-slate-200 text-xs sm:text-sm">
-                              {formatLargeNumber(item.netAssets)}
+                              {formatLargeNumber(item.netAssets, item.currency || "PLN")}
                             </span>
                             {item.netAssetsDate && (
                               <div className="text-[10px] text-slate-500">

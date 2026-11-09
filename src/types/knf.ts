@@ -107,6 +107,7 @@ export interface KNFSubfund {
   isActive?: boolean;
   isFundOnly?: boolean;
   companyId?: number;
+  currency?: string | null;
   _links?: KNFLink[];
 }
 
@@ -119,6 +120,7 @@ export interface KNFSubfundDetail {
   type: string;
   classification?: string | null; // np. "akcji", "dłużne", "mieszane"
   category?: string | null;       // np. "akcji zagranicznych", "skarbowy"
+  currency?: string | null;
   liquidationStartDate?: string | null;
   liquidationEndDate?: string | null;
   isLiquidating: boolean;
@@ -245,6 +247,7 @@ export interface SubfundCardModel extends KNFSubfund {
   benchmark?: string | null;
   latestValuation?: number | null;
   latestValuationDate?: string | null;
+  currency?: string | null;
   returnRate1M?: number | null;
   returnRate3M?: number | null;
   returnRate1Y?: number | null;
@@ -297,6 +300,7 @@ export interface RuntimeSubfundMeta {
   benchmark?: string | null;
   latestValuation?: number | null;
   latestValuationDate?: string | null;
+  currency?: string | null;
   returnRate1M?: number | null;
   returnRate3M?: number | null;
   returnRate1Y?: number | null;

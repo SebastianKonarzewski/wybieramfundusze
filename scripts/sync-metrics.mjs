@@ -176,6 +176,7 @@ async function main() {
           }
 
           const latestAsset = assetRes?.content?.[0];
+          const cur = latestVal?.currency || latestAsset?.currency || "PLN";
 
           metricsMap[String(prod.id)] = {
             ...rates,
@@ -186,6 +187,7 @@ async function main() {
             tc,
             a: latestAsset?.netAssets ?? null,
             ad: latestAsset?.date ?? null,
+            cur,
           };
         } catch (err) {
           console.warn(`Error syncing prod ${prod.id}:`, err.message);

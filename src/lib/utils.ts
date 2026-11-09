@@ -108,96 +108,104 @@ export function formatDate(
 
 /**
  * Format large numbers (AUM):
- * - PL: "461,45 mld zł"
- * - EN: "PLN 461.45 bn"
+ * - PL: "461,45 mld zł" or "66,87 mln USD"
+ * - EN: "PLN 461.45 bn" or "USD 66.87 m"
  */
 export function formatLargeNumber(
   value: number | null | undefined,
-  locale: Locale = "pl"
+  locale: Locale = "pl",
+  currency: string = "PLN"
 ): string {
   if (value === null || value === undefined || isNaN(value)) return "—";
 
+  const currCode = currency === "zł" ? "PLN" : currency;
+  const currLabelPl = currCode === "PLN" ? "zł" : currCode;
+
   if (locale === "en") {
     if (value >= 1_000_000_000_000) {
-      return `PLN ${formatNumber(value / 1_000_000_000_000, 2, "en")} trn`;
+      return `${currCode} ${formatNumber(value / 1_000_000_000_000, 2, "en")} trn`;
     }
     if (value >= 1_000_000_000) {
-      return `PLN ${formatNumber(value / 1_000_000_000, 2, "en")} bn`;
+      return `${currCode} ${formatNumber(value / 1_000_000_000, 2, "en")} bn`;
     }
     if (value >= 1_000_000) {
-      return `PLN ${formatNumber(value / 1_000_000, 2, "en")} m`;
+      return `${currCode} ${formatNumber(value / 1_000_000, 2, "en")} m`;
     }
     if (value >= 1_000) {
-      return `PLN ${formatNumber(value / 1_000, 2, "en")} k`;
+      return `${currCode} ${formatNumber(value / 1_000, 2, "en")} k`;
     }
-    return `PLN ${formatNumber(value, 2, "en")}`;
+    return `${currCode} ${formatNumber(value, 2, "en")}`;
   }
 
   // Polish formatting
   if (value >= 1_000_000_000_000) {
     const val = value / 1_000_000_000_000;
-    return `${formatNumber(val, 2, "pl")} bln zł`;
+    return `${formatNumber(val, 2, "pl")} bln ${currLabelPl}`;
   }
   if (value >= 1_000_000_000) {
     const val = value / 1_000_000_000;
-    return `${formatNumber(val, 2, "pl")} mld zł`;
+    return `${formatNumber(val, 2, "pl")} mld ${currLabelPl}`;
   }
   if (value >= 1_000_000) {
     const val = value / 1_000_000;
-    return `${formatNumber(val, 2, "pl")} mln zł`;
+    return `${formatNumber(val, 2, "pl")} mln ${currLabelPl}`;
   }
   if (value >= 1_000) {
     const val = value / 1_000;
-    return `${formatNumber(val, 2, "pl")} tys. zł`;
+    return `${formatNumber(val, 2, "pl")} tys. ${currLabelPl}`;
   }
-  return `${formatNumber(value, 2, "pl")} zł`;
+  return `${formatNumber(value, 2, "pl")} ${currLabelPl}`;
 }
 
 /**
  * Format large numbers into value and unit parts:
- * - PL: { value: "399,60", unit: "mld zł" }
- * - EN: { value: "399.60", unit: "bn PLN" }
+ * - PL: { value: "399,60", unit: "mld zł" } or { value: "66,87", unit: "mln USD" }
+ * - EN: { value: "399.60", unit: "bn PLN" } or { value: "66.87", unit: "m USD" }
  */
 export function formatLargeNumberParts(
   value: number | null | undefined,
-  locale: Locale = "pl"
+  locale: Locale = "pl",
+  currency: string = "PLN"
 ): { value: string; unit: string } {
   if (value === null || value === undefined || isNaN(value)) {
     return { value: "—", unit: "" };
   }
 
+  const currCode = currency === "zł" ? "PLN" : currency;
+  const currLabelPl = currCode === "PLN" ? "zł" : currCode;
+
   if (locale === "en") {
     if (value >= 1_000_000_000_000) {
-      return { value: formatNumber(value / 1_000_000_000_000, 2, "en"), unit: "trn PLN" };
+      return { value: formatNumber(value / 1_000_000_000_000, 2, "en"), unit: `trn ${currCode}` };
     }
     if (value >= 1_000_000_000) {
-      return { value: formatNumber(value / 1_000_000_000, 2, "en"), unit: "bn PLN" };
+      return { value: formatNumber(value / 1_000_000_000, 2, "en"), unit: `bn ${currCode}` };
     }
     if (value >= 1_000_000) {
-      return { value: formatNumber(value / 1_000_000, 2, "en"), unit: "m PLN" };
+      return { value: formatNumber(value / 1_000_000, 2, "en"), unit: `m ${currCode}` };
     }
     if (value >= 1_000) {
-      return { value: formatNumber(value / 1_000, 2, "en"), unit: "k PLN" };
+      return { value: formatNumber(value / 1_000, 2, "en"), unit: `k ${currCode}` };
     }
-    return { value: formatNumber(value, 2, "en"), unit: "PLN" };
+    return { value: formatNumber(value, 2, "en"), unit: currCode };
   }
 
   // Polish formatting
   if (value >= 1_000_000_000_000) {
     const val = value / 1_000_000_000_000;
-    return { value: formatNumber(val, 2, "pl"), unit: "bln zł" };
+    return { value: formatNumber(val, 2, "pl"), unit: `bln ${currLabelPl}` };
   }
   if (value >= 1_000_000_000) {
     const val = value / 1_000_000_000;
-    return { value: formatNumber(val, 2, "pl"), unit: "mld zł" };
+    return { value: formatNumber(val, 2, "pl"), unit: `mld ${currLabelPl}` };
   }
   if (value >= 1_000_000) {
     const val = value / 1_000_000;
-    return { value: formatNumber(val, 2, "pl"), unit: "mln zł" };
+    return { value: formatNumber(val, 2, "pl"), unit: `mln ${currLabelPl}` };
   }
   if (value >= 1_000) {
     const val = value / 1_000;
-    return { value: formatNumber(val, 2, "pl"), unit: "tys. zł" };
+    return { value: formatNumber(val, 2, "pl"), unit: `tys. ${currLabelPl}` };
   }
-  return { value: formatNumber(value, 2, "pl"), unit: "zł" };
+  return { value: formatNumber(value, 2, "pl"), unit: currLabelPl };
 }

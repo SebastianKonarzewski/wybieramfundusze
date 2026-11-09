@@ -123,6 +123,7 @@ function ensureClassificationsPopulated() {
           tc?: number | null;
           a?: number | null;
           ad?: string | null;
+          cur?: string | null;
         }
       >
     )) {
@@ -134,7 +135,8 @@ function ensureClassificationsPopulated() {
           !existing ||
           existing.returnRate1Y === undefined ||
           existing.netAssets === undefined ||
-          existing.transactionCostsRate === undefined
+          existing.transactionCostsRate === undefined ||
+          existing.currency === undefined
         ) {
           runtimeClassifications.set(id, {
             ...existing,
@@ -148,6 +150,7 @@ function ensureClassificationsPopulated() {
             returnRateYTD: existing?.returnRateYTD !== undefined ? existing.returnRateYTD : m.rytd,
             latestValuation: existing?.latestValuation !== undefined ? existing.latestValuation : m.v,
             latestValuationDate: existing?.latestValuationDate !== undefined ? existing.latestValuationDate : m.vd,
+            currency: existing?.currency !== undefined ? existing.currency : (m.cur || "PLN"),
             managementFee: existing?.managementFee !== undefined ? existing.managementFee : (m.fee ?? null),
             riskLevel: existing?.riskLevel !== undefined ? existing.riskLevel : (m.risk ?? null),
             transactionCostsRate: existing?.transactionCostsRate !== undefined ? existing.transactionCostsRate : (m.tc ?? null),
@@ -193,6 +196,7 @@ export function updateRuntimeSubfund(
     latestValuation: data.latestValuation !== undefined ? data.latestValuation : existing?.latestValuation,
     latestValuationDate:
       data.latestValuationDate !== undefined ? data.latestValuationDate : existing?.latestValuationDate,
+    currency: data.currency !== undefined ? data.currency : existing?.currency || "PLN",
     returnRate1M: data.returnRate1M !== undefined ? data.returnRate1M : existing?.returnRate1M,
     returnRate3M: data.returnRate3M !== undefined ? data.returnRate3M : existing?.returnRate3M,
     returnRate1Y: data.returnRate1Y !== undefined ? data.returnRate1Y : existing?.returnRate1Y,
@@ -742,9 +746,13 @@ export const knfApi = {
         liquidationEndDate: fund.liquidationEndDate,
         riskLevel: latestKid?.riskLevel ?? null,
         managementFee: latestKid?.managementAndOtherFeesRate ?? null,
+        transactionCostsRate: latestKid?.transactionCostsRate ?? null,
         benchmark: latestKid?.benchmark ?? null,
         latestValuation: latestVal?.valuation ?? null,
         latestValuationDate: latestVal?.date ?? null,
+        netAssets: assetsRes.content?.[0]?.netAssets ?? null,
+        netAssetsDate: assetsRes.content?.[0]?.date ?? null,
+        currency: latestVal?.currency || assetsRes.content?.[0]?.currency || latestKid?.currency || undefined,
         ...returnRates,
       });
 
@@ -828,9 +836,13 @@ export const knfApi = {
       liquidationEndDate: subfund.liquidationEndDate,
       riskLevel: latestKid?.riskLevel ?? null,
       managementFee: latestKid?.managementAndOtherFeesRate ?? null,
+      transactionCostsRate: latestKid?.transactionCostsRate ?? null,
       benchmark: latestKid?.benchmark ?? null,
       latestValuation: latestVal?.valuation ?? null,
       latestValuationDate: latestVal?.date ?? null,
+      netAssets: assetsRes.content?.[0]?.netAssets ?? null,
+      netAssetsDate: assetsRes.content?.[0]?.date ?? null,
+      currency: latestVal?.currency || assetsRes.content?.[0]?.currency || latestKid?.currency || undefined,
       ...returnRates,
     });
 
@@ -949,6 +961,7 @@ export const knfApi = {
         netAssetsDate: meta?.netAssetsDate ?? null,
         latestValuation: meta?.latestValuation ?? null,
         latestValuationDate: meta?.latestValuationDate ?? null,
+        currency: meta?.currency || sf.currency || "PLN",
         returnRate1M: meta?.returnRate1M ?? null,
         returnRate3M: meta?.returnRate3M ?? null,
         returnRate1Y: meta?.returnRate1Y ?? null,
@@ -1337,6 +1350,7 @@ export const knfApi = {
                 benchmark: kidDetail?.benchmark ?? null,
                 latestValuation: latestVal?.valuation ?? null,
                 latestValuationDate: latestVal?.date ?? null,
+                currency: latestVal?.currency || latestAsset?.currency || kidDetail?.currency || "PLN",
                 ...returnRates,
               });
 
@@ -1374,6 +1388,7 @@ export const knfApi = {
               benchmark: kid?.benchmark ?? null,
               latestValuation: latestVal?.valuation ?? null,
               latestValuationDate: latestVal?.date ?? null,
+              currency: latestVal?.currency || latestAsset?.currency || kid?.currency || "PLN",
               ...returnRates,
             });
 

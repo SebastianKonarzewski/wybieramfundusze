@@ -34,6 +34,7 @@ export function AssetsChart({ assets }: { assets: KNFAsset[] }) {
   }
 
   const latest = chronological[chronological.length - 1];
+  const currency = latest.currency || "PLN";
 
   return (
     <div className="bg-[#051329] border border-[#0e274d] rounded-2xl p-5 shadow-md">
@@ -44,7 +45,7 @@ export function AssetsChart({ assets }: { assets: KNFAsset[] }) {
           </div>
           <div className="flex items-baseline gap-3">
             <span className="text-2xl font-extrabold text-slate-100">
-              {formatLargeNumber(latest.netAssets)}
+              {formatLargeNumber(latest.netAssets, currency)}
             </span>
             <span className="text-xs text-slate-400">
               ({t.assets.netAssetsOn} {formatDate(latest.date)})
@@ -52,7 +53,7 @@ export function AssetsChart({ assets }: { assets: KNFAsset[] }) {
           </div>
         </div>
         <div className="text-xs text-slate-400">
-          {t.assets.grossAssetsLabel} <strong className="text-slate-200">{formatLargeNumber(latest.assets)}</strong>
+          {t.assets.grossAssetsLabel} <strong className="text-slate-200">{formatLargeNumber(latest.assets, currency)}</strong>
         </div>
       </div>
 
@@ -94,10 +95,10 @@ export function AssetsChart({ assets }: { assets: KNFAsset[] }) {
                         {t.assets.reportLabel} {formatDate(data.date)}
                       </div>
                       <div className="text-blue-400 font-semibold">
-                        {t.assets.netAssetsLabel} {formatLargeNumber(data.netAssets)}
+                        {t.assets.netAssetsLabel} {formatLargeNumber(data.netAssets, data.currency || currency)}
                       </div>
                       <div className="text-slate-200 font-semibold">
-                        {t.assets.grossAssetsTooltip} {formatLargeNumber(data.assets)}
+                        {t.assets.grossAssetsTooltip} {formatLargeNumber(data.assets, data.currency || currency)}
                       </div>
                     </div>
                   );
