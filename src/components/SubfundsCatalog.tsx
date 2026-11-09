@@ -1363,13 +1363,12 @@ export function SubfundsCatalog({
             </span>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm min-w-[720px] lg:min-w-0 border-collapse bg-transparent">
+            <table className="w-full text-left text-sm border-collapse bg-transparent">
               <thead className="bg-slate-50 dark:bg-[#030a16] text-xs uppercase tracking-wider text-slate-600 dark:text-slate-400 border-b border-slate-200 dark:border-[#0e274d]">
                 <tr>
-                  <th className="py-2.5 px-2 sm:px-2.5 font-semibold whitespace-nowrap">{t.catalog.table.typeCode}</th>
                   <th
                     onClick={() => handleSort("name")}
-                    className="py-2.5 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group whitespace-nowrap"
+                    className="py-2 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group whitespace-nowrap"
                   >
                     <div className="flex items-center gap-1.5">
                       <span>{t.catalog.table.name}</span>
@@ -1380,14 +1379,31 @@ export function SubfundsCatalog({
                       )}
                     </div>
                   </th>
-                  <th className="py-2.5 px-2 sm:px-2.5 font-semibold whitespace-nowrap">{t.catalog.table.assetClass}</th>
-                  <th className="py-2.5 px-1.5 sm:px-2 font-semibold whitespace-nowrap text-center w-[52px]">{t.catalog.table.status}</th>
+                  <th className="py-2 px-2 sm:px-2.5 font-semibold text-xs leading-tight">
+                    <div>
+                      {locale === "en" ? (
+                        <>
+                          <span>Asset</span>
+                          <span className="block text-[11px] opacity-80 font-normal">Class</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>Klasa</span>
+                          <span className="block text-[11px] opacity-80 font-normal">aktywów</span>
+                        </>
+                      )}
+                    </div>
+                  </th>
+                  <th className="py-2 px-1 sm:px-1.5 font-semibold whitespace-nowrap text-center text-xs w-[46px]">{t.catalog.table.status}</th>
                   <th
                     onClick={() => handleSort("risk")}
-                    className="py-2.5 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group whitespace-nowrap"
+                    className="py-2 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group text-xs leading-tight"
                   >
-                    <div className="flex items-center gap-1.5">
-                      <span>{t.catalog.table.risk}</span>
+                    <div className="flex items-center gap-1">
+                      <div>
+                        <span>{locale === "en" ? "Risk" : "Ryzyko"}</span>
+                        <span className="block text-[11px] opacity-80 font-normal">(SRI)</span>
+                      </div>
                       {sortField === "risk" ? (
                         sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0]" />
                       ) : (
@@ -1397,10 +1413,13 @@ export function SubfundsCatalog({
                   </th>
                   <th
                     onClick={() => handleSort("fee")}
-                    className="py-2.5 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group whitespace-nowrap"
+                    className="py-2 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group text-xs leading-tight"
                   >
-                    <div className="flex items-center gap-1.5">
-                      <span>{t.catalog.table.fee}</span>
+                    <div className="flex items-center gap-1">
+                      <div>
+                        <span>{locale === "en" ? "Ongoing" : "Opłata"}</span>
+                        <span className="block text-[11px] opacity-80 font-normal">{locale === "en" ? "Fee" : "stała"}</span>
+                      </div>
                       {sortField === "fee" ? (
                         sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0]" />
                       ) : (
@@ -1410,16 +1429,16 @@ export function SubfundsCatalog({
                   </th>
                   <th
                     onClick={() => handleSort("return")}
-                    className="py-2.5 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group whitespace-nowrap"
+                    className="py-2 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group text-xs leading-tight"
                     title={`${t.catalog.table.returnRate} (${activePeriodLabel})`}
                   >
-                    <div className="flex items-center gap-1.5">
-                      <span>
-                        {t.catalog.table.returnRate}
-                        <span className="ml-1 text-[11px] font-bold text-[#044CD0] dark:text-[#60a5fa]">
+                    <div className="flex items-center gap-1">
+                      <div>
+                        <span>{t.catalog.table.returnRate}</span>
+                        <span className="block text-[11px] font-bold text-[#044CD0] dark:text-[#60a5fa]">
                           ({activePeriodLabel})
                         </span>
-                      </span>
+                      </div>
                       {sortField === "return" ? (
                         sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0]" />
                       ) : (
@@ -1429,10 +1448,13 @@ export function SubfundsCatalog({
                   </th>
                   <th
                     onClick={() => handleSort("valuation")}
-                    className="py-2.5 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group whitespace-nowrap"
+                    className="py-2 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group text-xs leading-tight"
                   >
-                    <div className="flex items-center gap-1.5">
-                      <span>{t.catalog.table.valuation}</span>
+                    <div className="flex items-center gap-1">
+                      <div>
+                        <span>{locale === "en" ? "Latest" : "Ostatnia"}</span>
+                        <span className="block text-[11px] opacity-80 font-normal">{locale === "en" ? "NAV" : "wycena"}</span>
+                      </div>
                       {sortField === "valuation" ? (
                         sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0]" />
                       ) : (
@@ -1440,7 +1462,7 @@ export function SubfundsCatalog({
                       )}
                     </div>
                   </th>
-                  <th className="py-2.5 px-2 sm:px-2.5 text-right font-semibold whitespace-nowrap w-[125px]">{t.catalog.table.actions}</th>
+                  <th className="py-2 px-2 sm:px-2.5 text-right font-semibold whitespace-nowrap text-xs w-[120px]">{t.catalog.table.actions}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-[#0e274d]/70 text-slate-800 dark:text-slate-300">
@@ -1453,22 +1475,24 @@ export function SubfundsCatalog({
                       key={item.subfundId}
                       className="bg-white dark:bg-transparent hover:bg-slate-50 dark:hover:bg-[#071938]/60 transition-colors group"
                     >
-                      <td className="py-2.5 px-2 sm:px-2.5 whitespace-nowrap">
-                        <span className="font-bold text-xs bg-white dark:bg-[#030a16] border border-blue-200 dark:border-[#0e274d] px-1.5 py-0.5 rounded text-[#044CD0] dark:text-blue-300 shadow-2xs">
-                          {item.name.toUpperCase().includes("ETF") ? "ETF" : item.type}
-                        </span>
-                        <div className="text-[10px] text-slate-500 font-mono mt-0.5">
-                          {item.nationalCode}
-                        </div>
-                      </td>
-                      <td className="py-2.5 px-2 sm:px-2.5 min-w-[150px]">
+                      <td className="py-2.5 px-2 sm:px-2.5 min-w-[160px]">
                         <Link
                           href={`/fundusze/${item.subfundId}`}
                           title={item.name}
-                          className="font-semibold text-slate-900 dark:text-slate-100 hover:text-[#044CD0] dark:hover:text-[#60a5fa] transition-colors block truncate max-w-[170px] sm:max-w-[210px] md:max-w-[240px] lg:max-w-[270px] xl:max-w-[340px]"
+                          className="font-semibold text-slate-900 dark:text-slate-100 hover:text-[#044CD0] dark:hover:text-[#60a5fa] transition-colors block truncate max-w-[190px] sm:max-w-[240px] md:max-w-[280px] lg:max-w-[340px] xl:max-w-[420px]"
                         >
                           {item.name}
                         </Link>
+                        <div className="flex items-center gap-1.5 mt-0.5">
+                          <span className="font-bold text-[10px] bg-white dark:bg-[#030a16] border border-blue-200 dark:border-[#0e274d] px-1.5 py-0.2 rounded text-[#044CD0] dark:text-blue-300 shadow-2xs">
+                            {item.name.toUpperCase().includes("ETF") ? "ETF" : item.type}
+                          </span>
+                          {item.nationalCode && (
+                            <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">
+                              {item.nationalCode}
+                            </span>
+                          )}
+                        </div>
                       </td>
                       <td className="py-2.5 px-2 sm:px-2.5 whitespace-nowrap">
                         <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-xs font-medium bg-white dark:bg-[#030a16] border border-blue-200 dark:border-[#0e274d] text-slate-700 dark:text-slate-300 capitalize shadow-2xs">
