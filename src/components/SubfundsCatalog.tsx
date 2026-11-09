@@ -1297,29 +1297,6 @@ export function SubfundsCatalog({
                 {Math.max(1, pageInfo.totalPages)}
               </strong>
             </span>
-            {/* Desktop Quick Page Size Selector */}
-            <span className="text-slate-300 dark:text-slate-700 hidden lg:inline">•</span>
-            <div className="hidden lg:inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 select-none">
-              <span>{t.catalog.perPage}</span>
-              <div className="inline-flex items-center bg-slate-100 dark:bg-[#030a16] p-0.5 rounded-lg border border-slate-300/80 dark:border-[#0e274d] shadow-2xs">
-                {pageSizeOptions.map((opt) => (
-                  <button
-                    key={opt}
-                    type="button"
-                    onClick={() => handlePageSizeChange(opt)}
-                    aria-pressed={currentPageSize === opt}
-                    className={`px-2 py-0.5 rounded text-[11px] font-semibold transition-all cursor-pointer ${
-                      currentPageSize === opt
-                        ? "bg-[#044CD0] text-white shadow-2xs font-bold"
-                        : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-[#071938]"
-                    }`}
-                    title={`${locale === "en" ? "Show" : "Pokaż"} ${opt} ${locale === "en" ? (viewMode === "grid" ? "cards per page" : "rows per page") : (viewMode === "grid" ? "kafelków na stronę" : "wierszy na stronę")}`}
-                  >
-                    {opt}
-                  </button>
-                ))}
-              </div>
-            </div>
             {isPending && (
               <span className="inline-flex items-center gap-1 text-[#3b82f6]">
                 <RefreshCw className="w-3 h-3 animate-spin" /> {t.common.filtering}
