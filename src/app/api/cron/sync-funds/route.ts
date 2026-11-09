@@ -30,14 +30,16 @@ export async function GET(request: NextRequest) {
   }
 
   const searchParams = request.nextUrl.searchParams;
-  const mode = searchParams.get("mode") || "quick";
-  const limit = parseInt(searchParams.get("limit") || (mode === "quick" ? "50" : "500"), 10);
-  const delayMs = parseInt(searchParams.get("delay") || "50", 10);
+  const modeParam = searchParams.get("mode");
+  const mode = (modeParam === "quick" ? "quick" : "full") as "quick" | "full";
+  const rawLimit = searchParams.get("limit");
+  const limit = rawLimit ? parseInt(rawLimit, 10) : undefined;
+  const delayMs = parseInt(searchParams.get("delay") || "25", 10);
 
-  console.log(`[Cron] Sync started at ${new Date().toISOString()} (mode=${mode}, limit=${limit})`);
+  console.log(`[Cron] Sync started at ${new Date().toISOString()} (mode=${mode}${limit ? `, limit=${limit}` : " [all active products]"})`);
 
   try {
-    const result = await knfApi.syncFunds({ limit, delayMs });
+    const result = await knfApi.syncFunds({ mode, limit, delayMs });
     console.log(`[Cron] Sync finished successfully: updated ${result.updatedCount} funds in ${result.durationMs}ms`);
 
     // Invalidate Next.js Data Cache so fresh data is served immediately

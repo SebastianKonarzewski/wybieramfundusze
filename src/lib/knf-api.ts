@@ -924,31 +924,81 @@ export const knfApi = {
   // Nocna synchronizacja / odświeżanie danych (Cron Sync)
   // ==========================================
   async syncFunds(options?: {
+    mode?: "quick" | "full";
     limit?: number;
     delayMs?: number;
   }): Promise<{ updatedCount: number; durationMs: number }> {
     const startTime = Date.now();
-    const limit = options?.limit ?? 50;
-    const delayMs = options?.delayMs ?? 50;
+    const mode = options?.mode ?? "full";
+    const delayMs = options?.delayMs ?? 25;
+    const isFull = mode === "full";
+    const limit = options?.limit ?? (isFull ? 2000 : 50);
 
     // 1. Fetch active subfunds list
     const listRes = await this.getSubfunds({
-      size: Math.min(limit, 200),
+      size: Math.min(limit, 2000),
       includeInactive: false,
       includeLiquidating: false,
       sort: "name,asc",
     });
 
-    const subfundsToSync = listRes.content.filter((sf) => !UNQUOTED_SUBFUND_IDS.has(sf.subfundId));
+    const subfundsToSync: Array<KNFSubfund & { isFundOnly?: boolean }> = listRes.content.filter(
+      (sf) => !UNQUOTED_SUBFUND_IDS.has(sf.subfundId)
+    );
+
+    // In full mode, also include standalone funds (e.g. Beta ETF, PZU ETF)
+    if (isFull && Array.isArray(standaloneFundsData)) {
+      for (const fund of standaloneFundsData as unknown as Array<KNFSubfund & { isFundOnly?: boolean }>) {
+        if (fund.subfundId && !UNQUOTED_SUBFUND_IDS.has(fund.subfundId)) {
+          subfundsToSync.push({ ...fund, isFundOnly: true });
+        }
+      }
+    }
+
     let updatedCount = 0;
 
-    // Process in sequential chunks of 10 to avoid bursting UKNF servers
-    const chunkSize = 10;
+    // Process in sequential chunks of 20 concurrent requests
+    const chunkSize = 20;
     for (let i = 0; i < subfundsToSync.length; i += chunkSize) {
       const chunk = subfundsToSync.slice(i, i + chunkSize);
       await Promise.all(
         chunk.map(async (sf) => {
           try {
+            if (sf.isFundOnly) {
+              const [fundDetail, kidRes, valuationsRes] = await Promise.all([
+                this.getFund(sf.fundId),
+                this.getKeyInformation({ fundId: sf.fundId, size: 1 }),
+                this.getValuations({ fundId: sf.fundId, size: 1 }),
+              ]);
+
+              let kidDetail: KNFKeyInformationDetail | null = null;
+              if (kidRes.content?.[0]) {
+                kidDetail = await this.getKeyInformationDetail(kidRes.content[0].documentUuid);
+              }
+
+              const latestVal = valuationsRes.content?.[0];
+
+              updateRuntimeSubfund(sf.subfundId, {
+                name: sf.name,
+                fullName: fundDetail?.fullName || sf.fullName || sf.name,
+                classification: fundDetail?.classification || sf.classification || undefined,
+                category: fundDetail?.category || sf.category || undefined,
+                type: sf.type,
+                isActive: fundDetail?.isActive ?? sf.isActive ?? true,
+                isLiquidating: fundDetail?.isLiquidating ?? sf.isLiquidating ?? false,
+                liquidationStartDate: fundDetail?.liquidationStartDate ?? null,
+                liquidationEndDate: fundDetail?.liquidationEndDate ?? null,
+                riskLevel: kidDetail?.riskLevel ?? null,
+                managementFee: kidDetail?.managementAndOtherFeesRate ?? null,
+                benchmark: kidDetail?.benchmark ?? null,
+                latestValuation: latestVal?.valuation ?? null,
+                latestValuationDate: latestVal?.date ?? null,
+              });
+
+              updatedCount++;
+              return;
+            }
+
             const [details, kid, valuationsRes] = await Promise.all([
               this.getSubfund(sf.subfundId, undefined, true),
               this.getLatestKidForSubfund(sf.subfundId),
