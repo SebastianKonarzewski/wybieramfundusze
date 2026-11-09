@@ -43,6 +43,16 @@ interface CategoryGroup {
   options: CategoryOption[];
 }
 
+export type ReturnPeriod = "1M" | "3M" | "1Y" | "3Y" | "YTD";
+
+export const RETURN_PERIODS: { id: ReturnPeriod; labelPl: string; labelEn: string }[] = [
+  { id: "1M", labelPl: "1M", labelEn: "1M" },
+  { id: "3M", labelPl: "3M", labelEn: "3M" },
+  { id: "1Y", labelPl: "1R", labelEn: "1Y" },
+  { id: "3Y", labelPl: "3L", labelEn: "3Y" },
+  { id: "YTD", labelPl: "YTD", labelEn: "YTD" },
+];
+
 const CATEGORY_GROUPS: CategoryGroup[] = [
   {
     classId: "akcji",
@@ -156,12 +166,72 @@ export function SubfundsCatalog({
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const categoryDropdownRef = useRef<HTMLDivElement>(null);
   const resultsTopRef = useRef<HTMLDivElement>(null);
-  const [sortField, setSortField] = useState<"name" | "fee" | "risk" | "valuation">("name");
+  const [sortField, setSortField] = useState<"name" | "fee" | "risk" | "valuation" | "return">("name");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [returnPeriod, setReturnPeriod] = useState<ReturnPeriod>("1Y");
   const [currentPage, setCurrentPage] = useState(0);
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
   const [hasUserToggledView, setHasUserToggledView] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+
+  const activePeriodLabel = useMemo(() => {
+    const p = RETURN_PERIODS.find((item) => item.id === returnPeriod);
+    return locale === "en" ? p?.labelEn ?? returnPeriod : p?.labelPl ?? returnPeriod;
+  }, [returnPeriod, locale]);
+
+  const renderReturnBadge = (item: SubfundCardModel, period: ReturnPeriod) => {
+    let rate: number | null | undefined = null;
+    switch (period) {
+      case "1M":
+        rate = item.returnRate1M;
+        break;
+      case "3M":
+        rate = item.returnRate3M;
+        break;
+      case "1Y":
+        rate = item.returnRate1Y;
+        break;
+      case "3Y":
+        rate = item.returnRate3Y;
+        break;
+      case "YTD":
+        rate = item.returnRateYTD;
+        break;
+    }
+
+    if (rate === null || rate === undefined || isNaN(rate)) {
+      return <span className="text-slate-400 dark:text-slate-600 font-medium text-xs">—</span>;
+    }
+
+    const isPositive = rate > 0;
+    const isNegative = rate < 0;
+    const sign = isPositive ? "+" : "";
+    const formattedRate = `${sign}${formatPercent(rate)}`;
+
+    return (
+      <div className="flex flex-col items-start">
+        <span
+          className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-bold shadow-2xs ${
+            isPositive
+              ? "bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/60"
+              : isNegative
+              ? "bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 border border-rose-200 dark:border-rose-800/60"
+              : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700"
+          }`}
+        >
+          {formattedRate}
+        </span>
+        {period === "3Y" && item.returnRate3YAnn !== null && item.returnRate3YAnn !== undefined && (
+          <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium mt-0.5 whitespace-nowrap">
+            {t.catalog.table.annualizedSubtitle.replace(
+              "{rate}",
+              `${item.returnRate3YAnn > 0 ? "+" : ""}${formatPercent(item.returnRate3YAnn)}`
+            )}
+          </span>
+        )}
+      </div>
+    );
+  };
 
   // Sync if initialSearch prop changes (e.g. from TFI deep link navigation)
   useEffect(() => {
@@ -338,7 +408,13 @@ export function SubfundsCatalog({
           if (includeLiquidating) params.set("includeLiquidating", "true");
           params.set("page", String(currentPage));
           params.set("size", "24");
-          params.set("sort", sortField === "name" ? `name,${sortOrder}` : "name,asc");
+          if (sortField === "name") {
+            params.set("sort", `name,${sortOrder}`);
+          } else if (sortField === "return") {
+            params.set("sort", `return${returnPeriod},${sortOrder}`);
+          } else {
+            params.set("sort", "name,asc");
+          }
           params.set("enriched", "true");
 
           const res = await fetch(`/api/subfunds?${params.toString()}`);
@@ -368,22 +444,23 @@ export function SubfundsCatalog({
     currentPage,
     sortField,
     sortOrder,
+    returnPeriod,
   ]);
 
   // Handle header click sorting
-  const handleSort = (field: "name" | "fee" | "risk" | "valuation") => {
+  const handleSort = (field: "name" | "fee" | "risk" | "valuation" | "return") => {
     if (sortField === field) {
       setSortOrder(sortOrder === "asc" ? "desc" : "asc");
     } else {
       setSortField(field);
-      setSortOrder(field === "valuation" ? "desc" : "asc");
+      setSortOrder(field === "valuation" || field === "return" ? "desc" : "asc");
     }
   };
 
   // Handle combined sort dropdown change
   const handleCombinedSortChange = (combinedValue: string) => {
     const [field, order] = combinedValue.split("_") as [
-      "name" | "fee" | "risk" | "valuation",
+      "name" | "fee" | "risk" | "valuation" | "return",
       "asc" | "desc"
     ];
     if (field && order) {
@@ -423,10 +500,28 @@ export function SubfundsCatalog({
         const vb = b.latestValuation ?? -1;
         return sortOrder === "asc" ? va - vb : vb - va;
       });
+    } else if (sortField === "return") {
+      const getRate = (item: SubfundCardModel) => {
+        switch (returnPeriod) {
+          case "1M": return item.returnRate1M;
+          case "3M": return item.returnRate3M;
+          case "1Y": return item.returnRate1Y;
+          case "3Y": return item.returnRate3Y;
+          case "YTD": return item.returnRateYTD;
+          default: return item.returnRate1Y;
+        }
+      };
+      result.sort((a, b) => {
+        const ra = getRate(a);
+        const rb = getRate(b);
+        const valA = ra ?? (sortOrder === "asc" ? 9999 : -9999);
+        const valB = rb ?? (sortOrder === "asc" ? 9999 : -9999);
+        return sortOrder === "asc" ? valA - valB : valB - valA;
+      });
     }
 
     return result;
-  }, [items, sortField, sortOrder]);
+  }, [items, sortField, sortOrder, returnPeriod]);
 
   const classificationOptions = [
     { id: "ALL", label: t.catalog.classes.ALL },
@@ -865,7 +960,36 @@ export function SubfundsCatalog({
           </div>
 
           {/* Right: Integrated Sort Dropdown & View Mode Switcher */}
-          <div className="flex items-center justify-between md:justify-end gap-2.5 shrink-0">
+          <div className="flex items-center justify-between md:justify-end gap-2.5 shrink-0 flex-wrap">
+            {/* Period Switcher */}
+            <div className="h-[38px] flex items-center gap-1 bg-white dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] px-1.5 rounded-xl text-xs shadow-2xs">
+              <span className="text-slate-500 dark:text-slate-400 font-medium px-1 hidden sm:inline select-none text-xs">
+                {locale === "en" ? "Period:" : "Okres:"}
+              </span>
+              <div className="flex items-center gap-0.5">
+                {RETURN_PERIODS.map((p) => {
+                  const isSelected = returnPeriod === p.id;
+                  const label = locale === "en" ? p.labelEn : p.labelPl;
+                  return (
+                    <button
+                      key={p.id}
+                      type="button"
+                      onClick={() => setReturnPeriod(p.id)}
+                      aria-pressed={isSelected}
+                      className={`px-2 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                        isSelected
+                          ? "bg-[#044CD0] text-white shadow-xs font-bold"
+                          : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#071938]"
+                      }`}
+                      title={`${t.catalog.table.returnRate}: ${label}`}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
             {/* Integrated Sort Dropdown */}
             <div className="h-[38px] flex items-center gap-1.5 bg-white dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-[#044CD0]/60 px-2.5 sm:px-3 rounded-xl text-xs sm:text-sm transition-colors shadow-2xs">
               <ArrowUpDown className="w-3.5 h-3.5 text-[#044CD0] shrink-0" />
@@ -887,6 +1011,12 @@ export function SubfundsCatalog({
                 </option>
                 <option value="name_desc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
                   {t.catalog.sort.nameDesc}
+                </option>
+                <option value="return_desc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
+                  {t.catalog.sort.returnDesc} ({activePeriodLabel})
+                </option>
+                <option value="return_asc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
+                  {t.catalog.sort.returnAsc} ({activePeriodLabel})
                 </option>
                 <option value="fee_asc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
                   {t.catalog.sort.feeAsc}
@@ -1122,21 +1252,28 @@ export function SubfundsCatalog({
                   )}
 
                   {/* Metrics preview */}
-                  <div className="grid grid-cols-2 gap-2 pt-3 border-t border-blue-200/80 dark:border-[#0e274d] mb-4 text-xs">
+                  <div className="grid grid-cols-3 gap-2 pt-3 border-t border-blue-200/80 dark:border-[#0e274d] mb-4 text-xs">
                     <div>
-                      <span className="text-slate-500 dark:text-slate-400 text-[11px] block">{t.catalog.card.riskProfile}</span>
+                      <span className="text-slate-500 dark:text-slate-400 text-[11px] block truncate">{t.catalog.card.riskProfile}</span>
                       <RiskBadge level={item.riskLevel} showLabel={false} size="sm" />
                     </div>
 
                     <div>
-                      <span className="text-slate-500 dark:text-slate-400 text-[11px] block">{t.catalog.card.ongoingCharge}</span>
+                      <span className="text-slate-500 dark:text-slate-400 text-[11px] block truncate">{t.catalog.card.ongoingCharge}</span>
                       <span className="font-semibold text-slate-800 dark:text-slate-200">
                         {formatPercent(item.managementFee)}
                       </span>
                     </div>
 
+                    <div>
+                      <span className="text-slate-500 dark:text-slate-400 text-[11px] block truncate">
+                        {t.catalog.table.returnRate} <span className="font-bold text-[#044CD0] dark:text-[#60a5fa]">({activePeriodLabel})</span>
+                      </span>
+                      {renderReturnBadge(item, returnPeriod)}
+                    </div>
+
                     {item.latestValuation !== null && item.latestValuation !== undefined && (
-                      <div className="col-span-2 pt-1 flex items-center justify-between text-slate-500 dark:text-slate-400 text-[11px]">
+                      <div className="col-span-3 pt-2 flex items-center justify-between text-slate-500 dark:text-slate-400 text-[11px] border-t border-dashed border-blue-100 dark:border-[#0e274d]/80">
                         <span>{t.catalog.card.latestValuation}</span>
                         <span className="font-bold text-slate-900 dark:text-slate-200">
                           {formatCurrency(item.latestValuation)}
@@ -1214,7 +1351,7 @@ export function SubfundsCatalog({
             </span>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm min-w-[720px] border-collapse bg-transparent">
+            <table className="w-full text-left text-sm min-w-[840px] border-collapse bg-transparent">
               <thead className="bg-slate-50 dark:bg-[#030a16] text-xs uppercase tracking-wider text-slate-600 dark:text-slate-400 border-b border-slate-200 dark:border-[#0e274d]">
                 <tr>
                   <th className="py-3.5 px-3 sm:px-4 font-semibold whitespace-nowrap">{t.catalog.table.typeCode}</th>
@@ -1257,6 +1394,51 @@ export function SubfundsCatalog({
                       ) : (
                         <ArrowUpDown className="w-3 h-3 opacity-40 group-hover:opacity-100" />
                       )}
+                    </div>
+                  </th>
+                  <th
+                    className="py-3.5 px-3 sm:px-4 font-semibold whitespace-nowrap select-none"
+                  >
+                    <div className="flex flex-col gap-1.5">
+                      <div
+                        onClick={() => handleSort("return")}
+                        className="flex items-center gap-1.5 cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 group"
+                        title={`${t.catalog.table.returnRate} (${activePeriodLabel})`}
+                      >
+                        <span>{t.catalog.table.returnRate}</span>
+                        {sortField === "return" ? (
+                          sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0]" />
+                        ) : (
+                          <ArrowUpDown className="w-3 h-3 opacity-40 group-hover:opacity-100" />
+                        )}
+                      </div>
+                      <div
+                        className="inline-flex items-center gap-0.5 bg-slate-200/80 dark:bg-[#071938] p-0.5 rounded-lg border border-slate-300/80 dark:border-[#0e274d] w-fit"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {RETURN_PERIODS.map((p) => {
+                          const isSelected = returnPeriod === p.id;
+                          const label = locale === "en" ? p.labelEn : p.labelPl;
+                          return (
+                            <button
+                              key={p.id}
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setReturnPeriod(p.id);
+                              }}
+                              aria-pressed={isSelected}
+                              className={`px-1.5 py-0.5 rounded text-[10px] font-bold transition-all cursor-pointer ${
+                                isSelected
+                                  ? "bg-[#044CD0] text-white shadow-2xs"
+                                  : "text-slate-600 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-slate-200"
+                              }`}
+                            >
+                              {label}
+                            </button>
+                          );
+                        })}
+                      </div>
                     </div>
                   </th>
                   <th
@@ -1324,6 +1506,9 @@ export function SubfundsCatalog({
                       </td>
                       <td className="py-3 px-4 whitespace-nowrap font-medium text-slate-800 dark:text-slate-200">
                         {formatPercent(item.managementFee)}
+                      </td>
+                      <td className="py-3 px-4 whitespace-nowrap">
+                        {renderReturnBadge(item, returnPeriod)}
                       </td>
                       <td className="py-3 px-4 whitespace-nowrap">
                         {item.latestValuation ? (

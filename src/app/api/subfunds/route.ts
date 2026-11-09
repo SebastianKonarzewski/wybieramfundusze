@@ -30,7 +30,21 @@ export async function GET(request: NextRequest) {
   const page = Math.max(0, parseInt(searchParams.get("page") || "0", 10) || 0);
   const size = Math.max(1, Math.min(parseInt(searchParams.get("size") || "24", 10) || 24, 100));
   const rawSort = searchParams.get("sort") || "name,asc";
-  const sort = ["name,asc", "name,desc"].includes(rawSort) ? rawSort : "name,asc";
+  const allowedSorts = [
+    "name,asc",
+    "name,desc",
+    "return1M,asc",
+    "return1M,desc",
+    "return3M,asc",
+    "return3M,desc",
+    "return1Y,asc",
+    "return1Y,desc",
+    "return3Y,asc",
+    "return3Y,desc",
+    "returnYTD,asc",
+    "returnYTD,desc",
+  ];
+  const sort = allowedSorts.includes(rawSort) ? rawSort : "name,asc";
   const includeInactive = searchParams.get("includeInactive") === "true";
   const includeLiquidating = searchParams.get("includeLiquidating") === "true";
   const rawFundId = searchParams.get("fundId");

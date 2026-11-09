@@ -117,6 +117,12 @@ export function updateRuntimeSubfund(
     latestValuation: data.latestValuation !== undefined ? data.latestValuation : existing?.latestValuation,
     latestValuationDate:
       data.latestValuationDate !== undefined ? data.latestValuationDate : existing?.latestValuationDate,
+    returnRate1M: data.returnRate1M !== undefined ? data.returnRate1M : existing?.returnRate1M,
+    returnRate3M: data.returnRate3M !== undefined ? data.returnRate3M : existing?.returnRate3M,
+    returnRate1Y: data.returnRate1Y !== undefined ? data.returnRate1Y : existing?.returnRate1Y,
+    returnRate3Y: data.returnRate3Y !== undefined ? data.returnRate3Y : existing?.returnRate3Y,
+    returnRate3YAnn: data.returnRate3YAnn !== undefined ? data.returnRate3YAnn : existing?.returnRate3YAnn,
+    returnRateYTD: data.returnRateYTD !== undefined ? data.returnRateYTD : existing?.returnRateYTD,
     lastUpdated: Date.now(),
   };
   runtimeClassifications.set(subfundId, updated);
@@ -124,6 +130,110 @@ export function updateRuntimeSubfund(
 
 export function getRuntimeSubfund(subfundId: number): RuntimeSubfundMeta | undefined {
   return runtimeClassifications.get(subfundId);
+}
+
+export interface CalculatedReturnRates {
+  returnRate1M: number | null;
+  returnRate3M: number | null;
+  returnRate1Y: number | null;
+  returnRate3Y: number | null;
+  returnRate3YAnn: number | null;
+  returnRateYTD: number | null;
+}
+
+/**
+ * Calculates standard return rates from a list of valuations sorted by date descending.
+ */
+export function calculateReturnRates(valuations: KNFValuation[]): CalculatedReturnRates {
+  if (!valuations || valuations.length < 2) {
+    return {
+      returnRate1M: null,
+      returnRate3M: null,
+      returnRate1Y: null,
+      returnRate3Y: null,
+      returnRate3YAnn: null,
+      returnRateYTD: null,
+    };
+  }
+
+  const latest = valuations[0];
+  const latestDate = new Date(latest.date);
+  const latestVal = latest.valuation;
+
+  if (!latestVal || latestVal <= 0 || isNaN(latestDate.getTime())) {
+    return {
+      returnRate1M: null,
+      returnRate3M: null,
+      returnRate1Y: null,
+      returnRate3Y: null,
+      returnRate3YAnn: null,
+      returnRateYTD: null,
+    };
+  }
+
+  // Find closest past valuation on or before target date within margin
+  const findPastValuation = (targetDate: Date, maxMarginDays: number): number | null => {
+    const targetTime = targetDate.getTime();
+    for (const v of valuations) {
+      const vDate = new Date(v.date);
+      if (isNaN(vDate.getTime())) continue;
+      if (vDate.getTime() <= targetTime) {
+        const diffDays = Math.abs((targetTime - vDate.getTime()) / (1000 * 60 * 60 * 24));
+        if (diffDays <= maxMarginDays && v.valuation > 0) {
+          return v.valuation;
+        }
+        return null;
+      }
+    }
+    return null;
+  };
+
+  // 1 Month (~30 days, max 20 days margin)
+  const d1M = new Date(latestDate);
+  d1M.setDate(d1M.getDate() - 30);
+  const v1M = findPastValuation(d1M, 20);
+  const returnRate1M = v1M ? (latestVal - v1M) / v1M : null;
+
+  // 3 Months (~91 days, max 25 days margin)
+  const d3M = new Date(latestDate);
+  d3M.setDate(d3M.getDate() - 91);
+  const v3M = findPastValuation(d3M, 25);
+  const returnRate3M = v3M ? (latestVal - v3M) / v3M : null;
+
+  // 1 Year (~365 days, max 35 days margin)
+  const d1Y = new Date(latestDate);
+  d1Y.setDate(d1Y.getDate() - 365);
+  const v1Y = findPastValuation(d1Y, 35);
+  const returnRate1Y = v1Y ? (latestVal - v1Y) / v1Y : null;
+
+  // 3 Years (~1095 days, max 50 days margin)
+  const d3Y = new Date(latestDate);
+  d3Y.setDate(d3Y.getDate() - 1095);
+  const v3Y = findPastValuation(d3Y, 50);
+  const returnRate3Y = v3Y ? (latestVal - v3Y) / v3Y : null;
+
+  // Annualized CAGR for 3 years: (1 + R)^(1/3) - 1
+  let returnRate3YAnn: number | null = null;
+  if (returnRate3Y !== null) {
+    const totalGrowth = 1 + returnRate3Y;
+    if (totalGrowth > 0) {
+      returnRate3YAnn = Math.pow(totalGrowth, 1 / 3) - 1;
+    }
+  }
+
+  // YTD (since Jan 1 of current valuation year, max 20 days margin)
+  const dYTD = new Date(latestDate.getFullYear(), 0, 1);
+  const vYTD = findPastValuation(dYTD, 20);
+  const returnRateYTD = vYTD ? (latestVal - vYTD) / vYTD : null;
+
+  return {
+    returnRate1M,
+    returnRate3M,
+    returnRate1Y,
+    returnRate3Y,
+    returnRate3YAnn,
+    returnRateYTD,
+  };
 }
 
 export function inferClassificationFromName(name: string): { classification: string; category: string } {
@@ -513,7 +623,9 @@ export const knfApi = {
         company = await this.getCompany(fund.companyId);
       }
 
-      const latestVal = valuationsRes.content?.[0];
+      const valList = valuationsRes.content || [];
+      const latestVal = valList[0];
+      const returnRates = calculateReturnRates(valList);
 
       // Self-healing: refresh all runtime data from live UKNF response
       updateRuntimeSubfund(subfundId, {
@@ -531,6 +643,7 @@ export const knfApi = {
         benchmark: latestKid?.benchmark ?? null,
         latestValuation: latestVal?.valuation ?? null,
         latestValuationDate: latestVal?.date ?? null,
+        ...returnRates,
       });
 
       const syntheticSubfund: KNFSubfundDetail = {
@@ -596,7 +709,9 @@ export const knfApi = {
       company = await this.getCompany(fund.companyId);
     }
 
-    const latestVal = valuationsRes.content?.[0];
+    const valList = valuationsRes.content || [];
+    const latestVal = valList[0];
+    const returnRates = calculateReturnRates(valList);
 
     // Self-healing: refresh all runtime data from live UKNF response
     updateRuntimeSubfund(subfundId, {
@@ -614,6 +729,7 @@ export const knfApi = {
       benchmark: latestKid?.benchmark ?? null,
       latestValuation: latestVal?.valuation ?? null,
       latestValuationDate: latestVal?.date ?? null,
+      ...returnRates,
     });
 
     return {
@@ -703,6 +819,12 @@ export const knfApi = {
         classification: sf.classification || meta?.classification || fallback.classification,
         category: sf.category || meta?.category || fallback.category,
         fullName: sf.fullName || meta?.fullName || sf.name,
+        returnRate1M: meta?.returnRate1M ?? null,
+        returnRate3M: meta?.returnRate3M ?? null,
+        returnRate1Y: meta?.returnRate1Y ?? null,
+        returnRate3Y: meta?.returnRate3Y ?? null,
+        returnRate3YAnn: meta?.returnRate3YAnn ?? null,
+        returnRateYTD: meta?.returnRateYTD ?? null,
       };
     });
 
@@ -790,11 +912,31 @@ export const knfApi = {
       });
     }
 
-    // Handle sort if name,desc
+    // Handle sort if name,desc / return rates
     if (params?.sort === "name,desc") {
       filtered.sort((a, b) => b.name.localeCompare(a.name, "pl"));
     } else if (params?.sort === "name,asc") {
       filtered.sort((a, b) => a.name.localeCompare(b.name, "pl"));
+    } else if (params?.sort === "return1M,desc") {
+      filtered.sort((a, b) => (b.returnRate1M ?? -9999) - (a.returnRate1M ?? -9999));
+    } else if (params?.sort === "return1M,asc") {
+      filtered.sort((a, b) => (a.returnRate1M ?? 9999) - (b.returnRate1M ?? 9999));
+    } else if (params?.sort === "return3M,desc") {
+      filtered.sort((a, b) => (b.returnRate3M ?? -9999) - (a.returnRate3M ?? -9999));
+    } else if (params?.sort === "return3M,asc") {
+      filtered.sort((a, b) => (a.returnRate3M ?? 9999) - (b.returnRate3M ?? 9999));
+    } else if (params?.sort === "return1Y,desc") {
+      filtered.sort((a, b) => (b.returnRate1Y ?? -9999) - (a.returnRate1Y ?? -9999));
+    } else if (params?.sort === "return1Y,asc") {
+      filtered.sort((a, b) => (a.returnRate1Y ?? 9999) - (b.returnRate1Y ?? 9999));
+    } else if (params?.sort === "return3Y,desc") {
+      filtered.sort((a, b) => (b.returnRate3Y ?? -9999) - (a.returnRate3Y ?? -9999));
+    } else if (params?.sort === "return3Y,asc") {
+      filtered.sort((a, b) => (a.returnRate3Y ?? 9999) - (b.returnRate3Y ?? 9999));
+    } else if (params?.sort === "returnYTD,desc") {
+      filtered.sort((a, b) => (b.returnRateYTD ?? -9999) - (a.returnRateYTD ?? -9999));
+    } else if (params?.sort === "returnYTD,asc") {
+      filtered.sort((a, b) => (a.returnRateYTD ?? 9999) - (b.returnRateYTD ?? 9999));
     }
 
     const totalElements = filtered.length;
@@ -811,7 +953,7 @@ export const knfApi = {
             const [fundDetail, kidRes, valuationsRes] = await Promise.all([
               this.getFund(sf.fundId),
               this.getKeyInformation({ fundId: sf.fundId, size: 1 }),
-              this.getValuations({ fundId: sf.fundId, size: 1 }),
+              this.getValuations({ fundId: sf.fundId, size: 780 }),
             ]);
 
             let kidDetail: KNFKeyInformationDetail | null = null;
@@ -819,7 +961,9 @@ export const knfApi = {
               kidDetail = await this.getKeyInformationDetail(kidRes.content[0].documentUuid);
             }
 
-            const latestVal = valuationsRes.content[0];
+            const valList = valuationsRes.content || [];
+            const latestVal = valList[0];
+            const returnRates = calculateReturnRates(valList);
 
             const cardItem: SubfundCardModel = {
               ...sf,
@@ -836,6 +980,7 @@ export const knfApi = {
               benchmark: kidDetail?.benchmark ?? null,
               latestValuation: latestVal?.valuation ?? null,
               latestValuationDate: latestVal?.date ?? null,
+              ...returnRates,
             };
 
             updateRuntimeSubfund(sf.subfundId, {
@@ -851,6 +996,7 @@ export const knfApi = {
               benchmark: cardItem.benchmark,
               latestValuation: cardItem.latestValuation,
               latestValuationDate: cardItem.latestValuationDate,
+              ...returnRates,
             });
 
             return cardItem;
@@ -859,10 +1005,12 @@ export const knfApi = {
           const [details, kid, valuationsRes] = await Promise.all([
             this.getSubfund(sf.subfundId),
             this.getLatestKidForSubfund(sf.subfundId),
-            this.getValuations({ subfundId: sf.subfundId, size: 1 }),
+            this.getValuations({ subfundId: sf.subfundId, size: 780 }),
           ]);
 
-          const latestVal = valuationsRes.content[0];
+          const valList = valuationsRes.content || [];
+          const latestVal = valList[0];
+          const returnRates = calculateReturnRates(valList);
 
           const cardItem: SubfundCardModel = {
             ...sf,
@@ -878,6 +1026,7 @@ export const knfApi = {
             benchmark: kid?.benchmark ?? null,
             latestValuation: latestVal?.valuation ?? null,
             latestValuationDate: latestVal?.date ?? null,
+            ...returnRates,
           };
 
           updateRuntimeSubfund(sf.subfundId, {
@@ -893,6 +1042,7 @@ export const knfApi = {
             benchmark: cardItem.benchmark,
             latestValuation: cardItem.latestValuation,
             latestValuationDate: cardItem.latestValuationDate,
+            ...returnRates,
           });
 
           return cardItem;
@@ -968,7 +1118,7 @@ export const knfApi = {
               const [fundDetail, kidRes, valuationsRes] = await Promise.all([
                 this.getFund(sf.fundId),
                 this.getKeyInformation({ fundId: sf.fundId, size: 1 }),
-                this.getValuations({ fundId: sf.fundId, size: 1 }),
+                this.getValuations({ fundId: sf.fundId, size: 780 }),
               ]);
 
               let kidDetail: KNFKeyInformationDetail | null = null;
@@ -976,7 +1126,9 @@ export const knfApi = {
                 kidDetail = await this.getKeyInformationDetail(kidRes.content[0].documentUuid);
               }
 
-              const latestVal = valuationsRes.content?.[0];
+              const valList = valuationsRes.content || [];
+              const latestVal = valList[0];
+              const returnRates = calculateReturnRates(valList);
 
               updateRuntimeSubfund(sf.subfundId, {
                 name: sf.name,
@@ -993,6 +1145,7 @@ export const knfApi = {
                 benchmark: kidDetail?.benchmark ?? null,
                 latestValuation: latestVal?.valuation ?? null,
                 latestValuationDate: latestVal?.date ?? null,
+                ...returnRates,
               });
 
               updatedCount++;
@@ -1002,10 +1155,12 @@ export const knfApi = {
             const [details, kid, valuationsRes] = await Promise.all([
               this.getSubfund(sf.subfundId, undefined, true),
               this.getLatestKidForSubfund(sf.subfundId),
-              this.getValuations({ subfundId: sf.subfundId, size: 1 }),
+              this.getValuations({ subfundId: sf.subfundId, size: 780 }),
             ]);
 
-            const latestVal = valuationsRes.content?.[0];
+            const valList = valuationsRes.content || [];
+            const latestVal = valList[0];
+            const returnRates = calculateReturnRates(valList);
 
             updateRuntimeSubfund(sf.subfundId, {
               name: sf.name,
@@ -1022,6 +1177,7 @@ export const knfApi = {
               benchmark: kid?.benchmark ?? null,
               latestValuation: latestVal?.valuation ?? null,
               latestValuationDate: latestVal?.date ?? null,
+              ...returnRates,
             });
 
             updatedCount++;

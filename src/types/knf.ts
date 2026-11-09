@@ -243,8 +243,11 @@ export interface SubfundCardModel extends KNFSubfund {
   latestValuation?: number | null;
   latestValuationDate?: string | null;
   returnRate1M?: number | null;
+  returnRate3M?: number | null;
   returnRate1Y?: number | null;
   returnRate3Y?: number | null;
+  returnRate3YAnn?: number | null;
+  returnRateYTD?: number | null;
 }
 
 export interface SubfundFullProfile {
@@ -286,6 +289,12 @@ export interface RuntimeSubfundMeta {
   benchmark?: string | null;
   latestValuation?: number | null;
   latestValuationDate?: string | null;
+  returnRate1M?: number | null;
+  returnRate3M?: number | null;
+  returnRate1Y?: number | null;
+  returnRate3Y?: number | null;
+  returnRate3YAnn?: number | null;
+  returnRateYTD?: number | null;
   lastUpdated?: number;
 }
 
