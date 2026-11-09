@@ -155,7 +155,7 @@ export function SubfundsCatalog({
 }: SubfundsCatalogProps) {
   const { toggleFund, isSelected } = useCompare();
   const { toggleFund: togglePortfolioFund, isInPortfolio } = usePortfolio();
-  const { t, locale, formatCurrency, formatPercent, formatDate, formatNumber } = useTranslation();
+  const { t, locale, formatCurrency, formatPercent, formatDate, formatNumber, formatLargeNumber } = useTranslation();
 
   const [items, setItems] = useState<SubfundCardModel[]>(initialItems);
   const [pageInfo, setPageInfo] = useState(initialPage);
@@ -174,7 +174,7 @@ export function SubfundsCatalog({
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const categoryDropdownRef = useRef<HTMLDivElement>(null);
   const resultsTopRef = useRef<HTMLDivElement>(null);
-  const [sortField, setSortField] = useState<"name" | "fee" | "risk" | "valuation" | "return">("name");
+  const [sortField, setSortField] = useState<"name" | "fee" | "risk" | "valuation" | "return" | "assets">("name");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [returnPeriod, setReturnPeriod] = useState<ReturnPeriod>("1Y");
   const [currentPage, setCurrentPage] = useState(0);
@@ -425,6 +425,8 @@ export function SubfundsCatalog({
             params.set("sort", `name,${sortOrder}`);
           } else if (sortField === "return") {
             params.set("sort", `return${returnPeriod},${sortOrder}`);
+          } else if (sortField === "assets") {
+            params.set("sort", `assets,${sortOrder}`);
           } else {
             params.set("sort", `${sortField},${sortOrder}`);
           }
@@ -469,20 +471,20 @@ export function SubfundsCatalog({
   };
 
   // Handle header click sorting
-  const handleSort = (field: "name" | "fee" | "risk" | "valuation" | "return") => {
+  const handleSort = (field: "name" | "fee" | "risk" | "valuation" | "return" | "assets") => {
     setCurrentPage(0);
     if (sortField === field) {
       setSortOrder(sortOrder === "asc" ? "desc" : "asc");
     } else {
       setSortField(field);
-      setSortOrder(field === "valuation" || field === "return" ? "desc" : "asc");
+      setSortOrder(field === "valuation" || field === "return" || field === "assets" ? "desc" : "asc");
     }
   };
 
   // Handle combined sort dropdown change
   const handleCombinedSortChange = (combinedValue: string) => {
     const [field, order] = combinedValue.split("_") as [
-      "name" | "fee" | "risk" | "valuation" | "return",
+      "name" | "fee" | "risk" | "valuation" | "return" | "assets",
       "asc" | "desc"
     ];
     if (field && order) {
@@ -522,6 +524,12 @@ export function SubfundsCatalog({
         const va = a.latestValuation ?? -1;
         const vb = b.latestValuation ?? -1;
         return sortOrder === "asc" ? va - vb : vb - va;
+      });
+    } else if (sortField === "assets") {
+      result.sort((a, b) => {
+        const aa = a.netAssets ?? (sortOrder === "asc" ? 9999999999999 : -1);
+        const ab = b.netAssets ?? (sortOrder === "asc" ? 9999999999999 : -1);
+        return sortOrder === "asc" ? aa - ab : ab - aa;
       });
     } else if (sortField === "return") {
       const getRate = (item: SubfundCardModel) => {
@@ -1064,6 +1072,12 @@ export function SubfundsCatalog({
                 <option value="valuation_asc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
                   {t.catalog.sort.valuationAsc}
                 </option>
+                <option value="assets_desc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
+                  {t.catalog.sort.assetsDesc}
+                </option>
+                <option value="assets_asc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
+                  {t.catalog.sort.assetsAsc}
+                </option>
               </select>
             </div>
 
@@ -1291,6 +1305,14 @@ export function SubfundsCatalog({
                       <span className="font-semibold text-slate-800 dark:text-slate-200">
                         {formatPercent(item.managementFee)}
                       </span>
+                      {item.transactionCostsRate !== null && item.transactionCostsRate !== undefined && (
+                        <span
+                          className="block text-[10px] text-slate-500 dark:text-slate-400 leading-tight"
+                          title={`${t.catalog.table.transactionCosts}: ${formatPercent(item.transactionCostsRate)}`}
+                        >
+                          +{formatPercent(item.transactionCostsRate)} tr.
+                        </span>
+                      )}
                     </div>
 
                     <div>
@@ -1308,6 +1330,20 @@ export function SubfundsCatalog({
                           {item.latestValuationDate && (
                             <span className="text-[10px] text-slate-500 font-normal ml-1">
                               ({formatDate(item.latestValuationDate)})
+                            </span>
+                          )}
+                        </span>
+                      </div>
+                    )}
+
+                    {item.netAssets !== null && item.netAssets !== undefined && (
+                      <div className="col-span-3 pt-1.5 flex items-center justify-between text-slate-500 dark:text-slate-400 text-[11px]">
+                        <span>{t.catalog.card.netAssets}</span>
+                        <span className="font-bold text-slate-900 dark:text-slate-200">
+                          {formatLargeNumber(item.netAssets)}
+                          {item.netAssetsDate && (
+                            <span className="text-[10px] text-slate-500 font-normal ml-1">
+                              ({formatDate(item.netAssetsDate)})
                             </span>
                           )}
                         </span>
@@ -1480,6 +1516,23 @@ export function SubfundsCatalog({
                       )}
                     </div>
                   </th>
+                  <th
+                    onClick={() => handleSort("assets")}
+                    className="py-2 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group text-xs leading-tight whitespace-nowrap"
+                    title={t.catalog.table.netAssets}
+                  >
+                    <div className="flex items-center gap-1">
+                      <div>
+                        <span>{locale === "en" ? "Net" : "Aktywa"}</span>
+                        <span className="block">{locale === "en" ? "Assets" : "netto"}</span>
+                      </div>
+                      {sortField === "assets" ? (
+                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0]" />
+                      ) : (
+                        <ArrowUpDown className="w-3 h-3 opacity-40 group-hover:opacity-100" />
+                      )}
+                    </div>
+                  </th>
                   <th className="py-2 px-2 sm:px-2.5 text-right font-semibold whitespace-nowrap text-xs w-[130px]">
                     <span className="sr-only">{t.catalog.table.actions}</span>
                   </th>
@@ -1539,8 +1592,18 @@ export function SubfundsCatalog({
                       <td className="py-2.5 px-2 sm:px-2.5 text-center whitespace-nowrap w-[68px]">
                         <RiskBadge level={item.riskLevel} showLabel={false} showSriPrefix={false} stacked={true} size="sm" />
                       </td>
-                      <td className="py-2.5 px-2 sm:px-2.5 whitespace-nowrap font-medium text-slate-800 dark:text-slate-200 text-xs sm:text-sm">
-                        {formatPercent(item.managementFee)}
+                      <td className="py-2.5 px-2 sm:px-2.5 whitespace-nowrap">
+                        <div className="font-medium text-slate-800 dark:text-slate-200 text-xs sm:text-sm leading-tight">
+                          {formatPercent(item.managementFee)}
+                        </div>
+                        {item.transactionCostsRate !== null && item.transactionCostsRate !== undefined && (
+                          <div
+                            className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 whitespace-nowrap leading-tight"
+                            title={`${t.catalog.table.transactionCosts}: ${formatPercent(item.transactionCostsRate)}`}
+                          >
+                            +{formatPercent(item.transactionCostsRate)} tr.
+                          </div>
+                        )}
                       </td>
                       <td className="py-2.5 px-2 sm:px-2.5 whitespace-nowrap">
                         {renderReturnBadge(item, returnPeriod)}
@@ -1554,6 +1617,22 @@ export function SubfundsCatalog({
                             {item.latestValuationDate && (
                               <div className="text-[10px] text-slate-500">
                                 {formatDate(item.latestValuationDate)}
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          <span className="text-slate-400 dark:text-slate-600">—</span>
+                        )}
+                      </td>
+                      <td className="py-2.5 px-2 sm:px-2.5 whitespace-nowrap">
+                        {item.netAssets !== null && item.netAssets !== undefined ? (
+                          <div>
+                            <span className="font-bold text-slate-900 dark:text-slate-200 text-xs sm:text-sm">
+                              {formatLargeNumber(item.netAssets)}
+                            </span>
+                            {item.netAssetsDate && (
+                              <div className="text-[10px] text-slate-500">
+                                {formatDate(item.netAssetsDate)}
                               </div>
                             )}
                           </div>

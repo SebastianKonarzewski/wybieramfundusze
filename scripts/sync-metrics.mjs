@@ -143,7 +143,15 @@ async function main() {
             ? `${BASE_URL}/v1/key-information?fundId=${prod.id}&size=1`
             : `${BASE_URL}/v1/key-information?subfundId=${prod.id}&size=1`;
 
-          const [valRes, kidRes] = await Promise.all([fetchJson(valUrl), fetchJson(kidUrl)]);
+          const assetUrl = prod.isFundOnly
+            ? `${BASE_URL}/v1/assets?fundId=${prod.id}&size=1&sort=date,desc`
+            : `${BASE_URL}/v1/assets?subfundId=${prod.id}&size=1&sort=date,desc`;
+
+          const [valRes, kidRes, assetRes] = await Promise.all([
+            fetchJson(valUrl),
+            fetchJson(kidUrl),
+            fetchJson(assetUrl),
+          ]);
 
           const valList = valRes?.content || [];
           const latestVal = valList[0];
@@ -151,6 +159,7 @@ async function main() {
 
           let fee = null;
           let risk = null;
+          let tc = null;
           if (kidRes?.content?.[0]?.documentUuid) {
             const kidDetail = await fetchJson(
               `${BASE_URL}/v1/key-information/${kidRes.content[0].documentUuid}`
@@ -158,8 +167,11 @@ async function main() {
             if (kidDetail) {
               fee = kidDetail.managementAndOtherFeesRate ?? null;
               risk = kidDetail.riskLevel ?? null;
+              tc = kidDetail.transactionCostsRate ?? null;
             }
           }
+
+          const latestAsset = assetRes?.content?.[0];
 
           metricsMap[String(prod.id)] = {
             ...rates,
@@ -167,6 +179,9 @@ async function main() {
             vd: latestVal ? latestVal.date : null,
             fee,
             risk,
+            tc,
+            a: latestAsset?.netAssets ?? null,
+            ad: latestAsset?.date ?? null,
           };
         } catch (err) {
           console.warn(`Error syncing prod ${prod.id}:`, err.message);

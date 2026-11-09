@@ -239,6 +239,9 @@ export interface SubfundCardModel extends KNFSubfund {
   companyName?: string;
   riskLevel?: number | null;
   managementFee?: number | null;
+  transactionCostsRate?: number | null;
+  netAssets?: number | null;
+  netAssetsDate?: string | null;
   benchmark?: string | null;
   latestValuation?: number | null;
   latestValuationDate?: string | null;
@@ -288,6 +291,9 @@ export interface RuntimeSubfundMeta {
   liquidationEndDate?: string | null;
   riskLevel?: number | null;
   managementFee?: number | null;
+  transactionCostsRate?: number | null;
+  netAssets?: number | null;
+  netAssetsDate?: string | null;
   benchmark?: string | null;
   latestValuation?: number | null;
   latestValuationDate?: string | null;

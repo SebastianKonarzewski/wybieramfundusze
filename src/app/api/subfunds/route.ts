@@ -51,6 +51,8 @@ export async function GET(request: NextRequest) {
     "risk,desc",
     "valuation,asc",
     "valuation,desc",
+    "assets,asc",
+    "assets,desc",
   ];
   const sort = allowedSorts.includes(rawSort) ? rawSort : "name,asc";
   const includeInactive = searchParams.get("includeInactive") === "true";

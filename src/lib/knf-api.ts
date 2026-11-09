@@ -120,6 +120,9 @@ function ensureClassificationsPopulated() {
           vd: string | null;
           fee?: number | null;
           risk?: number | null;
+          tc?: number | null;
+          a?: number | null;
+          ad?: string | null;
         }
       >
     )) {
@@ -142,6 +145,9 @@ function ensureClassificationsPopulated() {
             latestValuationDate: existing?.latestValuationDate !== undefined ? existing.latestValuationDate : m.vd,
             managementFee: existing?.managementFee !== undefined ? existing.managementFee : (m.fee ?? null),
             riskLevel: existing?.riskLevel !== undefined ? existing.riskLevel : (m.risk ?? null),
+            transactionCostsRate: existing?.transactionCostsRate !== undefined ? existing.transactionCostsRate : (m.tc ?? null),
+            netAssets: existing?.netAssets !== undefined ? existing.netAssets : (m.a ?? null),
+            netAssetsDate: existing?.netAssetsDate !== undefined ? existing.netAssetsDate : (m.ad ?? null),
           });
         }
       }
@@ -174,6 +180,10 @@ export function updateRuntimeSubfund(
       data.liquidationEndDate !== undefined ? data.liquidationEndDate : existing?.liquidationEndDate,
     riskLevel: data.riskLevel !== undefined ? data.riskLevel : existing?.riskLevel,
     managementFee: data.managementFee !== undefined ? data.managementFee : existing?.managementFee,
+    transactionCostsRate:
+      data.transactionCostsRate !== undefined ? data.transactionCostsRate : existing?.transactionCostsRate,
+    netAssets: data.netAssets !== undefined ? data.netAssets : existing?.netAssets,
+    netAssetsDate: data.netAssetsDate !== undefined ? data.netAssetsDate : existing?.netAssetsDate,
     benchmark: data.benchmark !== undefined ? data.benchmark : existing?.benchmark,
     latestValuation: data.latestValuation !== undefined ? data.latestValuation : existing?.latestValuation,
     latestValuationDate:
@@ -409,6 +419,7 @@ async function knfFetch<T>(
     const fetchInit: RequestInit = {
       headers: {
         Accept: "application/json",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
       },
       signal: AbortSignal.timeout(10000),
     };
@@ -907,6 +918,9 @@ export const knfApi = {
         fullName: sf.fullName || meta?.fullName || sf.name,
         riskLevel: meta?.riskLevel ?? null,
         managementFee: meta?.managementFee ?? null,
+        transactionCostsRate: meta?.transactionCostsRate ?? null,
+        netAssets: meta?.netAssets ?? null,
+        netAssetsDate: meta?.netAssetsDate ?? null,
         latestValuation: meta?.latestValuation ?? null,
         latestValuationDate: meta?.latestValuationDate ?? null,
         returnRate1M: meta?.returnRate1M ?? null,
@@ -1045,6 +1059,10 @@ export const knfApi = {
       filtered.sort((a, b) => (a.latestValuation ?? 9999999) - (b.latestValuation ?? 9999999));
     } else if (params?.sort === "valuation,desc") {
       filtered.sort((a, b) => (b.latestValuation ?? -1) - (a.latestValuation ?? -1));
+    } else if (params?.sort === "assets,asc") {
+      filtered.sort((a, b) => (a.netAssets ?? 9999999999999) - (b.netAssets ?? 9999999999999));
+    } else if (params?.sort === "assets,desc") {
+      filtered.sort((a, b) => (b.netAssets ?? -1) - (a.netAssets ?? -1));
     }
 
     const totalElements = filtered.length;
@@ -1085,6 +1103,9 @@ export const knfApi = {
               liquidationEndDate: fundDetail?.liquidationEndDate ?? null,
               riskLevel: kidDetail?.riskLevel ?? null,
               managementFee: kidDetail?.managementAndOtherFeesRate ?? null,
+              transactionCostsRate: kidDetail?.transactionCostsRate ?? sf.transactionCostsRate ?? null,
+              netAssets: sf.netAssets ?? null,
+              netAssetsDate: sf.netAssetsDate ?? null,
               benchmark: kidDetail?.benchmark ?? null,
               latestValuation: latestVal?.valuation ?? null,
               latestValuationDate: latestVal?.date ?? null,
@@ -1101,6 +1122,9 @@ export const knfApi = {
               isLiquidating: cardItem.isLiquidating,
               riskLevel: cardItem.riskLevel,
               managementFee: cardItem.managementFee,
+              transactionCostsRate: cardItem.transactionCostsRate,
+              netAssets: cardItem.netAssets,
+              netAssetsDate: cardItem.netAssetsDate,
               benchmark: cardItem.benchmark,
               latestValuation: cardItem.latestValuation,
               latestValuationDate: cardItem.latestValuationDate,
@@ -1131,6 +1155,9 @@ export const knfApi = {
             liquidationEndDate: details?.liquidationEndDate ?? sf.liquidationEndDate,
             riskLevel: kid?.riskLevel ?? null,
             managementFee: kid?.managementAndOtherFeesRate ?? null,
+            transactionCostsRate: kid?.transactionCostsRate ?? sf.transactionCostsRate ?? null,
+            netAssets: sf.netAssets ?? null,
+            netAssetsDate: sf.netAssetsDate ?? null,
             benchmark: kid?.benchmark ?? null,
             latestValuation: latestVal?.valuation ?? null,
             latestValuationDate: latestVal?.date ?? null,
@@ -1147,6 +1174,9 @@ export const knfApi = {
             isLiquidating: cardItem.isLiquidating,
             riskLevel: cardItem.riskLevel,
             managementFee: cardItem.managementFee,
+            transactionCostsRate: cardItem.transactionCostsRate,
+            netAssets: cardItem.netAssets,
+            netAssetsDate: cardItem.netAssetsDate,
             benchmark: cardItem.benchmark,
             latestValuation: cardItem.latestValuation,
             latestValuationDate: cardItem.latestValuationDate,
@@ -1159,6 +1189,9 @@ export const knfApi = {
             ...sf,
             riskLevel: null,
             managementFee: null,
+            transactionCostsRate: null,
+            netAssets: null,
+            netAssetsDate: null,
             benchmark: null,
             latestValuation: null,
             latestValuationDate: null,
@@ -1223,10 +1256,11 @@ export const knfApi = {
         chunk.map(async (sf) => {
           try {
             if (sf.isFundOnly) {
-              const [fundDetail, kidRes, valuationsRes] = await Promise.all([
+              const [fundDetail, kidRes, valuationsRes, assetsRes] = await Promise.all([
                 this.getFund(sf.fundId),
                 this.getKeyInformation({ fundId: sf.fundId, size: 1 }),
                 this.getValuations({ fundId: sf.fundId, size: 780 }),
+                this.getAssets({ fundId: sf.fundId, size: 1, sort: "date,desc" }),
               ]);
 
               let kidDetail: KNFKeyInformationDetail | null = null;
@@ -1236,6 +1270,7 @@ export const knfApi = {
 
               const valList = valuationsRes.content || [];
               const latestVal = valList[0];
+              const latestAsset = assetsRes?.content?.[0];
               const returnRates = calculateReturnRates(valList);
 
               updateRuntimeSubfund(sf.subfundId, {
@@ -1250,6 +1285,9 @@ export const knfApi = {
                 liquidationEndDate: fundDetail?.liquidationEndDate ?? null,
                 riskLevel: kidDetail?.riskLevel ?? null,
                 managementFee: kidDetail?.managementAndOtherFeesRate ?? null,
+                transactionCostsRate: kidDetail?.transactionCostsRate ?? null,
+                netAssets: latestAsset?.netAssets ?? null,
+                netAssetsDate: latestAsset?.date ?? null,
                 benchmark: kidDetail?.benchmark ?? null,
                 latestValuation: latestVal?.valuation ?? null,
                 latestValuationDate: latestVal?.date ?? null,
@@ -1260,14 +1298,16 @@ export const knfApi = {
               return;
             }
 
-            const [details, kid, valuationsRes] = await Promise.all([
+            const [details, kid, valuationsRes, assetsRes] = await Promise.all([
               this.getSubfund(sf.subfundId, undefined, true),
               this.getLatestKidForSubfund(sf.subfundId),
               this.getValuations({ subfundId: sf.subfundId, size: 780 }),
+              this.getAssets({ subfundId: sf.subfundId, size: 1, sort: "date,desc" }),
             ]);
 
             const valList = valuationsRes.content || [];
             const latestVal = valList[0];
+            const latestAsset = assetsRes?.content?.[0];
             const returnRates = calculateReturnRates(valList);
 
             updateRuntimeSubfund(sf.subfundId, {
@@ -1282,6 +1322,9 @@ export const knfApi = {
               liquidationEndDate: details?.liquidationEndDate ?? sf.liquidationEndDate,
               riskLevel: kid?.riskLevel ?? null,
               managementFee: kid?.managementAndOtherFeesRate ?? null,
+              transactionCostsRate: kid?.transactionCostsRate ?? null,
+              netAssets: latestAsset?.netAssets ?? null,
+              netAssetsDate: latestAsset?.date ?? null,
               benchmark: kid?.benchmark ?? null,
               latestValuation: latestVal?.valuation ?? null,
               latestValuationDate: latestVal?.date ?? null,
