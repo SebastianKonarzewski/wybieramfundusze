@@ -146,14 +146,14 @@ export function Navbar() {
             </div>
             <div className="flex flex-col min-w-0">
               <div className="flex items-center gap-1 sm:gap-2">
-                <span className="font-bold text-sm sm:text-base xl:text-lg text-slate-100 tracking-tight whitespace-nowrap">
+                <span className="font-bold text-sm sm:text-base xl:text-lg text-slate-900 dark:text-slate-100 tracking-tight whitespace-nowrap">
                   {t.nav.brandName}<span className="text-[#3b82f6]">{t.nav.brandHighlight}</span>
                 </span>
                 <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider px-1.5 sm:px-2 py-0.5 rounded-full bg-[#f0f7ff] dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-[#60a5fa] border border-[#bfdbfe] dark:border-[#044CD0]/40 hidden xl:inline-block shadow-2xs">
                   UKNF API
                 </span>
               </div>
-              <p className="text-[10px] sm:text-[11px] text-slate-400 hidden xl:block truncate">
+              <p className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 hidden xl:block truncate">
                 {t.nav.brandSubtitle}
               </p>
             </div>
@@ -175,7 +175,7 @@ export function Navbar() {
                     className={`relative flex items-center justify-center gap-1.5 xl:gap-2 px-2.5 py-1.5 xl:px-3 xl:py-2 rounded-lg text-xs xl:text-sm font-medium transition-all whitespace-nowrap shrink-0 ${
                       isActive
                         ? "bg-[#044CD0] text-white shadow-xs font-semibold"
-                        : "text-slate-300 hover:text-white hover:bg-[#071938]"
+                        : "text-slate-700 dark:text-slate-300 hover:text-[#044CD0] dark:hover:text-white hover:bg-blue-50/80 dark:hover:bg-[#071938]"
                     }`}
                     title={link.label}
                     aria-label={link.label}
@@ -193,7 +193,7 @@ export function Navbar() {
             </nav>
 
             {/* Desktop Divider - visible only on lg: */}
-            <div className="hidden lg:block w-px h-5 bg-[#0e274d] mx-1" />
+            <div className="hidden lg:block w-px h-5 bg-slate-200 dark:bg-[#0e274d] mx-1" />
 
             {/* Quick Comparator Badge Link (Mobile only, when funds are selected) */}
             {selectedFunds.length > 0 && (

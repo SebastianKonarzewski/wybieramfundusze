@@ -96,12 +96,12 @@ export function AccessibilityToolbar({
         className={`w-8.5 h-8.5 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl border transition-all cursor-pointer flex items-center justify-center relative shrink-0 ${
           isOpen || hasNonDefaultSettings
             ? "bg-[#044CD0] text-white border-blue-400 shadow-xs"
-            : "bg-[#030a16] text-slate-300 border-[#0e274d] hover:text-white hover:border-[#044CD0]/60"
+            : "bg-white dark:bg-[#030a16] text-slate-700 dark:text-slate-300 border-slate-300 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-white hover:border-[#044CD0]/60 shadow-xs"
         }`}
       >
         <Accessibility className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
         {hasNonDefaultSettings && (
-          <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-amber-400 ring-2 ring-[#030a16]" />
+          <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-amber-400 ring-2 ring-white dark:ring-[#030a16]" />
         )}
       </button>
 
@@ -109,17 +109,17 @@ export function AccessibilityToolbar({
         <div
           role="dialog"
           aria-label={t.a11y.toolbarTitle}
-          className="absolute right-0 top-full mt-2 w-72 sm:w-80 bg-[#051329] border border-[#0e274d] rounded-2xl p-4 shadow-2xl z-50 animate-in fade-in slide-in-from-top-2 duration-150 space-y-4 text-xs"
+          className="absolute right-0 top-full mt-2 w-72 sm:w-80 bg-white dark:bg-[#051329] border border-slate-200 dark:border-[#0e274d] rounded-2xl p-4 shadow-2xl z-50 animate-in fade-in slide-in-from-top-2 duration-150 space-y-4 text-xs"
         >
           {/* Header */}
-          <div className="flex items-center justify-between pb-2 border-b border-[#0e274d]">
-            <div className="flex items-center gap-1.5 font-bold text-slate-100 text-sm">
-              <Accessibility className="w-4 h-4 text-[#3b82f6]" />
+          <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-[#0e274d]">
+            <div className="flex items-center gap-1.5 font-bold text-slate-900 dark:text-slate-100 text-sm">
+              <Accessibility className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6]" />
               <span>{t.a11y.toolbarTitle}</span>
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="p-1 rounded-md text-slate-400 hover:text-white transition-colors"
+              className="p-1 rounded-md text-slate-400 hover:text-slate-700 dark:hover:text-white transition-colors"
               aria-label={t.common.close}
             >
               <X className="w-4 h-4" />

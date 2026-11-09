@@ -1902,7 +1902,7 @@ export function SubfundsCatalog({
                   return (
                     <tr
                       key={item.subfundId}
-                      className="bg-white dark:bg-transparent hover:bg-blue-50/40 dark:hover:bg-[#071938]/70 transition-colors group"
+                      className="bg-white dark:bg-transparent hover:bg-slate-50/90 dark:hover:bg-[#071938]/70 transition-colors group"
                     >
                       <td className="py-3 px-3.5 sm:px-4 min-w-[240px]">
                         <Link

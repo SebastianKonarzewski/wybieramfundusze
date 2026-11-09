@@ -234,14 +234,24 @@ html.light:not(.high-contrast) .catalog-table-container thead th {
 html.light:not(.high-contrast) .catalog-table-container tbody tr {
   background-color: #ffffff !important;
   border-color: #f1f5f9 !important;
+  border-top-color: #f1f5f9 !important;
+  border-bottom-color: #f1f5f9 !important;
 }
 
 html.light:not(.high-contrast) .catalog-table-container tbody tr:hover {
   background-color: #f8fafc !important;
+  border-color: #f1f5f9 !important;
+  border-top-color: #f1f5f9 !important;
+  border-bottom-color: #f1f5f9 !important;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
-html.light:not(.high-contrast) .catalog-table-container tbody tr td {
+html.light:not(.high-contrast) .catalog-table-container tbody tr td,
+html.light:not(.high-contrast) .catalog-table-container tbody tr:hover td {
   border-color: #f1f5f9 !important;
+  border-top-color: #f1f5f9 !important;
+  border-bottom-color: #f1f5f9 !important;
 }
 
 /* Explicitly eliminate any black border on first row, below thead or between rows */
@@ -262,12 +272,12 @@ html.light:not(.high-contrast) .catalog-table-container [class*="divide-[#0e274d
   border-color: #f1f5f9 !important;
 }
 
-/* Interactive button & pill hover states in light mode */
+/* Interactive button & pill hover states in light mode - exclude table rows and cells */
 html.light:not(.high-contrast) button[aria-pressed="false"]:not(:disabled):hover,
 html.light:not(.high-contrast) button[class*="hover:border-[#044CD0]"]:not([aria-pressed="true"]):not(:disabled):hover,
 html.light:not(.high-contrast) button[class*="hover:bg-[#071938]"]:not([aria-pressed="true"]):not(:disabled):hover,
-html.light:not(.high-contrast) [class*="hover:bg-[#071938]"]:not(.catalog-grid-card):not(:disabled):hover,
-html.light:not(.high-contrast) [class*="hover:bg-[#0e274d]"]:not(:disabled):hover {
+html.light:not(.high-contrast) [class*="hover:bg-[#071938]"]:not(.catalog-grid-card):not(tr):not(tbody):not(td):not(table):not(:disabled):hover,
+html.light:not(.high-contrast) [class*="hover:bg-[#0e274d]"]:not(tr):not(tbody):not(td):not(table):not(:disabled):hover {
   background-color: #eff6ff !important;
   border-color: #044CD0 !important;
   color: #044CD0 !important;
