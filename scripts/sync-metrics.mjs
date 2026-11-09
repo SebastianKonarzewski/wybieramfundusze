@@ -16,6 +16,7 @@ function calculateReturnRates(valuations) {
     return {
       r1m: null,
       r3m: null,
+      r6m: null,
       r1y: null,
       r2y: null,
       r2ya: null,
@@ -31,6 +32,7 @@ function calculateReturnRates(valuations) {
     return {
       r1m: null,
       r3m: null,
+      r6m: null,
       r1y: null,
       r2y: null,
       r2ya: null,
@@ -66,6 +68,12 @@ function calculateReturnRates(valuations) {
   const v3M = findPastValuation(d3M, 25);
   const r3m = v3M ? Number(((latestVal - v3M) / v3M).toFixed(6)) : null;
 
+  // 6M (~182d, max 30d)
+  const d6M = new Date(latestDate);
+  d6M.setDate(d6M.getDate() - 182);
+  const v6M = findPastValuation(d6M, 30);
+  const r6m = v6M ? Number(((latestVal - v6M) / v6M).toFixed(6)) : null;
+
   // 1Y (~365d, max 35d)
   const d1Y = new Date(latestDate);
   d1Y.setDate(d1Y.getDate() - 365);
@@ -87,7 +95,7 @@ function calculateReturnRates(valuations) {
   const vYTD = findPastValuation(dYTD, 20);
   const rytd = vYTD ? Number(((latestVal - vYTD) / vYTD).toFixed(6)) : null;
 
-  return { r1m, r3m, r1y, r2y, r2ya, rytd };
+  return { r1m, r3m, r6m, r1y, r2y, r2ya, rytd };
 }
 
 async function fetchJson(url) {

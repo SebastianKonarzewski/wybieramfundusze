@@ -47,7 +47,7 @@ interface CategoryGroup {
   options: CategoryOption[];
 }
 
-export type ReturnPeriod = "1M" | "3M" | "1Y" | "2Y" | "YTD";
+export type ReturnPeriod = "1M" | "3M" | "6M" | "1Y" | "2Y" | "YTD";
 
 export const RETURN_PERIODS: {
   id: ReturnPeriod;
@@ -58,6 +58,7 @@ export const RETURN_PERIODS: {
 }[] = [
   { id: "1M", labelPl: "1M", labelEn: "1M", fullPl: "1M", fullEn: "1M" },
   { id: "3M", labelPl: "3M", labelEn: "3M", fullPl: "3M", fullEn: "3M" },
+  { id: "6M", labelPl: "6M", labelEn: "6M", fullPl: "6M", fullEn: "6M" },
   { id: "1Y", labelPl: "12M", labelEn: "12M", fullPl: "12M", fullEn: "12M" },
   { id: "2Y", labelPl: "24M", labelEn: "24M", fullPl: "24M", fullEn: "24M" },
   { id: "YTD", labelPl: "YTD", labelEn: "YTD", fullPl: "YTD", fullEn: "YTD" },
@@ -209,6 +210,9 @@ export function SubfundsCatalog({
         break;
       case "3M":
         rate = item.returnRate3M;
+        break;
+      case "6M":
+        rate = item.returnRate6M;
         break;
       case "1Y":
         rate = item.returnRate1Y;
@@ -591,6 +595,7 @@ export function SubfundsCatalog({
         switch (returnPeriod) {
           case "1M": return item.returnRate1M;
           case "3M": return item.returnRate3M;
+          case "6M": return item.returnRate6M;
           case "1Y": return item.returnRate1Y;
           case "2Y": return item.returnRate2Y;
           case "YTD": return item.returnRateYTD;

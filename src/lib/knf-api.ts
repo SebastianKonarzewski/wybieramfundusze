@@ -112,6 +112,7 @@ function ensureClassificationsPopulated() {
         {
           r1m: number | null;
           r3m: number | null;
+          r6m?: number | null;
           r1y: number | null;
           r2y: number | null;
           r2ya: number | null;
@@ -144,6 +145,7 @@ function ensureClassificationsPopulated() {
             ...existing,
             returnRate1M: existing?.returnRate1M !== undefined ? existing.returnRate1M : m.r1m,
             returnRate3M: existing?.returnRate3M !== undefined ? existing.returnRate3M : m.r3m,
+            returnRate6M: existing?.returnRate6M !== undefined ? existing.returnRate6M : (m.r6m ?? null),
             returnRate1Y: existing?.returnRate1Y !== undefined ? existing.returnRate1Y : m.r1y,
             returnRate2Y: existing?.returnRate2Y !== undefined ? existing.returnRate2Y : m.r2y,
             returnRate2YAnn: existing?.returnRate2YAnn !== undefined ? existing.returnRate2YAnn : m.r2ya,
@@ -201,6 +203,7 @@ export function updateRuntimeSubfund(
     currency: data.currency !== undefined ? data.currency : existing?.currency || "PLN",
     returnRate1M: data.returnRate1M !== undefined ? data.returnRate1M : existing?.returnRate1M,
     returnRate3M: data.returnRate3M !== undefined ? data.returnRate3M : existing?.returnRate3M,
+    returnRate6M: data.returnRate6M !== undefined ? data.returnRate6M : existing?.returnRate6M,
     returnRate1Y: data.returnRate1Y !== undefined ? data.returnRate1Y : existing?.returnRate1Y,
     returnRate2Y: data.returnRate2Y !== undefined ? data.returnRate2Y : existing?.returnRate2Y,
     returnRate2YAnn: data.returnRate2YAnn !== undefined ? data.returnRate2YAnn : existing?.returnRate2YAnn,
@@ -219,6 +222,7 @@ export function getRuntimeSubfund(subfundId: number): RuntimeSubfundMeta | undef
 export interface CalculatedReturnRates {
   returnRate1M: number | null;
   returnRate3M: number | null;
+  returnRate6M: number | null;
   returnRate1Y: number | null;
   returnRate2Y: number | null;
   returnRate2YAnn: number | null;
@@ -235,6 +239,7 @@ export function calculateReturnRates(valuations: KNFValuation[]): CalculatedRetu
     return {
       returnRate1M: null,
       returnRate3M: null,
+      returnRate6M: null,
       returnRate1Y: null,
       returnRate2Y: null,
       returnRate2YAnn: null,
@@ -252,6 +257,7 @@ export function calculateReturnRates(valuations: KNFValuation[]): CalculatedRetu
     return {
       returnRate1M: null,
       returnRate3M: null,
+      returnRate6M: null,
       returnRate1Y: null,
       returnRate2Y: null,
       returnRate2YAnn: null,
@@ -289,6 +295,12 @@ export function calculateReturnRates(valuations: KNFValuation[]): CalculatedRetu
   d3M.setDate(d3M.getDate() - 91);
   const v3M = findPastValuation(d3M, 25);
   const returnRate3M = v3M ? (latestVal - v3M) / v3M : null;
+
+  // 6 Months (~182 days, max 30 days margin)
+  const d6M = new Date(latestDate);
+  d6M.setDate(d6M.getDate() - 182);
+  const v6M = findPastValuation(d6M, 30);
+  const returnRate6M = v6M ? (latestVal - v6M) / v6M : null;
 
   // 1 Year (~365 days, max 35 days margin)
   const d1Y = new Date(latestDate);
@@ -334,6 +346,7 @@ export function calculateReturnRates(valuations: KNFValuation[]): CalculatedRetu
   return {
     returnRate1M,
     returnRate3M,
+    returnRate6M,
     returnRate1Y,
     returnRate2Y,
     returnRate2YAnn,
@@ -997,6 +1010,7 @@ export const knfApi = {
         fxRate,
         returnRate1M: meta?.returnRate1M ?? null,
         returnRate3M: meta?.returnRate3M ?? null,
+        returnRate6M: meta?.returnRate6M ?? null,
         returnRate1Y: meta?.returnRate1Y ?? null,
         returnRate2Y: meta?.returnRate2Y ?? null,
         returnRate2YAnn: meta?.returnRate2YAnn ?? null,
@@ -1141,6 +1155,10 @@ export const knfApi = {
       filtered.sort((a, b) => (b.returnRate3M ?? -9999) - (a.returnRate3M ?? -9999));
     } else if (params?.sort === "return3M,asc") {
       filtered.sort((a, b) => (a.returnRate3M ?? 9999) - (b.returnRate3M ?? 9999));
+    } else if (params?.sort === "return6M,desc") {
+      filtered.sort((a, b) => (b.returnRate6M ?? -9999) - (a.returnRate6M ?? -9999));
+    } else if (params?.sort === "return6M,asc") {
+      filtered.sort((a, b) => (a.returnRate6M ?? 9999) - (b.returnRate6M ?? 9999));
     } else if (params?.sort === "return1Y,desc") {
       filtered.sort((a, b) => (b.returnRate1Y ?? -9999) - (a.returnRate1Y ?? -9999));
     } else if (params?.sort === "return1Y,asc") {
