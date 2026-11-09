@@ -24,6 +24,7 @@ import { SubfundFullProfile } from "@/types/knf";
 import { useCompare } from "./CompareContext";
 import { StatusBadge } from "./StatusBadge";
 import { RiskBadge } from "./RiskBadge";
+import { FormattedCurrency } from "./FormattedAmount";
 import { useTranslation } from "@/lib/i18n";
 import { useAccessibility } from "@/lib/accessibility";
 
@@ -501,7 +502,12 @@ export function FundComparator() {
                           {latestVal ? (
                             <div>
                               <div className="font-bold text-slate-100 text-base">
-                                {formatCurrency(latestVal.valuation, latestVal.currency)}
+                                <FormattedCurrency
+                                  value={latestVal.valuation}
+                                  currency={latestVal.currency}
+                                  valueClassName="font-bold text-slate-100 text-base"
+                                  unitClassName="text-xs font-semibold text-slate-400"
+                                />
                               </div>
                               <div className="text-[11px] text-slate-500">
                                 {t.compare.asOf} {formatDate(latestVal.date)}

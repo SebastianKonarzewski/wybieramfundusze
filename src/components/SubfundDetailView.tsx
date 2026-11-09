@@ -22,6 +22,7 @@ import { ValuationChart } from "./ValuationChart";
 import { AssetsChart } from "./AssetsChart";
 import { KidDetailsCard } from "./KidDetailsCard";
 import { HistoryTimeline } from "./HistoryTimeline";
+import { FormattedCurrency } from "./FormattedAmount";
 import { useCompare } from "./CompareContext";
 import { usePortfolio } from "./PortfolioContext";
 import { useTranslation } from "@/lib/i18n";
@@ -164,9 +165,13 @@ export function SubfundDetailView({ profile }: { profile: SubfundFullProfile }) 
                 <span className="text-[10px] sm:text-[11px] font-medium text-slate-500 block">
                   {t.subfundDetail.quickMetrics.latestValuation}
                 </span>
-                <span className="text-lg sm:text-xl font-bold text-slate-100">
-                  {formatCurrency(valuations[0].valuation, valuations[0].currency)}
-                </span>
+                <FormattedCurrency
+                  value={valuations[0].valuation}
+                  currency={valuations[0].currency}
+                  className="inline-flex items-baseline justify-center gap-1"
+                  valueClassName="text-lg sm:text-xl font-bold text-slate-100"
+                  unitClassName="text-xs sm:text-sm font-semibold text-slate-400"
+                />
               </div>
             )}
           </div>

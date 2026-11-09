@@ -11,6 +11,7 @@ import {
 } from "recharts";
 import { KNFAsset } from "@/types/knf";
 import { Coins } from "lucide-react";
+import { FormattedLargeNumber } from "./FormattedAmount";
 import { useTranslation } from "@/lib/i18n";
 import { useAccessibility } from "@/lib/accessibility";
 
@@ -44,16 +45,27 @@ export function AssetsChart({ assets }: { assets: KNFAsset[] }) {
             {t.assets.title}
           </div>
           <div className="flex items-baseline gap-3">
-            <span className="text-2xl font-extrabold text-slate-100">
-              {formatLargeNumber(latest.netAssets, currency)}
-            </span>
+            <FormattedLargeNumber
+              value={latest.netAssets}
+              currency={currency}
+              className="inline-flex items-baseline gap-1.5"
+              valueClassName="text-2xl font-extrabold text-slate-100"
+              unitClassName="text-sm font-bold text-slate-400"
+            />
             <span className="text-xs text-slate-400">
               ({t.assets.netAssetsOn} {formatDate(latest.date)})
             </span>
           </div>
         </div>
         <div className="text-xs text-slate-400">
-          {t.assets.grossAssetsLabel} <strong className="text-slate-200">{formatLargeNumber(latest.assets, currency)}</strong>
+          {t.assets.grossAssetsLabel}{" "}
+          <FormattedLargeNumber
+            value={latest.assets}
+            currency={currency}
+            className="inline-flex items-baseline gap-1"
+            valueClassName="font-bold text-slate-200"
+            unitClassName="text-[11px] font-medium text-slate-400"
+          />
         </div>
       </div>
 

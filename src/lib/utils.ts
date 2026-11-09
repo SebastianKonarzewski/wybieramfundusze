@@ -38,8 +38,8 @@ export function formatNumber(
 
 /**
  * Format currency:
- * - PL: "1 000,07 zł"
- * - EN: "PLN 1,000.07" (or "1,000.07 EUR")
+ * - PL: "1 000,07 PLN"
+ * - EN: "PLN 1,000.07" (or "USD 47.07")
  */
 export function formatCurrency(
   value: number | null | undefined,
@@ -48,14 +48,36 @@ export function formatCurrency(
 ): string {
   if (value === null || value === undefined || isNaN(value)) return "—";
   const numStr = formatNumber(value, 2, locale);
+  const currCode = currency === "zł" ? "PLN" : (currency || "PLN");
 
   if (locale === "en") {
-    const code = currency === "zł" ? "PLN" : currency;
-    return `${code} ${numStr}`;
+    return `${currCode} ${numStr}`;
   }
 
-  const currLabel = currency === "PLN" ? "zł" : currency;
-  return `${numStr} ${currLabel}`;
+  return `${numStr} ${currCode}`;
+}
+
+/**
+ * Format currency into value and unit parts:
+ * - PL: { value: "1 000,07", unit: "PLN", prefix: false }
+ * - EN: { value: "1,000.07", unit: "PLN", prefix: true }
+ */
+export function formatCurrencyParts(
+  value: number | null | undefined,
+  currency: string = "PLN",
+  locale: Locale = "pl"
+): { value: string; unit: string; prefix: boolean } {
+  if (value === null || value === undefined || isNaN(value)) {
+    return { value: "—", unit: "", prefix: false };
+  }
+  const numStr = formatNumber(value, 2, locale);
+  const currCode = currency === "zł" ? "PLN" : (currency || "PLN");
+
+  return {
+    value: numStr,
+    unit: currCode,
+    prefix: locale === "en",
+  };
 }
 
 /**
@@ -108,7 +130,7 @@ export function formatDate(
 
 /**
  * Format large numbers (AUM):
- * - PL: "461,45 mld zł" or "66,87 mln USD"
+ * - PL: "461,45 mld PLN" or "66,87 mln USD"
  * - EN: "PLN 461.45 bn" or "USD 66.87 m"
  */
 export function formatLargeNumber(
@@ -118,8 +140,7 @@ export function formatLargeNumber(
 ): string {
   if (value === null || value === undefined || isNaN(value)) return "—";
 
-  const currCode = currency === "zł" ? "PLN" : currency;
-  const currLabelPl = currCode === "PLN" ? "zł" : currCode;
+  const currCode = currency === "zł" ? "PLN" : (currency || "PLN");
 
   if (locale === "en") {
     if (value >= 1_000_000_000_000) {
@@ -137,29 +158,29 @@ export function formatLargeNumber(
     return `${currCode} ${formatNumber(value, 2, "en")}`;
   }
 
-  // Polish formatting
+  // Polish formatting (PLN, USD, EUR)
   if (value >= 1_000_000_000_000) {
     const val = value / 1_000_000_000_000;
-    return `${formatNumber(val, 2, "pl")} bln ${currLabelPl}`;
+    return `${formatNumber(val, 2, "pl")} bln ${currCode}`;
   }
   if (value >= 1_000_000_000) {
     const val = value / 1_000_000_000;
-    return `${formatNumber(val, 2, "pl")} mld ${currLabelPl}`;
+    return `${formatNumber(val, 2, "pl")} mld ${currCode}`;
   }
   if (value >= 1_000_000) {
     const val = value / 1_000_000;
-    return `${formatNumber(val, 2, "pl")} mln ${currLabelPl}`;
+    return `${formatNumber(val, 2, "pl")} mln ${currCode}`;
   }
   if (value >= 1_000) {
     const val = value / 1_000;
-    return `${formatNumber(val, 2, "pl")} tys. ${currLabelPl}`;
+    return `${formatNumber(val, 2, "pl")} tys. ${currCode}`;
   }
-  return `${formatNumber(value, 2, "pl")} ${currLabelPl}`;
+  return `${formatNumber(value, 2, "pl")} ${currCode}`;
 }
 
 /**
  * Format large numbers into value and unit parts:
- * - PL: { value: "399,60", unit: "mld zł" } or { value: "66,87", unit: "mln USD" }
+ * - PL: { value: "399,60", unit: "mld PLN" } or { value: "66,87", unit: "mln USD" }
  * - EN: { value: "399.60", unit: "bn PLN" } or { value: "66.87", unit: "m USD" }
  */
 export function formatLargeNumberParts(
@@ -171,8 +192,7 @@ export function formatLargeNumberParts(
     return { value: "—", unit: "" };
   }
 
-  const currCode = currency === "zł" ? "PLN" : currency;
-  const currLabelPl = currCode === "PLN" ? "zł" : currCode;
+  const currCode = currency === "zł" ? "PLN" : (currency || "PLN");
 
   if (locale === "en") {
     if (value >= 1_000_000_000_000) {
@@ -193,19 +213,19 @@ export function formatLargeNumberParts(
   // Polish formatting
   if (value >= 1_000_000_000_000) {
     const val = value / 1_000_000_000_000;
-    return { value: formatNumber(val, 2, "pl"), unit: `bln ${currLabelPl}` };
+    return { value: formatNumber(val, 2, "pl"), unit: `bln ${currCode}` };
   }
   if (value >= 1_000_000_000) {
     const val = value / 1_000_000_000;
-    return { value: formatNumber(val, 2, "pl"), unit: `mld ${currLabelPl}` };
+    return { value: formatNumber(val, 2, "pl"), unit: `mld ${currCode}` };
   }
   if (value >= 1_000_000) {
     const val = value / 1_000_000;
-    return { value: formatNumber(val, 2, "pl"), unit: `mln ${currLabelPl}` };
+    return { value: formatNumber(val, 2, "pl"), unit: `mln ${currCode}` };
   }
   if (value >= 1_000) {
     const val = value / 1_000;
-    return { value: formatNumber(val, 2, "pl"), unit: `tys. ${currLabelPl}` };
+    return { value: formatNumber(val, 2, "pl"), unit: `tys. ${currCode}` };
   }
-  return { value: formatNumber(value, 2, "pl"), unit: currLabelPl };
+  return { value: formatNumber(value, 2, "pl"), unit: currCode };
 }

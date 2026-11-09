@@ -7,6 +7,7 @@ import {
   Locale,
   formatNumber,
   formatCurrency,
+  formatCurrencyParts,
   formatPercent,
   formatDate,
   formatLargeNumber,
@@ -19,6 +20,7 @@ interface I18nContextType {
   t: Translations;
   formatNumber: (value: number | null | undefined, decimals?: number) => string;
   formatCurrency: (value: number | null | undefined, currency?: string) => string;
+  formatCurrencyParts: (value: number | null | undefined, currency?: string) => { value: string; unit: string; prefix: boolean };
   formatPercent: (value: number | null | undefined, digits?: number) => string;
   formatDate: (dateString: string | null | undefined) => string;
   formatLargeNumber: (value: number | null | undefined, currency?: string) => string;
@@ -65,6 +67,7 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
         t,
         formatNumber: (val, dec) => formatNumber(val, dec, locale),
         formatCurrency: (val, curr) => formatCurrency(val, curr, locale),
+        formatCurrencyParts: (val, curr) => formatCurrencyParts(val, curr, locale),
         formatPercent: (val, dig) => formatPercent(val, dig, locale),
         formatDate: (d) => formatDate(d, locale),
         formatLargeNumber: (val, curr) => formatLargeNumber(val, locale, curr),
@@ -86,6 +89,7 @@ export function useTranslation() {
       t: pl,
       formatNumber: (val: number | null | undefined, dec?: number) => formatNumber(val, dec, "pl"),
       formatCurrency: (val: number | null | undefined, curr?: string) => formatCurrency(val, curr, "pl"),
+      formatCurrencyParts: (val: number | null | undefined, curr?: string) => formatCurrencyParts(val, curr, "pl"),
       formatPercent: (val: number | null | undefined, dig?: number) => formatPercent(val, dig, "pl"),
       formatDate: (d: string | null | undefined) => formatDate(d, "pl"),
       formatLargeNumber: (val: number | null | undefined, curr?: string) => formatLargeNumber(val, "pl", curr),
