@@ -112,7 +112,7 @@ export const pl = {
     clearCategory: "Wyczyść kategorię",
     activeFiltersCount: "aktywnych",
     legalRegistry: "Rejestr i status prawny:",
-    showInactive: "Pokaż wykreślone / nieaktywne",
+    showInactive: "Pokaż fundusze nieaktywne",
     showLiquidating: "Pokaż fundusze w likwidacji",
     foundCount: "Znaleziono:",
     subfundsCount: "funduszy",

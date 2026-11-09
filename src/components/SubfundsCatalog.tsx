@@ -1143,23 +1143,15 @@ export function SubfundsCatalog({
                 <span>{t.catalog.legalRegistry}</span>
               </span>
 
-              <div className="flex items-center flex-wrap gap-4 sm:gap-6">
-                <label className="flex items-center gap-2 cursor-pointer select-none group font-medium whitespace-nowrap">
-                  <input
-                    type="checkbox"
-                    checked={includeInactive}
-                    onChange={(e) => {
-                      setIncludeInactive(e.target.checked);
-                      setCurrentPage(0);
-                    }}
-                    className="w-4 h-4 rounded bg-white dark:bg-[#051329] border border-slate-300 dark:border-slate-700 text-[#044CD0] accent-[#044CD0] cursor-pointer"
-                  />
-                  <span className="text-slate-700 dark:text-slate-300 group-hover:text-[#044CD0] dark:group-hover:text-slate-100 transition-colors">
-                    {t.catalog.showInactive}
-                  </span>
-                </label>
-
-                <label className="flex items-center gap-2 cursor-pointer select-none group font-medium whitespace-nowrap">
+              <div className="flex items-center flex-wrap gap-2.5 sm:gap-3">
+                {/* 1. Fundusze w likwidacji */}
+                <label
+                  className={`group relative inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xl border text-xs sm:text-sm cursor-pointer select-none transition-all shadow-2xs ${
+                    includeLiquidating
+                      ? "border-blue-300 dark:border-blue-800/80 bg-blue-50/60 dark:bg-[#044CD0]/15"
+                      : "border-slate-200/90 dark:border-[#0e274d] bg-white dark:bg-[#030a16]/60 hover:bg-slate-50 dark:hover:bg-[#071938] hover:border-slate-300 dark:hover:border-[#1e3a6a]"
+                  }`}
+                >
                   <input
                     type="checkbox"
                     checked={includeLiquidating}
@@ -1167,10 +1159,72 @@ export function SubfundsCatalog({
                       setIncludeLiquidating(e.target.checked);
                       setCurrentPage(0);
                     }}
-                    className="w-4 h-4 rounded bg-white dark:bg-[#051329] border border-slate-300 dark:border-slate-700 text-amber-500 accent-amber-500 cursor-pointer"
+                    className="sr-only peer"
                   />
-                  <span className="text-slate-700 dark:text-slate-300 group-hover:text-amber-600 dark:group-hover:text-slate-100 transition-colors">
+                  <div
+                    className={`relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out peer-focus-visible:ring-2 peer-focus-visible:ring-[#044CD0] peer-focus-visible:ring-offset-2 ${
+                      includeLiquidating
+                        ? "bg-[#044CD0]"
+                        : "bg-slate-300 dark:bg-slate-700"
+                    }`}
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-xs transition duration-200 ease-in-out ${
+                        includeLiquidating ? "translate-x-4" : "translate-x-0"
+                      }`}
+                    />
+                  </div>
+                  <span
+                    className={`whitespace-nowrap transition-colors ${
+                      includeLiquidating
+                        ? "text-[#044CD0] dark:text-blue-300 font-semibold"
+                        : "text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white font-medium"
+                    }`}
+                  >
                     {t.catalog.showLiquidating}
+                  </span>
+                </label>
+
+                {/* 2. Fundusze nieaktywne */}
+                <label
+                  className={`group relative inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xl border text-xs sm:text-sm cursor-pointer select-none transition-all shadow-2xs ${
+                    includeInactive
+                      ? "border-blue-300 dark:border-blue-800/80 bg-blue-50/60 dark:bg-[#044CD0]/15"
+                      : "border-slate-200/90 dark:border-[#0e274d] bg-white dark:bg-[#030a16]/60 hover:bg-slate-50 dark:hover:bg-[#071938] hover:border-slate-300 dark:hover:border-[#1e3a6a]"
+                  }`}
+                >
+                  <input
+                    type="checkbox"
+                    checked={includeInactive}
+                    onChange={(e) => {
+                      setIncludeInactive(e.target.checked);
+                      setCurrentPage(0);
+                    }}
+                    className="sr-only peer"
+                  />
+                  <div
+                    className={`relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out peer-focus-visible:ring-2 peer-focus-visible:ring-[#044CD0] peer-focus-visible:ring-offset-2 ${
+                      includeInactive
+                        ? "bg-[#044CD0]"
+                        : "bg-slate-300 dark:bg-slate-700"
+                    }`}
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-xs transition duration-200 ease-in-out ${
+                        includeInactive ? "translate-x-4" : "translate-x-0"
+                      }`}
+                    />
+                  </div>
+                  <span
+                    className={`whitespace-nowrap transition-colors ${
+                      includeInactive
+                        ? "text-[#044CD0] dark:text-blue-300 font-semibold"
+                        : "text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white font-medium"
+                    }`}
+                  >
+                    {t.catalog.showInactive}
                   </span>
                 </label>
               </div>
@@ -1443,22 +1497,7 @@ export function SubfundsCatalog({
               </button>
             ))}
 
-            {/* Inactive & Liquidating chips */}
-            {includeInactive && (
-              <button
-                type="button"
-                onClick={() => {
-                  setIncludeInactive(false);
-                  setCurrentPage(0);
-                }}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
-                title={`Usuń: ${t.catalog.showInactive}`}
-              >
-                <span>{t.catalog.showInactive}</span>
-                <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
-              </button>
-            )}
-
+            {/* Liquidating & Inactive chips */}
             {includeLiquidating && (
               <button
                 type="button"
@@ -1466,10 +1505,25 @@ export function SubfundsCatalog({
                   setIncludeLiquidating(false);
                   setCurrentPage(0);
                 }}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-amber-50 dark:bg-amber-950/30 text-amber-700 dark:text-amber-300 border border-amber-300 dark:border-amber-800 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-300 border border-blue-200/80 dark:border-[#044CD0]/40 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
                 title={`Usuń: ${t.catalog.showLiquidating}`}
               >
                 <span>{t.catalog.showLiquidating}</span>
+                <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
+              </button>
+            )}
+
+            {includeInactive && (
+              <button
+                type="button"
+                onClick={() => {
+                  setIncludeInactive(false);
+                  setCurrentPage(0);
+                }}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-300 border border-blue-200/80 dark:border-[#044CD0]/40 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
+                title={`Usuń: ${t.catalog.showInactive}`}
+              >
+                <span>{t.catalog.showInactive}</span>
                 <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
               </button>
             )}

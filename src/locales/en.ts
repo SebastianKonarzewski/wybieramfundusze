@@ -114,7 +114,7 @@ export const en: Translations = {
     clearCategory: "Clear category",
     activeFiltersCount: "active",
     legalRegistry: "Registry & Legal Status:",
-    showInactive: "Show deregistered / inactive",
+    showInactive: "Show inactive funds",
     showLiquidating: "Show funds in liquidation",
     foundCount: "Found:",
     subfundsCount: "funds",
