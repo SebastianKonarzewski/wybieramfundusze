@@ -89,9 +89,9 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
               <Scale className="w-4.5 h-4.5" />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-[#044CD0] dark:group-hover:text-blue-400 transition-colors flex items-center justify-between">
+              <div className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-[#044CD0] dark:group-hover:text-[#60a5fa] transition-colors flex items-center justify-between">
                 <span>{t.hero.quickCompareTitle}</span>
-                <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#044CD0] dark:group-hover:text-blue-400 group-hover:translate-x-0.5 transition-all" />
+                <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#044CD0] dark:group-hover:text-[#60a5fa] group-hover:translate-x-0.5 transition-all" />
               </div>
               <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
                 {t.hero.quickCompareDesc}
@@ -103,13 +103,13 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
             href="/portfel"
             className="group flex items-center gap-3 px-3.5 py-2.5 rounded-2xl bg-white/70 dark:bg-[#051329]/90 hover:bg-white dark:hover:bg-[#071938] border border-slate-200/80 dark:border-[#0e274d] hover:border-[#044CD0]/60 dark:hover:border-blue-500/50 transition-all shadow-xs hover:shadow-md cursor-pointer"
           >
-            <div className="w-9 h-9 rounded-xl bg-indigo-50 dark:bg-indigo-500/15 border border-indigo-200/60 dark:border-indigo-500/30 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform text-indigo-600 dark:text-indigo-400">
+            <div className="w-9 h-9 rounded-xl bg-blue-50 dark:bg-[#044CD0]/15 border border-blue-200/60 dark:border-[#044CD0]/30 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform text-[#044CD0] dark:text-[#60a5fa]">
               <Briefcase className="w-4.5 h-4.5" />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors flex items-center justify-between">
+              <div className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-[#044CD0] dark:group-hover:text-[#60a5fa] transition-colors flex items-center justify-between">
                 <span>{t.hero.quickPortfolioTitle}</span>
-                <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all" />
+                <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#044CD0] dark:group-hover:text-[#60a5fa] group-hover:translate-x-0.5 transition-all" />
               </div>
               <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
                 {t.hero.quickPortfolioDesc}
@@ -170,9 +170,9 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
                 <span className="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 leading-snug">
                   {t.hero.investableProducts}
                 </span>
-                <Layers className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform shrink-0 mt-0.5" />
+                <Layers className="w-4 h-4 sm:w-5 sm:h-5 text-[#044CD0] group-hover:scale-110 transition-transform shrink-0 mt-0.5" />
               </div>
-              <div className="text-xl sm:text-2xl lg:text-3xl font-black text-blue-600 dark:text-blue-400">
+              <div className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 dark:text-slate-100">
                 {formatNumber(stats.investableProductsCount || 688, 0)}
               </div>
             </div>
