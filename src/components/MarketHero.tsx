@@ -83,13 +83,13 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
         <div className="hidden lg:flex flex-col gap-2.5 shrink-0 w-64 xl:w-72">
           <Link
             href="/porownywarka"
-            className="group flex items-center gap-3 px-3.5 py-2.5 rounded-2xl bg-white dark:bg-[#051329] hover:bg-slate-50/80 dark:hover:bg-[#071938] border border-slate-200 dark:border-[#0e274d] hover:border-[#044CD0]/60 dark:hover:border-blue-500/50 transition-all shadow-xs hover:shadow-md cursor-pointer"
+            className="hero-action-card group flex items-center gap-3 px-3.5 py-2.5 rounded-2xl bg-white dark:bg-[#051329] hover:bg-white dark:hover:bg-[#071938] border border-slate-200 dark:border-[#0e274d] hover:border-[#044CD0]/60 dark:hover:border-blue-500/50 transition-all shadow-xs hover:shadow-md cursor-pointer"
           >
             <div className="w-9 h-9 rounded-xl bg-blue-50 dark:bg-[#044CD0]/15 border border-blue-200/60 dark:border-[#044CD0]/30 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform text-[#044CD0] dark:text-[#60a5fa]">
               <Scale className="w-4.5 h-4.5" />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-[#044CD0] dark:hover:text-[#60a5fa] transition-colors flex items-center justify-between">
+              <div className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-[#044CD0] dark:group-hover:text-[#60a5fa] transition-colors flex items-center justify-between">
                 <span>{t.hero.quickCompareTitle}</span>
                 <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#044CD0] dark:group-hover:text-[#60a5fa] group-hover:translate-x-0.5 transition-all" />
               </div>
@@ -101,7 +101,7 @@ export function MarketHero({ stats }: { stats: MarketStatistics }) {
 
           <Link
             href="/portfel"
-            className="group flex items-center gap-3 px-3.5 py-2.5 rounded-2xl bg-white dark:bg-[#051329] hover:bg-slate-50/80 dark:hover:bg-[#071938] border border-slate-200 dark:border-[#0e274d] hover:border-[#044CD0]/60 dark:hover:border-blue-500/50 transition-all shadow-xs hover:shadow-md cursor-pointer"
+            className="hero-action-card group flex items-center gap-3 px-3.5 py-2.5 rounded-2xl bg-white dark:bg-[#051329] hover:bg-white dark:hover:bg-[#071938] border border-slate-200 dark:border-[#0e274d] hover:border-[#044CD0]/60 dark:hover:border-blue-500/50 transition-all shadow-xs hover:shadow-md cursor-pointer"
           >
             <div className="w-9 h-9 rounded-xl bg-blue-50 dark:bg-[#044CD0]/15 border border-blue-200/60 dark:border-[#044CD0]/30 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform text-[#044CD0] dark:text-[#60a5fa]">
               <Briefcase className="w-4.5 h-4.5" />

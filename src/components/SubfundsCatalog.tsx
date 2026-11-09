@@ -1553,7 +1553,7 @@ export function SubfundsCatalog({
 
                   {/* Managing Entity & Umbrella Fund (TFI + Parasol) */}
                   <div className="flex items-center gap-1.5 mb-3 leading-normal flex-wrap">
-                    <span className="inline-flex items-center font-bold text-[10px] leading-none bg-blue-50/80 dark:bg-[#030a16] border border-blue-200/80 dark:border-[#0e274d] px-1.5 py-0.5 rounded text-[#044CD0] dark:text-blue-300 shadow-2xs shrink-0 uppercase tracking-wider">
+                    <span className="fund-type-badge inline-flex items-center font-bold text-[10px] leading-none bg-slate-100 dark:bg-[#030a16] border border-slate-300/80 dark:border-[#0e274d] px-1.5 py-0.5 rounded text-black dark:text-blue-300 shadow-2xs shrink-0 uppercase tracking-wider">
                       {item.name.toUpperCase().includes("ETF") ? "ETF" : item.type}
                     </span>
                     {item.companyName && (
@@ -1913,7 +1913,7 @@ export function SubfundsCatalog({
                           {item.name}
                         </Link>
                         <div className="flex items-center gap-1.5 mt-1.5 leading-normal flex-wrap">
-                          <span className="inline-flex items-center font-bold text-[10px] leading-none bg-blue-50/80 dark:bg-[#030a16] border border-blue-200/80 dark:border-[#0e274d] px-1.5 py-0.5 rounded text-[#044CD0] dark:text-blue-300 shadow-2xs shrink-0 uppercase tracking-wider">
+                          <span className="fund-type-badge inline-flex items-center font-bold text-[10px] leading-none bg-slate-100 dark:bg-[#030a16] border border-slate-300/80 dark:border-[#0e274d] px-1.5 py-0.5 rounded text-black dark:text-blue-300 shadow-2xs shrink-0 uppercase tracking-wider">
                             {item.name.toUpperCase().includes("ETF") ? "ETF" : item.type}
                           </span>
                           {item.companyName && (
