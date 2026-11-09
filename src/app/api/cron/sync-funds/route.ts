@@ -18,9 +18,15 @@ export async function GET(request: NextRequest) {
   const authHeader = request.headers.get("authorization");
   const cronSecret = process.env.CRON_SECRET;
 
-  // Verify secret if set in environment
-  if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  // In production, strictly require CRON_SECRET to prevent unauthorized public execution.
+  // In development, allow testing without a secret if CRON_SECRET is not set in .env.local.
+  if (process.env.NODE_ENV === "production" || cronSecret) {
+    if (!cronSecret || authHeader !== `Bearer ${cronSecret}`) {
+      return NextResponse.json(
+        { error: "Unauthorized: Missing or invalid CRON_SECRET" },
+        { status: 401 }
+      );
+    }
   }
 
   const searchParams = request.nextUrl.searchParams;
