@@ -60,7 +60,7 @@ export const pl = {
   },
   hero: {
     title: "Porównywarka i katalog funduszy inwestycyjnych",
-    desc: "Narzędzie analityczne oparte o publiczne dane rejestrowe UKNF. Weryfikuj rzeczywiste opłaty bieżące z dokumentów KID, profile ryzyka SRI oraz historyczne wyceny i przekształcenia funduszy w Polsce.",
+    desc: "Narzędzie analityczne oparte o publiczne dane rejestrowe UKNF. Weryfikuj rzeczywiste opłaty bieżące z dokumentów KID, profile ryzyka SRI oraz historyczne wyceny funduszy w Polsce.",
     quickCompareTitle: "Porównywarka",
     quickCompareDesc: "Zestaw do 4 funduszy",
     quickPortfolioTitle: "Portfel funduszy",
@@ -86,8 +86,8 @@ export const pl = {
     fullHistoryLink: "Pełna historia rynku",
   },
   catalog: {
-    searchPlaceholder: "Szukaj funduszu po nazwie, TFI, kategorii lub kodzie (np. PKO, Obligacji, ETF, PLSFIO)...",
-    searchPlaceholderMobile: "Szukaj funduszu (np. PKO, ETF)...",
+    searchPlaceholder: "Szukaj funduszu po nazwie, TFI, kategorii lub kodzie (np. Skarbowy, Akcji, ETF, PLSFIO)...",
+    searchPlaceholderMobile: "Szukaj funduszu (np. Akcji, ETF)...",
     viewModeGrid: "Widok kafelków",
     viewModeTable: "Widok tabeli",
     assetClass: "Klasa aktywów:",

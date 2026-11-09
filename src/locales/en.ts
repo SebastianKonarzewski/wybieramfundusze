@@ -88,8 +88,8 @@ export const en: Translations = {
     fullHistoryLink: "Full market history",
   },
   catalog: {
-    searchPlaceholder: "Search fund by name, TFI, category, or code (e.g., PKO, Bonds, ETF, PLSFIO)...",
-    searchPlaceholderMobile: "Search fund (e.g., PKO, ETF)...",
+    searchPlaceholder: "Search fund by name, TFI, category, or code (e.g., Treasury, Equity, ETF, PLSFIO)...",
+    searchPlaceholderMobile: "Search fund (e.g., Equity, ETF)...",
     viewModeGrid: "Cards view",
     viewModeTable: "Table view",
     assetClass: "Asset Class:",
