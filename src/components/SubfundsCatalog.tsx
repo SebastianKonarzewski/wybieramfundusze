@@ -1542,9 +1542,9 @@ export function SubfundsCatalog({
                     <div className="flex items-center gap-1.5">
                       <span>{t.catalog.table.name}</span>
                       {sortField === "name" ? (
-                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" />
+                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5] shrink-0" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5] shrink-0" />
                       ) : (
-                        <ArrowUpDown className="w-3 h-3 opacity-40 group-hover:opacity-100" />
+                        <ArrowUpDown className="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 shrink-0" />
                       )}
                     </div>
                   </th>
@@ -1566,9 +1566,9 @@ export function SubfundsCatalog({
                         <span className="block font-bold">(SRI)</span>
                       </div>
                       {sortField === "risk" ? (
-                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" />
+                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5] shrink-0" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5] shrink-0" />
                       ) : (
-                        <ArrowUpDown className="w-3 h-3 opacity-40 group-hover:opacity-100" />
+                        <ArrowUpDown className="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 shrink-0" />
                       )}
                     </div>
                   </th>
@@ -1584,28 +1584,28 @@ export function SubfundsCatalog({
                     <div className="flex items-center gap-1">
                       <span>{t.catalog.table.fee}</span>
                       {sortField === "fee" ? (
-                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" />
+                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5] shrink-0" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5] shrink-0" />
                       ) : (
-                        <ArrowUpDown className="w-3 h-3 opacity-40 group-hover:opacity-100" />
+                        <ArrowUpDown className="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 shrink-0" />
                       )}
                     </div>
                   </th>
                   <th
                     onClick={() => handleSort("return")}
-                    className="py-2.5 px-2 font-bold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group leading-tight min-w-[75px]"
+                    className="py-2.5 px-2 font-bold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group leading-tight min-w-[70px]"
                     title={`${t.catalog.table.returnRate} (${activePeriodFullLabel})`}
                   >
                     <div className="flex items-center gap-1">
-                      <div>
-                        <span>{t.catalog.table.returnRate}</span>
-                        <span className="block font-bold text-[#044CD0] dark:text-[#60a5fa]">
+                      <div className="leading-tight">
+                        <span>{locale === "en" ? "Return" : "Zwrot"}</span>
+                        <span className="block font-bold">
                           ({activePeriodLabel})
                         </span>
                       </div>
                       {sortField === "return" ? (
-                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" />
+                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5] shrink-0" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5] shrink-0" />
                       ) : (
-                        <ArrowUpDown className="w-3 h-3 opacity-40 group-hover:opacity-100" />
+                        <ArrowUpDown className="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 shrink-0" />
                       )}
                     </div>
                   </th>
@@ -1619,9 +1619,9 @@ export function SubfundsCatalog({
                         <span className="block">{locale === "en" ? "NAV" : "wycena"}</span>
                       </div>
                       {sortField === "valuation" ? (
-                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" />
+                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5] shrink-0" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5] shrink-0" />
                       ) : (
-                        <ArrowUpDown className="w-3 h-3 opacity-40 group-hover:opacity-100" />
+                        <ArrowUpDown className="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 shrink-0" />
                       )}
                     </div>
                   </th>
@@ -1636,9 +1636,9 @@ export function SubfundsCatalog({
                         <span className="block">{locale === "en" ? "Assets" : "netto"}</span>
                       </div>
                       {sortField === "assets" ? (
-                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" />
+                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5] shrink-0" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5] shrink-0" />
                       ) : (
-                        <ArrowUpDown className="w-3 h-3 opacity-40 group-hover:opacity-100" />
+                        <ArrowUpDown className="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 shrink-0" />
                       )}
                     </div>
                   </th>
@@ -1717,7 +1717,7 @@ export function SubfundsCatalog({
                           </div>
                         )}
                       </td>
-                      <td className="py-2.5 px-2 whitespace-nowrap min-w-[75px]">
+                      <td className="py-2.5 px-2 whitespace-nowrap min-w-[70px]">
                         {renderReturnBadge(item, returnPeriod)}
                       </td>
                       <td className="py-2.5 px-2 whitespace-nowrap min-w-[85px]">
