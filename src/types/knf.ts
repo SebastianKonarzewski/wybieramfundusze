@@ -107,6 +107,7 @@ export interface KNFSubfund {
   isActive?: boolean;
   isFundOnly?: boolean;
   companyId?: number;
+  companyName?: string;
   currency?: string | null;
   _links?: KNFLink[];
 }
@@ -239,6 +240,8 @@ export interface KNFTotalAsset {
 export interface SubfundCardModel extends KNFSubfund {
   isFundOnly?: boolean;
   companyName?: string;
+  companyId?: number;
+  fundName?: string;
   riskLevel?: number | null;
   managementFee?: number | null;
   transactionCostsRate?: number | null;

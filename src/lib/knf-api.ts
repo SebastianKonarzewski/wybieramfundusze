@@ -20,6 +20,7 @@ import {
 import subfundsClassifications from "@/data/subfunds-classifications.json";
 import standaloneFundsData from "@/data/standalone-funds.json";
 import subfundsMetrics from "@/data/subfunds-metrics.json";
+import fundsCompaniesMap from "@/data/funds-companies-map.json";
 import { getExchangeRates, convertToPln } from "./exchange-rates";
 
 const BASE_URL = "https://wybieramfundusze-api.knf.gov.pl";
@@ -947,10 +948,18 @@ export const knfApi = {
       );
     }
 
-    const combinedPool = [...validSubfunds, ...standalonePool];
+    let combinedPool = [...validSubfunds, ...standalonePool];
+
+    // Filter by umbrella fundId if specified
+    if (params?.fundId) {
+      combinedPool = combinedPool.filter(
+        (sf) => sf.fundId === params.fundId || sf.subfundId === params.fundId
+      );
+    }
 
     const ratesState = await getExchangeRates();
     const rates = ratesState.rates;
+    const fundsRecord = (fundsCompaniesMap as unknown as { funds: Record<string, { fundName?: string; companyId?: number; companyName?: string | null }> })?.funds || {};
 
     let filtered = combinedPool.map((sf) => {
       const meta = runtimeClassifications.get(sf.subfundId);
@@ -962,8 +971,16 @@ export const knfApi = {
       const latestValuationPln = convertToPln(latestValuation, currency, rates);
       const fxRate = currency && currency !== "PLN" ? (rates[currency] || null) : null;
 
+      const fundMeta = sf.fundId ? fundsRecord[String(sf.fundId)] : sf.subfundId ? fundsRecord[String(sf.subfundId)] : undefined;
+      const companyName = fundMeta?.companyName || sf.companyName || undefined;
+      const companyId = fundMeta?.companyId || sf.companyId || undefined;
+      const fundName = fundMeta?.fundName || undefined;
+
       return {
         ...sf,
+        companyName,
+        companyId,
+        fundName,
         classification: sf.classification || meta?.classification || fallback.classification,
         category: sf.category || meta?.category || fallback.category,
         fullName: sf.fullName || meta?.fullName || sf.name,
@@ -989,7 +1006,7 @@ export const knfApi = {
       };
     });
 
-    // Filter by search terms across name, fullName, nationalCode, classification, category, type
+    // Filter by search terms across name, fullName, nationalCode, classification, category, type, companyName, fundName
     if (params?.search && params.search.trim()) {
       const searchTerms = params.search.toLowerCase().trim().split(/\s+/).filter(Boolean);
       filtered = filtered.filter((sf) => {
@@ -1000,6 +1017,8 @@ export const knfApi = {
           sf.classification,
           sf.category,
           sf.type,
+          sf.companyName,
+          sf.fundName,
         ]
           .filter(Boolean)
           .join(" ")

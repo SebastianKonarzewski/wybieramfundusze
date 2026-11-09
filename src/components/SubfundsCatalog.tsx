@@ -148,12 +148,16 @@ interface SubfundsCatalogProps {
     number: number;
   };
   initialSearch?: string;
+  initialFundId?: number;
+  initialFundName?: string;
 }
 
 export function SubfundsCatalog({
   initialItems,
   initialPage,
   initialSearch = "",
+  initialFundId,
+  initialFundName,
 }: SubfundsCatalogProps) {
   const { toggleFund, isSelected } = useCompare();
   const { toggleFund: togglePortfolioFund, isInPortfolio } = usePortfolio();
@@ -165,6 +169,8 @@ export function SubfundsCatalog({
 
   // Filters state
   const [searchTerm, setSearchTerm] = useState(initialSearch);
+  const [fundId, setFundId] = useState<number | undefined>(initialFundId);
+  const [fundName, setFundName] = useState<string | undefined>(initialFundName);
   const [includeInactive, setIncludeInactive] = useState(false);
   const [includeLiquidating, setIncludeLiquidating] = useState(false);
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
@@ -249,15 +255,19 @@ export function SubfundsCatalog({
     );
   };
 
-  // Sync if initialSearch prop changes (e.g. from TFI deep link navigation)
+  // Sync if initialSearch or initialFundId props change (e.g. from TFI deep link navigation)
   useEffect(() => {
-    if (initialSearch) {
+    if (initialSearch || initialFundId) {
       startTransition(() => {
-        setSearchTerm(initialSearch);
+        if (initialSearch) setSearchTerm(initialSearch);
+        if (initialFundId) {
+          setFundId(initialFundId);
+          setFundName(initialFundName);
+        }
         setCurrentPage(0);
       });
     }
-  }, [initialSearch]);
+  }, [initialSearch, initialFundId, initialFundName]);
 
   // Set default view: "table" on full desktop (>=1280px), "grid" on mobile, tablet & intermediate (<1280px)
   // and track mobile viewport for responsive input placeholders
@@ -392,6 +402,7 @@ export function SubfundsCatalog({
 
   const hasAnyActiveFilters =
     searchTerm.trim() !== "" ||
+    Boolean(fundId) ||
     selectedClassifications.length > 0 ||
     selectedTypes.length > 0 ||
     selectedCurrencies.length > 0 ||
@@ -401,6 +412,7 @@ export function SubfundsCatalog({
 
   const activeFiltersCount =
     (searchTerm.trim() !== "" ? 1 : 0) +
+    (fundId ? 1 : 0) +
     selectedClassifications.length +
     selectedTypes.length +
     selectedCurrencies.length +
@@ -410,6 +422,8 @@ export function SubfundsCatalog({
 
   const resetAllFilters = () => {
     setSearchTerm("");
+    setFundId(undefined);
+    setFundName(undefined);
     setSelectedClassifications([]);
     setSelectedTypes([]);
     setSelectedCurrencies([]);
@@ -426,6 +440,7 @@ export function SubfundsCatalog({
         try {
           const params = new URLSearchParams();
           if (searchTerm) params.set("search", searchTerm);
+          if (fundId) params.set("fundId", String(fundId));
           if (selectedClassifications.length > 0) {
             params.set("classifications", selectedClassifications.join(","));
           }
@@ -472,6 +487,7 @@ export function SubfundsCatalog({
     return () => clearTimeout(timer);
   }, [
     searchTerm,
+    fundId,
     selectedClassifications,
     selectedTypes,
     selectedCurrencies,
@@ -1174,6 +1190,25 @@ export function SubfundsCatalog({
         {/* Active Filter Chips (one-click dismissible tags) */}
         {hasAnyActiveFilters && (
           <div className="flex items-center flex-wrap gap-1.5 pt-1">
+            {/* Umbrella fund (Parasol) chip */}
+            {fundId && (
+              <button
+                type="button"
+                onClick={() => {
+                  setFundId(undefined);
+                  setFundName(undefined);
+                  setCurrentPage(0);
+                }}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
+                title={`Usuń: ${fundName || `Parasol ID ${fundId}`}`}
+              >
+                <span className="truncate max-w-[200px] sm:max-w-[260px]">
+                  Parasol: {fundName || `ID ${fundId}`}
+                </span>
+                <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
+              </button>
+            )}
+
             {/* Classification chips */}
             {selectedClassifications.map((clsId) => {
               const label =
@@ -1329,12 +1364,12 @@ export function SubfundsCatalog({
                   {/* Top tags & status */}
                   <div className="flex items-center justify-between gap-2 mb-2.5">
                     <div className="flex items-center gap-1.5 flex-wrap">
-                      <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-white dark:bg-[#030a16] text-[#044CD0] dark:text-blue-300 border border-blue-200/90 dark:border-[#0e274d] shadow-2xs">
+                      <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-white dark:bg-[#030a16] text-[#044CD0] dark:text-blue-300 border border-blue-200/90 dark:border-[#0e274d] shadow-2xs shrink-0">
                         {item.name.toUpperCase().includes("ETF") ? "ETF" : item.type}
                       </span>
-                      {item.nationalCode && (
-                        <span className="text-[10px] text-slate-500 font-mono">
-                          {item.nationalCode}
+                      {item.companyName && (
+                        <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium truncate max-w-[180px]">
+                          {item.companyName}
                         </span>
                       )}
                     </div>
@@ -1669,9 +1704,9 @@ export function SubfundsCatalog({
                           <span className="inline-flex items-center font-bold text-[10px] leading-none bg-blue-50/70 dark:bg-[#030a16] border border-blue-200/80 dark:border-[#0e274d] px-1.5 py-0.5 rounded text-[#044CD0] dark:text-blue-300 shadow-2xs shrink-0">
                             {item.name.toUpperCase().includes("ETF") ? "ETF" : item.type}
                           </span>
-                          {item.nationalCode && (
-                            <span className="inline-flex items-center text-[10px] leading-none text-slate-400 dark:text-slate-500 font-mono tracking-tight">
-                              {item.nationalCode}
+                          {item.companyName && (
+                            <span className="inline-flex items-center text-[10px] sm:text-[11px] leading-none text-slate-500 dark:text-slate-400 font-medium truncate max-w-[160px] sm:max-w-[240px]">
+                              {item.companyName}
                             </span>
                           )}
                         </div>

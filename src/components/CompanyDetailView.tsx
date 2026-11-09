@@ -143,7 +143,7 @@ export function CompanyDetailView({ company, history, funds }: CompanyDetailView
                   </div>
 
                   <Link
-                    href={`/?search=${encodeURIComponent(fund.name)}`}
+                    href={`/?fundId=${fund.fundId}&fundName=${encodeURIComponent(fund.name)}`}
                     className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-[#030a16] hover:bg-[#071938] border border-[#0e274d] text-slate-200 transition-colors self-start sm:self-auto shrink-0"
                   >
                     {t.tfi.showSubfunds}

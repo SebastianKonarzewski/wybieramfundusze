@@ -11,10 +11,14 @@ export const dynamic = "force-dynamic";
 export default async function HomePage({
   searchParams,
 }: {
-  searchParams?: Promise<{ search?: string }>;
+  searchParams?: Promise<{ search?: string; fundId?: string; fundName?: string }>;
 }) {
   const resolvedParams = await searchParams;
   const initialSearch = typeof resolvedParams?.search === "string" ? resolvedParams.search : "";
+  const initialFundId = resolvedParams?.fundId && !isNaN(parseInt(resolvedParams.fundId, 10))
+    ? parseInt(resolvedParams.fundId, 10)
+    : undefined;
+  const initialFundName = typeof resolvedParams?.fundName === "string" ? resolvedParams.fundName : undefined;
 
   const [stats, initialSubfunds] = await Promise.all([
     knfApi.getMarketStats(),
@@ -22,6 +26,7 @@ export default async function HomePage({
       size: 24,
       sort: "name,asc",
       search: initialSearch || undefined,
+      fundId: initialFundId,
     }),
   ]);
 
@@ -38,6 +43,8 @@ export default async function HomePage({
           initialItems={initialSubfunds.items}
           initialPage={initialSubfunds.page}
           initialSearch={initialSearch}
+          initialFundId={initialFundId}
+          initialFundName={initialFundName}
         />
       </main>
 

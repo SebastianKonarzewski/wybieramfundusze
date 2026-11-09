@@ -1,0 +1,3215 @@
+{
+  "companies": {
+    "63992": {
+      "id": 63992,
+      "name": "Generali Investments TFI",
+      "fullName": "Generali Investments TFI S.A.",
+      "code": "PLTFI000001"
+    },
+    "64012": {
+      "id": 64012,
+      "name": "Pekao TFI",
+      "fullName": "Pekao TFI S.A.",
+      "code": "PLTFI000010"
+    },
+    "64032": {
+      "id": 64032,
+      "name": "PKO TFI",
+      "fullName": "PKO TFI S.A.",
+      "code": "PLTFI000002"
+    },
+    "64051": {
+      "id": 64051,
+      "name": "Skarbiec TFI",
+      "fullName": "Skarbiec TFI S.A.",
+      "code": "PLTFI000003"
+    },
+    "64108": {
+      "id": 64108,
+      "name": "ING TFI",
+      "fullName": "ING TFI S.A.",
+      "code": "PLTFI000005"
+    },
+    "64146": {
+      "id": 64146,
+      "name": "Erste TFI",
+      "fullName": "Erste TFI S.A.",
+      "code": "PLTFI000006"
+    },
+    "64165": {
+      "id": 64165,
+      "name": "Rockbridge TFI",
+      "fullName": "Rockbridge TFI S.A.",
+      "code": "PLTFI000007"
+    },
+    "64185": {
+      "id": 64185,
+      "name": "Esaliens TFI",
+      "fullName": "Esaliens TFI S.A.",
+      "code": "PLTFI000008"
+    },
+    "64205": {
+      "id": 64205,
+      "name": "TFI PZU SA",
+      "fullName": "TFI PZU SA",
+      "code": "PLTFI000009"
+    },
+    "64259": {
+      "id": 64259,
+      "name": "Millennium TFI",
+      "fullName": "Millennium TFI S.A.",
+      "code": "PLTFI000011"
+    },
+    "64299": {
+      "id": 64299,
+      "name": "TFI Allianz Polska",
+      "fullName": "TFI Allianz Polska S.A.",
+      "code": "PLTFI000013"
+    },
+    "64395": {
+      "id": 64395,
+      "name": "Intrum TFI",
+      "fullName": "Intrum TFI S.A.",
+      "code": "PLTFI000017"
+    },
+    "64414": {
+      "id": 64414,
+      "name": "Investors TFI",
+      "fullName": "Investors TFI S.A.",
+      "code": "PLTFI000018"
+    },
+    "64432": {
+      "id": 64432,
+      "name": "Superfund TFI",
+      "fullName": "Superfund TFI S.A.",
+      "code": "PLTFI000019"
+    },
+    "64469": {
+      "id": 64469,
+      "name": "Fundusze Inwestycji Polskich TFI",
+      "fullName": "Fundusze Inwestycji Polskich TFI S.A.",
+      "code": "PLTFI000021"
+    },
+    "64487": {
+      "id": 64487,
+      "name": "VeloFunds TFI",
+      "fullName": "VeloFunds TFI S.A.",
+      "code": "PLTFI000022"
+    },
+    "64506": {
+      "id": 64506,
+      "name": "Opoka TFI",
+      "fullName": "Opoka TFI S.A.",
+      "code": "PLTFI000023"
+    },
+    "64523": {
+      "id": 64523,
+      "name": "Forum TFI",
+      "fullName": "Forum TFI S.A.",
+      "code": "PLTFI000024"
+    },
+    "64541": {
+      "id": 64541,
+      "name": "Eques Investment TFI",
+      "fullName": "Eques Investment TFI S.A.",
+      "code": "PLTFI000025"
+    },
+    "64559": {
+      "id": 64559,
+      "name": "MCI Capital TFI",
+      "fullName": "MCI Capital TFI S.A.",
+      "code": "PLTFI000026"
+    },
+    "64576": {
+      "id": 64576,
+      "name": "PRA Group TFI",
+      "fullName": "PRA Group TFI S.A.",
+      "code": "PLTFI000028"
+    },
+    "64596": {
+      "id": 64596,
+      "name": "Ipopema TFI",
+      "fullName": "Ipopema TFI S.A.",
+      "code": "PLTFI000027"
+    },
+    "64615": {
+      "id": 64615,
+      "name": "Amathus TFI",
+      "fullName": "Amathus TFI S.A.",
+      "code": "PLTFI000029"
+    },
+    "64633": {
+      "id": 64633,
+      "name": "BEST TFI",
+      "fullName": "BEST TFI S.A.",
+      "code": "PLTFI000030"
+    },
+    "64651": {
+      "id": 64651,
+      "name": "Quercus TFI",
+      "fullName": "Quercus TFI S.A.",
+      "code": "PLTFI000031"
+    },
+    "64669": {
+      "id": 64669,
+      "name": "TFI AGRO",
+      "fullName": "TFI AGRO S.A.",
+      "code": "PLTFI000032"
+    },
+    "64762": {
+      "id": 64762,
+      "name": "AgioFunds TFI",
+      "fullName": "AgioFunds TFI S.A.",
+      "code": "PLTFI000036"
+    },
+    "64781": {
+      "id": 64781,
+      "name": "Mount TFI",
+      "fullName": "Mount TFI  S.A.",
+      "code": "PLTFI000037"
+    },
+    "64800": {
+      "id": 64800,
+      "name": "OSTOJA TFI",
+      "fullName": "OSTOJA TFI S.A.",
+      "code": "PLTFI000038"
+    },
+    "64818": {
+      "id": 64818,
+      "name": "White Berg TFI",
+      "fullName": "White Berg TFI S.A.",
+      "code": "PLTFI000039"
+    },
+    "64837": {
+      "id": 64837,
+      "name": "ARP TFI",
+      "fullName": "ARP TFI S.A.",
+      "code": "PLTFI000040"
+    },
+    "64875": {
+      "id": 64875,
+      "name": "Uniqa TFI",
+      "fullName": "Uniqa TFI S.A.",
+      "code": "PLTFI000042"
+    },
+    "64893": {
+      "id": 64893,
+      "name": "BPS TFI",
+      "fullName": "BPS TFI S.A.",
+      "code": "PLTFI000043"
+    },
+    "64912": {
+      "id": 64912,
+      "name": "BNP Paribas TFI",
+      "fullName": "BNP Paribas TFI S.A.",
+      "code": "PLTFI000044"
+    },
+    "64969": {
+      "id": 64969,
+      "name": "Allied Funds TFI",
+      "fullName": "Allied Funds TFI S.A.",
+      "code": "PLTFI000047"
+    },
+    "64987": {
+      "id": 64987,
+      "name": "Mebis TFI SA",
+      "fullName": "Mebis TFI SA",
+      "code": "PLTFI000048"
+    },
+    "65005": {
+      "id": 65005,
+      "name": "KRUK TFI",
+      "fullName": "KRUK TFI S.A.",
+      "code": "PLTFI000049"
+    },
+    "65023": {
+      "id": 65023,
+      "name": "Caspar TFI",
+      "fullName": "Caspar TFI S.A.",
+      "code": "PLTFI000050"
+    },
+    "65060": {
+      "id": 65060,
+      "name": "Origin TFI",
+      "fullName": "Origin TFI S.A.",
+      "code": "PLTFI000052"
+    },
+    "65079": {
+      "id": 65079,
+      "name": "MMP TFI",
+      "fullName": "MMP TFI S.A.",
+      "code": "PLTFI000053"
+    },
+    "65097": {
+      "id": 65097,
+      "name": "Amundi Polska TFI",
+      "fullName": "Amundi Polska TFI S.A.",
+      "code": "PLTFI000054"
+    },
+    "65115": {
+      "id": 65115,
+      "name": "PFR TFI",
+      "fullName": "PFR TFI S.A.",
+      "code": "PLTFI000056"
+    },
+    "65133": {
+      "id": 65133,
+      "name": "IB TFI",
+      "fullName": "IB TFI S.A.",
+      "code": "PLTFI000055"
+    },
+    "65151": {
+      "id": 65151,
+      "name": "OPTI TFI",
+      "fullName": "OPTI TFI S.A.",
+      "code": "PLTFI000057"
+    },
+    "65169": {
+      "id": 65169,
+      "name": "Alior TFI",
+      "fullName": "Alior TFI S.A.",
+      "code": "PLTFI000058"
+    },
+    "65225": {
+      "id": 65225,
+      "name": "Insignis TFI",
+      "fullName": "Insignis TFI S.A.",
+      "code": "PLTFI000061"
+    },
+    "65280": {
+      "id": 65280,
+      "name": "Baltic Capital TFI",
+      "fullName": "Baltic Capital TFI S.A.",
+      "code": "PLTFI000064"
+    },
+    "65315": {
+      "id": 65315,
+      "name": "TYR TFI",
+      "fullName": "TYR TFI S.A.",
+      "code": "PLTFI000066"
+    },
+    "220511": {
+      "id": 220511,
+      "name": "Ultimo TFI",
+      "fullName": "Ultimo TFI S.A.",
+      "code": "PLTFI000067"
+    },
+    "240743": {
+      "id": 240743,
+      "name": "VIG/C-QUADRAT TFI",
+      "fullName": "VIG/C-QUADRAT TFI S.A.",
+      "code": "PLTFI000068"
+    },
+    "431428": {
+      "id": 431428,
+      "name": "mTFI",
+      "fullName": "mTFI S.A.",
+      "code": "PLTFI000069"
+    },
+    "567979": {
+      "id": 567979,
+      "name": "Hoist TFI",
+      "fullName": "Hoist TFI S.A.",
+      "code": "PLTFI000070"
+    },
+    "601090": {
+      "id": 601090,
+      "name": "Michael/Ström TFI",
+      "fullName": "Michael/Ström TFI S.A.",
+      "code": "PLTFI000071"
+    }
+  },
+  "funds": {
+    "136071": {
+      "fundId": 136071,
+      "fundName": "Esaliens Senior FIO",
+      "type": "FIO",
+      "companyId": 64185,
+      "companyName": "Esaliens TFI"
+    },
+    "136342": {
+      "fundId": 136342,
+      "fundName": "mFundusz Konserwatywny SFIO",
+      "type": "SFIO",
+      "companyId": 431428,
+      "companyName": "mTFI"
+    },
+    "136855": {
+      "fundId": 136855,
+      "fundName": "Fundusz Własności Pracowniczej PKP SFIO",
+      "type": "SFIO",
+      "companyId": 64032,
+      "companyName": "PKO TFI"
+    },
+    "137214": {
+      "fundId": 137214,
+      "fundName": "Credit Agricole FIO",
+      "type": "FIO",
+      "companyId": 64146,
+      "companyName": "Erste TFI"
+    },
+    "138634": {
+      "fundId": 138634,
+      "fundName": "BNPP FIO",
+      "type": "FIO",
+      "companyId": 64912,
+      "companyName": "BNP Paribas TFI"
+    },
+    "138745": {
+      "fundId": 138745,
+      "fundName": "Rockbridge FIZ BI2",
+      "type": "FIZ",
+      "companyId": 64165,
+      "companyName": "Rockbridge TFI"
+    },
+    "138783": {
+      "fundId": 138783,
+      "fundName": "Millennium SFIO",
+      "type": "SFIO",
+      "companyId": 64259,
+      "companyName": "Millennium TFI"
+    },
+    "139052": {
+      "fundId": 139052,
+      "fundName": "S-Collect Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "139486": {
+      "fundId": 139486,
+      "fundName": "Intrum Justitia Debt Fund 1 Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64395,
+      "companyName": "Intrum TFI"
+    },
+    "139522": {
+      "fundId": 139522,
+      "fundName": "Investor FIZ",
+      "type": "FIZ",
+      "companyId": 64414,
+      "companyName": "Investors TFI"
+    },
+    "139594": {
+      "fundId": 139594,
+      "fundName": "Prokura Niestandaryzowany Fundusz Wierzytelności FIZ",
+      "type": "FIZ",
+      "companyId": 65005,
+      "companyName": "KRUK TFI"
+    },
+    "140074": {
+      "fundId": 140074,
+      "fundName": "Superfund SFIO",
+      "type": "SFIO",
+      "companyId": 64432,
+      "companyName": "Superfund TFI"
+    },
+    "140213": {
+      "fundId": 140213,
+      "fundName": "Rockbridge FIZ BI4",
+      "type": "FIZ",
+      "companyId": 64165,
+      "companyName": "Rockbridge TFI"
+    },
+    "140319": {
+      "fundId": 140319,
+      "fundName": "ALFA Real Estate FIZ",
+      "type": "FIZ",
+      "companyId": 65060,
+      "companyName": "Origin TFI"
+    },
+    "140389": {
+      "fundId": 140389,
+      "fundName": "Rockbridge FIZ BI5",
+      "type": "FIZ",
+      "companyId": 64165,
+      "companyName": "Rockbridge TFI"
+    },
+    "140542": {
+      "fundId": 140542,
+      "fundName": "Pekao Funduszy Globalnych SFIO",
+      "type": "SFIO",
+      "companyId": 64012,
+      "companyName": "Pekao TFI"
+    },
+    "140646": {
+      "fundId": 140646,
+      "fundName": "Ultimo Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 220511,
+      "companyName": "Ultimo TFI"
+    },
+    "140716": {
+      "fundId": 140716,
+      "fundName": "AVANTA FIZ Niestandaryzowany Fundusz Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64893,
+      "companyName": "BPS TFI"
+    },
+    "140882": {
+      "fundId": 140882,
+      "fundName": "ING Parasol FIO",
+      "type": "FIO",
+      "companyId": 64108,
+      "companyName": "ING TFI"
+    },
+    "140988": {
+      "fundId": 140988,
+      "fundName": "FORUM FIZ Sektora Nieruchomości 2",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "141240": {
+      "fundId": 141240,
+      "fundName": "Investor Gold FIZ",
+      "type": "FIZ",
+      "companyId": 64414,
+      "companyName": "Investors TFI"
+    },
+    "141372": {
+      "fundId": 141372,
+      "fundName": "Rockbridge Neo SFIO",
+      "type": "SFIO",
+      "companyId": 64165,
+      "companyName": "Rockbridge TFI"
+    },
+    "141731": {
+      "fundId": 141731,
+      "fundName": "Superfund Silver Podstawowy SFIO",
+      "type": "SFIO",
+      "companyId": 64432,
+      "companyName": "Superfund TFI"
+    },
+    "141809": {
+      "fundId": 141809,
+      "fundName": "Superfund Silver Powiązany SFIO",
+      "type": "SFIO",
+      "companyId": 64432,
+      "companyName": "Superfund TFI"
+    },
+    "141878": {
+      "fundId": 141878,
+      "fundName": "Kredyt Inkaso I Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64633,
+      "companyName": "BEST TFI"
+    },
+    "141915": {
+      "fundId": 141915,
+      "fundName": "VeloFunds FIO",
+      "type": "FIO",
+      "companyId": 64487,
+      "companyName": "VeloFunds TFI"
+    },
+    "142323": {
+      "fundId": 142323,
+      "fundName": "OPOKA Q FIZ",
+      "type": "FIZ",
+      "companyId": 64506,
+      "companyName": "Opoka TFI"
+    },
+    "142450": {
+      "fundId": 142450,
+      "fundName": "VPF I Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "142682": {
+      "fundId": 142682,
+      "fundName": "Investor Central and Eastern Europe FIZ",
+      "type": "FIZ",
+      "companyId": 64414,
+      "companyName": "Investors TFI"
+    },
+    "142955": {
+      "fundId": 142955,
+      "fundName": "Forum IV FIZ",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "143158": {
+      "fundId": 143158,
+      "fundName": "PKO Parasolowy FIO",
+      "type": "FIO",
+      "companyId": 64032,
+      "companyName": "PKO TFI"
+    },
+    "143394": {
+      "fundId": 143394,
+      "fundName": "GPM Vindexus Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64987,
+      "companyName": "Mebis TFI SA"
+    },
+    "143487": {
+      "fundId": 143487,
+      "fundName": "Generali Fundusze FIO",
+      "type": "FIO",
+      "companyId": 63992,
+      "companyName": "Generali Investments TFI"
+    },
+    "143520": {
+      "fundId": 143520,
+      "fundName": "Allianz FIO",
+      "type": "FIO",
+      "companyId": 64299,
+      "companyName": "TFI Allianz Polska"
+    },
+    "143552": {
+      "fundId": 143552,
+      "fundName": "Skarbiec FIO",
+      "type": "FIO",
+      "companyId": 64051,
+      "companyName": "Skarbiec TFI"
+    },
+    "143583": {
+      "fundId": 143583,
+      "fundName": "MCI.PrivateVentures FIZ",
+      "type": "FIZ",
+      "companyId": 64559,
+      "companyName": "MCI Capital TFI"
+    },
+    "144020": {
+      "fundId": 144020,
+      "fundName": "Comarch Corporate Finance FIZ",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "144444": {
+      "fundId": 144444,
+      "fundName": "IPOPEMA 3 FIZ AN",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "144834": {
+      "fundId": 144834,
+      "fundName": "Investor Parasol SFIO",
+      "type": "SFIO",
+      "companyId": 64414,
+      "companyName": "Investors TFI"
+    },
+    "144900": {
+      "fundId": 144900,
+      "fundName": "AMATHUS FIZ",
+      "type": "FIZ",
+      "companyId": 64615,
+      "companyName": "Amathus TFI"
+    },
+    "145243": {
+      "fundId": 145243,
+      "fundName": "IPOPEMA PRE-IPO FIZ AN",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "145347": {
+      "fundId": 145347,
+      "fundName": "IPOPEMA 10 FIZ AN",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "145418": {
+      "fundId": 145418,
+      "fundName": "IPOPEMA 12 FIZ AN",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "145626": {
+      "fundId": 145626,
+      "fundName": "Pekao FIO",
+      "type": "FIO",
+      "companyId": 64012,
+      "companyName": "Pekao TFI"
+    },
+    "145785": {
+      "fundId": 145785,
+      "fundName": "Quercus Parasolowy SFIO",
+      "type": "SFIO",
+      "companyId": 64651,
+      "companyName": "Quercus TFI"
+    },
+    "145889": {
+      "fundId": 145889,
+      "fundName": "Allianz Inwestycje SFIO",
+      "type": "SFIO",
+      "companyId": 64299,
+      "companyName": "TFI Allianz Polska"
+    },
+    "146516": {
+      "fundId": 146516,
+      "fundName": "Opoka I FIZ",
+      "type": "FIZ",
+      "companyId": 64506,
+      "companyName": "Opoka TFI"
+    },
+    "146624": {
+      "fundId": 146624,
+      "fundName": "Wechta FIZ",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "146704": {
+      "fundId": 146704,
+      "fundName": "SFIO AGRO Kapitał na Rozwój",
+      "type": "SFIO",
+      "companyId": 64669,
+      "companyName": "TFI AGRO"
+    },
+    "146974": {
+      "fundId": 146974,
+      "fundName": "Rockbridge FIO Parasolowy",
+      "type": "FIO",
+      "companyId": 64165,
+      "companyName": "Rockbridge TFI"
+    },
+    "147167": {
+      "fundId": 147167,
+      "fundName": "Millennium FIO",
+      "type": "FIO",
+      "companyId": 64259,
+      "companyName": "Millennium TFI"
+    },
+    "147487": {
+      "fundId": 147487,
+      "fundName": "Pekao Strategie Funduszowe SFIO",
+      "type": "SFIO",
+      "companyId": 64012,
+      "companyName": "Pekao TFI"
+    },
+    "147806": {
+      "fundId": 147806,
+      "fundName": "TOTAL FIZ",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "147879": {
+      "fundId": 147879,
+      "fundName": "CORPUS IURIS Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "148939": {
+      "fundId": 148939,
+      "fundName": "IPOPEMA 118 FIZ AN",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "149545": {
+      "fundId": 149545,
+      "fundName": "ALIOR SFIO",
+      "type": "SFIO",
+      "companyId": 65169,
+      "companyName": "Alior TFI"
+    },
+    "149580": {
+      "fundId": 149580,
+      "fundName": "ALTER FIZ",
+      "type": "FIZ",
+      "companyId": 64165,
+      "companyName": "Rockbridge TFI"
+    },
+    "149950": {
+      "fundId": 149950,
+      "fundName": "AGIO SFIO",
+      "type": "SFIO",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "150090": {
+      "fundId": 150090,
+      "fundName": "Allianz Premium FIZ",
+      "type": "FIZ",
+      "companyId": 64299,
+      "companyName": "TFI Allianz Polska"
+    },
+    "150160": {
+      "fundId": 150160,
+      "fundName": "P1 FIZ",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "150198": {
+      "fundId": 150198,
+      "fundName": "Mount Digital Assets FIZ AN",
+      "type": "FIZ",
+      "companyId": 64781,
+      "companyName": "Mount TFI"
+    },
+    "150236": {
+      "fundId": 150236,
+      "fundName": "Galicja FIZ",
+      "type": "FIZ",
+      "companyId": 64781,
+      "companyName": "Mount TFI"
+    },
+    "150274": {
+      "fundId": 150274,
+      "fundName": "Esaliens Akcji Skoncentrowany FIZ",
+      "type": "FIZ",
+      "companyId": 64185,
+      "companyName": "Esaliens TFI"
+    },
+    "150378": {
+      "fundId": 150378,
+      "fundName": "Generali Fundusze SFIO",
+      "type": "SFIO",
+      "companyId": 63992,
+      "companyName": "Generali Investments TFI"
+    },
+    "150440": {
+      "fundId": 150440,
+      "fundName": "Ostoja I FIZ AN",
+      "type": "FIZ",
+      "companyId": 64800,
+      "companyName": "OSTOJA TFI"
+    },
+    "150617": {
+      "fundId": 150617,
+      "fundName": "Rockbridge Neo FIO",
+      "type": "FIO",
+      "companyId": 64165,
+      "companyName": "Rockbridge TFI"
+    },
+    "150715": {
+      "fundId": 150715,
+      "fundName": "PZU SFIO Universum",
+      "type": "SFIO",
+      "companyId": 64205,
+      "companyName": "TFI PZU SA"
+    },
+    "150753": {
+      "fundId": 150753,
+      "fundName": "ING SFIO",
+      "type": "SFIO",
+      "companyId": 64108,
+      "companyName": "ING TFI"
+    },
+    "150786": {
+      "fundId": 150786,
+      "fundName": "Allianz SFIO",
+      "type": "SFIO",
+      "companyId": 64299,
+      "companyName": "TFI Allianz Polska"
+    },
+    "151806": {
+      "fundId": 151806,
+      "fundName": "Pekao Obligacji - Dynamiczna Alokacja FIO",
+      "type": "FIO",
+      "companyId": 64012,
+      "companyName": "Pekao TFI"
+    },
+    "152616": {
+      "fundId": 152616,
+      "fundName": "Quercus Absolute Return FIZ",
+      "type": "FIZ",
+      "companyId": 64651,
+      "companyName": "Quercus TFI"
+    },
+    "152650": {
+      "fundId": 152650,
+      "fundName": "Opoka One FIZ",
+      "type": "FIZ",
+      "companyId": 64506,
+      "companyName": "Opoka TFI"
+    },
+    "152684": {
+      "fundId": 152684,
+      "fundName": "Erste Prestiż SFIO",
+      "type": "SFIO",
+      "companyId": 64146,
+      "companyName": "Erste TFI"
+    },
+    "153038": {
+      "fundId": 153038,
+      "fundName": "UNIQA FIO",
+      "type": "FIO",
+      "companyId": 64875,
+      "companyName": "Uniqa TFI"
+    },
+    "153673": {
+      "fundId": 153673,
+      "fundName": "SS1 FIZ",
+      "type": "FIZ",
+      "companyId": 64165,
+      "companyName": "Rockbridge TFI"
+    },
+    "153838": {
+      "fundId": 153838,
+      "fundName": "VeloFunds SFIO",
+      "type": "SFIO",
+      "companyId": 64487,
+      "companyName": "VeloFunds TFI"
+    },
+    "154609": {
+      "fundId": 154609,
+      "fundName": "Erste FIO",
+      "type": "FIO",
+      "companyId": 64146,
+      "companyName": "Erste TFI"
+    },
+    "154710": {
+      "fundId": 154710,
+      "fundName": "Uzdrowiska Polskie FIZ AN",
+      "type": "FIZ",
+      "companyId": 64893,
+      "companyName": "BPS TFI"
+    },
+    "154853": {
+      "fundId": 154853,
+      "fundName": "Efficenter Wierzytelności Niestandaryzowany FIZ ",
+      "type": "FIZ",
+      "companyId": 65151,
+      "companyName": "OPTI TFI"
+    },
+    "154919": {
+      "fundId": 154919,
+      "fundName": "Quercus Global Balanced Plus FIZ",
+      "type": "FIZ",
+      "companyId": 64651,
+      "companyName": "Quercus TFI"
+    },
+    "155132": {
+      "fundId": 155132,
+      "fundName": "Esaliens Medycyny i Technologii FIZ",
+      "type": "FIZ",
+      "companyId": 64185,
+      "companyName": "Esaliens TFI"
+    },
+    "155242": {
+      "fundId": 155242,
+      "fundName": "ALTER 29 FIZ",
+      "type": "FIZ",
+      "companyId": 64165,
+      "companyName": "Rockbridge TFI"
+    },
+    "155459": {
+      "fundId": 155459,
+      "fundName": "Rockbridge FIZ Multi Inwestycja",
+      "type": "FIZ",
+      "companyId": 64165,
+      "companyName": "Rockbridge TFI"
+    },
+    "155495": {
+      "fundId": 155495,
+      "fundName": "FORUM Fund 1 FIZ AN",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "155787": {
+      "fundId": 155787,
+      "fundName": "PZU FIO Parasolowy",
+      "type": "FIO",
+      "companyId": 64205,
+      "companyName": "TFI PZU SA"
+    },
+    "155917": {
+      "fundId": 155917,
+      "fundName": "Bezpieczna Jesień SFIO",
+      "type": "SFIO",
+      "companyId": 64299,
+      "companyName": "TFI Allianz Polska"
+    },
+    "156126": {
+      "fundId": 156126,
+      "fundName": "CORPUS IURIS II NFIZW",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "156266": {
+      "fundId": 156266,
+      "fundName": "Presco Niestandaryzowany Fundusz Wierzytelności FIZ",
+      "type": "FIZ",
+      "companyId": 65005,
+      "companyName": "KRUK TFI"
+    },
+    "156675": {
+      "fundId": 156675,
+      "fundName": "PKO GLOBALNEJ MAKROEKONOMII FIZ",
+      "type": "FIZ",
+      "companyId": 64032,
+      "companyName": "PKO TFI"
+    },
+    "156977": {
+      "fundId": 156977,
+      "fundName": "Future Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64987,
+      "companyName": "Mebis TFI SA"
+    },
+    "157304": {
+      "fundId": 157304,
+      "fundName": "IPOPEMA SFIO",
+      "type": "SFIO",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "157336": {
+      "fundId": 157336,
+      "fundName": "Allianz Discovery FIZ",
+      "type": "FIZ",
+      "companyId": 64299,
+      "companyName": "TFI Allianz Polska"
+    },
+    "157370": {
+      "fundId": 157370,
+      "fundName": "PZU FIZ AN Sektora Nieruchomości 2",
+      "type": "FIZ",
+      "companyId": 64205,
+      "companyName": "TFI PZU SA"
+    },
+    "157654": {
+      "fundId": 157654,
+      "fundName": "Private Investor III FIZ AN",
+      "type": "FIZ",
+      "companyId": 64414,
+      "companyName": "Investors TFI"
+    },
+    "157795": {
+      "fundId": 157795,
+      "fundName": "EOS 1 Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64893,
+      "companyName": "BPS TFI"
+    },
+    "157900": {
+      "fundId": 157900,
+      "fundName": "PKO Strategii Dłużnych FIZ",
+      "type": "FIZ",
+      "companyId": 64032,
+      "companyName": "PKO TFI"
+    },
+    "158583": {
+      "fundId": 158583,
+      "fundName": "POLSKI DEWELOPERSKI FIZ",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "158747": {
+      "fundId": 158747,
+      "fundName": "HOIST I Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 567979,
+      "companyName": "Hoist TFI"
+    },
+    "158781": {
+      "fundId": 158781,
+      "fundName": "ING Perspektywa SFIO",
+      "type": "SFIO",
+      "companyId": 64108,
+      "companyName": "ING TFI"
+    },
+    "158940": {
+      "fundId": 158940,
+      "fundName": "HOIST III Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 567979,
+      "companyName": "Hoist TFI"
+    },
+    "158975": {
+      "fundId": 158975,
+      "fundName": "Kredyt Inkaso II Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64633,
+      "companyName": "BEST TFI"
+    },
+    "159242": {
+      "fundId": 159242,
+      "fundName": "IPOPEMA 68 FIZ AN",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "159438": {
+      "fundId": 159438,
+      "fundName": "EQUES SFIO",
+      "type": "SFIO",
+      "companyId": 64541,
+      "companyName": "Eques Investment TFI"
+    },
+    "159567": {
+      "fundId": 159567,
+      "fundName": "EQUES DEBITUM FIZ Niestandaryzowany Fundusz Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64541,
+      "companyName": "Eques Investment TFI"
+    },
+    "159802": {
+      "fundId": 159802,
+      "fundName": "BEKaP FIZ",
+      "type": "FIZ",
+      "companyId": 64414,
+      "companyName": "Investors TFI"
+    },
+    "159836": {
+      "fundId": 159836,
+      "fundName": "Private Investor II FIZ AN",
+      "type": "FIZ",
+      "companyId": 64414,
+      "companyName": "Investors TFI"
+    },
+    "159902": {
+      "fundId": 159902,
+      "fundName": "FORUM 50 FIZ",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "160042": {
+      "fundId": 160042,
+      "fundName": "Lindorff I Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64395,
+      "companyName": "Intrum TFI"
+    },
+    "160145": {
+      "fundId": 160145,
+      "fundName": "PKO Zabezpieczenia Emerytalnego SFIO",
+      "type": "SFIO",
+      "companyId": 64032,
+      "companyName": "PKO TFI"
+    },
+    "160242": {
+      "fundId": 160242,
+      "fundName": "ALTER FIZ Rynku Polskiego 2",
+      "type": "FIZ",
+      "companyId": 64165,
+      "companyName": "Rockbridge TFI"
+    },
+    "160437": {
+      "fundId": 160437,
+      "fundName": "Allianz Obligacji Korporacyjnych FIZ",
+      "type": "FIZ",
+      "companyId": 64299,
+      "companyName": "TFI Allianz Polska"
+    },
+    "160603": {
+      "fundId": 160603,
+      "fundName": "PZW FIZ",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "160849": {
+      "fundId": 160849,
+      "fundName": "Caspar Parasolowy FIO",
+      "type": "FIO",
+      "companyId": 65023,
+      "companyName": "Caspar TFI"
+    },
+    "160914": {
+      "fundId": 160914,
+      "fundName": "Acer Multistrategy FIZ",
+      "type": "FIZ",
+      "companyId": 64651,
+      "companyName": "Quercus TFI"
+    },
+    "161012": {
+      "fundId": 161012,
+      "fundName": "PZU FIZ Feniks Absolutnej Stopy Zwrotu",
+      "type": "FIZ",
+      "companyId": 64205,
+      "companyName": "TFI PZU SA"
+    },
+    "161144": {
+      "fundId": 161144,
+      "fundName": "LUMEN Quantum Absolute Return FIZ",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "161668": {
+      "fundId": 161668,
+      "fundName": "PZU FIZ AN BIS 2",
+      "type": "FIZ",
+      "companyId": 64205,
+      "companyName": "TFI PZU SA"
+    },
+    "161935": {
+      "fundId": 161935,
+      "fundName": "PZU FIZ AN BIS 1",
+      "type": "FIZ",
+      "companyId": 64205,
+      "companyName": "TFI PZU SA"
+    },
+    "162198": {
+      "fundId": 162198,
+      "fundName": "FIZ AGRO Ziemski",
+      "type": "FIZ",
+      "companyId": 64669,
+      "companyName": "TFI AGRO"
+    },
+    "162328": {
+      "fundId": 162328,
+      "fundName": "PZU FIZ Forte Absolutnej Stopy Zwrotu",
+      "type": "FIZ",
+      "companyId": 64205,
+      "companyName": "TFI PZU SA"
+    },
+    "162565": {
+      "fundId": 162565,
+      "fundName": "CC44 FIZ",
+      "type": "FIZ",
+      "companyId": 64893,
+      "companyName": "BPS TFI"
+    },
+    "162599": {
+      "fundId": 162599,
+      "fundName": "Esaliens Parasol FIO",
+      "type": "FIO",
+      "companyId": 64185,
+      "companyName": "Esaliens TFI"
+    },
+    "162696": {
+      "fundId": 162696,
+      "fundName": "Alfa Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64987,
+      "companyName": "Mebis TFI SA"
+    },
+    "162828": {
+      "fundId": 162828,
+      "fundName": "ALTER FIZ RZ 3",
+      "type": "FIZ",
+      "companyId": 64165,
+      "companyName": "Rockbridge TFI"
+    },
+    "163148": {
+      "fundId": 163148,
+      "fundName": "INBAP FIZ AN",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "163348": {
+      "fundId": 163348,
+      "fundName": "Q1 FIZ",
+      "type": "FIZ",
+      "companyId": 64651,
+      "companyName": "Quercus TFI"
+    },
+    "163444": {
+      "fundId": 163444,
+      "fundName": "IPOPEMA 89 FIZ AN",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "163783": {
+      "fundId": 163783,
+      "fundName": "PKO Globalnej Strategii FIZ",
+      "type": "FIZ",
+      "companyId": 64032,
+      "companyName": "PKO TFI"
+    },
+    "163983": {
+      "fundId": 163983,
+      "fundName": "FORUM 51 FIZ",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "164879": {
+      "fundId": 164879,
+      "fundName": "Varsovia Niestandaryzowany Fundusz Wierzytelności FIZ",
+      "type": "FIZ",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "164912": {
+      "fundId": 164912,
+      "fundName": "Raport Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "165052": {
+      "fundId": 165052,
+      "fundName": "GAMMA Parasol BIZNES FIO",
+      "type": "FIO",
+      "companyId": 64032,
+      "companyName": "PKO TFI"
+    },
+    "165378": {
+      "fundId": 165378,
+      "fundName": "Open Retail Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64487,
+      "companyName": "VeloFunds TFI"
+    },
+    "165411": {
+      "fundId": 165411,
+      "fundName": "Superfund FIO Portfelowy",
+      "type": "FIO",
+      "companyId": 64432,
+      "companyName": "Superfund TFI"
+    },
+    "165475": {
+      "fundId": 165475,
+      "fundName": "LUMEN Quantum Neutral FIZ",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "165543": {
+      "fundId": 165543,
+      "fundName": "EQUES Aktywnego Inwestowania FIZ",
+      "type": "FIZ",
+      "companyId": 64541,
+      "companyName": "Eques Investment TFI"
+    },
+    "165575": {
+      "fundId": 165575,
+      "fundName": "Sanatio Fund FIZ NFW",
+      "type": "FIZ",
+      "companyId": 64818,
+      "companyName": "White Berg TFI"
+    },
+    "165707": {
+      "fundId": 165707,
+      "fundName": "Property FIZ AN",
+      "type": "FIZ",
+      "companyId": 64487,
+      "companyName": "VeloFunds TFI"
+    },
+    "165741": {
+      "fundId": 165741,
+      "fundName": "OPTI FIZ",
+      "type": "FIZ",
+      "companyId": 65151,
+      "companyName": "OPTI TFI"
+    },
+    "165843": {
+      "fundId": 165843,
+      "fundName": "EPEF FIZ AN",
+      "type": "FIZ",
+      "companyId": 65060,
+      "companyName": "Origin TFI"
+    },
+    "166210": {
+      "fundId": 166210,
+      "fundName": "Rockbridge FIZ MID CAPS+",
+      "type": "FIZ",
+      "companyId": 64165,
+      "companyName": "Rockbridge TFI"
+    },
+    "166544": {
+      "fundId": 166544,
+      "fundName": "PKO Strategii Obligacyjnych FIZ",
+      "type": "FIZ",
+      "companyId": 64032,
+      "companyName": "PKO TFI"
+    },
+    "166612": {
+      "fundId": 166612,
+      "fundName": "Amundi Parasolowy FIO",
+      "type": "FIO",
+      "companyId": 65097,
+      "companyName": "Amundi Polska TFI"
+    },
+    "166749": {
+      "fundId": 166749,
+      "fundName": "MERA FIZ AN",
+      "type": "FIZ",
+      "companyId": 64818,
+      "companyName": "White Berg TFI"
+    },
+    "166784": {
+      "fundId": 166784,
+      "fundName": "IPOPEMA Infrastruktury Cyfrowej i Energii FIZ",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "166888": {
+      "fundId": 166888,
+      "fundName": "ALTER FIZ RZ 2",
+      "type": "FIZ",
+      "companyId": 64165,
+      "companyName": "Rockbridge TFI"
+    },
+    "166953": {
+      "fundId": 166953,
+      "fundName": "BNP Paribas PARASOL SFIO",
+      "type": "SFIO",
+      "companyId": 64912,
+      "companyName": "BNP Paribas TFI"
+    },
+    "167122": {
+      "fundId": 167122,
+      "fundName": "OCTAVA FIZ AN",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "167156": {
+      "fundId": 167156,
+      "fundName": "BPS Rynku Nieruchomości FIZ AN",
+      "type": "FIZ",
+      "companyId": 64893,
+      "companyName": "BPS TFI"
+    },
+    "167256": {
+      "fundId": 167256,
+      "fundName": "NGU FIZ",
+      "type": "FIZ",
+      "companyId": 64165,
+      "companyName": "Rockbridge TFI"
+    },
+    "167351": {
+      "fundId": 167351,
+      "fundName": "Pekao Walutowy FIO",
+      "type": "FIO",
+      "companyId": 64012,
+      "companyName": "Pekao TFI"
+    },
+    "167519": {
+      "fundId": 167519,
+      "fundName": "IPOPEMA 103 FIZ AN",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "167794": {
+      "fundId": 167794,
+      "fundName": "Investor Parasol FIO",
+      "type": "FIO",
+      "companyId": 64414,
+      "companyName": "Investors TFI"
+    },
+    "167992": {
+      "fundId": 167992,
+      "fundName": "VESTA FIZ AN",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "168168": {
+      "fundId": 168168,
+      "fundName": "Epsilon FIZ AN",
+      "type": "FIZ",
+      "companyId": 65060,
+      "companyName": "Origin TFI"
+    },
+    "168272": {
+      "fundId": 168272,
+      "fundName": "Efektywny FIZ",
+      "type": "FIZ",
+      "companyId": 65079,
+      "companyName": "MMP TFI"
+    },
+    "168307": {
+      "fundId": 168307,
+      "fundName": "Solidny FIZ",
+      "type": "FIZ",
+      "companyId": 65079,
+      "companyName": "MMP TFI"
+    },
+    "168645": {
+      "fundId": 168645,
+      "fundName": "Fundusz Sektora Mieszkań na Wynajem FIZ AN",
+      "type": "FIZ",
+      "companyId": 65115,
+      "companyName": "PFR TFI"
+    },
+    "168814": {
+      "fundId": 168814,
+      "fundName": "EQUES CREDITUM FIZ Niestandaryzowany Fundusz Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64541,
+      "companyName": "Eques Investment TFI"
+    },
+    "168850": {
+      "fundId": 168850,
+      "fundName": "Opoka FIZ",
+      "type": "FIZ",
+      "companyId": 64506,
+      "companyName": "Opoka TFI"
+    },
+    "169210": {
+      "fundId": 169210,
+      "fundName": "Globalny Fundusz Medyczny FIZ",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "169276": {
+      "fundId": 169276,
+      "fundName": "Mezzanine FIZ AN",
+      "type": "FIZ",
+      "companyId": 64487,
+      "companyName": "VeloFunds TFI"
+    },
+    "169309": {
+      "fundId": 169309,
+      "fundName": "IB 1 FIZ AN",
+      "type": "FIZ",
+      "companyId": 65133,
+      "companyName": "IB TFI"
+    },
+    "169608": {
+      "fundId": 169608,
+      "fundName": "PSF FIZ AN",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "169643": {
+      "fundId": 169643,
+      "fundName": "OPTI Płynnych Obligacji FIZ",
+      "type": "FIZ",
+      "companyId": 65151,
+      "companyName": "OPTI TFI"
+    },
+    "169849": {
+      "fundId": 169849,
+      "fundName": "PKO MULTI STRATEGIA FIZ",
+      "type": "FIZ",
+      "companyId": 64032,
+      "companyName": "PKO TFI"
+    },
+    "170051": {
+      "fundId": 170051,
+      "fundName": "KDW FIZ",
+      "type": "FIZ",
+      "companyId": 64893,
+      "companyName": "BPS TFI"
+    },
+    "170313": {
+      "fundId": 170313,
+      "fundName": "IPOPEMA Sektora Obronnego FIZ",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "170655": {
+      "fundId": 170655,
+      "fundName": "Willard TR FIZ",
+      "type": "FIZ",
+      "companyId": 65280,
+      "companyName": "Baltic Capital TFI"
+    },
+    "170689": {
+      "fundId": 170689,
+      "fundName": "Baltic Global FIZ",
+      "type": "FIZ",
+      "companyId": 65280,
+      "companyName": "Baltic Capital TFI"
+    },
+    "171138": {
+      "fundId": 171138,
+      "fundName": "Generali Absolute Return Dłużny FIZ",
+      "type": "FIZ",
+      "companyId": 63992,
+      "companyName": "Generali Investments TFI"
+    },
+    "171170": {
+      "fundId": 171170,
+      "fundName": "ING Konto Funduszowe SFIO",
+      "type": "SFIO",
+      "companyId": 64108,
+      "companyName": "ING TFI"
+    },
+    "171401": {
+      "fundId": 171401,
+      "fundName": "AIXON AI MULTIFACTOR FIZ",
+      "type": "FIZ",
+      "companyId": 65280,
+      "companyName": "Baltic Capital TFI"
+    },
+    "171434": {
+      "fundId": 171434,
+      "fundName": "Venture FIZ",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "171531": {
+      "fundId": 171531,
+      "fundName": "IB 8 FIZ AN",
+      "type": "FIZ",
+      "companyId": 65133,
+      "companyName": "IB TFI"
+    },
+    "171935": {
+      "fundId": 171935,
+      "fundName": "mBank FIO",
+      "type": "FIO",
+      "companyId": 431428,
+      "companyName": "mTFI"
+    },
+    "172136": {
+      "fundId": 172136,
+      "fundName": "PZU FIZ Akord Absolutnej Stopy Zwrotu",
+      "type": "FIZ",
+      "companyId": 64205,
+      "companyName": "TFI PZU SA"
+    },
+    "172237": {
+      "fundId": 172237,
+      "fundName": "Horyzont Niestandaryzowany Fundusz Wierzytelności FIZ",
+      "type": "FIZ",
+      "companyId": 64576,
+      "companyName": "PRA Group TFI"
+    },
+    "172334": {
+      "fundId": 172334,
+      "fundName": "LL FIZ AN",
+      "type": "FIZ",
+      "companyId": 65133,
+      "companyName": "IB TFI"
+    },
+    "172366": {
+      "fundId": 172366,
+      "fundName": "PKO EUROPA WSCHÓD - ZACHÓD FIZ",
+      "type": "FIZ",
+      "companyId": 64032,
+      "companyName": "PKO TFI"
+    },
+    "172600": {
+      "fundId": 172600,
+      "fundName": "ALTER FIZ AG",
+      "type": "FIZ",
+      "companyId": 64165,
+      "companyName": "Rockbridge TFI"
+    },
+    "172906": {
+      "fundId": 172906,
+      "fundName": "HSB INVEST FIZ",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "173076": {
+      "fundId": 173076,
+      "fundName": "Insignis FIZ",
+      "type": "FIZ",
+      "companyId": 65225,
+      "companyName": "Insignis TFI"
+    },
+    "173110": {
+      "fundId": 173110,
+      "fundName": "IPOPEMA 127 FIZ AN",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "173349": {
+      "fundId": 173349,
+      "fundName": "Zolkiewicz & Partners Inwestycji w Wartość FIZ",
+      "type": "FIZ",
+      "companyId": 65151,
+      "companyName": "OPTI TFI"
+    },
+    "173381": {
+      "fundId": 173381,
+      "fundName": "NEPTUN FIZ AN",
+      "type": "FIZ",
+      "companyId": 64032,
+      "companyName": "PKO TFI"
+    },
+    "173519": {
+      "fundId": 173519,
+      "fundName": "89th Avenue Fund No 1 FIZ",
+      "type": "FIZ",
+      "companyId": 65151,
+      "companyName": "OPTI TFI"
+    },
+    "173654": {
+      "fundId": 173654,
+      "fundName": "Fundusz Ekspansji Zagranicznej FIZ AN",
+      "type": "FIZ",
+      "companyId": 65115,
+      "companyName": "PFR TFI"
+    },
+    "173761": {
+      "fundId": 173761,
+      "fundName": "PFR Fundusz Inwestycyjny FIZ AN",
+      "type": "FIZ",
+      "companyId": 65115,
+      "companyName": "PFR TFI"
+    },
+    "173797": {
+      "fundId": 173797,
+      "fundName": "PFR Fundusz Inwestycji Samorządowych FIZ AN",
+      "type": "FIZ",
+      "companyId": 65115,
+      "companyName": "PFR TFI"
+    },
+    "173936": {
+      "fundId": 173936,
+      "fundName": "AGIO PLUS FIO",
+      "type": "FIO",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "174037": {
+      "fundId": 174037,
+      "fundName": "Wratislavia Project FIZ AN",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "174239": {
+      "fundId": 174239,
+      "fundName": "Generali Absolute Return Akcyjny FIZ",
+      "type": "FIZ",
+      "companyId": 63992,
+      "companyName": "Generali Investments TFI"
+    },
+    "174374": {
+      "fundId": 174374,
+      "fundName": "AMATHUS 3 FIZ",
+      "type": "FIZ",
+      "companyId": 64615,
+      "companyName": "Amathus TFI"
+    },
+    "174440": {
+      "fundId": 174440,
+      "fundName": "Esaliens Parasol Zagraniczny SFIO",
+      "type": "SFIO",
+      "companyId": 64185,
+      "companyName": "Esaliens TFI"
+    },
+    "174471": {
+      "fundId": 174471,
+      "fundName": "InValue Multi-Asset Zrównoważony FIZ",
+      "type": "FIZ",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "174742": {
+      "fundId": 174742,
+      "fundName": "RWS FIZ",
+      "type": "FIZ",
+      "companyId": 65060,
+      "companyName": "Origin TFI"
+    },
+    "174987": {
+      "fundId": 174987,
+      "fundName": "MPP FIZ AN",
+      "type": "FIZ",
+      "companyId": 64818,
+      "companyName": "White Berg TFI"
+    },
+    "175229": {
+      "fundId": 175229,
+      "fundName": "CAMPANULA CAPITAL FIZ AN",
+      "type": "FIZ",
+      "companyId": 64818,
+      "companyName": "White Berg TFI"
+    },
+    "175361": {
+      "fundId": 175361,
+      "fundName": "EPEF 2 FIZ AN",
+      "type": "FIZ",
+      "companyId": 65060,
+      "companyName": "Origin TFI"
+    },
+    "175561": {
+      "fundId": 175561,
+      "fundName": "QUERCUS Multistrategy FIZ",
+      "type": "FIZ",
+      "companyId": 64651,
+      "companyName": "Quercus TFI"
+    },
+    "175595": {
+      "fundId": 175595,
+      "fundName": "WFH FIZ AN",
+      "type": "FIZ",
+      "companyId": 64893,
+      "companyName": "BPS TFI"
+    },
+    "176153": {
+      "fundId": 176153,
+      "fundName": "FORUM 77 FIZ",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "176187": {
+      "fundId": 176187,
+      "fundName": "FORUM 78 FIZ",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "176255": {
+      "fundId": 176255,
+      "fundName": "PERPETUM 10 FIZ AN",
+      "type": "FIZ",
+      "companyId": 65280,
+      "companyName": "Baltic Capital TFI"
+    },
+    "176324": {
+      "fundId": 176324,
+      "fundName": "eM64 FIZ AN",
+      "type": "FIZ",
+      "companyId": 64506,
+      "companyName": "Opoka TFI"
+    },
+    "176497": {
+      "fundId": 176497,
+      "fundName": "PKO Globalnego Dochodu FIZ",
+      "type": "FIZ",
+      "companyId": 64032,
+      "companyName": "PKO TFI"
+    },
+    "176533": {
+      "fundId": 176533,
+      "fundName": "CENTAURUS FIZ",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "176605": {
+      "fundId": 176605,
+      "fundName": "OPTI Absolute Return FIZ",
+      "type": "FIZ",
+      "companyId": 65151,
+      "companyName": "OPTI TFI"
+    },
+    "176772": {
+      "fundId": 176772,
+      "fundName": "IB 14 FIZ AN",
+      "type": "FIZ",
+      "companyId": 65133,
+      "companyName": "IB TFI"
+    },
+    "177158": {
+      "fundId": 177158,
+      "fundName": "Komunalny FIZ",
+      "type": "FIZ",
+      "companyId": 64818,
+      "companyName": "White Berg TFI"
+    },
+    "178083": {
+      "fundId": 178083,
+      "fundName": "Fundusz Sektora Mieszkań dla Rozwoju FIZ AN",
+      "type": "FIZ",
+      "companyId": 65115,
+      "companyName": "PFR TFI"
+    },
+    "178151": {
+      "fundId": 178151,
+      "fundName": "LIVORNO CAPITAL FIZ AN",
+      "type": "FIZ",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "178218": {
+      "fundId": 178218,
+      "fundName": "HANSON FIZ AN",
+      "type": "FIZ",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "178553": {
+      "fundId": 178553,
+      "fundName": "MJG Investments FIZ AN",
+      "type": "FIZ",
+      "companyId": 64893,
+      "companyName": "BPS TFI"
+    },
+    "178587": {
+      "fundId": 178587,
+      "fundName": "CC83 FIZ AN",
+      "type": "FIZ",
+      "companyId": 64893,
+      "companyName": "BPS TFI"
+    },
+    "178803": {
+      "fundId": 178803,
+      "fundName": "BNP Paribas FIO",
+      "type": "FIO",
+      "companyId": 64912,
+      "companyName": "BNP Paribas TFI"
+    },
+    "179476": {
+      "fundId": 179476,
+      "fundName": "Allianz Income and Growth FIZ",
+      "type": "FIZ",
+      "companyId": 64299,
+      "companyName": "TFI Allianz Polska"
+    },
+    "179542": {
+      "fundId": 179542,
+      "fundName": "VeloFund Akumulacji Kapitału FIZ",
+      "type": "FIZ",
+      "companyId": 64487,
+      "companyName": "VeloFunds TFI"
+    },
+    "179609": {
+      "fundId": 179609,
+      "fundName": "VALUE FIZ",
+      "type": "FIZ",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "179937": {
+      "fundId": 179937,
+      "fundName": "Forum 90 FIZ",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "180448": {
+      "fundId": 180448,
+      "fundName": "Gotowe Strategie SFIO",
+      "type": "SFIO",
+      "companyId": 431428,
+      "companyName": "mTFI"
+    },
+    "180478": {
+      "fundId": 180478,
+      "fundName": "VIDRIO FUND FIZ AN",
+      "type": "FIZ",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "180512": {
+      "fundId": 180512,
+      "fundName": "Fundusz Długu Korporacyjnego Rentier FIZ",
+      "type": "FIZ",
+      "companyId": 64487,
+      "companyName": "VeloFunds TFI"
+    },
+    "180579": {
+      "fundId": 180579,
+      "fundName": "PKO Absolutnej Stopy Zwrotu Europa Wschód - Zachód FIZ",
+      "type": "FIZ",
+      "companyId": 64032,
+      "companyName": "PKO TFI"
+    },
+    "180614": {
+      "fundId": 180614,
+      "fundName": "Plus IPOPEMA SFIO",
+      "type": "SFIO",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "181058": {
+      "fundId": 181058,
+      "fundName": "Allianz SFIO Stabilnego Dochodu",
+      "type": "SFIO",
+      "companyId": 64299,
+      "companyName": "TFI Allianz Polska"
+    },
+    "181333": {
+      "fundId": 181333,
+      "fundName": "Vindix Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 65133,
+      "companyName": "IB TFI"
+    },
+    "181464": {
+      "fundId": 181464,
+      "fundName": "PSF 2 FIZ AN",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "181702": {
+      "fundId": 181702,
+      "fundName": "ROIFORT FIZ AN",
+      "type": "FIZ",
+      "companyId": 65280,
+      "companyName": "Baltic Capital TFI"
+    },
+    "182473": {
+      "fundId": 182473,
+      "fundName": "MEDIA VENTURE CAPITAL FIZ AN",
+      "type": "FIZ",
+      "companyId": 64818,
+      "companyName": "White Berg TFI"
+    },
+    "182540": {
+      "fundId": 182540,
+      "fundName": "Value Fund Poland Activist FIZ",
+      "type": "FIZ",
+      "companyId": 64818,
+      "companyName": "White Berg TFI"
+    },
+    "182808": {
+      "fundId": 182808,
+      "fundName": "EQUES Private Debt FIZ",
+      "type": "FIZ",
+      "companyId": 64541,
+      "companyName": "Eques Investment TFI"
+    },
+    "182982": {
+      "fundId": 182982,
+      "fundName": "Caspar Prywatny 1 FIZ",
+      "type": "FIZ",
+      "companyId": 65023,
+      "companyName": "Caspar TFI"
+    },
+    "183182": {
+      "fundId": 183182,
+      "fundName": "ALTER FIZ Multi Strategia",
+      "type": "FIZ",
+      "companyId": 64165,
+      "companyName": "Rockbridge TFI"
+    },
+    "183488": {
+      "fundId": 183488,
+      "fundName": "Private Equity Multifund FIZ",
+      "type": "FIZ",
+      "companyId": 64651,
+      "companyName": "Quercus TFI"
+    },
+    "183629": {
+      "fundId": 183629,
+      "fundName": "PFR KOFFI FIZ",
+      "type": "FIZ",
+      "companyId": 65115,
+      "companyName": "PFR TFI"
+    },
+    "183697": {
+      "fundId": 183697,
+      "fundName": "LARQ GROWTH FUND I FIZ",
+      "type": "FIZ",
+      "companyId": 64818,
+      "companyName": "White Berg TFI"
+    },
+    "183728": {
+      "fundId": 183728,
+      "fundName": "PROTEGAT 1 Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "183762": {
+      "fundId": 183762,
+      "fundName": "EurActive Capital FIZ",
+      "type": "FIZ",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "183831": {
+      "fundId": 183831,
+      "fundName": "EQUES Akumulacji Majątku FIZ",
+      "type": "FIZ",
+      "companyId": 64541,
+      "companyName": "Eques Investment TFI"
+    },
+    "184166": {
+      "fundId": 184166,
+      "fundName": "LC Asset Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "184333": {
+      "fundId": 184333,
+      "fundName": "InValue Multi-Asset Konserwatywny FIZ",
+      "type": "FIZ",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "184499": {
+      "fundId": 184499,
+      "fundName": "MEDICO Niestandaryzowany Fundusz Wierzytelności FIZ",
+      "type": "FIZ",
+      "companyId": 64818,
+      "companyName": "White Berg TFI"
+    },
+    "184566": {
+      "fundId": 184566,
+      "fundName": "IPS-SGB Wierzytelności FIZ Niestandaryzowany Fundusz Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64893,
+      "companyName": "BPS TFI"
+    },
+    "184895": {
+      "fundId": 184895,
+      "fundName": "Infinity Akcji FIZ",
+      "type": "FIZ",
+      "companyId": 65280,
+      "companyName": "Baltic Capital TFI"
+    },
+    "184962": {
+      "fundId": 184962,
+      "fundName": "Private Investor X FIZ AN",
+      "type": "FIZ",
+      "companyId": 64414,
+      "companyName": "Investors TFI"
+    },
+    "185296": {
+      "fundId": 185296,
+      "fundName": "PZU Energia Emerytura SFIO",
+      "type": "SFIO",
+      "companyId": 64205,
+      "companyName": "TFI PZU SA"
+    },
+    "185427": {
+      "fundId": 185427,
+      "fundName": "PFR NCBR CVC FIZ AN",
+      "type": "FIZ",
+      "companyId": 65115,
+      "companyName": "PFR TFI"
+    },
+    "185814": {
+      "fundId": 185814,
+      "fundName": "UNIQA GLOBALNY FIO",
+      "type": "FIO",
+      "companyId": 64875,
+      "companyName": "Uniqa TFI"
+    },
+    "185877": {
+      "fundId": 185877,
+      "fundName": "Dirlango Tech FIZ AN",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "185980": {
+      "fundId": 185980,
+      "fundName": "Mount Finansowania Przedsiębiorstw FIZ AN",
+      "type": "FIZ",
+      "companyId": 64781,
+      "companyName": "Mount TFI"
+    },
+    "186148": {
+      "fundId": 186148,
+      "fundName": "ABJ FIZ",
+      "type": "FIZ",
+      "companyId": 65023,
+      "companyName": "Caspar TFI"
+    },
+    "186250": {
+      "fundId": 186250,
+      "fundName": "Rockbridge FIZ Alpha Hedge 2",
+      "type": "FIZ",
+      "companyId": 64165,
+      "companyName": "Rockbridge TFI"
+    },
+    "186352": {
+      "fundId": 186352,
+      "fundName": "Rockbridge FIZ Value ",
+      "type": "FIZ",
+      "companyId": 64165,
+      "companyName": "Rockbridge TFI"
+    },
+    "186453": {
+      "fundId": 186453,
+      "fundName": "Alphaset FIZ",
+      "type": "FIZ",
+      "companyId": 64651,
+      "companyName": "Quercus TFI"
+    },
+    "186486": {
+      "fundId": 186486,
+      "fundName": "Michael/Ström Obligacji Korporacyjnych FIZ",
+      "type": "FIZ",
+      "companyId": 601090,
+      "companyName": "Michael/Ström TFI"
+    },
+    "186556": {
+      "fundId": 186556,
+      "fundName": "LOKUM DEWELOPER FIZ",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "186590": {
+      "fundId": 186590,
+      "fundName": "PKO PORTFELE INWESTYCYJNE SFIO",
+      "type": "SFIO",
+      "companyId": 64032,
+      "companyName": "PKO TFI"
+    },
+    "186620": {
+      "fundId": 186620,
+      "fundName": "Real Estate Investment FIZ AN",
+      "type": "FIZ",
+      "companyId": 64818,
+      "companyName": "White Berg TFI"
+    },
+    "186653": {
+      "fundId": 186653,
+      "fundName": "LUMEN Profit 30 Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "186686": {
+      "fundId": 186686,
+      "fundName": "Premium Properties FIZ AN",
+      "type": "FIZ",
+      "companyId": 64205,
+      "companyName": "TFI PZU SA"
+    },
+    "186721": {
+      "fundId": 186721,
+      "fundName": "Mount Globalnego Rynku Nieruchomości FIZ",
+      "type": "FIZ",
+      "companyId": 64781,
+      "companyName": "Mount TFI"
+    },
+    "186946": {
+      "fundId": 186946,
+      "fundName": "HETOKA FIZ",
+      "type": "FIZ",
+      "companyId": 65023,
+      "companyName": "Caspar TFI"
+    },
+    "187228": {
+      "fundId": 187228,
+      "fundName": "AMATHUS 4 FIZ AN",
+      "type": "FIZ",
+      "companyId": 64615,
+      "companyName": "Amathus TFI"
+    },
+    "187299": {
+      "fundId": 187299,
+      "fundName": "Private Investor XI FIZ AN",
+      "type": "FIZ",
+      "companyId": 64414,
+      "companyName": "Investors TFI"
+    },
+    "187404": {
+      "fundId": 187404,
+      "fundName": "IPOPEMA 151 FIZ AN",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "187538": {
+      "fundId": 187538,
+      "fundName": "JSW Stabilizacyjny FIZ",
+      "type": "FIZ",
+      "companyId": 64205,
+      "companyName": "TFI PZU SA"
+    },
+    "187604": {
+      "fundId": 187604,
+      "fundName": "inPZU FIO",
+      "type": "FIO",
+      "companyId": 64205,
+      "companyName": "TFI PZU SA"
+    },
+    "187778": {
+      "fundId": 187778,
+      "fundName": "Rockbridge FIZ Alpha Hedge",
+      "type": "FIZ",
+      "companyId": 64165,
+      "companyName": "Rockbridge TFI"
+    },
+    "188264": {
+      "fundId": 188264,
+      "fundName": "IPOPEMA Benefit 3 FIZ AN",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "188372": {
+      "fundId": 188372,
+      "fundName": "PKO VC FIZ AN",
+      "type": "FIZ",
+      "companyId": 64032,
+      "companyName": "PKO TFI"
+    },
+    "188437": {
+      "fundId": 188437,
+      "fundName": "CF1 Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "188538": {
+      "fundId": 188538,
+      "fundName": "PFR Fundusz Funduszy FIZ",
+      "type": "FIZ",
+      "companyId": 65115,
+      "companyName": "PFR TFI"
+    },
+    "188821": {
+      "fundId": 188821,
+      "fundName": "SMART RUNNER FIZ AN",
+      "type": "FIZ",
+      "companyId": 64781,
+      "companyName": "Mount TFI"
+    },
+    "188964": {
+      "fundId": 188964,
+      "fundName": "Beta ETF WIG20TR Portfelowy FIZ",
+      "type": "FIZ",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "188999": {
+      "fundId": 188999,
+      "fundName": "POLARIS FIZ",
+      "type": "FIZ",
+      "companyId": 64818,
+      "companyName": "White Berg TFI"
+    },
+    "189070": {
+      "fundId": 189070,
+      "fundName": "Aneto Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "189103": {
+      "fundId": 189103,
+      "fundName": "HOIST II Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 567979,
+      "companyName": "Hoist TFI"
+    },
+    "189313": {
+      "fundId": 189313,
+      "fundName": "EQUES Akcji Sektora Prywatnego FIZ",
+      "type": "FIZ",
+      "companyId": 64541,
+      "companyName": "Eques Investment TFI"
+    },
+    "189347": {
+      "fundId": 189347,
+      "fundName": "MJM & CO FIZ",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "189450": {
+      "fundId": 189450,
+      "fundName": "White Berg Pożyczek Nieruchomościowych FIZ AN",
+      "type": "FIZ",
+      "companyId": 64818,
+      "companyName": "White Berg TFI"
+    },
+    "189484": {
+      "fundId": 189484,
+      "fundName": "Millennium PPK SFIO",
+      "type": "SFIO",
+      "companyId": 64259,
+      "companyName": "Millennium TFI"
+    },
+    "189546": {
+      "fundId": 189546,
+      "fundName": "AGIO Pożyczkowy Niestandaryzowany Fundusz Wierzytelności FIZ",
+      "type": "FIZ",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "189612": {
+      "fundId": 189612,
+      "fundName": "EQUES Reditum FIZ Niestandaryzowany Fundusz Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64541,
+      "companyName": "Eques Investment TFI"
+    },
+    "189720": {
+      "fundId": 189720,
+      "fundName": "UNIQA Emerytura SFIO",
+      "type": "SFIO",
+      "companyId": 64875,
+      "companyName": "Uniqa TFI"
+    },
+    "189747": {
+      "fundId": 189747,
+      "fundName": "PKO EMERYTURA SFIO",
+      "type": "SFIO",
+      "companyId": 64032,
+      "companyName": "PKO TFI"
+    },
+    "189774": {
+      "fundId": 189774,
+      "fundName": "PPK inPZU SFIO",
+      "type": "SFIO",
+      "companyId": 64205,
+      "companyName": "TFI PZU SA"
+    },
+    "189801": {
+      "fundId": 189801,
+      "fundName": "Esaliens PPK SFIO",
+      "type": "SFIO",
+      "companyId": 64185,
+      "companyName": "Esaliens TFI"
+    },
+    "189863": {
+      "fundId": 189863,
+      "fundName": "Generali Horyzont SFIO",
+      "type": "SFIO",
+      "companyId": 63992,
+      "companyName": "Generali Investments TFI"
+    },
+    "189890": {
+      "fundId": 189890,
+      "fundName": "Erste PPK SFIO",
+      "type": "SFIO",
+      "companyId": 64146,
+      "companyName": "Erste TFI"
+    },
+    "189952": {
+      "fundId": 189952,
+      "fundName": "PFR PPK SFIO",
+      "type": "SFIO",
+      "companyId": 65115,
+      "companyName": "PFR TFI"
+    },
+    "189979": {
+      "fundId": 189979,
+      "fundName": "Allianz Plan Emerytalny SFIO",
+      "type": "SFIO",
+      "companyId": 64299,
+      "companyName": "TFI Allianz Polska"
+    },
+    "190034": {
+      "fundId": 190034,
+      "fundName": "Investor PPK SFIO",
+      "type": "SFIO",
+      "companyId": 64414,
+      "companyName": "Investors TFI"
+    },
+    "190061": {
+      "fundId": 190061,
+      "fundName": "ING Emerytura SFIO",
+      "type": "SFIO",
+      "companyId": 64108,
+      "companyName": "ING TFI"
+    },
+    "190089": {
+      "fundId": 190089,
+      "fundName": "Pekao PPK SFIO",
+      "type": "SFIO",
+      "companyId": 64012,
+      "companyName": "Pekao TFI"
+    },
+    "190120": {
+      "fundId": 190120,
+      "fundName": "FORUM Wierzytelności Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "190182": {
+      "fundId": 190182,
+      "fundName": "Pro Vento Capital FIZ AN",
+      "type": "FIZ",
+      "companyId": 64818,
+      "companyName": "White Berg TFI"
+    },
+    "190284": {
+      "fundId": 190284,
+      "fundName": "BNP Paribas PPK SFIO",
+      "type": "SFIO",
+      "companyId": 64912,
+      "companyName": "BNP Paribas TFI"
+    },
+    "190315": {
+      "fundId": 190315,
+      "fundName": "Amundi Stars SFIO",
+      "type": "SFIO",
+      "companyId": 65097,
+      "companyName": "Amundi Polska TFI"
+    },
+    "190371": {
+      "fundId": 190371,
+      "fundName": "Beta ETF mWIG40TR Portfelowy FIZ",
+      "type": "FIZ",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "190440": {
+      "fundId": 190440,
+      "fundName": "Beta ETF WIG20lev Portfelowy FIZ",
+      "type": "FIZ",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "190471": {
+      "fundId": 190471,
+      "fundName": "Beta ETF WIG20short Portfelowy FIZ",
+      "type": "FIZ",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "190506": {
+      "fundId": 190506,
+      "fundName": "CVI IPOPEMA RE DEBT FIZ AN",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "190603": {
+      "fundId": 190603,
+      "fundName": "GW FIZ AN",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "190674": {
+      "fundId": 190674,
+      "fundName": "FORUM WIERZYTELNOŚCI+ Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "190707": {
+      "fundId": 190707,
+      "fundName": "CAMARO FIZ AN",
+      "type": "FIZ",
+      "companyId": 64818,
+      "companyName": "White Berg TFI"
+    },
+    "190771": {
+      "fundId": 190771,
+      "fundName": "IPOPEMA Benefit 7 FIZ AN",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "190887": {
+      "fundId": 190887,
+      "fundName": "AURORA FIZ",
+      "type": "FIZ",
+      "companyId": 65151,
+      "companyName": "OPTI TFI"
+    },
+    "190914": {
+      "fundId": 190914,
+      "fundName": "Westminster One FIZ Niestandaryzowany Fundusz Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64893,
+      "companyName": "BPS TFI"
+    },
+    "217660": {
+      "fundId": 217660,
+      "fundName": "Beta ETF Nasdaq-100 PLN-Hedged Portfelowy FIZ",
+      "type": "FIZ",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "217703": {
+      "fundId": 217703,
+      "fundName": "Beta ETF S&P 500 PLN-Hedged Portfelowy FIZ",
+      "type": "FIZ",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "222257": {
+      "fundId": 222257,
+      "fundName": "FORUM EURO NIERUCHOMOŚCI FIZ AN",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "223231": {
+      "fundId": 223231,
+      "fundName": "LC ASSET II Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "225653": {
+      "fundId": 225653,
+      "fundName": "Liquity FIZ Niestandaryzowany Fundusz Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64818,
+      "companyName": "White Berg TFI"
+    },
+    "230282": {
+      "fundId": 230282,
+      "fundName": "Beta ETF Obligacji 6M Portfelowy FIZ",
+      "type": "FIZ",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "230388": {
+      "fundId": 230388,
+      "fundName": "TYR Private Debt Rynku Nieruchomości FIZ AN",
+      "type": "FIZ",
+      "companyId": 65315,
+      "companyName": "TYR TFI"
+    },
+    "234044": {
+      "fundId": 234044,
+      "fundName": "Family Caspar FIZ",
+      "type": "FIZ",
+      "companyId": 65023,
+      "companyName": "Caspar TFI"
+    },
+    "238651": {
+      "fundId": 238651,
+      "fundName": "PRO BONO FIZ",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "238705": {
+      "fundId": 238705,
+      "fundName": "Projekt Solartechnik Fund FIZ",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "239121": {
+      "fundId": 239121,
+      "fundName": "Quercus Instytucjonalny SFIO",
+      "type": "SFIO",
+      "companyId": 64651,
+      "companyName": "Quercus TFI"
+    },
+    "240358": {
+      "fundId": 240358,
+      "fundName": "IPOPEMA EUROBENEFIT 7 FIZ",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "240685": {
+      "fundId": 240685,
+      "fundName": "PZU FIZ Legato Absolutnej Stopy Zwrotu",
+      "type": "FIZ",
+      "companyId": 64205,
+      "companyName": "TFI PZU SA"
+    },
+    "402659": {
+      "fundId": 402659,
+      "fundName": "VIG/C-QUADRAT FIO",
+      "type": "FIO",
+      "companyId": 240743,
+      "companyName": "VIG/C-QUADRAT TFI"
+    },
+    "402981": {
+      "fundId": 402981,
+      "fundName": "Fidemo Polska FIZ",
+      "type": "FIZ",
+      "companyId": 64541,
+      "companyName": "Eques Investment TFI"
+    },
+    "412440": {
+      "fundId": 412440,
+      "fundName": "VIG/C-QUADRAT SFIO",
+      "type": "SFIO",
+      "companyId": 240743,
+      "companyName": "VIG/C-QUADRAT TFI"
+    },
+    "412810": {
+      "fundId": 412810,
+      "fundName": "Beta ETF TBSP Portfelowy FIZ",
+      "type": "FIZ",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "413499": {
+      "fundId": 413499,
+      "fundName": "Beta ETF sWIG80TR Portfelowy FIZ",
+      "type": "FIZ",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "415930": {
+      "fundId": 415930,
+      "fundName": "Third Dot FIZ",
+      "type": "FIZ",
+      "companyId": 64506,
+      "companyName": "Opoka TFI"
+    },
+    "418522": {
+      "fundId": 418522,
+      "fundName": "Rockbridge Value Growth FIZ",
+      "type": "FIZ",
+      "companyId": 64165,
+      "companyName": "Rockbridge TFI"
+    },
+    "419625": {
+      "fundId": 419625,
+      "fundName": "Jupiter FIZ Niestandaryzowany Fundusz Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64969,
+      "companyName": "Allied Funds TFI"
+    },
+    "424727": {
+      "fundId": 424727,
+      "fundName": "SMART MONEY FIZ",
+      "type": "FIZ",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "425121": {
+      "fundId": 425121,
+      "fundName": "Myntro FIZ NFW",
+      "type": "FIZ",
+      "companyId": 64818,
+      "companyName": "White Berg TFI"
+    },
+    "425342": {
+      "fundId": 425342,
+      "fundName": "KROPKA III FIZ",
+      "type": "FIZ",
+      "companyId": 64165,
+      "companyName": "Rockbridge TFI"
+    },
+    "427991": {
+      "fundId": 427991,
+      "fundName": "Ondana FIZ",
+      "type": "FIZ",
+      "companyId": 65023,
+      "companyName": "Caspar TFI"
+    },
+    "428130": {
+      "fundId": 428130,
+      "fundName": "ASC FIZ Niestandaryzowany Fundusz Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64893,
+      "companyName": "BPS TFI"
+    },
+    "431288": {
+      "fundId": 431288,
+      "fundName": "Pekao 1 FIZ",
+      "type": "FIZ",
+      "companyId": 64012,
+      "companyName": "Pekao TFI"
+    },
+    "431343": {
+      "fundId": 431343,
+      "fundName": "MONTON Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "432898": {
+      "fundId": 432898,
+      "fundName": "4 FIZ",
+      "type": "FIZ",
+      "companyId": 65023,
+      "companyName": "Caspar TFI"
+    },
+    "432952": {
+      "fundId": 432952,
+      "fundName": "Arrow FIZ",
+      "type": "FIZ",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "434064": {
+      "fundId": 434064,
+      "fundName": "Mount Mezzanine FIZ AN",
+      "type": "FIZ",
+      "companyId": 64781,
+      "companyName": "Mount TFI"
+    },
+    "434241": {
+      "fundId": 434241,
+      "fundName": "89th Avenue Fund No 2 FIZ",
+      "type": "FIZ",
+      "companyId": 65280,
+      "companyName": "Baltic Capital TFI"
+    },
+    "436161": {
+      "fundId": 436161,
+      "fundName": "HERMES FIZ",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "437699": {
+      "fundId": 437699,
+      "fundName": "BeGlobal SFIO",
+      "type": "SFIO",
+      "companyId": 64165,
+      "companyName": "Rockbridge TFI"
+    },
+    "437986": {
+      "fundId": 437986,
+      "fundName": "Fundusz Ekspansji Zagranicznej 2 FIZ AN",
+      "type": "FIZ",
+      "companyId": 65115,
+      "companyName": "PFR TFI"
+    },
+    "438171": {
+      "fundId": 438171,
+      "fundName": "ALTA FIZ AN",
+      "type": "FIZ",
+      "companyId": 65315,
+      "companyName": "TYR TFI"
+    },
+    "438252": {
+      "fundId": 438252,
+      "fundName": "Michael/Ström Obligacji Dużych Spółek FIZ",
+      "type": "FIZ",
+      "companyId": 601090,
+      "companyName": "Michael/Ström TFI"
+    },
+    "479124": {
+      "fundId": 479124,
+      "fundName": "PK Green Commodities FIZ",
+      "type": "FIZ",
+      "companyId": 65280,
+      "companyName": "Baltic Capital TFI"
+    },
+    "482052": {
+      "fundId": 482052,
+      "fundName": "White Berg Capital Markets FIZ",
+      "type": "FIZ",
+      "companyId": 64818,
+      "companyName": "White Berg TFI"
+    },
+    "483742": {
+      "fundId": 483742,
+      "fundName": "WH FIZ",
+      "type": "FIZ",
+      "companyId": 65023,
+      "companyName": "Caspar TFI"
+    },
+    "484121": {
+      "fundId": 484121,
+      "fundName": "Insignis Long FIZ",
+      "type": "FIZ",
+      "companyId": 65225,
+      "companyName": "Insignis TFI"
+    },
+    "562696": {
+      "fundId": 562696,
+      "fundName": "EQUES PEKABEX Deweloperski FIZ",
+      "type": "FIZ",
+      "companyId": 64541,
+      "companyName": "Eques Investment TFI"
+    },
+    "565655": {
+      "fundId": 565655,
+      "fundName": "Mount Polskich Akcji FIZ",
+      "type": "FIZ",
+      "companyId": 64781,
+      "companyName": "Mount TFI"
+    },
+    "566618": {
+      "fundId": 566618,
+      "fundName": "CRF 1 Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "569151": {
+      "fundId": 569151,
+      "fundName": "QIAGEN POLAND INVEST FIZ AN",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "576428": {
+      "fundId": 576428,
+      "fundName": "Michael/Ström Private Debt FIZ",
+      "type": "FIZ",
+      "companyId": 601090,
+      "companyName": "Michael/Ström TFI"
+    },
+    "577777": {
+      "fundId": 577777,
+      "fundName": "FORUM 119 FIZ",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "578579": {
+      "fundId": 578579,
+      "fundName": "MML Capital FIZ",
+      "type": "FIZ",
+      "companyId": 64818,
+      "companyName": "White Berg TFI"
+    },
+    "579146": {
+      "fundId": 579146,
+      "fundName": "PROSPERA Niestandaryzowany FIZ Wierzytelności",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "580407": {
+      "fundId": 580407,
+      "fundName": "Erste Private Equity FIZ",
+      "type": "FIZ",
+      "companyId": 64146,
+      "companyName": "Erste TFI"
+    },
+    "582217": {
+      "fundId": 582217,
+      "fundName": "Beta ETF Nasdaq-100 2 x Short Portfelowy FIZ",
+      "type": "FIZ",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "582329": {
+      "fundId": 582329,
+      "fundName": "Beta ETF Nasdaq-100 3 x Leveraged Portfelowy FIZ",
+      "type": "FIZ",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "582408": {
+      "fundId": 582408,
+      "fundName": "NUTIT REAL ESTATE FIZ",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "592014": {
+      "fundId": 592014,
+      "fundName": "MT Capital FIZ",
+      "type": "FIZ",
+      "companyId": 64165,
+      "companyName": "Rockbridge TFI"
+    },
+    "593270": {
+      "fundId": 593270,
+      "fundName": "PZF FIZ",
+      "type": "FIZ",
+      "companyId": 64837,
+      "companyName": "ARP TFI"
+    },
+    "594130": {
+      "fundId": 594130,
+      "fundName": "BEST NFIZW",
+      "type": "FIZ",
+      "companyId": 64633,
+      "companyName": "BEST TFI"
+    },
+    "594434": {
+      "fundId": 594434,
+      "fundName": "FORUM 777 FIZ",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "597787": {
+      "fundId": 597787,
+      "fundName": "PZU FIZ Obligacji Korporacyjnych",
+      "type": "FIZ",
+      "companyId": 64205,
+      "companyName": "TFI PZU SA"
+    },
+    "598509": {
+      "fundId": 598509,
+      "fundName": "REGAL FIZ",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "598875": {
+      "fundId": 598875,
+      "fundName": "IPOPEMA Instytucjonalny Dłużny Uniwersalny SFIO",
+      "type": "SFIO",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "599920": {
+      "fundId": 599920,
+      "fundName": "Recovery FIZ NFW",
+      "type": "FIZ",
+      "companyId": 65315,
+      "companyName": "TYR TFI"
+    },
+    "603998": {
+      "fundId": 603998,
+      "fundName": "SOLUTIO NFIZW",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "604366": {
+      "fundId": 604366,
+      "fundName": "Beta ETF DYWIDENDA PLUS Portfelowy FIZ",
+      "type": "FIZ",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "604422": {
+      "fundId": 604422,
+      "fundName": "Beta ETF Bitcoin Portfelowy FIZ",
+      "type": "FIZ",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "604767": {
+      "fundId": 604767,
+      "fundName": "Third Dot Bio FIZ",
+      "type": "FIZ",
+      "companyId": 64506,
+      "companyName": "Opoka TFI"
+    },
+    "605346": {
+      "fundId": 605346,
+      "fundName": "KROPKA IV FIZ",
+      "type": "FIZ",
+      "companyId": 64165,
+      "companyName": "Rockbridge TFI"
+    },
+    "606650": {
+      "fundId": 606650,
+      "fundName": "123 FIZ",
+      "type": "FIZ",
+      "companyId": 64818,
+      "companyName": "White Berg TFI"
+    },
+    "607540": {
+      "fundId": 607540,
+      "fundName": "Blue I NFIZW ",
+      "type": "FIZ",
+      "companyId": 64395,
+      "companyName": "Intrum TFI"
+    },
+    "608422": {
+      "fundId": 608422,
+      "fundName": "LC ASSET III NFIZW",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "608903": {
+      "fundId": 608903,
+      "fundName": "PZU FIZ Private Debt ",
+      "type": "FIZ",
+      "companyId": 64205,
+      "companyName": "TFI PZU SA"
+    },
+    "610426": {
+      "fundId": 610426,
+      "fundName": "Kapelanka FIZ",
+      "type": "FIZ",
+      "companyId": 64541,
+      "companyName": "Eques Investment TFI"
+    },
+    "610711": {
+      "fundId": 610711,
+      "fundName": "Rubikon NFIZW",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "612788": {
+      "fundId": 612788,
+      "fundName": "ECO-CLASSIC DEWELOPERSKI  FIZ AN",
+      "type": "FIZ",
+      "companyId": 64818,
+      "companyName": "White Berg TFI"
+    },
+    "612927": {
+      "fundId": 612927,
+      "fundName": "Caspar Focus FIZ",
+      "type": "FIZ",
+      "companyId": 65023,
+      "companyName": "Caspar TFI"
+    },
+    "613970": {
+      "fundId": 613970,
+      "fundName": "Caspar US Leaders FIZ",
+      "type": "FIZ",
+      "companyId": 65023,
+      "companyName": "Caspar TFI"
+    },
+    "614878": {
+      "fundId": 614878,
+      "fundName": "FORUM 124 FIZ",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "615424": {
+      "fundId": 615424,
+      "fundName": "Contigo FIZ",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "617139": {
+      "fundId": 617139,
+      "fundName": "NASA CAPITAL FIZ AN",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "619159": {
+      "fundId": 619159,
+      "fundName": "Obligatio FIZ NFW",
+      "type": "FIZ",
+      "companyId": 64541,
+      "companyName": "Eques Investment TFI"
+    },
+    "619712": {
+      "fundId": 619712,
+      "fundName": "PZU ETF WIG20 TR + mWIG40 TR Portfelowy FIZ",
+      "type": "FIZ",
+      "companyId": 64205,
+      "companyName": "TFI PZU SA"
+    },
+    "620413": {
+      "fundId": 620413,
+      "fundName": "INFINITUM 1 FIZ NFW",
+      "type": "FIZ",
+      "companyId": 64818,
+      "companyName": "White Berg TFI"
+    },
+    "620469": {
+      "fundId": 620469,
+      "fundName": "JB Investment FIZ NFW ",
+      "type": "FIZ",
+      "companyId": 64893,
+      "companyName": "BPS TFI"
+    },
+    "621164": {
+      "fundId": 621164,
+      "fundName": "Beta ETF MWIG40TRlv Portfelowy FIZ",
+      "type": "FIZ",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "621220": {
+      "fundId": 621220,
+      "fundName": "Beta ETF MWIG40TRsh Portfelowy FIZ",
+      "type": "FIZ",
+      "companyId": 64762,
+      "companyName": "AgioFunds TFI"
+    },
+    "622601": {
+      "fundId": 622601,
+      "fundName": "PZU ETF MSCI WORLD Portfelowy FIZ",
+      "type": "FIZ",
+      "companyId": 64205,
+      "companyName": "TFI PZU SA"
+    },
+    "623682": {
+      "fundId": 623682,
+      "fundName": "EQUES Franklin Lexington PE FIZ",
+      "type": "FIZ",
+      "companyId": 64541,
+      "companyName": "Eques Investment TFI"
+    },
+    "623802": {
+      "fundId": 623802,
+      "fundName": "Jantar FIZ NFW",
+      "type": "FIZ",
+      "companyId": 64969,
+      "companyName": "Allied Funds TFI"
+    },
+    "624447": {
+      "fundId": 624447,
+      "fundName": "PZU ETF Gold Portfelowy FIZ",
+      "type": "FIZ",
+      "companyId": 64205,
+      "companyName": "TFI PZU SA"
+    },
+    "626106": {
+      "fundId": 626106,
+      "fundName": "Smart Park FIZ AN",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "628140": {
+      "fundId": 628140,
+      "fundName": "FORUM 120 FIZ",
+      "type": "FIZ",
+      "companyId": 64523,
+      "companyName": "Forum TFI"
+    },
+    "629083": {
+      "fundId": 629083,
+      "fundName": "Nexus Credit NFIZW",
+      "type": "FIZ",
+      "companyId": 64596,
+      "companyName": "Ipopema TFI"
+    },
+    "629281": {
+      "fundId": 629281,
+      "fundName": "PZU ETF Obligacji Skarbowych Długoterminowych Portfelowy FIZ",
+      "type": "FIZ",
+      "companyId": 64205,
+      "companyName": "TFI PZU SA"
+    },
+    "629337": {
+      "fundId": 629337,
+      "fundName": "PZU ETF Obligacji Skarbowych Zmiennokuponowych Portfelowy FIZ",
+      "type": "FIZ",
+      "companyId": 64205,
+      "companyName": "TFI PZU SA"
+    },
+    "629828": {
+      "fundId": 629828,
+      "fundName": "mEuro Konserwatywny FIO",
+      "type": "FIO",
+      "companyId": 431428,
+      "companyName": "mTFI"
+    },
+    "630371": {
+      "fundId": 630371,
+      "fundName": "Mount Blockchain i Nowych Technologii FIZ",
+      "type": "FIZ",
+      "companyId": 64781,
+      "companyName": "Mount TFI"
+    },
+    "631266": {
+      "fundId": 631266,
+      "fundName": "CB FIZ NFW",
+      "type": "FIZ",
+      "companyId": 64893,
+      "companyName": "BPS TFI"
+    },
+    "635283": {
+      "fundId": 635283,
+      "fundName": "Insignis Artificial Intelligence FIZ",
+      "type": "FIZ",
+      "companyId": 65225,
+      "companyName": "Insignis TFI"
+    },
+    "636228": {
+      "fundId": 636228,
+      "fundName": "Giewont FIZ",
+      "type": "FIZ",
+      "companyId": 64837,
+      "companyName": "ARP TFI"
+    },
+    "636709": {
+      "fundId": 636709,
+      "fundName": "Pekao Rynku Pieniężnego SFIO",
+      "type": "SFIO",
+      "companyId": 64012,
+      "companyName": "Pekao TFI"
+    },
+    "636907": {
+      "fundId": 636907,
+      "fundName": "Mount Global Alfa FIZ",
+      "type": "FIZ",
+      "companyId": 64781,
+      "companyName": "Mount TFI"
+    },
+    "636962": {
+      "fundId": 636962,
+      "fundName": "Mount Infrastruktury Cyfrowej FIZ",
+      "type": "FIZ",
+      "companyId": 64781,
+      "companyName": "Mount TFI"
+    },
+    "637205": {
+      "fundId": 637205,
+      "fundName": "Deep Tech FIZ",
+      "type": "FIZ",
+      "companyId": 64837,
+      "companyName": "ARP TFI"
+    },
+    "637954": {
+      "fundId": 637954,
+      "fundName": "Pekao Innovate FIZ AN",
+      "type": "FIZ",
+      "companyId": 64012,
+      "companyName": "Pekao TFI"
+    }
+  }
+}
