@@ -584,20 +584,7 @@ export function SubfundsCatalog({
 
   const sortGroups = useMemo(() => [
     {
-      group: locale === "en" ? "Return Rate" : "Stopa zwrotu",
-      options: [
-        {
-          value: "return_desc",
-          label: `${t.catalog.sort.returnDesc} (${activePeriodLabel})`,
-        },
-        {
-          value: "return_asc",
-          label: `${t.catalog.sort.returnAsc} (${activePeriodLabel})`,
-        },
-      ],
-    },
-    {
-      group: locale === "en" ? "Name" : "Nazwa",
+      id: "name",
       options: [
         {
           value: "name_asc",
@@ -610,33 +597,7 @@ export function SubfundsCatalog({
       ],
     },
     {
-      group: locale === "en" ? "Net Assets (AUM)" : "Wartość aktywów (AUM)",
-      options: [
-        {
-          value: "assets_desc",
-          label: t.catalog.sort.assetsDesc,
-        },
-        {
-          value: "assets_asc",
-          label: t.catalog.sort.assetsAsc,
-        },
-      ],
-    },
-    {
-      group: locale === "en" ? "Management Fee" : "Opłata za zarządzanie",
-      options: [
-        {
-          value: "fee_asc",
-          label: t.catalog.sort.feeAsc,
-        },
-        {
-          value: "fee_desc",
-          label: t.catalog.sort.feeDesc,
-        },
-      ],
-    },
-    {
-      group: locale === "en" ? "Risk Level (SRI)" : "Poziom ryzyka (SRI)",
+      id: "risk",
       options: [
         {
           value: "risk_asc",
@@ -649,7 +610,33 @@ export function SubfundsCatalog({
       ],
     },
     {
-      group: locale === "en" ? "Latest Valuation" : "Wycena jednostki",
+      id: "fee",
+      options: [
+        {
+          value: "fee_asc",
+          label: t.catalog.sort.feeAsc,
+        },
+        {
+          value: "fee_desc",
+          label: t.catalog.sort.feeDesc,
+        },
+      ],
+    },
+    {
+      id: "return",
+      options: [
+        {
+          value: "return_desc",
+          label: `${t.catalog.sort.returnDesc} (${activePeriodLabel})`,
+        },
+        {
+          value: "return_asc",
+          label: `${t.catalog.sort.returnAsc} (${activePeriodLabel})`,
+        },
+      ],
+    },
+    {
+      id: "valuation",
       options: [
         {
           value: "valuation_desc",
@@ -661,7 +648,20 @@ export function SubfundsCatalog({
         },
       ],
     },
-  ], [t, locale, activePeriodLabel]);
+    {
+      id: "assets",
+      options: [
+        {
+          value: "assets_desc",
+          label: t.catalog.sort.assetsDesc,
+        },
+        {
+          value: "assets_asc",
+          label: t.catalog.sort.assetsAsc,
+        },
+      ],
+    },
+  ], [t, activePeriodLabel]);
 
   const currentSortValue = `${sortField}_${sortOrder}`;
 
@@ -1283,40 +1283,38 @@ export function SubfundsCatalog({
                   <div
                     role="listbox"
                     aria-labelledby="catalog-sort-button"
-                    className="absolute top-full left-0 sm:left-auto sm:right-0 mt-1.5 w-full sm:w-[310px] bg-white dark:bg-[#030c1c] border border-slate-200 dark:border-[#0e274d] rounded-xl shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-100 max-h-84 overflow-y-auto p-1.5 space-y-1"
+                    className="absolute top-full left-0 sm:left-auto sm:right-0 mt-1.5 w-full sm:w-[285px] bg-white dark:bg-[#030c1c] border border-slate-200 dark:border-[#0e274d] rounded-xl shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-100 max-h-[85vh] sm:max-h-96 overflow-y-auto p-1.5"
                   >
                     {sortGroups.map((grp) => (
-                      <div key={grp.group} className="pt-1.5 border-t border-slate-100 dark:border-[#0e274d]/50 first:border-t-0 first:pt-0">
-                        <div className="px-2.5 py-1 text-[10px] font-bold text-[#044CD0] dark:text-[#60a5fa] uppercase tracking-wide select-none">
-                          {grp.group}
-                        </div>
-                        <div className="space-y-0.5">
-                          {grp.options.map((opt) => {
-                            const isSelected = currentSortValue === opt.value;
-                            return (
-                              <button
-                                key={opt.value}
-                                type="button"
-                                role="option"
-                                aria-selected={isSelected}
-                                onClick={() => {
-                                  handleCombinedSortChange(opt.value);
-                                  setIsSortOpen(false);
-                                }}
-                                className={`w-full text-left px-2.5 py-1.5 text-xs rounded-lg flex items-center justify-between transition-colors cursor-pointer select-none ${
-                                  isSelected
-                                    ? "bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-200 font-semibold"
-                                    : "text-slate-700 dark:text-slate-300 hover:bg-blue-50/70 dark:hover:bg-[#071938] hover:text-[#044CD0] dark:hover:text-white"
-                                }`}
-                              >
-                                <span className="truncate pr-2">{opt.label}</span>
-                                {isSelected && (
-                                  <Check className="w-3.5 h-3.5 stroke-[3] text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
-                                )}
-                              </button>
-                            );
-                          })}
-                        </div>
+                      <div
+                        key={grp.id}
+                        className="border-t border-slate-100 dark:border-[#0e274d]/50 first:border-t-0 pt-1 mt-1 first:pt-0 first:mt-0 space-y-0.5"
+                      >
+                        {grp.options.map((opt) => {
+                          const isSelected = currentSortValue === opt.value;
+                          return (
+                            <button
+                              key={opt.value}
+                              type="button"
+                              role="option"
+                              aria-selected={isSelected}
+                              onClick={() => {
+                                handleCombinedSortChange(opt.value);
+                                setIsSortOpen(false);
+                              }}
+                              className={`w-full text-left px-2.5 py-1.5 text-xs rounded-lg flex items-center justify-between transition-colors cursor-pointer select-none ${
+                                isSelected
+                                  ? "bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-200 font-semibold"
+                                  : "text-slate-700 dark:text-slate-300 hover:bg-slate-100/80 dark:hover:bg-[#071938] hover:text-[#044CD0] dark:hover:text-white"
+                              }`}
+                            >
+                              <span className="truncate pr-2">{opt.label}</span>
+                              {isSelected && (
+                                <Check className="w-3.5 h-3.5 stroke-[3] text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
+                              )}
+                            </button>
+                          );
+                        })}
                       </div>
                     ))}
                   </div>
