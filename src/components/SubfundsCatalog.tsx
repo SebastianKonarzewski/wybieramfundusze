@@ -57,7 +57,7 @@ export const RETURN_PERIODS: {
   { id: "3M", labelPl: "3M", labelEn: "3M", fullPl: "3 MIESIĄCE", fullEn: "3 MONTHS" },
   { id: "1Y", labelPl: "12M", labelEn: "12M", fullPl: "12 MIESIĘCY", fullEn: "12 MONTHS" },
   { id: "2Y", labelPl: "24M", labelEn: "24M", fullPl: "24 MIESIĄCE", fullEn: "24 MONTHS" },
-  { id: "YTD", labelPl: "YTD", labelEn: "YTD", fullPl: "OD POCZĄTKU ROKU", fullEn: "YEAR TO DATE" },
+  { id: "YTD", labelPl: "YTD", labelEn: "YTD", fullPl: "YTD", fullEn: "YTD" },
 ];
 
 const CATEGORY_GROUPS: CategoryGroup[] = [
@@ -1446,7 +1446,7 @@ export function SubfundsCatalog({
                     <div className="flex items-center gap-1">
                       <div>
                         <span>{t.catalog.table.returnRate}</span>
-                        <span className="block font-bold text-[#044CD0] dark:text-[#60a5fa]">
+                        <span className="block">
                           ({activePeriodFullLabel})
                         </span>
                       </div>
@@ -1473,7 +1473,9 @@ export function SubfundsCatalog({
                       )}
                     </div>
                   </th>
-                  <th className="py-2 px-2 sm:px-2.5 text-right font-semibold whitespace-nowrap text-xs w-[120px]">{t.catalog.table.actions}</th>
+                  <th className="py-2 px-2 sm:px-2.5 text-right font-semibold whitespace-nowrap text-xs w-[120px]">
+                    <span className="sr-only">{t.catalog.table.actions}</span>
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-[#0e274d]/70 text-slate-800 dark:text-slate-300">

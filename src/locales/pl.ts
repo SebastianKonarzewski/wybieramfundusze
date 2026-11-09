@@ -117,7 +117,7 @@ export const pl = {
     classesTagLabel: "klasy:",
     typesTagLabel: "typy:",
     categoryTagLabel: "kategoria:",
-    returnPeriodLabel: "Stopa zwrotu za:",
+    returnPeriodLabel: "Stopa zwrotu:",
     horizontalScrollHint: "Przesuń tabelę w bok, aby zobaczyć wszystkie kolumny (SRI, opłata, stopa zwrotu, wycena)",
     backToTop: "Wróć na górę",
     displayingPage: "Wyświetlanie strony",
@@ -158,7 +158,7 @@ export const pl = {
     },
     table: {
       typeCode: "Typ / Kod",
-      name: "Nazwa subfunduszu",
+      name: "Nazwa funduszu",
       assetClass: "Klasa aktywów",
       status: "Status",
       risk: "Ryzyko (SRI)",

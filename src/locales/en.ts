@@ -119,7 +119,7 @@ export const en: Translations = {
     classesTagLabel: "classes:",
     typesTagLabel: "types:",
     categoryTagLabel: "category:",
-    returnPeriodLabel: "Return rate for:",
+    returnPeriodLabel: "Return rate:",
     horizontalScrollHint: "Scroll horizontally to view all columns (SRI, fee, return rate, NAV)",
     backToTop: "Back to top",
     displayingPage: "Showing page",
@@ -160,7 +160,7 @@ export const en: Translations = {
     },
     table: {
       typeCode: "Type / Code",
-      name: "Subfund Name",
+      name: "Fund Name",
       assetClass: "Asset Class",
       status: "Status",
       risk: "Risk (SRI)",
