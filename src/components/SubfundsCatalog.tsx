@@ -46,12 +46,18 @@ interface CategoryGroup {
 
 export type ReturnPeriod = "1M" | "3M" | "1Y" | "2Y" | "YTD";
 
-export const RETURN_PERIODS: { id: ReturnPeriod; labelPl: string; labelEn: string }[] = [
-  { id: "1M", labelPl: "1M", labelEn: "1M" },
-  { id: "3M", labelPl: "3M", labelEn: "3M" },
-  { id: "1Y", labelPl: "1R", labelEn: "1Y" },
-  { id: "2Y", labelPl: "2L", labelEn: "2Y" },
-  { id: "YTD", labelPl: "YTD", labelEn: "YTD" },
+export const RETURN_PERIODS: {
+  id: ReturnPeriod;
+  labelPl: string;
+  labelEn: string;
+  fullPl: string;
+  fullEn: string;
+}[] = [
+  { id: "1M", labelPl: "1M", labelEn: "1M", fullPl: "1 MIESIĄC", fullEn: "1 MONTH" },
+  { id: "3M", labelPl: "3M", labelEn: "3M", fullPl: "3 MIESIĄCE", fullEn: "3 MONTHS" },
+  { id: "1Y", labelPl: "12M", labelEn: "12M", fullPl: "12 MIESIĘCY", fullEn: "12 MONTHS" },
+  { id: "2Y", labelPl: "24M", labelEn: "24M", fullPl: "24 MIESIĄCE", fullEn: "24 MONTHS" },
+  { id: "YTD", labelPl: "YTD", labelEn: "YTD", fullPl: "OD POCZĄTKU ROKU", fullEn: "YEAR TO DATE" },
 ];
 
 const CATEGORY_GROUPS: CategoryGroup[] = [
@@ -178,6 +184,11 @@ export function SubfundsCatalog({
   const activePeriodLabel = useMemo(() => {
     const p = RETURN_PERIODS.find((item) => item.id === returnPeriod);
     return locale === "en" ? p?.labelEn ?? returnPeriod : p?.labelPl ?? returnPeriod;
+  }, [returnPeriod, locale]);
+
+  const activePeriodFullLabel = useMemo(() => {
+    const p = RETURN_PERIODS.find((item) => item.id === returnPeriod);
+    return locale === "en" ? p?.fullEn ?? returnPeriod : p?.fullPl ?? returnPeriod;
   }, [returnPeriod, locale]);
 
   const renderReturnBadge = (item: SubfundCardModel, period: ReturnPeriod) => {
@@ -1384,12 +1395,12 @@ export function SubfundsCatalog({
                       {locale === "en" ? (
                         <>
                           <span>Asset</span>
-                          <span className="block text-[11px] opacity-80 font-normal">Class</span>
+                          <span className="block">Class</span>
                         </>
                       ) : (
                         <>
                           <span>Klasa</span>
-                          <span className="block text-[11px] opacity-80 font-normal">aktywów</span>
+                          <span className="block">aktywów</span>
                         </>
                       )}
                     </div>
@@ -1402,7 +1413,7 @@ export function SubfundsCatalog({
                     <div className="flex items-center gap-1">
                       <div>
                         <span>{locale === "en" ? "Risk" : "Ryzyko"}</span>
-                        <span className="block text-[11px] opacity-80 font-normal">(SRI)</span>
+                        <span className="block">(SRI)</span>
                       </div>
                       {sortField === "risk" ? (
                         sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0]" />
@@ -1418,7 +1429,7 @@ export function SubfundsCatalog({
                     <div className="flex items-center gap-1">
                       <div>
                         <span>{locale === "en" ? "Ongoing" : "Opłata"}</span>
-                        <span className="block text-[11px] opacity-80 font-normal">{locale === "en" ? "Fee" : "stała"}</span>
+                        <span className="block">{locale === "en" ? "Fee" : "stała"}</span>
                       </div>
                       {sortField === "fee" ? (
                         sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0]" />
@@ -1429,14 +1440,14 @@ export function SubfundsCatalog({
                   </th>
                   <th
                     onClick={() => handleSort("return")}
-                    className="py-2 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group text-xs leading-tight"
-                    title={`${t.catalog.table.returnRate} (${activePeriodLabel})`}
+                    className="py-2 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group text-xs leading-tight whitespace-nowrap"
+                    title={`${t.catalog.table.returnRate} (${activePeriodFullLabel})`}
                   >
                     <div className="flex items-center gap-1">
                       <div>
                         <span>{t.catalog.table.returnRate}</span>
-                        <span className="block text-[11px] font-bold text-[#044CD0] dark:text-[#60a5fa]">
-                          ({activePeriodLabel})
+                        <span className="block font-bold text-[#044CD0] dark:text-[#60a5fa]">
+                          ({activePeriodFullLabel})
                         </span>
                       </div>
                       {sortField === "return" ? (
@@ -1453,7 +1464,7 @@ export function SubfundsCatalog({
                     <div className="flex items-center gap-1">
                       <div>
                         <span>{locale === "en" ? "Latest" : "Ostatnia"}</span>
-                        <span className="block text-[11px] opacity-80 font-normal">{locale === "en" ? "NAV" : "wycena"}</span>
+                        <span className="block">{locale === "en" ? "NAV" : "wycena"}</span>
                       </div>
                       {sortField === "valuation" ? (
                         sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0]" />
