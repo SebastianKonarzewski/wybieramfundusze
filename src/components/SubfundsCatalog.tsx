@@ -1583,7 +1583,7 @@ export function SubfundsCatalog({
                 <tr>
                   <th
                     onClick={() => handleSort("name")}
-                    className="py-2.5 px-3 font-bold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group w-full min-w-[240px]"
+                    className="py-3 px-3.5 sm:px-4 font-bold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group min-w-[240px]"
                   >
                     <div className="flex items-center gap-1.5">
                       <span>{t.catalog.table.name}</span>
@@ -1594,16 +1594,16 @@ export function SubfundsCatalog({
                       )}
                     </div>
                   </th>
-                  <th className="py-2.5 px-2.5 font-bold leading-tight min-w-[100px] max-w-[140px]">
+                  <th className="py-3 px-3 font-bold leading-tight min-w-[120px] max-w-[160px]">
                     <div>
                       <span>{locale === "en" ? "Asset" : "Klasa"}</span>
                       <span className="block">{locale === "en" ? "Class" : "aktywów"}</span>
                     </div>
                   </th>
-                  <th className="py-2.5 px-1 font-bold whitespace-nowrap text-center w-[48px]">{t.catalog.table.status}</th>
+                  <th className="py-3 px-2 font-bold whitespace-nowrap text-center w-[54px] min-w-[54px]">{t.catalog.table.status}</th>
                   <th
                     onClick={() => handleSort("risk")}
-                    className="py-2.5 px-1.5 font-bold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group leading-tight w-[64px] text-center"
+                    className="py-3 px-2 font-bold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group leading-tight w-[72px] min-w-[72px] text-center"
                     title={`${locale === "en" ? "Risk Level" : "Poziom ryzyka"} (SRI 1-7)`}
                   >
                     <div className="flex items-center justify-center gap-1">
@@ -1620,7 +1620,7 @@ export function SubfundsCatalog({
                   </th>
                   <th
                     onClick={() => handleSort("fee")}
-                    className="py-2.5 px-2 font-bold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group leading-tight min-w-[70px]"
+                    className="py-3 px-3 font-bold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group leading-tight min-w-[85px]"
                     title={
                       locale === "en"
                         ? "Fees: ongoing + transaction"
@@ -1638,7 +1638,7 @@ export function SubfundsCatalog({
                   </th>
                   <th
                     onClick={() => handleSort("return")}
-                    className="py-2.5 px-2 font-bold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group leading-tight min-w-[70px]"
+                    className="py-3 px-3 font-bold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group leading-tight min-w-[88px]"
                     title={`${t.catalog.table.returnRate} (${activePeriodFullLabel})`}
                   >
                     <div className="flex items-center gap-1">
@@ -1657,7 +1657,7 @@ export function SubfundsCatalog({
                   </th>
                   <th
                     onClick={() => handleSort("valuation")}
-                    className="py-2.5 px-2 font-bold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group leading-tight min-w-[85px]"
+                    className="py-3 px-3.5 font-bold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group leading-tight min-w-[105px]"
                   >
                     <div className="flex items-center gap-1">
                       <div>
@@ -1673,7 +1673,7 @@ export function SubfundsCatalog({
                   </th>
                   <th
                     onClick={() => handleSort("assets")}
-                    className="py-2.5 px-2 font-bold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group leading-tight min-w-[85px]"
+                    className="py-3 px-3.5 font-bold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group leading-tight min-w-[105px]"
                     title={t.catalog.table.netAssets}
                   >
                     <div className="flex items-center gap-1">
@@ -1688,7 +1688,7 @@ export function SubfundsCatalog({
                       )}
                     </div>
                   </th>
-                  <th className="py-2.5 px-2.5 text-right font-bold whitespace-nowrap w-[130px] min-w-[130px]">
+                  <th className="py-3 px-3.5 text-right font-bold whitespace-nowrap w-[136px] min-w-[136px]">
                     <span className="sr-only">{t.catalog.table.actions}</span>
                   </th>
                 </tr>
@@ -1703,7 +1703,7 @@ export function SubfundsCatalog({
                       key={item.subfundId}
                       className="bg-white dark:bg-transparent hover:bg-blue-50/40 dark:hover:bg-[#071938]/70 transition-colors group"
                     >
-                      <td className="py-2.5 px-3 min-w-[240px]">
+                      <td className="py-3 px-3.5 sm:px-4 min-w-[240px]">
                         <Link
                           href={`/fundusze/${item.subfundId}`}
                           title={item.name}
@@ -1733,7 +1733,7 @@ export function SubfundsCatalog({
                           )}
                         </div>
                       </td>
-                      <td className="py-2.5 px-2.5 min-w-[100px] max-w-[140px]">
+                      <td className="py-3 px-3 min-w-[120px] max-w-[160px]">
                         <div className="font-semibold text-slate-800 dark:text-slate-200 text-xs capitalize leading-tight">
                           {item.classification || "—"}
                         </div>
@@ -1746,7 +1746,7 @@ export function SubfundsCatalog({
                           </div>
                         )}
                       </td>
-                      <td className="py-2.5 px-1 text-center whitespace-nowrap w-[48px]">
+                      <td className="py-3 px-2 text-center whitespace-nowrap w-[54px] min-w-[54px]">
                         <StatusBadge
                           compact={true}
                           isActive={item.isActive}
@@ -1755,10 +1755,10 @@ export function SubfundsCatalog({
                           liquidationEndDate={item.liquidationEndDate}
                         />
                       </td>
-                      <td className="py-2.5 px-1.5 text-center whitespace-nowrap w-[64px]">
+                      <td className="py-3 px-2 text-center whitespace-nowrap w-[72px] min-w-[72px]">
                         <RiskBadge level={item.riskLevel} showLabel={false} showSriPrefix={false} stacked={true} size="sm" />
                       </td>
-                      <td className="py-2.5 px-2 whitespace-nowrap min-w-[70px]">
+                      <td className="py-3 px-3 whitespace-nowrap min-w-[85px]">
                         <div
                           className="font-semibold text-slate-900 dark:text-slate-100 text-xs sm:text-sm leading-tight"
                           title={t.catalog.table.ongoingFeeTooltip}
@@ -1774,10 +1774,10 @@ export function SubfundsCatalog({
                           </div>
                         )}
                       </td>
-                      <td className="py-2.5 px-2 whitespace-nowrap min-w-[70px]">
+                      <td className="py-3 px-3 whitespace-nowrap min-w-[88px]">
                         {renderReturnBadge(item, returnPeriod)}
                       </td>
-                      <td className="py-2.5 px-2 whitespace-nowrap min-w-[85px]">
+                      <td className="py-3 px-3.5 whitespace-nowrap min-w-[105px]">
                         {item.latestValuation ? (
                           <div>
                             <FormattedCurrency
@@ -1810,7 +1810,7 @@ export function SubfundsCatalog({
                           <span className="text-slate-400 dark:text-slate-600">—</span>
                         )}
                       </td>
-                      <td className="py-2.5 px-2 whitespace-nowrap min-w-[85px]">
+                      <td className="py-3 px-3.5 whitespace-nowrap min-w-[105px]">
                         {item.netAssets !== null && item.netAssets !== undefined ? (
                           <div>
                             <FormattedLargeNumber
@@ -1843,7 +1843,7 @@ export function SubfundsCatalog({
                           <span className="text-slate-400 dark:text-slate-600">—</span>
                         )}
                       </td>
-                      <td className="py-2.5 px-2.5 text-right whitespace-nowrap w-[130px] min-w-[130px]">
+                      <td className="py-3 px-3.5 text-right whitespace-nowrap w-[136px] min-w-[136px]">
                         <div className="flex items-center justify-end gap-1.5">
                           <button
                             type="button"
