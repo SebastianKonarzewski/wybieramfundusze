@@ -1597,7 +1597,7 @@ export function SubfundsCatalog({
                   >
                     <div className="flex items-center gap-1">
                       <div className="leading-tight">
-                        <span>{locale === "en" ? "Return" : "Zwrot"}</span>
+                        <span>{locale === "en" ? "Return" : "Wynik"}</span>
                         <span className="block font-bold">
                           ({activePeriodLabel})
                         </span>
