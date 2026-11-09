@@ -914,7 +914,10 @@ export const knfApi = {
     // Fetch the list of subfunds (up to 2000 so we cover all)
     const listRes = await this.getSubfunds({
       fundId: params?.fundId,
-      fundType: activeFundTypes.length === 1 ? activeFundTypes[0] : undefined,
+      fundType:
+        activeFundTypes.length === 1 && ["FIO", "SFIO", "FIZ"].includes(activeFundTypes[0])
+          ? activeFundTypes[0]
+          : undefined,
       includeInactive: params?.includeInactive,
       includeLiquidating: params?.includeLiquidating,
       page: 0,
@@ -1046,9 +1049,33 @@ export const knfApi = {
     // Filter by multiple fund types if selected
     if (activeFundTypes.length > 0) {
       filtered = filtered.filter((sf) => {
+        const isPpk =
+          sf.type === "PPK" ||
+          (sf.name || "").toUpperCase().includes("PPK") ||
+          (sf.fundName || "").toUpperCase().includes("PPK") ||
+          (sf.classification || "").toUpperCase().includes("PPK") ||
+          (sf.category || "").toUpperCase().includes("PPK");
+
+        const isEtf = sf.type === "ETF" || (sf.name || "").toUpperCase().includes("ETF");
+
         return activeFundTypes.some((selectedType) => {
           if (selectedType === "ETF") {
-            return sf.type === "ETF" || (sf.name || "").toUpperCase().includes("ETF");
+            return isEtf;
+          }
+          if (selectedType === "PPK") {
+            return isPpk;
+          }
+          if (selectedType === "SFIO") {
+            if (activeFundTypes.includes("PPK")) {
+              return sf.type === "SFIO";
+            }
+            return sf.type === "SFIO" && !isPpk;
+          }
+          if (selectedType === "FIZ") {
+            if (activeFundTypes.includes("ETF")) {
+              return sf.type === "FIZ";
+            }
+            return sf.type === "FIZ" && !isEtf;
           }
           return sf.type === selectedType;
         });

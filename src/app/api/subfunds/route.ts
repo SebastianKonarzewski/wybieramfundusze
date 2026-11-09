@@ -86,7 +86,10 @@ export async function GET(request: NextRequest) {
     } else {
       const data = await knfApi.getSubfunds({
         search,
-        fundType: fundTypes && fundTypes.length === 1 ? fundTypes[0] : undefined,
+        fundType:
+          fundTypes && fundTypes.length === 1 && ["FIO", "SFIO", "FIZ"].includes(fundTypes[0])
+            ? fundTypes[0]
+            : undefined,
         page,
         size,
         sort,

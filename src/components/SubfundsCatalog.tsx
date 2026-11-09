@@ -140,6 +140,12 @@ function getCategoryLabel(catId: string, isEn: boolean): string {
   return catId;
 }
 
+function getDisplayType(item: { name: string; type: string; classification?: string | null }): string {
+  if (item.name.toUpperCase().includes("ETF")) return "ETF";
+  if (item.name.toUpperCase().includes("PPK") || item.classification === "PPK") return "PPK";
+  return item.type;
+}
+
 interface SubfundsCatalogProps {
   initialItems: SubfundCardModel[];
   initialPage: {
@@ -346,13 +352,20 @@ export function SubfundsCatalog({
     );
   };
 
-  // Filter category groups by currently active asset classes if any are selected
+  // Filter category groups by currently active asset classes / legal types if any are selected
   const visibleCategoryGroups = useMemo(() => {
-    if (selectedClassifications.length === 0) {
-      return CATEGORY_GROUPS;
+    let groups = CATEGORY_GROUPS;
+    if (selectedClassifications.length > 0) {
+      groups = groups.filter(
+        (grp) =>
+          selectedClassifications.includes(grp.classId) ||
+          (grp.classId === "PPK" && selectedTypes.includes("PPK"))
+      );
+    } else if (selectedTypes.length > 0 && !selectedTypes.includes("PPK")) {
+      groups = groups.filter((grp) => grp.classId !== "PPK");
     }
-    return CATEGORY_GROUPS.filter((grp) => selectedClassifications.includes(grp.classId));
-  }, [selectedClassifications]);
+    return groups;
+  }, [selectedClassifications, selectedTypes]);
 
   // Helper to toggle a category in multi-select
   const toggleCategory = (catId: string) => {
@@ -742,7 +755,6 @@ export function SubfundsCatalog({
     { id: "akcji", label: t.catalog.classes.akcji },
     { id: "dłużn", label: t.catalog.classes.dłużn },
     { id: "mieszan", label: t.catalog.classes.mieszan },
-    { id: "PPK", label: t.catalog.classes.PPK },
     { id: "alternatyw", label: t.catalog.classes.alternatyw },
   ];
 
@@ -822,7 +834,7 @@ export function SubfundsCatalog({
                 {t.catalog.legalType}
               </span>
               <div className="flex items-center gap-1.5 flex-wrap">
-                {["ALL", "FIO", "SFIO", "FIZ", "ETF"].map((type) => {
+                {["ALL", "FIO", "SFIO", "FIZ", "ETF", "PPK"].map((type) => {
                   const isSelected =
                     type === "ALL"
                       ? selectedTypes.length === 0
@@ -1604,7 +1616,7 @@ export function SubfundsCatalog({
                   {/* Typ funduszu + Nazwa TFI + Parasol */}
                   <div className="flex items-center gap-1.5 mb-2 leading-normal flex-wrap">
                     <span className="fund-type-badge inline-flex items-center font-bold text-[10px] leading-none bg-slate-100 dark:bg-[#030a16] border border-slate-300/80 dark:border-[#0e274d] px-1.5 py-0.5 rounded text-black dark:text-blue-300 shadow-2xs shrink-0 uppercase tracking-wider">
-                      {item.name.toUpperCase().includes("ETF") ? "ETF" : item.type}
+                      {getDisplayType(item)}
                     </span>
                     {item.companyName && (
                       <span
@@ -1792,7 +1804,7 @@ export function SubfundsCatalog({
                       toggleFund({
                         subfundId: item.subfundId,
                         name: item.name,
-                        type: item.type,
+                        type: getDisplayType(item),
                         category: item.category,
                       })
                     }
@@ -1814,7 +1826,7 @@ export function SubfundsCatalog({
                       togglePortfolioFund({
                         subfundId: item.subfundId,
                         name: item.name,
-                        type: item.type,
+                        type: getDisplayType(item),
                         category: item.category,
                       })
                     }
@@ -1980,7 +1992,7 @@ export function SubfundsCatalog({
                         </Link>
                         <div className="flex items-center gap-1.5 mt-1.5 leading-normal flex-wrap">
                           <span className="fund-type-badge inline-flex items-center font-bold text-[10px] leading-none bg-slate-100 dark:bg-[#030a16] border border-slate-300/80 dark:border-[#0e274d] px-1.5 py-0.5 rounded text-black dark:text-blue-300 shadow-2xs shrink-0 uppercase tracking-wider">
-                            {item.name.toUpperCase().includes("ETF") ? "ETF" : item.type}
+                            {getDisplayType(item)}
                           </span>
                           {item.companyName && (
                             <span
@@ -2121,7 +2133,7 @@ export function SubfundsCatalog({
                               toggleFund({
                                 subfundId: item.subfundId,
                                 name: item.name,
-                                type: item.type,
+                                type: getDisplayType(item),
                                 category: item.category,
                               })
                             }
@@ -2142,7 +2154,7 @@ export function SubfundsCatalog({
                               togglePortfolioFund({
                                 subfundId: item.subfundId,
                                 name: item.name,
-                                type: item.type,
+                                type: getDisplayType(item),
                                 category: item.category,
                               })
                             }
