@@ -1376,21 +1376,24 @@ export function SubfundsCatalog({
                 <div>
                   {/* Top tags & status */}
                   <div className="flex items-center justify-between gap-2 mb-2.5">
-                    <div className="flex items-center gap-1.5 flex-wrap min-w-0">
-                      <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-white dark:bg-[#030a16] text-[#044CD0] dark:text-blue-300 border border-blue-200/90 dark:border-[#0e274d] shadow-2xs shrink-0">
+                    <div className="flex items-center gap-1.5 flex-wrap min-w-0 leading-normal">
+                      <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-blue-50/80 dark:bg-[#030a16] text-[#044CD0] dark:text-blue-300 border border-blue-200/90 dark:border-[#0e274d] shadow-2xs shrink-0 uppercase tracking-wider leading-none">
                         {item.name.toUpperCase().includes("ETF") ? "ETF" : item.type}
                       </span>
                       {item.companyName && (
-                        <span title={item.companyName} className="text-[11px] text-slate-500 dark:text-slate-400 font-medium truncate max-w-[140px] sm:max-w-[180px]">
+                        <span
+                          title={item.companyName}
+                          className="text-[11px] sm:text-xs text-slate-600 dark:text-slate-300 font-medium truncate max-w-[140px] sm:max-w-[180px] leading-normal"
+                        >
                           {item.companyName}
                         </span>
                       )}
                       {item.fundName && !item.isFundOnly && item.fundName.trim().toLowerCase() !== item.name.trim().toLowerCase() && (
                         <>
-                          <span className="text-slate-300 dark:text-slate-600 text-[10px] select-none">•</span>
+                          <span className="text-slate-300 dark:text-slate-600 text-xs select-none">•</span>
                           <span
                             title={item.fundName}
-                            className="text-[11px] text-slate-400 dark:text-slate-500 font-normal truncate max-w-[140px] sm:max-w-[180px]"
+                            className="text-[11px] sm:text-xs text-slate-400 dark:text-slate-400 font-normal truncate max-w-[140px] sm:max-w-[180px] leading-normal"
                           >
                             {item.fundName}
                           </span>
@@ -1724,21 +1727,24 @@ export function SubfundsCatalog({
                         >
                           {item.name}
                         </Link>
-                        <div className="flex items-center gap-1.5 mt-1 leading-none flex-wrap">
-                          <span className="inline-flex items-center font-bold text-[10px] leading-none bg-blue-50/70 dark:bg-[#030a16] border border-blue-200/80 dark:border-[#0e274d] px-1.5 py-0.5 rounded text-[#044CD0] dark:text-blue-300 shadow-2xs shrink-0">
+                        <div className="flex items-center gap-1.5 mt-1.5 leading-normal flex-wrap">
+                          <span className="inline-flex items-center font-bold text-[10px] leading-none bg-blue-50/80 dark:bg-[#030a16] border border-blue-200/80 dark:border-[#0e274d] px-1.5 py-0.5 rounded text-[#044CD0] dark:text-blue-300 shadow-2xs shrink-0 uppercase tracking-wider">
                             {item.name.toUpperCase().includes("ETF") ? "ETF" : item.type}
                           </span>
                           {item.companyName && (
-                            <span title={item.companyName} className="inline-flex items-center text-[10px] sm:text-[11px] leading-none text-slate-500 dark:text-slate-400 font-medium truncate max-w-[140px] sm:max-w-[200px]">
+                            <span
+                              title={item.companyName}
+                              className="text-[11px] sm:text-xs leading-normal font-medium text-slate-600 dark:text-slate-300 truncate max-w-[150px] sm:max-w-[210px]"
+                            >
                               {item.companyName}
                             </span>
                           )}
                           {item.fundName && !item.isFundOnly && item.fundName.trim().toLowerCase() !== item.name.trim().toLowerCase() && (
                             <>
-                              <span className="text-slate-300 dark:text-slate-600 text-[10px] select-none">•</span>
+                              <span className="text-slate-300 dark:text-slate-600 text-xs select-none">•</span>
                               <span
                                 title={item.fundName}
-                                className="inline-flex items-center text-[10px] sm:text-[11px] leading-none text-slate-400 dark:text-slate-500 font-normal truncate max-w-[140px] sm:max-w-[220px]"
+                                className="text-[11px] sm:text-xs leading-normal font-normal text-slate-400 dark:text-slate-400 truncate max-w-[150px] sm:max-w-[230px]"
                               >
                                 {item.fundName}
                               </span>
