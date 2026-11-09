@@ -221,14 +221,14 @@ export function SubfundsCatalog({
     const formattedRate = `${sign}${formatPercent(rate)}`;
 
     return (
-      <div className="flex flex-col items-start">
+      <div className="flex flex-col items-start leading-tight">
         <span
-          className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-bold shadow-2xs ${
+          className={`text-xs sm:text-sm font-bold ${
             isPositive
-              ? "bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/60"
+              ? "text-emerald-600 dark:text-emerald-400"
               : isNegative
-              ? "bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 border border-rose-200 dark:border-rose-800/60"
-              : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700"
+              ? "text-rose-600 dark:text-rose-400"
+              : "text-slate-700 dark:text-slate-300"
           }`}
         >
           {formattedRate}
@@ -1512,10 +1512,10 @@ export function SubfundsCatalog({
                         </div>
                       </td>
                       <td className="py-2.5 px-2 sm:px-2.5 min-w-[110px] max-w-[170px]">
-                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-xs font-medium bg-white dark:bg-[#030a16] border border-blue-200 dark:border-[#0e274d] text-slate-700 dark:text-slate-300 capitalize shadow-2xs">
+                        <div className="font-semibold text-slate-800 dark:text-slate-200 text-xs capitalize leading-tight">
                           {item.classification || "—"}
-                        </span>
-                        {item.category && (
+                        </div>
+                        {item.category && item.category.trim().toLowerCase() !== (item.classification || "").trim().toLowerCase() && (
                           <div
                             title={item.category}
                             className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-snug line-clamp-2 break-words"
@@ -1562,6 +1562,25 @@ export function SubfundsCatalog({
                         <div className="flex items-center justify-end gap-1.5">
                           <button
                             onClick={() =>
+                              toggleFund({
+                                subfundId: item.subfundId,
+                                name: item.name,
+                                type: item.type,
+                                category: item.category,
+                              })
+                            }
+                            className={`w-8 h-8 flex items-center justify-center rounded-xl border text-xs transition-colors shadow-2xs ${
+                              inCompare
+                                ? "bg-[#044CD0] text-white border-blue-400"
+                                : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-blue-200 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-blue-400"
+                            }`}
+                            title={inCompare ? t.catalog.card.removeFromCompare : t.common.compare}
+                            aria-label={inCompare ? t.catalog.card.removeFromCompare : t.common.compare}
+                          >
+                            <Scale className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() =>
                               togglePortfolioFund({
                                 subfundId: item.subfundId,
                                 name: item.name,
@@ -1586,25 +1605,6 @@ export function SubfundsCatalog({
                           >
                             {t.common.profile}
                           </Link>
-                          <button
-                            onClick={() =>
-                              toggleFund({
-                                subfundId: item.subfundId,
-                                name: item.name,
-                                type: item.type,
-                                category: item.category,
-                              })
-                            }
-                            className={`w-8 h-8 flex items-center justify-center rounded-xl border text-xs transition-colors shadow-2xs ${
-                              inCompare
-                                ? "bg-[#044CD0] text-white border-blue-400"
-                                : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-blue-200 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-blue-400"
-                            }`}
-                            title={inCompare ? t.catalog.card.removeFromCompare : t.common.compare}
-                            aria-label={inCompare ? t.catalog.card.removeFromCompare : t.common.compare}
-                          >
-                            <Scale className="w-4 h-4" />
-                          </button>
                         </div>
                       </td>
                     </tr>
