@@ -1053,7 +1053,7 @@ export function SubfundsCatalog({
 
       {/* Results Header & Presentation Controls */}
       <div ref={resultsTopRef} className="space-y-2.5 px-1 scroll-mt-24">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+        <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-2.5 sm:gap-3 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
           {/* Left: Results Count, Page Info & Filtering Status */}
           <div className="flex items-center flex-wrap gap-x-2 gap-y-1">
             <span>
@@ -1082,13 +1082,13 @@ export function SubfundsCatalog({
           </div>
 
           {/* Right: Integrated Sort Dropdown & View Mode Switcher */}
-          <div className="flex items-center justify-between md:justify-end gap-2.5 shrink-0 flex-wrap">
+          <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap justify-between sm:justify-start xl:justify-end">
             {/* Period Switcher */}
-            <div className="h-[38px] flex items-center gap-2 bg-white dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-[#044CD0]/60 px-2.5 sm:px-3 rounded-xl transition-colors shadow-2xs">
-              <div className="flex items-center gap-1.5 select-none shrink-0">
+            <div className="h-[38px] flex items-center gap-1.5 sm:gap-2 bg-white dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-[#044CD0]/60 px-2 sm:px-2.5 rounded-xl transition-colors shadow-2xs">
+              <div className="flex items-center gap-1 select-none shrink-0" title={t.catalog.returnPeriodLabel}>
                 <TrendingUp className="w-3.5 h-3.5 text-[#044CD0] shrink-0" />
-                <span className="text-xs font-medium text-slate-500 dark:text-slate-400 whitespace-nowrap">
-                  {t.catalog.returnPeriodLabel}
+                <span className="text-xs font-medium text-slate-500 dark:text-slate-400 whitespace-nowrap hidden sm:inline">
+                  {locale === "en" ? "Period:" : "Wynik:"}
                 </span>
               </div>
               <div className="flex items-center gap-0.5">
@@ -1101,7 +1101,7 @@ export function SubfundsCatalog({
                       type="button"
                       onClick={() => handlePeriodChange(p.id)}
                       aria-pressed={isSelected}
-                      className={`px-2 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                      className={`px-1.5 sm:px-2 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                         isSelected
                           ? "bg-[#044CD0] text-white shadow-xs font-bold"
                           : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#071938]"
@@ -1116,12 +1116,12 @@ export function SubfundsCatalog({
             </div>
 
             {/* Integrated Sort Dropdown */}
-            <div className="h-[38px] flex items-center gap-2 bg-white dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-[#044CD0]/60 px-2.5 sm:px-3 rounded-xl transition-colors shadow-2xs">
-              <div className="flex items-center gap-1.5 select-none shrink-0">
+            <div className="h-[38px] flex items-center gap-1.5 sm:gap-2 bg-white dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-[#044CD0]/60 px-2 sm:px-2.5 rounded-xl transition-colors shadow-2xs">
+              <div className="flex items-center gap-1 select-none shrink-0">
                 <ArrowUpDown className="w-3.5 h-3.5 text-[#044CD0] shrink-0" />
                 <label
                   htmlFor="catalog-sort-select"
-                  className="text-xs font-medium text-slate-500 dark:text-slate-400 hidden sm:inline whitespace-nowrap cursor-pointer"
+                  className="text-xs font-medium text-slate-500 dark:text-slate-400 hidden 2xl:inline whitespace-nowrap cursor-pointer"
                 >
                   {t.catalog.sort.label}:
                 </label>
@@ -1131,7 +1131,7 @@ export function SubfundsCatalog({
                 value={`${sortField}_${sortOrder}`}
                 onChange={(e) => handleCombinedSortChange(e.target.value)}
                 aria-label={t.catalog.sort.label}
-                className="bg-transparent text-slate-800 dark:text-slate-200 font-sans font-medium text-xs focus:outline-hidden cursor-pointer pr-1"
+                className="bg-transparent text-slate-800 dark:text-slate-200 font-sans font-medium text-xs focus:outline-hidden cursor-pointer max-w-[140px] sm:max-w-[175px] truncate pr-1"
               >
                 <option value="name_asc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
                   {t.catalog.sort.nameAsc}
