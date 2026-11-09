@@ -250,6 +250,7 @@ export interface SubfundCardModel extends KNFSubfund {
   currency?: string | null;
   netAssetsPln?: number | null;
   latestValuationPln?: number | null;
+  fxRate?: number | null;
   returnRate1M?: number | null;
   returnRate3M?: number | null;
   returnRate1Y?: number | null;
@@ -305,6 +306,7 @@ export interface RuntimeSubfundMeta {
   currency?: string | null;
   netAssetsPln?: number | null;
   latestValuationPln?: number | null;
+  fxRate?: number | null;
   returnRate1M?: number | null;
   returnRate3M?: number | null;
   returnRate1Y?: number | null;

@@ -1415,7 +1415,13 @@ export function SubfundsCatalog({
                           {item.currency && item.currency !== "PLN" && item.latestValuationPln && (
                             <span
                               className="text-[10px] text-blue-600 dark:text-blue-400 font-medium ml-1"
-                              title={`Wycena w PLN wg kursu NBP: ${formatCurrency(item.latestValuationPln, "PLN")}`}
+                              title={
+                                item.fxRate
+                                  ? t.catalog.fxTooltip
+                                      .replace("{curr}", item.currency)
+                                      .replace("{rate}", formatNumber(item.fxRate, 4))
+                                  : undefined
+                              }
                             >
                               (≈ {formatCurrency(item.latestValuationPln, "PLN")})
                             </span>
@@ -1442,7 +1448,13 @@ export function SubfundsCatalog({
                           {item.currency && item.currency !== "PLN" && item.netAssetsPln && (
                             <span
                               className="text-[10px] text-blue-600 dark:text-blue-400 font-medium ml-1"
-                              title={`Aktywa w PLN wg kursu NBP: ${formatCurrency(item.netAssetsPln, "PLN")}`}
+                              title={
+                                item.fxRate
+                                  ? t.catalog.fxTooltip
+                                      .replace("{curr}", item.currency)
+                                      .replace("{rate}", formatNumber(item.fxRate, 4))
+                                  : undefined
+                              }
                             >
                               (≈ {formatLargeNumber(item.netAssetsPln, "PLN")})
                             </span>
@@ -1726,7 +1738,13 @@ export function SubfundsCatalog({
                             {item.currency && item.currency !== "PLN" && item.latestValuationPln && (
                               <div
                                 className="text-[10px] text-blue-600 dark:text-blue-400 font-medium"
-                                title={`Wycena w PLN wg kursu NBP: ${formatCurrency(item.latestValuationPln, "PLN")}`}
+                                title={
+                                  item.fxRate
+                                    ? t.catalog.fxTooltip
+                                        .replace("{curr}", item.currency)
+                                        .replace("{rate}", formatNumber(item.fxRate, 4))
+                                    : undefined
+                                }
                               >
                                 ≈ {formatCurrency(item.latestValuationPln, "PLN")}
                               </div>
@@ -1753,7 +1771,13 @@ export function SubfundsCatalog({
                             {item.currency && item.currency !== "PLN" && item.netAssetsPln && (
                               <div
                                 className="text-[10px] text-blue-600 dark:text-blue-400 font-medium"
-                                title={`Aktywa w PLN wg kursu NBP: ${formatCurrency(item.netAssetsPln, "PLN")}`}
+                                title={
+                                  item.fxRate
+                                    ? t.catalog.fxTooltip
+                                        .replace("{curr}", item.currency)
+                                        .replace("{rate}", formatNumber(item.fxRate, 4))
+                                    : undefined
+                                }
                               >
                                 ≈ {formatLargeNumber(item.netAssetsPln, "PLN")}
                               </div>

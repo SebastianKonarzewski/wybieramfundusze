@@ -960,6 +960,7 @@ export const knfApi = {
       const latestValuation = meta?.latestValuation ?? null;
       const netAssetsPln = convertToPln(netAssets, currency, rates);
       const latestValuationPln = convertToPln(latestValuation, currency, rates);
+      const fxRate = currency && currency !== "PLN" ? (rates[currency] || null) : null;
 
       return {
         ...sf,
@@ -976,6 +977,7 @@ export const knfApi = {
         currency,
         netAssetsPln,
         latestValuationPln,
+        fxRate,
         returnRate1M: meta?.returnRate1M ?? null,
         returnRate3M: meta?.returnRate3M ?? null,
         returnRate1Y: meta?.returnRate1Y ?? null,

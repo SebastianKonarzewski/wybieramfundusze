@@ -120,6 +120,7 @@ export const pl = {
     typesTagLabel: "typy:",
     currenciesTagLabel: "waluty:",
     categoryTagLabel: "kategoria:",
+    fxTooltip: "Kurs NBP: 1 {curr} = {rate} PLN",
     returnPeriodLabel: "Stopa zwrotu:",
     horizontalScrollHint: "Przesuń tabelę w bok, aby zobaczyć wszystkie kolumny (SRI, opłata, stopa zwrotu, wycena)",
     backToTop: "Wróć na górę",

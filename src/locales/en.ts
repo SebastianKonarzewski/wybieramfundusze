@@ -122,6 +122,7 @@ export const en: Translations = {
     typesTagLabel: "types:",
     currenciesTagLabel: "currencies:",
     categoryTagLabel: "category:",
+    fxTooltip: "NBP rate: 1 {curr} = {rate} PLN",
     returnPeriodLabel: "Return rate:",
     horizontalScrollHint: "Scroll horizontally to view all columns (SRI, fee, return rate, NAV)",
     backToTop: "Back to top",
