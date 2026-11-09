@@ -1327,25 +1327,6 @@ export function SubfundsCatalog({
 
                   <button
                     onClick={() =>
-                      togglePortfolioFund({
-                        subfundId: item.subfundId,
-                        name: item.name,
-                        type: item.type,
-                        category: item.category,
-                      })
-                    }
-                    className={`p-2 rounded-xl text-xs font-medium border transition-all shadow-2xs ${
-                      inPortfolio
-                        ? "bg-emerald-600 text-white border-emerald-400 shadow-xs"
-                        : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-blue-200 dark:border-[#0e274d] hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-400"
-                    }`}
-                    title={inPortfolio ? t.portfolio.removeFromPortfolio : t.portfolio.addToPortfolio}
-                  >
-                    {inPortfolio ? <Check className="w-4 h-4" /> : <Briefcase className="w-4 h-4" />}
-                  </button>
-
-                  <button
-                    onClick={() =>
                       toggleFund({
                         subfundId: item.subfundId,
                         name: item.name,
@@ -1359,8 +1340,29 @@ export function SubfundsCatalog({
                         : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-blue-200 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-blue-400"
                     }`}
                     title={inCompare ? t.catalog.card.removeFromCompare : t.catalog.card.addToCompare}
+                    aria-label={inCompare ? t.catalog.card.removeFromCompare : t.catalog.card.addToCompare}
                   >
-                    {inCompare ? <Check className="w-4 h-4" /> : <Scale className="w-4 h-4" />}
+                    <Scale className="w-4 h-4" />
+                  </button>
+
+                  <button
+                    onClick={() =>
+                      togglePortfolioFund({
+                        subfundId: item.subfundId,
+                        name: item.name,
+                        type: item.type,
+                        category: item.category,
+                      })
+                    }
+                    className={`p-2 rounded-xl text-xs font-medium border transition-all shadow-2xs ${
+                      inPortfolio
+                        ? "bg-indigo-600 text-white border-indigo-400 shadow-xs"
+                        : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-blue-200 dark:border-[#0e274d] hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-400"
+                    }`}
+                    title={inPortfolio ? t.portfolio.removeFromPortfolio : t.portfolio.addToPortfolio}
+                    aria-label={inPortfolio ? t.portfolio.removeFromPortfolio : t.portfolio.addToPortfolio}
+                  >
+                    <Briefcase className="w-4 h-4" />
                   </button>
                 </div>
               </div>
@@ -1590,13 +1592,13 @@ export function SubfundsCatalog({
                             }
                             className={`w-8 h-8 flex items-center justify-center rounded-xl border text-xs transition-colors shadow-2xs ${
                               inPortfolio
-                                ? "bg-emerald-600 text-white border-emerald-400"
-                                : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-blue-200 dark:border-[#0e274d] hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-400"
+                                ? "bg-indigo-600 text-white border-indigo-400"
+                                : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-blue-200 dark:border-[#0e274d] hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-400"
                             }`}
                             title={inPortfolio ? t.portfolio.removeFromPortfolio : t.portfolio.addToPortfolio}
                             aria-label={inPortfolio ? t.portfolio.removeFromPortfolio : t.portfolio.addToPortfolio}
                           >
-                            {inPortfolio ? <Check className="w-4 h-4" /> : <Briefcase className="w-4 h-4" />}
+                            <Briefcase className="w-4 h-4" />
                           </button>
                           <Link
                             href={`/fundusze/${item.subfundId}`}
