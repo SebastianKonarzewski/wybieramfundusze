@@ -271,3 +271,21 @@ export interface MarketStatistics {
   assetsHistory?: KNFTotalAsset[];
 }
 
+export interface RuntimeSubfundMeta {
+  classification?: string | null;
+  category?: string | null;
+  fullName?: string | null;
+  name?: string;
+  type?: string;
+  isActive?: boolean;
+  isLiquidating?: boolean;
+  liquidationStartDate?: string | null;
+  liquidationEndDate?: string | null;
+  riskLevel?: number | null;
+  managementFee?: number | null;
+  benchmark?: string | null;
+  latestValuation?: number | null;
+  latestValuationDate?: string | null;
+  lastUpdated?: number;
+}
+

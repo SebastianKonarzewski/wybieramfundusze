@@ -15,6 +15,7 @@ import {
   SubfundFullProfile,
   MarketStatistics,
   SubfundCardModel,
+  RuntimeSubfundMeta,
 } from "@/types/knf";
 import subfundsClassifications from "@/data/subfunds-classifications.json";
 import standaloneFundsData from "@/data/standalone-funds.json";
@@ -32,8 +33,98 @@ interface FetchOptions {
   cache?: RequestCache;
 }
 
-// In-memory cache for subfund details to minimize repeated network calls
-const subfundDetailCache = new Map<number, KNFSubfundDetail>();
+interface CacheEntry<T> {
+  data: T;
+  timestamp: number;
+}
+
+// Global runtime memory store to persist across hot reloads in Next.js development and warm serverless containers
+const globalForKnf = globalThis as unknown as {
+  knfRuntimeClassifications?: Map<number, RuntimeSubfundMeta>;
+  knfSubfundDetailCache?: Map<number, CacheEntry<KNFSubfundDetail>>;
+};
+
+// In-memory cache for subfund details with TTL to minimize repeated network calls
+const subfundDetailCache =
+  globalForKnf.knfSubfundDetailCache ?? new Map<number, CacheEntry<KNFSubfundDetail>>();
+if (!globalForKnf.knfSubfundDetailCache) {
+  globalForKnf.knfSubfundDetailCache = subfundDetailCache;
+}
+
+// Active runtime registry of classifications, KIDs and valuations
+const runtimeClassifications =
+  globalForKnf.knfRuntimeClassifications ?? new Map<number, RuntimeSubfundMeta>();
+if (!globalForKnf.knfRuntimeClassifications) {
+  // Prepopulate from static classifications JSON
+  if (subfundsClassifications && typeof subfundsClassifications === "object") {
+    for (const [idStr, meta] of Object.entries(
+      subfundsClassifications as Record<string, { c: string; cat: string; fn: string }>
+    )) {
+      const id = parseInt(idStr, 10);
+      if (!isNaN(id)) {
+        runtimeClassifications.set(id, {
+          classification: meta.c,
+          category: meta.cat,
+          fullName: meta.fn,
+        });
+      }
+    }
+  }
+
+  // Prepopulate standalone funds (e.g. Beta ETF, PZU ETF)
+  if (Array.isArray(standaloneFundsData)) {
+    for (const sf of standaloneFundsData as unknown as KNFSubfund[]) {
+      if (sf.subfundId) {
+        runtimeClassifications.set(sf.subfundId, {
+          classification: sf.classification || "",
+          category: sf.category || "",
+          fullName: sf.fullName || sf.name || "",
+          name: sf.name,
+          type: sf.type,
+          isActive: sf.isActive,
+          isLiquidating: sf.isLiquidating,
+        });
+      }
+    }
+  }
+
+  globalForKnf.knfRuntimeClassifications = runtimeClassifications;
+}
+
+/**
+ * Updates or enriches a subfund in the global runtime registry with fresh live data.
+ */
+export function updateRuntimeSubfund(
+  subfundId: number,
+  data: Partial<RuntimeSubfundMeta>
+): void {
+  const existing = runtimeClassifications.get(subfundId);
+  const updated: RuntimeSubfundMeta = {
+    classification: data.classification !== undefined ? data.classification : existing?.classification || "",
+    category: data.category !== undefined ? data.category : existing?.category || "",
+    fullName: data.fullName || existing?.fullName || data.name || existing?.name || "",
+    name: data.name || existing?.name,
+    type: data.type || existing?.type,
+    isActive: data.isActive !== undefined ? data.isActive : existing?.isActive,
+    isLiquidating: data.isLiquidating !== undefined ? data.isLiquidating : existing?.isLiquidating,
+    liquidationStartDate:
+      data.liquidationStartDate !== undefined ? data.liquidationStartDate : existing?.liquidationStartDate,
+    liquidationEndDate:
+      data.liquidationEndDate !== undefined ? data.liquidationEndDate : existing?.liquidationEndDate,
+    riskLevel: data.riskLevel !== undefined ? data.riskLevel : existing?.riskLevel,
+    managementFee: data.managementFee !== undefined ? data.managementFee : existing?.managementFee,
+    benchmark: data.benchmark !== undefined ? data.benchmark : existing?.benchmark,
+    latestValuation: data.latestValuation !== undefined ? data.latestValuation : existing?.latestValuation,
+    latestValuationDate:
+      data.latestValuationDate !== undefined ? data.latestValuationDate : existing?.latestValuationDate,
+    lastUpdated: Date.now(),
+  };
+  runtimeClassifications.set(subfundId, updated);
+}
+
+export function getRuntimeSubfund(subfundId: number): RuntimeSubfundMeta | undefined {
+  return runtimeClassifications.get(subfundId);
+}
 
 export function inferClassificationFromName(name: string): { classification: string; category: string } {
   const n = (name || "").toLowerCase();
@@ -248,13 +339,14 @@ export const knfApi = {
     return res || { content: [], page: { size: 0, totalElements: 0, totalPages: 0, number: 0 } };
   },
 
-  async getSubfund(subfundId: number, asOf?: string): Promise<KNFSubfundDetail | null> {
-    if (!asOf && subfundDetailCache.has(subfundId)) {
-      return subfundDetailCache.get(subfundId)!;
+  async getSubfund(subfundId: number, asOf?: string, forceFresh?: boolean): Promise<KNFSubfundDetail | null> {
+    const cached = subfundDetailCache.get(subfundId);
+    if (!asOf && !forceFresh && cached && Date.now() - cached.timestamp < DEFAULT_REVALIDATE * 1000) {
+      return cached.data;
     }
     const detail = await knfFetch<KNFSubfundDetail>(`/v1/subfunds/${subfundId}`, { asOf });
     if (detail && !asOf) {
-      subfundDetailCache.set(subfundId, detail);
+      subfundDetailCache.set(subfundId, { data: detail, timestamp: Date.now() });
     }
     return detail;
   },
@@ -398,7 +490,7 @@ export const knfApi = {
   // Pełny profil subfunduszu / funduszu (dla strony detalu)
   // ==========================================
   async getSubfundFullProfile(subfundId: number): Promise<SubfundFullProfile | null> {
-    const subfund = await this.getSubfund(subfundId);
+    const subfund = await this.getSubfund(subfundId, undefined, true);
     if (!subfund) {
       // Check if subfundId corresponds to a standalone fund (without segregated subfunds, e.g. ETF)
       const fund = await this.getFund(subfundId);
@@ -420,6 +512,26 @@ export const knfApi = {
       if (fund.companyId) {
         company = await this.getCompany(fund.companyId);
       }
+
+      const latestVal = valuationsRes.content?.[0];
+
+      // Self-healing: refresh all runtime data from live UKNF response
+      updateRuntimeSubfund(subfundId, {
+        name: fund.name,
+        fullName: fund.fullName || fund.name,
+        classification: fund.classification || undefined,
+        category: fund.category || undefined,
+        type: fund.type,
+        isActive: fund.isActive,
+        isLiquidating: fund.isLiquidating,
+        liquidationStartDate: fund.liquidationStartDate,
+        liquidationEndDate: fund.liquidationEndDate,
+        riskLevel: latestKid?.riskLevel ?? null,
+        managementFee: latestKid?.managementAndOtherFeesRate ?? null,
+        benchmark: latestKid?.benchmark ?? null,
+        latestValuation: latestVal?.valuation ?? null,
+        latestValuationDate: latestVal?.date ?? null,
+      });
 
       const syntheticSubfund: KNFSubfundDetail = {
         subfundId: fund.fundId,
@@ -484,6 +596,26 @@ export const knfApi = {
       company = await this.getCompany(fund.companyId);
     }
 
+    const latestVal = valuationsRes.content?.[0];
+
+    // Self-healing: refresh all runtime data from live UKNF response
+    updateRuntimeSubfund(subfundId, {
+      name: subfund.name,
+      fullName: subfund.fullName || subfund.name,
+      classification: subfund.classification || undefined,
+      category: subfund.category || undefined,
+      type: subfund.type,
+      isActive: subfund.isActive,
+      isLiquidating: subfund.isLiquidating,
+      liquidationStartDate: subfund.liquidationStartDate,
+      liquidationEndDate: subfund.liquidationEndDate,
+      riskLevel: latestKid?.riskLevel ?? null,
+      managementFee: latestKid?.managementAndOtherFeesRate ?? null,
+      benchmark: latestKid?.benchmark ?? null,
+      latestValuation: latestVal?.valuation ?? null,
+      latestValuationDate: latestVal?.date ?? null,
+    });
+
     return {
       subfund,
       fund,
@@ -532,11 +664,6 @@ export const knfApi = {
       activeFundTypes.push(params.fundType);
     }
 
-    const classificationsMap = (subfundsClassifications || {}) as Record<
-      string,
-      { c: string; cat: string; fn: string }
-    >;
-
     // Fetch the list of subfunds (up to 2000 so we cover all)
     const listRes = await this.getSubfunds({
       fundId: params?.fundId,
@@ -569,13 +696,13 @@ export const knfApi = {
     const combinedPool = [...validSubfunds, ...standalonePool];
 
     let filtered = combinedPool.map((sf) => {
-      const meta = classificationsMap[String(sf.subfundId)];
+      const meta = runtimeClassifications.get(sf.subfundId);
       const fallback = inferClassificationFromName(sf.name);
       return {
         ...sf,
-        classification: sf.classification || meta?.c || fallback.classification,
-        category: sf.category || meta?.cat || fallback.category,
-        fullName: sf.fullName || meta?.fn || sf.name,
+        classification: sf.classification || meta?.classification || fallback.classification,
+        category: sf.category || meta?.category || fallback.category,
+        fullName: sf.fullName || meta?.fullName || sf.name,
       };
     });
 
@@ -694,7 +821,7 @@ export const knfApi = {
 
             const latestVal = valuationsRes.content[0];
 
-            return {
+            const cardItem: SubfundCardModel = {
               ...sf,
               isFundOnly: true,
               classification: fundDetail?.classification || sf.classification,
@@ -710,6 +837,23 @@ export const knfApi = {
               latestValuation: latestVal?.valuation ?? null,
               latestValuationDate: latestVal?.date ?? null,
             };
+
+            updateRuntimeSubfund(sf.subfundId, {
+              classification: cardItem.classification,
+              category: cardItem.category,
+              fullName: cardItem.fullName || cardItem.name,
+              name: cardItem.name,
+              type: cardItem.type,
+              isActive: cardItem.isActive,
+              isLiquidating: cardItem.isLiquidating,
+              riskLevel: cardItem.riskLevel,
+              managementFee: cardItem.managementFee,
+              benchmark: cardItem.benchmark,
+              latestValuation: cardItem.latestValuation,
+              latestValuationDate: cardItem.latestValuationDate,
+            });
+
+            return cardItem;
           }
 
           const [details, kid, valuationsRes] = await Promise.all([
@@ -720,7 +864,7 @@ export const knfApi = {
 
           const latestVal = valuationsRes.content[0];
 
-          return {
+          const cardItem: SubfundCardModel = {
             ...sf,
             classification: details?.classification || sf.classification,
             category: details?.category || sf.category,
@@ -735,6 +879,23 @@ export const knfApi = {
             latestValuation: latestVal?.valuation ?? null,
             latestValuationDate: latestVal?.date ?? null,
           };
+
+          updateRuntimeSubfund(sf.subfundId, {
+            classification: cardItem.classification,
+            category: cardItem.category,
+            fullName: cardItem.fullName || cardItem.name,
+            name: cardItem.name,
+            type: cardItem.type,
+            isActive: cardItem.isActive,
+            isLiquidating: cardItem.isLiquidating,
+            riskLevel: cardItem.riskLevel,
+            managementFee: cardItem.managementFee,
+            benchmark: cardItem.benchmark,
+            latestValuation: cardItem.latestValuation,
+            latestValuationDate: cardItem.latestValuationDate,
+          });
+
+          return cardItem;
         } catch {
           return {
             ...sf,
@@ -756,6 +917,78 @@ export const knfApi = {
         totalPages,
         number: currentPage,
       },
+    };
+  },
+
+  // ==========================================
+  // Nocna synchronizacja / odświeżanie danych (Cron Sync)
+  // ==========================================
+  async syncFunds(options?: {
+    limit?: number;
+    delayMs?: number;
+  }): Promise<{ updatedCount: number; durationMs: number }> {
+    const startTime = Date.now();
+    const limit = options?.limit ?? 50;
+    const delayMs = options?.delayMs ?? 50;
+
+    // 1. Fetch active subfunds list
+    const listRes = await this.getSubfunds({
+      size: Math.min(limit, 200),
+      includeInactive: false,
+      includeLiquidating: false,
+      sort: "name,asc",
+    });
+
+    const subfundsToSync = listRes.content.filter((sf) => !UNQUOTED_SUBFUND_IDS.has(sf.subfundId));
+    let updatedCount = 0;
+
+    // Process in sequential chunks of 10 to avoid bursting UKNF servers
+    const chunkSize = 10;
+    for (let i = 0; i < subfundsToSync.length; i += chunkSize) {
+      const chunk = subfundsToSync.slice(i, i + chunkSize);
+      await Promise.all(
+        chunk.map(async (sf) => {
+          try {
+            const [details, kid, valuationsRes] = await Promise.all([
+              this.getSubfund(sf.subfundId, undefined, true),
+              this.getLatestKidForSubfund(sf.subfundId),
+              this.getValuations({ subfundId: sf.subfundId, size: 1 }),
+            ]);
+
+            const latestVal = valuationsRes.content?.[0];
+
+            updateRuntimeSubfund(sf.subfundId, {
+              name: sf.name,
+              fullName: details?.fullName || sf.fullName || sf.name,
+              classification: details?.classification || sf.classification || undefined,
+              category: details?.category || sf.category || undefined,
+              type: sf.type,
+              isActive: details?.isActive ?? sf.isActive,
+              isLiquidating: details?.isLiquidating ?? sf.isLiquidating,
+              liquidationStartDate: details?.liquidationStartDate ?? sf.liquidationStartDate,
+              liquidationEndDate: details?.liquidationEndDate ?? sf.liquidationEndDate,
+              riskLevel: kid?.riskLevel ?? null,
+              managementFee: kid?.managementAndOtherFeesRate ?? null,
+              benchmark: kid?.benchmark ?? null,
+              latestValuation: latestVal?.valuation ?? null,
+              latestValuationDate: latestVal?.date ?? null,
+            });
+
+            updatedCount++;
+          } catch (err) {
+            console.warn(`[Sync] Failed to sync subfund ${sf.subfundId}:`, err);
+          }
+        })
+      );
+
+      if (delayMs > 0 && i + chunkSize < subfundsToSync.length) {
+        await new Promise((resolve) => setTimeout(resolve, delayMs));
+      }
+    }
+
+    return {
+      updatedCount,
+      durationMs: Date.now() - startTime,
     };
   },
 };
