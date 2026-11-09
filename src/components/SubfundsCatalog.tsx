@@ -1095,7 +1095,7 @@ export function SubfundsCatalog({
                     </div>
 
                     {/* Popover solid footer pinned to bottom (no gap, no bleed) */}
-                    <div className="px-3 py-2 bg-slate-50 dark:bg-[#051329] border-t border-slate-200 dark:border-[#0e274d] flex items-center justify-between text-xs shrink-0 select-none">
+                    <div data-component="category-dropdown-footer" className="px-3 py-2 bg-slate-50 dark:bg-[#051329] border-t border-slate-200 dark:border-[#0e274d] flex items-center justify-between text-xs shrink-0 select-none">
                       <span className="text-slate-500 dark:text-slate-400 font-medium">
                         {locale === "en" ? "Selected:" : "Wybrano:"}{" "}
                         <strong className="text-slate-900 dark:text-white font-bold">
@@ -1283,12 +1283,13 @@ export function SubfundsCatalog({
                   <div
                     role="listbox"
                     aria-labelledby="catalog-sort-button"
+                    data-component="catalog-sort-popover"
                     className="absolute top-full left-0 sm:left-auto sm:right-0 mt-1.5 w-full sm:w-[285px] bg-white dark:bg-[#030c1c] border border-slate-200 dark:border-[#0e274d] rounded-xl shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-100 max-h-[85vh] sm:max-h-96 overflow-y-auto p-1.5"
                   >
                     {sortGroups.map((grp) => (
                       <div
                         key={grp.id}
-                        className="border-t border-slate-100 dark:border-[#0e274d]/50 first:border-t-0 pt-1 mt-1 first:pt-0 first:mt-0 space-y-0.5"
+                        className="border-t border-slate-100 dark:border-[#0e274d]/50 first:border-t-0 pt-1 mt-1 first:pt-0 first:mt-0 space-y-0.5 bg-transparent"
                       >
                         {grp.options.map((opt) => {
                           const isSelected = currentSortValue === opt.value;
@@ -1902,7 +1903,7 @@ export function SubfundsCatalog({
                   return (
                     <tr
                       key={item.subfundId}
-                      className="bg-white dark:bg-transparent hover:bg-slate-50/90 dark:hover:bg-[#071938]/70 transition-colors group"
+                      className="bg-white dark:bg-transparent hover:bg-blue-50/60 dark:hover:bg-[#071938]/70 transition-colors group"
                     >
                       <td className="py-3 px-3.5 sm:px-4 min-w-[240px]">
                         <Link

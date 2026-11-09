@@ -128,8 +128,8 @@ html.light:not(.high-contrast) .catalog-grid-card [class*="bg-[#030a16]"] {
 }
 
 /* Light mode backgrounds: Inner boxes, secondary panels, tags */
-html.light:not(.high-contrast) [class*="bg-[#071938]"]:not(.hero-action-card):not(.catalog-grid-card),
-html.light:not(.high-contrast) .bg-\[\#071938\]:not(.hero-action-card):not(.catalog-grid-card) {
+html.light:not(.high-contrast) [class*="bg-[#071938]"]:not(.hero-action-card):not(.catalog-grid-card):not(tr):not(tbody):not(td):not(table):not(thead),
+html.light:not(.high-contrast) .bg-\[\#071938\]:not(.hero-action-card):not(.catalog-grid-card):not(tr):not(tbody):not(td):not(table):not(thead) {
   background-color: #f1f5f9 !important;
 }
 
@@ -268,27 +268,23 @@ html.light:not(.high-contrast) .catalog-table-container thead th {
   border-color: #e2e8f0 !important;
 }
 
-html.light:not(.high-contrast) .catalog-table-container tbody tr {
+html.light:not(.high-contrast) .catalog-table-container tbody tr,
+html.light:not(.high-contrast) .catalog-table-container tbody tr td {
   background-color: #ffffff !important;
   border-color: #f1f5f9 !important;
   border-top-color: #f1f5f9 !important;
   border-bottom-color: #f1f5f9 !important;
 }
 
-html.light:not(.high-contrast) .catalog-table-container tbody tr:hover {
-  background-color: #f8fafc !important;
+/* Distinct, pleasant hover state in light mode without harsh blue border line */
+html.light:not(.high-contrast) .catalog-table-container tbody tr:hover,
+html.light:not(.high-contrast) .catalog-table-container tbody tr:hover td {
+  background-color: #eff6ff !important;
   border-color: #f1f5f9 !important;
   border-top-color: #f1f5f9 !important;
   border-bottom-color: #f1f5f9 !important;
   outline: none !important;
   box-shadow: none !important;
-}
-
-html.light:not(.high-contrast) .catalog-table-container tbody tr td,
-html.light:not(.high-contrast) .catalog-table-container tbody tr:hover td {
-  border-color: #f1f5f9 !important;
-  border-top-color: #f1f5f9 !important;
-  border-bottom-color: #f1f5f9 !important;
 }
 
 /* Explicitly eliminate any black border on first row, below thead or between rows */
@@ -392,19 +388,24 @@ html.light:not(.high-contrast) [role="listbox"] [role="option"][aria-selected="t
   color: #ffffff !important;
 }
 
-/* Listbox solid footer */
-html.light:not(.high-contrast) [role="listbox"] > div:last-child {
+/* Listbox solid footer for category selector */
+html.light:not(.high-contrast) [data-component="category-dropdown-footer"] {
   background-color: #f8fafc !important;
   border-top-color: #e2e8f0 !important;
 }
 
-html.light:not(.high-contrast) [role="listbox"] > div:last-child span {
+html.light:not(.high-contrast) [data-component="category-dropdown-footer"] span {
   color: #475569 !important;
 }
 
-html.light:not(.high-contrast) [role="listbox"] > div:last-child strong {
+html.light:not(.high-contrast) [data-component="category-dropdown-footer"] strong {
   color: #0f172a !important;
   font-weight: 700 !important;
+}
+
+/* Sort dropdown popover: ensure all option groups have uniform transparent background */
+html.light:not(.high-contrast) [data-component="catalog-sort-popover"] > div {
+  background-color: transparent !important;
 }
 
 /* Table thead in light mode (default/fallback) */
@@ -1368,13 +1369,17 @@ html.high-contrast [role="listbox"] [role="option"][aria-selected="true"]:hover 
 }
 
 /* Popover solid footer in High Contrast */
-html.high-contrast [role="listbox"] > div:last-child {
+html.high-contrast [data-component="category-dropdown-footer"] {
   background-color: #000000 !important;
   border-top: 2px solid #ffff00 !important;
 }
-html.high-contrast [role="listbox"] > div:last-child span,
-html.high-contrast [role="listbox"] > div:last-child strong {
+html.high-contrast [data-component="category-dropdown-footer"] span,
+html.high-contrast [data-component="category-dropdown-footer"] strong {
   color: #ffff00 !important;
+}
+
+html.high-contrast [data-component="catalog-sort-popover"] > div {
+  background-color: transparent !important;
 }
 
 /* Badge counter in Category Dropdown Trigger */
