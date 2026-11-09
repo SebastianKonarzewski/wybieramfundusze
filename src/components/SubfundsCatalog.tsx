@@ -1212,7 +1212,7 @@ export function SubfundsCatalog({
               <button
                 type="button"
                 onClick={clearUmbrellaFundFilter}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-blue-50 dark:bg-blue-950/40 text-[#044CD0] dark:text-blue-300 border border-blue-200 dark:border-blue-800 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
                 title={`Usuń: ${fundName || `Parasol ID ${fundId}`}`}
               >
                 <span className="truncate max-w-[200px] sm:max-w-[260px]">
@@ -1570,8 +1570,8 @@ export function SubfundsCatalog({
                     }
                     className={`w-9 h-9 flex items-center justify-center rounded-xl text-xs font-medium border transition-all shadow-2xs shrink-0 cursor-pointer ${
                       inPortfolio
-                        ? "bg-indigo-600 text-white border-indigo-600 shadow-xs"
-                        : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-slate-200 dark:border-[#0e274d] hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-300 dark:hover:border-indigo-500/50 hover:bg-indigo-50/50 dark:hover:bg-[#071938]"
+                        ? "bg-[#044CD0] text-white border-[#044CD0] shadow-xs"
+                        : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-slate-200 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-blue-300 dark:hover:border-blue-500/50 hover:bg-blue-50/50 dark:hover:bg-[#071938]"
                     }`}
                     title={inPortfolio ? t.portfolio.removeFromPortfolio : t.portfolio.addToPortfolio}
                     aria-label={inPortfolio ? t.portfolio.removeFromPortfolio : t.portfolio.addToPortfolio}
@@ -1896,8 +1896,8 @@ export function SubfundsCatalog({
                             }
                             className={`w-9 h-9 flex items-center justify-center rounded-xl border text-xs transition-all shadow-2xs cursor-pointer ${
                               inPortfolio
-                                ? "bg-indigo-600 text-white border-indigo-600 shadow-xs"
-                                : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-slate-200 dark:border-[#0e274d] hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-300 dark:hover:border-indigo-500/50 hover:bg-indigo-50/50 dark:hover:bg-[#071938]"
+                                ? "bg-[#044CD0] text-white border-[#044CD0] shadow-xs"
+                                : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-slate-200 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-blue-300 dark:hover:border-blue-500/50 hover:bg-blue-50/50 dark:hover:bg-[#071938]"
                             }`}
                             title={inPortfolio ? t.portfolio.removeFromPortfolio : t.portfolio.addToPortfolio}
                             aria-label={inPortfolio ? t.portfolio.removeFromPortfolio : t.portfolio.addToPortfolio}

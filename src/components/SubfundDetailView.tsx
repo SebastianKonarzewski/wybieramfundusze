@@ -120,8 +120,8 @@ export function SubfundDetailView({ profile }: { profile: SubfundFullProfile }) 
                 }
                 className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer shadow-xs ${
                   inPortfolio
-                    ? "bg-indigo-600 text-white border-indigo-400"
-                    : "bg-[#030a16] text-slate-300 border-[#0e274d] hover:text-indigo-400 hover:border-indigo-500"
+                    ? "bg-[#044CD0] text-white border-[#044CD0]"
+                    : "bg-[#030a16] text-slate-300 border-[#0e274d] hover:text-[#60a5fa] hover:border-blue-500"
                 }`}
               >
                 {inPortfolio ? <Check className="w-3.5 h-3.5" /> : <Briefcase className="w-3.5 h-3.5" />}
