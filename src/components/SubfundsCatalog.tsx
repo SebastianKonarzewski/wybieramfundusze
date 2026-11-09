@@ -984,12 +984,14 @@ export function SubfundsCatalog({
           {/* Right: Integrated Sort Dropdown & View Mode Switcher */}
           <div className="flex items-center justify-between md:justify-end gap-2.5 shrink-0 flex-wrap">
             {/* Period Switcher */}
-            <div className="h-[38px] flex items-center gap-1.5 bg-white dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] px-2.5 rounded-xl text-xs shadow-2xs">
-              <div className="flex items-center gap-1 text-slate-600 dark:text-slate-300 font-semibold select-none">
+            <div className="h-[38px] flex items-center gap-2 bg-white dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-[#044CD0]/60 px-2.5 sm:px-3 rounded-xl transition-colors shadow-2xs">
+              <div className="flex items-center gap-1.5 select-none shrink-0">
                 <TrendingUp className="w-3.5 h-3.5 text-[#044CD0] shrink-0" />
-                <span className="text-xs whitespace-nowrap">{t.catalog.returnPeriodLabel}</span>
+                <span className="text-xs font-medium text-slate-500 dark:text-slate-400 whitespace-nowrap">
+                  {t.catalog.returnPeriodLabel}
+                </span>
               </div>
-              <div className="flex items-center gap-0.5 ml-0.5">
+              <div className="flex items-center gap-0.5">
                 {RETURN_PERIODS.map((p) => {
                   const isSelected = returnPeriod === p.id;
                   const label = locale === "en" ? p.labelEn : p.labelPl;
@@ -1014,20 +1016,22 @@ export function SubfundsCatalog({
             </div>
 
             {/* Integrated Sort Dropdown */}
-            <div className="h-[38px] flex items-center gap-1.5 bg-white dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-[#044CD0]/60 px-2.5 sm:px-3 rounded-xl text-xs sm:text-sm transition-colors shadow-2xs">
-              <ArrowUpDown className="w-3.5 h-3.5 text-[#044CD0] shrink-0" />
-              <label
-                htmlFor="catalog-sort-select"
-                className="text-slate-500 dark:text-slate-400 font-medium hidden sm:inline select-none shrink-0"
-              >
-                {t.catalog.sort.label}:
-              </label>
+            <div className="h-[38px] flex items-center gap-2 bg-white dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-[#044CD0]/60 px-2.5 sm:px-3 rounded-xl transition-colors shadow-2xs">
+              <div className="flex items-center gap-1.5 select-none shrink-0">
+                <ArrowUpDown className="w-3.5 h-3.5 text-[#044CD0] shrink-0" />
+                <label
+                  htmlFor="catalog-sort-select"
+                  className="text-xs font-medium text-slate-500 dark:text-slate-400 hidden sm:inline whitespace-nowrap cursor-pointer"
+                >
+                  {t.catalog.sort.label}:
+                </label>
+              </div>
               <select
                 id="catalog-sort-select"
                 value={`${sortField}_${sortOrder}`}
                 onChange={(e) => handleCombinedSortChange(e.target.value)}
                 aria-label={t.catalog.sort.label}
-                className="bg-transparent text-slate-800 dark:text-slate-200 font-sans font-medium text-xs sm:text-sm focus:outline-hidden cursor-pointer pr-1"
+                className="bg-transparent text-slate-800 dark:text-slate-200 font-sans font-medium text-xs focus:outline-hidden cursor-pointer pr-1"
               >
                 <option value="name_asc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
                   {t.catalog.sort.nameAsc}
@@ -1496,12 +1500,12 @@ export function SubfundsCatalog({
                         >
                           {item.name}
                         </Link>
-                        <div className="flex items-center gap-1.5 mt-1">
-                          <span className="font-bold text-[10px] bg-white dark:bg-[#030a16] border border-blue-200 dark:border-[#0e274d] px-1.5 py-0.2 rounded text-[#044CD0] dark:text-blue-300 shadow-2xs shrink-0">
+                        <div className="flex items-center gap-1.5 mt-1 leading-none">
+                          <span className="inline-flex items-center font-bold text-[10px] leading-none bg-white dark:bg-[#030a16] border border-blue-200 dark:border-[#0e274d] px-1.5 py-0.5 rounded text-[#044CD0] dark:text-blue-300 shadow-2xs shrink-0">
                             {item.name.toUpperCase().includes("ETF") ? "ETF" : item.type}
                           </span>
                           {item.nationalCode && (
-                            <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono truncate">
+                            <span className="inline-flex items-center text-[10px] leading-none text-slate-500 dark:text-slate-400 font-mono tracking-tight">
                               {item.nationalCode}
                             </span>
                           )}

@@ -30,53 +30,47 @@ export function StatusBadge({
       const tooltip = liquidationStartDate
         ? `${t.common.inLiquidation} ${t.common.since} ${formatDate(liquidationStartDate)}${liquidationEndDate ? ` - ${formatDate(liquidationEndDate)}` : ""}`
         : t.common.inLiquidation;
-      const shortLabel = locale === "en" ? "Liq." : "Likwid.";
+      const label = locale === "en" ? "Liquidation" : "Likwidacja";
       return (
         <span
           data-component="status-badge"
           title={tooltip}
           className={`inline-flex flex-col items-center justify-center text-center ${className}`}
         >
-          <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30 shrink-0">
-            <AlertTriangle className="w-3 h-3 text-amber-600 dark:text-amber-400 shrink-0" />
-          </span>
+          <AlertTriangle className="w-4 h-4 text-amber-500 dark:text-amber-400 shrink-0" />
           <span className="text-[9px] font-semibold text-amber-700 dark:text-amber-400 leading-tight mt-0.5 whitespace-nowrap">
-            {shortLabel}
+            {label}
           </span>
         </span>
       );
     }
 
     if (isActive === false) {
-      const shortLabel = locale === "en" ? "Inactive" : "Nieaktywny";
+      const label = locale === "en" ? "Inactive" : "Nieaktywny";
       return (
         <span
           data-component="status-badge"
           title={t.common.inactive}
           className={`inline-flex flex-col items-center justify-center text-center ${className}`}
         >
-          <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-300 dark:border-slate-700 shrink-0">
-            <XCircle className="w-3 h-3 text-slate-500 shrink-0" />
-          </span>
-          <span className="text-[9px] font-semibold text-slate-600 dark:text-slate-400 leading-tight mt-0.5 whitespace-nowrap">
-            {shortLabel}
+          <XCircle className="w-4 h-4 text-slate-400 dark:text-slate-500 shrink-0" />
+          <span className="text-[9px] font-semibold text-slate-500 dark:text-slate-400 leading-tight mt-0.5 whitespace-nowrap">
+            {label}
           </span>
         </span>
       );
     }
 
-    const activeLabel = locale === "en" ? "Active" : "Aktywny";
+    const label = locale === "en" ? "Active" : "Aktywny";
     return (
       <span
         data-component="status-badge"
         title={t.common.active}
         className={`inline-flex flex-col items-center justify-center text-center ${className}`}
       >
-        <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30 shrink-0">
-          <CheckCircle2 className="w-3.5 h-3.5" />
-        </span>
+        <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
         <span className="text-[9px] font-semibold text-emerald-700 dark:text-emerald-400 leading-tight mt-0.5 whitespace-nowrap">
-          {activeLabel}
+          {label}
         </span>
       </span>
     );

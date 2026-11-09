@@ -31,56 +31,56 @@ export function RiskBadge({
     );
   }
 
-  // SRI styling: completely transparent background in light mode with crisp colored border and high-contrast text
+  // SRI styling: smooth green -> yellow -> red transition
   const getColor = (sri: number) => {
     switch (sri) {
       case 1:
         return {
-          bg: "bg-transparent dark:bg-emerald-950/70 border-emerald-600 dark:border-emerald-600/40 text-emerald-800 dark:text-emerald-300",
+          textColor: "text-emerald-700 dark:text-emerald-400",
+          dotColor: "bg-emerald-600 dark:bg-emerald-500",
           desc: t.common.riskLevels.veryLow,
-          dot: "bg-emerald-600 dark:bg-emerald-400",
         };
       case 2:
         return {
-          bg: "bg-transparent dark:bg-teal-950/70 border-teal-600 dark:border-teal-600/40 text-teal-800 dark:text-teal-300",
+          textColor: "text-green-700 dark:text-green-400",
+          dotColor: "bg-green-600 dark:bg-green-500",
           desc: t.common.riskLevels.low,
-          dot: "bg-teal-600 dark:bg-teal-400",
         };
       case 3:
         return {
-          bg: "bg-transparent dark:bg-cyan-950/70 border-cyan-600 dark:border-cyan-600/40 text-cyan-800 dark:text-cyan-300",
+          textColor: "text-lime-700 dark:text-lime-400",
+          dotColor: "bg-lime-600 dark:bg-lime-500",
           desc: t.common.riskLevels.mediumLow,
-          dot: "bg-cyan-600 dark:bg-cyan-400",
         };
       case 4:
         return {
-          bg: "bg-transparent dark:bg-amber-950/70 border-amber-600 dark:border-amber-600/40 text-amber-800 dark:text-amber-300",
+          textColor: "text-yellow-700 dark:text-yellow-400",
+          dotColor: "bg-yellow-500 dark:bg-yellow-400",
           desc: t.common.riskLevels.moderate,
-          dot: "bg-amber-600 dark:bg-amber-400",
         };
       case 5:
         return {
-          bg: "bg-transparent dark:bg-orange-950/70 border-orange-600 dark:border-orange-600/40 text-orange-800 dark:text-orange-300",
+          textColor: "text-amber-700 dark:text-amber-400",
+          dotColor: "bg-amber-500 dark:bg-amber-400",
           desc: t.common.riskLevels.mediumHigh,
-          dot: "bg-orange-600 dark:bg-orange-400",
         };
       case 6:
         return {
-          bg: "bg-transparent dark:bg-rose-950/70 border-rose-600 dark:border-rose-600/40 text-rose-800 dark:text-rose-300",
+          textColor: "text-orange-700 dark:text-orange-400",
+          dotColor: "bg-orange-600 dark:bg-orange-500",
           desc: t.common.riskLevels.high,
-          dot: "bg-rose-600 dark:bg-rose-400",
         };
       case 7:
         return {
-          bg: "bg-transparent dark:bg-red-950/80 border-red-600 dark:border-red-500/50 text-red-800 dark:text-red-300",
+          textColor: "text-red-700 dark:text-red-400",
+          dotColor: "bg-red-600 dark:bg-red-500",
           desc: t.common.riskLevels.veryHigh,
-          dot: "bg-red-600 dark:bg-red-500",
         };
       default:
         return {
-          bg: "bg-transparent dark:bg-[#030a16] border-slate-300 dark:border-[#0e274d] text-slate-700 dark:text-slate-300",
+          textColor: "text-slate-600 dark:text-slate-400",
+          dotColor: "bg-slate-400 dark:bg-slate-500",
           desc: t.common.riskLevels.unknown,
-          dot: "bg-slate-400",
         };
     }
   };
@@ -94,19 +94,24 @@ export function RiskBadge({
     return (
       <div
         data-component="risk-badge"
-        className={`inline-flex flex-col items-center justify-center px-1.5 py-0.5 rounded-md border font-semibold ${info.bg}`}
+        className="inline-flex flex-col items-center justify-center cursor-default select-none py-0.5"
         title={tooltipText}
       >
-        <span className="font-extrabold text-xs tracking-tight leading-tight">
-          {showSriPrefix ? "SRI " : ""}{level}<span className="text-[10px] font-semibold opacity-70">/7</span>
-        </span>
-        <div className="flex items-center gap-0.5 mt-0.5">
+        <div className="flex items-baseline gap-0.5 leading-none">
+          <span className={`text-xs font-black tracking-tight ${info.textColor}`}>
+            {showSriPrefix ? "SRI " : ""}{level}
+          </span>
+          <span className="text-[10px] font-semibold text-slate-400 dark:text-slate-500">
+            /7
+          </span>
+        </div>
+        <div className="flex items-center gap-0.5 mt-1">
           {[1, 2, 3, 4, 5, 6, 7].map((num) => (
             <span
               key={num}
               data-active={num <= level ? "true" : "false"}
-              className={`w-1 h-1.5 rounded-2xs ${
-                num <= level ? info.dot : "bg-slate-200 dark:bg-slate-800 border border-slate-300/40 dark:border-transparent"
+              className={`w-1.5 h-1 rounded-full ${
+                num <= level ? info.dotColor : "bg-slate-200 dark:bg-slate-800"
               }`}
             />
           ))}
@@ -118,8 +123,8 @@ export function RiskBadge({
   return (
     <div
       data-component="risk-badge"
-      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md border font-semibold ${info.bg} ${
-        size === "sm" ? "text-xs" : size === "lg" ? "text-sm py-1.5 px-3" : "text-xs py-1 px-2.5"
+      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border font-semibold bg-white dark:bg-[#030a16] border-slate-200 dark:border-[#0e274d] shadow-2xs ${
+        size === "sm" ? "text-xs py-0.5 px-2" : size === "lg" ? "text-sm py-1.5 px-3" : "text-xs"
       }`}
       title={tooltipText}
     >
@@ -129,15 +134,15 @@ export function RiskBadge({
             key={num}
             data-active={num <= level ? "true" : "false"}
             className={`w-1.5 h-3 rounded-xs ${
-              num <= level ? info.dot : "bg-slate-200 dark:bg-slate-800 border border-slate-300/40 dark:border-transparent"
+              num <= level ? info.dotColor : "bg-slate-200 dark:bg-slate-800"
             }`}
           />
         ))}
       </div>
-      <span className="font-extrabold ml-1 tracking-tight">
+      <span className={`font-black ml-1 tracking-tight ${info.textColor}`}>
         {showSriPrefix ? "SRI " : ""}{level}/7
       </span>
-      {showLabel && <span className="opacity-90 text-[10px] hidden sm:inline">({info.desc})</span>}
+      {showLabel && <span className="opacity-80 text-[10px] hidden sm:inline text-slate-500 dark:text-slate-400">({info.desc})</span>}
     </div>
   );
 }
