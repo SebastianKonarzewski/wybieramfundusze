@@ -245,6 +245,8 @@ export interface SubfundCardModel extends KNFSubfund {
   returnRate1M?: number | null;
   returnRate3M?: number | null;
   returnRate1Y?: number | null;
+  returnRate2Y?: number | null;
+  returnRate2YAnn?: number | null;
   returnRate3Y?: number | null;
   returnRate3YAnn?: number | null;
   returnRateYTD?: number | null;
@@ -292,6 +294,8 @@ export interface RuntimeSubfundMeta {
   returnRate1M?: number | null;
   returnRate3M?: number | null;
   returnRate1Y?: number | null;
+  returnRate2Y?: number | null;
+  returnRate2YAnn?: number | null;
   returnRate3Y?: number | null;
   returnRate3YAnn?: number | null;
   returnRateYTD?: number | null;

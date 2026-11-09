@@ -120,6 +120,8 @@ export function updateRuntimeSubfund(
     returnRate1M: data.returnRate1M !== undefined ? data.returnRate1M : existing?.returnRate1M,
     returnRate3M: data.returnRate3M !== undefined ? data.returnRate3M : existing?.returnRate3M,
     returnRate1Y: data.returnRate1Y !== undefined ? data.returnRate1Y : existing?.returnRate1Y,
+    returnRate2Y: data.returnRate2Y !== undefined ? data.returnRate2Y : existing?.returnRate2Y,
+    returnRate2YAnn: data.returnRate2YAnn !== undefined ? data.returnRate2YAnn : existing?.returnRate2YAnn,
     returnRate3Y: data.returnRate3Y !== undefined ? data.returnRate3Y : existing?.returnRate3Y,
     returnRate3YAnn: data.returnRate3YAnn !== undefined ? data.returnRate3YAnn : existing?.returnRate3YAnn,
     returnRateYTD: data.returnRateYTD !== undefined ? data.returnRateYTD : existing?.returnRateYTD,
@@ -136,6 +138,8 @@ export interface CalculatedReturnRates {
   returnRate1M: number | null;
   returnRate3M: number | null;
   returnRate1Y: number | null;
+  returnRate2Y: number | null;
+  returnRate2YAnn: number | null;
   returnRate3Y: number | null;
   returnRate3YAnn: number | null;
   returnRateYTD: number | null;
@@ -150,6 +154,8 @@ export function calculateReturnRates(valuations: KNFValuation[]): CalculatedRetu
       returnRate1M: null,
       returnRate3M: null,
       returnRate1Y: null,
+      returnRate2Y: null,
+      returnRate2YAnn: null,
       returnRate3Y: null,
       returnRate3YAnn: null,
       returnRateYTD: null,
@@ -165,6 +171,8 @@ export function calculateReturnRates(valuations: KNFValuation[]): CalculatedRetu
       returnRate1M: null,
       returnRate3M: null,
       returnRate1Y: null,
+      returnRate2Y: null,
+      returnRate2YAnn: null,
       returnRate3Y: null,
       returnRate3YAnn: null,
       returnRateYTD: null,
@@ -206,6 +214,21 @@ export function calculateReturnRates(valuations: KNFValuation[]): CalculatedRetu
   const v1Y = findPastValuation(d1Y, 35);
   const returnRate1Y = v1Y ? (latestVal - v1Y) / v1Y : null;
 
+  // 2 Years (~730 days, max 45 days margin)
+  const d2Y = new Date(latestDate);
+  d2Y.setDate(d2Y.getDate() - 730);
+  const v2Y = findPastValuation(d2Y, 45);
+  const returnRate2Y = v2Y ? (latestVal - v2Y) / v2Y : null;
+
+  // Annualized CAGR for 2 years: (1 + R)^(1/2) - 1
+  let returnRate2YAnn: number | null = null;
+  if (returnRate2Y !== null) {
+    const totalGrowth = 1 + returnRate2Y;
+    if (totalGrowth > 0) {
+      returnRate2YAnn = Math.sqrt(totalGrowth) - 1;
+    }
+  }
+
   // 3 Years (~1095 days, max 50 days margin)
   const d3Y = new Date(latestDate);
   d3Y.setDate(d3Y.getDate() - 1095);
@@ -230,6 +253,8 @@ export function calculateReturnRates(valuations: KNFValuation[]): CalculatedRetu
     returnRate1M,
     returnRate3M,
     returnRate1Y,
+    returnRate2Y,
+    returnRate2YAnn,
     returnRate3Y,
     returnRate3YAnn,
     returnRateYTD,
@@ -822,6 +847,8 @@ export const knfApi = {
         returnRate1M: meta?.returnRate1M ?? null,
         returnRate3M: meta?.returnRate3M ?? null,
         returnRate1Y: meta?.returnRate1Y ?? null,
+        returnRate2Y: meta?.returnRate2Y ?? null,
+        returnRate2YAnn: meta?.returnRate2YAnn ?? null,
         returnRate3Y: meta?.returnRate3Y ?? null,
         returnRate3YAnn: meta?.returnRate3YAnn ?? null,
         returnRateYTD: meta?.returnRateYTD ?? null,
@@ -929,6 +956,10 @@ export const knfApi = {
       filtered.sort((a, b) => (b.returnRate1Y ?? -9999) - (a.returnRate1Y ?? -9999));
     } else if (params?.sort === "return1Y,asc") {
       filtered.sort((a, b) => (a.returnRate1Y ?? 9999) - (b.returnRate1Y ?? 9999));
+    } else if (params?.sort === "return2Y,desc") {
+      filtered.sort((a, b) => (b.returnRate2Y ?? -9999) - (a.returnRate2Y ?? -9999));
+    } else if (params?.sort === "return2Y,asc") {
+      filtered.sort((a, b) => (a.returnRate2Y ?? 9999) - (b.returnRate2Y ?? 9999));
     } else if (params?.sort === "return3Y,desc") {
       filtered.sort((a, b) => (b.returnRate3Y ?? -9999) - (a.returnRate3Y ?? -9999));
     } else if (params?.sort === "return3Y,asc") {

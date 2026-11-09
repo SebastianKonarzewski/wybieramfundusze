@@ -43,13 +43,13 @@ interface CategoryGroup {
   options: CategoryOption[];
 }
 
-export type ReturnPeriod = "1M" | "3M" | "1Y" | "3Y" | "YTD";
+export type ReturnPeriod = "1M" | "3M" | "1Y" | "2Y" | "YTD";
 
 export const RETURN_PERIODS: { id: ReturnPeriod; labelPl: string; labelEn: string }[] = [
   { id: "1M", labelPl: "1M", labelEn: "1M" },
   { id: "3M", labelPl: "3M", labelEn: "3M" },
   { id: "1Y", labelPl: "1R", labelEn: "1Y" },
-  { id: "3Y", labelPl: "3L", labelEn: "3Y" },
+  { id: "2Y", labelPl: "2L", labelEn: "2Y" },
   { id: "YTD", labelPl: "YTD", labelEn: "YTD" },
 ];
 
@@ -191,8 +191,8 @@ export function SubfundsCatalog({
       case "1Y":
         rate = item.returnRate1Y;
         break;
-      case "3Y":
-        rate = item.returnRate3Y;
+      case "2Y":
+        rate = item.returnRate2Y;
         break;
       case "YTD":
         rate = item.returnRateYTD;
@@ -221,11 +221,11 @@ export function SubfundsCatalog({
         >
           {formattedRate}
         </span>
-        {period === "3Y" && item.returnRate3YAnn !== null && item.returnRate3YAnn !== undefined && (
+        {period === "2Y" && item.returnRate2YAnn !== null && item.returnRate2YAnn !== undefined && (
           <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium mt-0.5 whitespace-nowrap">
             {t.catalog.table.annualizedSubtitle.replace(
               "{rate}",
-              `${item.returnRate3YAnn > 0 ? "+" : ""}${formatPercent(item.returnRate3YAnn)}`
+              `${item.returnRate2YAnn > 0 ? "+" : ""}${formatPercent(item.returnRate2YAnn)}`
             )}
           </span>
         )}
@@ -506,7 +506,7 @@ export function SubfundsCatalog({
           case "1M": return item.returnRate1M;
           case "3M": return item.returnRate3M;
           case "1Y": return item.returnRate1Y;
-          case "3Y": return item.returnRate3Y;
+          case "2Y": return item.returnRate2Y;
           case "YTD": return item.returnRateYTD;
           default: return item.returnRate1Y;
         }

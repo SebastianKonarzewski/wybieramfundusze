@@ -39,6 +39,8 @@ export async function GET(request: NextRequest) {
     "return3M,desc",
     "return1Y,asc",
     "return1Y,desc",
+    "return2Y,asc",
+    "return2Y,desc",
     "return3Y,asc",
     "return3Y,desc",
     "returnYTD,asc",
