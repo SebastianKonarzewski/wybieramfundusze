@@ -1466,16 +1466,17 @@ export function SubfundsCatalog({
                 </div>
 
                 {/* Bottom Action Buttons */}
-                <div className="flex items-center gap-2 pt-3 border-t border-blue-200/80 dark:border-[#0e274d]/80 mt-auto">
+                <div className="flex items-center gap-2 pt-3 border-t border-slate-200/80 dark:border-[#0e274d]/80 mt-auto">
                   <Link
                     href={`/fundusze/${item.subfundId}`}
                     data-component="fund-details-btn"
-                    className="flex-1 text-center py-2 px-3 rounded-xl text-xs font-semibold bg-white hover:bg-blue-50 dark:bg-[#030a16] dark:hover:bg-[#071938] text-slate-800 dark:text-slate-200 hover:text-[#044CD0] dark:hover:text-white border border-blue-200 dark:border-[#0e274d] hover:border-blue-400 dark:hover:border-slate-600 transition-all shadow-2xs"
+                    className="flex-1 text-center py-2 px-3 rounded-xl text-xs font-semibold bg-white hover:bg-blue-50/70 dark:bg-[#030a16] dark:hover:bg-[#071938] text-slate-800 dark:text-slate-200 hover:text-[#044CD0] dark:hover:text-white border border-slate-200 dark:border-[#0e274d] hover:border-blue-300 dark:hover:border-slate-600 transition-all shadow-2xs cursor-pointer"
                   >
                     {t.catalog.card.fundDetails}
                   </Link>
 
                   <button
+                    type="button"
                     onClick={() =>
                       toggleFund({
                         subfundId: item.subfundId,
@@ -1484,18 +1485,19 @@ export function SubfundsCatalog({
                         category: item.category,
                       })
                     }
-                    className={`w-9 h-9 flex items-center justify-center rounded-xl text-xs font-medium border transition-all shadow-2xs shrink-0 ${
+                    className={`w-9 h-9 flex items-center justify-center rounded-xl text-xs font-medium border transition-all shadow-2xs shrink-0 cursor-pointer ${
                       inCompare
-                        ? "bg-[#044CD0] text-white border-blue-400 shadow-xs"
-                        : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-blue-200 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-blue-400"
+                        ? "bg-[#044CD0] text-white border-[#044CD0] shadow-xs"
+                        : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-slate-200 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-blue-300 dark:hover:border-blue-500/50 hover:bg-blue-50/50 dark:hover:bg-[#071938]"
                     }`}
                     title={inCompare ? t.catalog.card.removeFromCompare : t.catalog.card.addToCompare}
                     aria-label={inCompare ? t.catalog.card.removeFromCompare : t.catalog.card.addToCompare}
                   >
-                    <Scale className="w-5 h-5" />
+                    <Scale className="w-4 h-4" />
                   </button>
 
                   <button
+                    type="button"
                     onClick={() =>
                       togglePortfolioFund({
                         subfundId: item.subfundId,
@@ -1504,15 +1506,15 @@ export function SubfundsCatalog({
                         category: item.category,
                       })
                     }
-                    className={`w-9 h-9 flex items-center justify-center rounded-xl text-xs font-medium border transition-all shadow-2xs shrink-0 ${
+                    className={`w-9 h-9 flex items-center justify-center rounded-xl text-xs font-medium border transition-all shadow-2xs shrink-0 cursor-pointer ${
                       inPortfolio
-                        ? "bg-indigo-600 text-white border-indigo-400 shadow-xs"
-                        : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-blue-200 dark:border-[#0e274d] hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-400"
+                        ? "bg-indigo-600 text-white border-indigo-600 shadow-xs"
+                        : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-slate-200 dark:border-[#0e274d] hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-300 dark:hover:border-indigo-500/50 hover:bg-indigo-50/50 dark:hover:bg-[#071938]"
                     }`}
                     title={inPortfolio ? t.portfolio.removeFromPortfolio : t.portfolio.addToPortfolio}
                     aria-label={inPortfolio ? t.portfolio.removeFromPortfolio : t.portfolio.addToPortfolio}
                   >
-                    <Briefcase className="w-5 h-5" />
+                    <Briefcase className="w-4 h-4" />
                   </button>
                 </div>
               </div>
@@ -1531,48 +1533,34 @@ export function SubfundsCatalog({
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm border-collapse bg-transparent">
-              <thead className="bg-slate-50 dark:bg-[#030a16] text-xs uppercase tracking-wider text-slate-600 dark:text-slate-400 border-b border-slate-200 dark:border-[#0e274d]">
+              <thead className="bg-slate-50 dark:bg-[#030a16] text-[11px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 border-b border-slate-200 dark:border-[#0e274d]">
                 <tr>
                   <th
                     onClick={() => handleSort("name")}
-                    className="py-2 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group whitespace-nowrap w-full min-w-[200px]"
+                    className="py-3 px-3 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group whitespace-nowrap w-full min-w-[220px]"
                   >
                     <div className="flex items-center gap-1.5">
                       <span>{t.catalog.table.name}</span>
                       {sortField === "name" ? (
-                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0]" />
+                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" />
                       ) : (
                         <ArrowUpDown className="w-3 h-3 opacity-40 group-hover:opacity-100" />
                       )}
                     </div>
                   </th>
-                  <th className="py-2 px-2 sm:px-2.5 font-semibold text-xs leading-tight">
-                    <div>
-                      {locale === "en" ? (
-                        <>
-                          <span>Asset</span>
-                          <span className="block">Class</span>
-                        </>
-                      ) : (
-                        <>
-                          <span>Klasa</span>
-                          <span className="block">aktywów</span>
-                        </>
-                      )}
-                    </div>
+                  <th className="py-3 px-3 font-semibold min-w-[120px] whitespace-nowrap">
+                    <span>{locale === "en" ? "Asset Class" : "Klasa aktywów"}</span>
                   </th>
-                  <th className="py-2 px-1 sm:px-1.5 font-semibold whitespace-nowrap text-center text-xs w-[48px]">{t.catalog.table.status}</th>
+                  <th className="py-3 px-2 font-semibold whitespace-nowrap text-center w-[52px]">{t.catalog.table.status}</th>
                   <th
                     onClick={() => handleSort("risk")}
-                    className="py-2 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group text-xs leading-tight w-[68px]"
+                    className="py-3 px-2 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group w-[72px] text-center"
+                    title={`${locale === "en" ? "Risk Level" : "Poziom ryzyka"} (SRI 1-7)`}
                   >
                     <div className="flex items-center justify-center gap-1">
-                      <div className="text-center">
-                        <span>{locale === "en" ? "Risk" : "Ryzyko"}</span>
-                        <span className="block">(SRI)</span>
-                      </div>
+                      <span>SRI</span>
                       {sortField === "risk" ? (
-                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0]" />
+                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" />
                       ) : (
                         <ArrowUpDown className="w-3 h-3 opacity-40 group-hover:opacity-100" />
                       )}
@@ -1580,17 +1568,17 @@ export function SubfundsCatalog({
                   </th>
                   <th
                     onClick={() => handleSort("fee")}
-                    className="py-2 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group text-xs leading-tight whitespace-nowrap"
+                    className="py-3 px-3 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group whitespace-nowrap min-w-[95px]"
                     title={
                       locale === "en"
                         ? "Fees: ongoing + transaction"
                         : "Opłaty: stała + transakcyjna"
                     }
                   >
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-1.5">
                       <span>{t.catalog.table.fee}</span>
                       {sortField === "fee" ? (
-                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0]" />
+                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" />
                       ) : (
                         <ArrowUpDown className="w-3 h-3 opacity-40 group-hover:opacity-100" />
                       )}
@@ -1598,18 +1586,13 @@ export function SubfundsCatalog({
                   </th>
                   <th
                     onClick={() => handleSort("return")}
-                    className="py-2 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group text-xs leading-tight whitespace-nowrap"
+                    className="py-3 px-3 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group whitespace-nowrap min-w-[105px]"
                     title={`${t.catalog.table.returnRate} (${activePeriodFullLabel})`}
                   >
-                    <div className="flex items-center gap-1">
-                      <div>
-                        <span>{t.catalog.table.returnRate}</span>
-                        <span className="block">
-                          ({activePeriodFullLabel})
-                        </span>
-                      </div>
+                    <div className="flex items-center gap-1.5">
+                      <span>{t.catalog.table.returnRate} ({activePeriodLabel})</span>
                       {sortField === "return" ? (
-                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0]" />
+                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" />
                       ) : (
                         <ArrowUpDown className="w-3 h-3 opacity-40 group-hover:opacity-100" />
                       )}
@@ -1617,15 +1600,12 @@ export function SubfundsCatalog({
                   </th>
                   <th
                     onClick={() => handleSort("valuation")}
-                    className="py-2 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group text-xs leading-tight"
+                    className="py-3 px-3 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group whitespace-nowrap min-w-[110px]"
                   >
-                    <div className="flex items-center gap-1">
-                      <div>
-                        <span>{locale === "en" ? "Latest" : "Ostatnia"}</span>
-                        <span className="block">{locale === "en" ? "NAV" : "wycena"}</span>
-                      </div>
+                    <div className="flex items-center gap-1.5">
+                      <span>{locale === "en" ? "Latest NAV" : "Ostatnia wycena"}</span>
                       {sortField === "valuation" ? (
-                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0]" />
+                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" />
                       ) : (
                         <ArrowUpDown className="w-3 h-3 opacity-40 group-hover:opacity-100" />
                       )}
@@ -1633,22 +1613,19 @@ export function SubfundsCatalog({
                   </th>
                   <th
                     onClick={() => handleSort("assets")}
-                    className="py-2 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group text-xs leading-tight whitespace-nowrap"
+                    className="py-3 px-3 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group whitespace-nowrap min-w-[120px]"
                     title={t.catalog.table.netAssets}
                   >
-                    <div className="flex items-center gap-1">
-                      <div>
-                        <span>{locale === "en" ? "Net" : "Aktywa"}</span>
-                        <span className="block">{locale === "en" ? "Assets" : "netto"}</span>
-                      </div>
+                    <div className="flex items-center gap-1.5">
+                      <span>{locale === "en" ? "Net Assets" : "Aktywa netto"}</span>
                       {sortField === "assets" ? (
-                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0]" />
+                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" />
                       ) : (
                         <ArrowUpDown className="w-3 h-3 opacity-40 group-hover:opacity-100" />
                       )}
                     </div>
                   </th>
-                  <th className="py-2 px-2 sm:px-2.5 text-right font-semibold whitespace-nowrap text-xs w-[130px]">
+                  <th className="py-3 px-3 text-right font-semibold whitespace-nowrap text-xs w-[136px] min-w-[136px]">
                     <span className="sr-only">{t.catalog.table.actions}</span>
                   </th>
                 </tr>
@@ -1661,28 +1638,28 @@ export function SubfundsCatalog({
                   return (
                     <tr
                       key={item.subfundId}
-                      className="bg-white dark:bg-transparent hover:bg-slate-50 dark:hover:bg-[#071938]/60 transition-colors group"
+                      className="bg-white dark:bg-transparent hover:bg-blue-50/40 dark:hover:bg-[#071938]/70 transition-colors group"
                     >
-                      <td className="py-2.5 px-2 sm:px-2.5 min-w-[200px]">
+                      <td className="py-3 px-3 min-w-[220px]">
                         <Link
                           href={`/fundusze/${item.subfundId}`}
                           title={item.name}
-                          className="font-semibold text-slate-900 dark:text-slate-100 hover:text-[#044CD0] dark:hover:text-[#60a5fa] transition-colors block line-clamp-2 leading-snug break-words"
+                          className="font-semibold text-slate-900 dark:text-slate-100 hover:text-[#044CD0] dark:hover:text-[#60a5fa] transition-colors block line-clamp-2 leading-snug break-words text-xs sm:text-sm"
                         >
                           {item.name}
                         </Link>
                         <div className="flex items-center gap-1.5 mt-1 leading-none">
-                          <span className="inline-flex items-center font-bold text-[10px] leading-none bg-white dark:bg-[#030a16] border border-blue-200 dark:border-[#0e274d] px-1.5 py-0.5 rounded text-[#044CD0] dark:text-blue-300 shadow-2xs shrink-0">
+                          <span className="inline-flex items-center font-bold text-[10px] leading-none bg-blue-50/70 dark:bg-[#030a16] border border-blue-200/80 dark:border-[#0e274d] px-1.5 py-0.5 rounded text-[#044CD0] dark:text-blue-300 shadow-2xs shrink-0">
                             {item.name.toUpperCase().includes("ETF") ? "ETF" : item.type}
                           </span>
                           {item.nationalCode && (
-                            <span className="inline-flex items-center text-[10px] leading-none text-slate-500 dark:text-slate-400 font-mono tracking-tight">
+                            <span className="inline-flex items-center text-[10px] leading-none text-slate-400 dark:text-slate-500 font-mono tracking-tight">
                               {item.nationalCode}
                             </span>
                           )}
                         </div>
                       </td>
-                      <td className="py-2.5 px-2 sm:px-2.5 min-w-[110px] max-w-[170px]">
+                      <td className="py-3 px-3 min-w-[120px] max-w-[190px]">
                         <div className="font-semibold text-slate-800 dark:text-slate-200 text-xs capitalize leading-tight">
                           {item.classification || "—"}
                         </div>
@@ -1695,7 +1672,7 @@ export function SubfundsCatalog({
                           </div>
                         )}
                       </td>
-                      <td className="py-2 px-1 sm:px-1.5 text-center whitespace-nowrap w-[48px]">
+                      <td className="py-3 px-2 text-center whitespace-nowrap w-[52px]">
                         <StatusBadge
                           compact={true}
                           isActive={item.isActive}
@@ -1704,12 +1681,12 @@ export function SubfundsCatalog({
                           liquidationEndDate={item.liquidationEndDate}
                         />
                       </td>
-                      <td className="py-2.5 px-2 sm:px-2.5 text-center whitespace-nowrap w-[68px]">
+                      <td className="py-3 px-2 text-center whitespace-nowrap w-[72px]">
                         <RiskBadge level={item.riskLevel} showLabel={false} showSriPrefix={false} stacked={true} size="sm" />
                       </td>
-                      <td className="py-2.5 px-2 sm:px-2.5 whitespace-nowrap">
+                      <td className="py-3 px-3 whitespace-nowrap min-w-[95px]">
                         <div
-                          className="font-medium text-slate-800 dark:text-slate-200 text-xs sm:text-sm leading-tight"
+                          className="font-semibold text-slate-900 dark:text-slate-100 text-xs sm:text-sm leading-tight"
                           title={t.catalog.table.ongoingFeeTooltip}
                         >
                           {formatPercent(item.managementFee)}
@@ -1723,21 +1700,21 @@ export function SubfundsCatalog({
                           </div>
                         )}
                       </td>
-                      <td className="py-2.5 px-2 sm:px-2.5 whitespace-nowrap">
+                      <td className="py-3 px-3 whitespace-nowrap min-w-[105px]">
                         {renderReturnBadge(item, returnPeriod)}
                       </td>
-                      <td className="py-2.5 px-2 sm:px-2.5 whitespace-nowrap">
+                      <td className="py-3 px-3 whitespace-nowrap min-w-[110px]">
                         {item.latestValuation ? (
                           <div>
                             <FormattedCurrency
                               value={item.latestValuation}
                               currency={item.currency}
-                              valueClassName="font-bold text-slate-900 dark:text-slate-200 text-xs sm:text-sm"
+                              valueClassName="font-bold text-slate-900 dark:text-slate-100 text-xs sm:text-sm"
                               unitClassName="text-[10px] font-medium text-slate-500 dark:text-slate-400"
                             />
                             {item.currency && item.currency !== "PLN" && item.latestValuationPln && (
                               <div
-                                className="text-[10px] text-blue-600 dark:text-blue-400 font-medium"
+                                className="text-[10px] text-blue-600 dark:text-blue-400 font-medium leading-tight mt-0.5"
                                 title={
                                   item.fxRate
                                     ? t.catalog.fxTooltip
@@ -1750,7 +1727,7 @@ export function SubfundsCatalog({
                               </div>
                             )}
                             {item.latestValuationDate && (
-                              <div className="text-[10px] text-slate-500">
+                              <div className="text-[10px] text-slate-400 dark:text-slate-500 leading-tight mt-0.5">
                                 {formatDate(item.latestValuationDate)}
                               </div>
                             )}
@@ -1759,18 +1736,18 @@ export function SubfundsCatalog({
                           <span className="text-slate-400 dark:text-slate-600">—</span>
                         )}
                       </td>
-                      <td className="py-2.5 px-2 sm:px-2.5 whitespace-nowrap">
+                      <td className="py-3 px-3 whitespace-nowrap min-w-[120px]">
                         {item.netAssets !== null && item.netAssets !== undefined ? (
                           <div>
                             <FormattedLargeNumber
                               value={item.netAssets}
                               currency={item.currency}
-                              valueClassName="font-bold text-slate-900 dark:text-slate-200 text-xs sm:text-sm"
+                              valueClassName="font-bold text-slate-900 dark:text-slate-100 text-xs sm:text-sm"
                               unitClassName="text-[10px] font-medium text-slate-500 dark:text-slate-400"
                             />
                             {item.currency && item.currency !== "PLN" && item.netAssetsPln && (
                               <div
-                                className="text-[10px] text-blue-600 dark:text-blue-400 font-medium"
+                                className="text-[10px] text-blue-600 dark:text-blue-400 font-medium leading-tight mt-0.5"
                                 title={
                                   item.fxRate
                                     ? t.catalog.fxTooltip
@@ -1783,7 +1760,7 @@ export function SubfundsCatalog({
                               </div>
                             )}
                             {item.netAssetsDate && (
-                              <div className="text-[10px] text-slate-500">
+                              <div className="text-[10px] text-slate-400 dark:text-slate-500 leading-tight mt-0.5">
                                 {formatDate(item.netAssetsDate)}
                               </div>
                             )}
@@ -1792,9 +1769,10 @@ export function SubfundsCatalog({
                           <span className="text-slate-400 dark:text-slate-600">—</span>
                         )}
                       </td>
-                      <td className="py-2.5 px-2 sm:px-2.5 text-right whitespace-nowrap w-[130px]">
+                      <td className="py-3 px-3 text-right whitespace-nowrap w-[136px] min-w-[136px]">
                         <div className="flex items-center justify-end gap-1.5">
                           <button
+                            type="button"
                             onClick={() =>
                               toggleFund({
                                 subfundId: item.subfundId,
@@ -1803,17 +1781,18 @@ export function SubfundsCatalog({
                                 category: item.category,
                               })
                             }
-                            className={`w-9 h-9 flex items-center justify-center rounded-xl border text-xs transition-colors shadow-2xs ${
+                            className={`w-9 h-9 flex items-center justify-center rounded-xl border text-xs transition-all shadow-2xs cursor-pointer ${
                               inCompare
-                                ? "bg-[#044CD0] text-white border-blue-400"
-                                : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-blue-200 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-blue-400"
+                                ? "bg-[#044CD0] text-white border-[#044CD0] shadow-xs"
+                                : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-slate-200 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-blue-300 dark:hover:border-blue-500/50 hover:bg-blue-50/50 dark:hover:bg-[#071938]"
                             }`}
                             title={inCompare ? t.catalog.card.removeFromCompare : t.common.compare}
                             aria-label={inCompare ? t.catalog.card.removeFromCompare : t.common.compare}
                           >
-                            <Scale className="w-5 h-5" />
+                            <Scale className="w-4 h-4" />
                           </button>
                           <button
+                            type="button"
                             onClick={() =>
                               togglePortfolioFund({
                                 subfundId: item.subfundId,
@@ -1822,24 +1801,24 @@ export function SubfundsCatalog({
                                 category: item.category,
                               })
                             }
-                            className={`w-9 h-9 flex items-center justify-center rounded-xl border text-xs transition-colors shadow-2xs ${
+                            className={`w-9 h-9 flex items-center justify-center rounded-xl border text-xs transition-all shadow-2xs cursor-pointer ${
                               inPortfolio
-                                ? "bg-indigo-600 text-white border-indigo-400"
-                                : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-blue-200 dark:border-[#0e274d] hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-400"
+                                ? "bg-indigo-600 text-white border-indigo-600 shadow-xs"
+                                : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-slate-200 dark:border-[#0e274d] hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-300 dark:hover:border-indigo-500/50 hover:bg-indigo-50/50 dark:hover:bg-[#071938]"
                             }`}
                             title={inPortfolio ? t.portfolio.removeFromPortfolio : t.portfolio.addToPortfolio}
                             aria-label={inPortfolio ? t.portfolio.removeFromPortfolio : t.portfolio.addToPortfolio}
                           >
-                            <Briefcase className="w-5 h-5" />
+                            <Briefcase className="w-4 h-4" />
                           </button>
                           <Link
                             href={`/fundusze/${item.subfundId}`}
                             data-component="fund-details-btn"
-                            className="w-9 h-9 flex items-center justify-center rounded-xl bg-white hover:bg-blue-50 dark:bg-[#030a16] dark:hover:bg-[#071938] border border-blue-200 dark:border-[#0e274d] text-slate-600 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-blue-400 transition-colors shadow-2xs"
+                            className="w-9 h-9 flex items-center justify-center rounded-xl bg-white hover:bg-blue-50/70 dark:bg-[#030a16] dark:hover:bg-[#071938] border border-slate-200 dark:border-[#0e274d] text-slate-600 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-blue-300 dark:hover:border-blue-500/50 transition-all shadow-2xs cursor-pointer"
                             title={t.common.profile}
                             aria-label={t.common.profile}
                           >
-                            <ArrowRight className="w-5 h-5" />
+                            <ArrowRight className="w-4 h-4" />
                           </Link>
                         </div>
                       </td>
