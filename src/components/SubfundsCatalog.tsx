@@ -64,6 +64,9 @@ export const RETURN_PERIODS: {
   { id: "YTD", labelPl: "YTD", labelEn: "YTD", fullPl: "Od początku roku (YTD)", fullEn: "Year to date (YTD)" },
 ];
 
+export const GRID_PAGE_SIZES = [24, 48, 96];
+export const TABLE_PAGE_SIZES = [25, 50, 100];
+
 const CATEGORY_GROUPS: CategoryGroup[] = [
   {
     classId: "akcji",
@@ -199,6 +202,11 @@ export function SubfundsCatalog({
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
   const [hasUserToggledView, setHasUserToggledView] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [gridPageSize, setGridPageSize] = useState<number>(24);
+  const [tablePageSize, setTablePageSize] = useState<number>(25);
+
+  const currentPageSize = viewMode === "grid" ? gridPageSize : tablePageSize;
+  const pageSizeOptions = viewMode === "grid" ? GRID_PAGE_SIZES : TABLE_PAGE_SIZES;
 
   const activePeriodLabel = useMemo(() => {
     const p = RETURN_PERIODS.find((item) => item.id === returnPeriod);
@@ -296,8 +304,28 @@ export function SubfundsCatalog({
   }, [hasUserToggledView]);
 
   const handleViewModeChange = (mode: "grid" | "table") => {
+    if (mode === viewMode) return;
     setHasUserToggledView(true);
     setViewMode(mode);
+
+    // Keep approximate scroll/item position
+    const oldSize = viewMode === "grid" ? gridPageSize : tablePageSize;
+    const newSize = mode === "grid" ? gridPageSize : tablePageSize;
+    const currentFirstIndex = currentPage * oldSize;
+    const newPage = Math.floor(currentFirstIndex / newSize);
+    setCurrentPage(newPage);
+  };
+
+  const handlePageSizeChange = (newSize: number) => {
+    if (newSize === currentPageSize) return;
+    const currentFirstIndex = currentPage * currentPageSize;
+    if (viewMode === "grid") {
+      setGridPageSize(newSize);
+    } else {
+      setTablePageSize(newSize);
+    }
+    const newPage = Math.floor(currentFirstIndex / newSize);
+    setCurrentPage(newPage);
   };
 
   // Toggle helpers for multi-select
@@ -519,7 +547,7 @@ export function SubfundsCatalog({
           if (includeInactive) params.set("includeInactive", "true");
           if (includeLiquidating) params.set("includeLiquidating", "true");
           params.set("page", String(currentPage));
-          params.set("size", "24");
+          params.set("size", String(currentPageSize));
           if (sortField === "name") {
             params.set("sort", `name,${sortOrder}`);
           } else if (sortField === "return") {
@@ -535,7 +563,7 @@ export function SubfundsCatalog({
           if (res.ok) {
             const data = await res.json();
             setItems(data.items || []);
-            setPageInfo(data.page || { size: 24, totalElements: 0, totalPages: 0, number: 0 });
+            setPageInfo(data.page || { size: currentPageSize, totalElements: 0, totalPages: 0, number: 0 });
           }
         } catch (error) {
           console.error("Error fetching subfunds:", error);
@@ -558,6 +586,7 @@ export function SubfundsCatalog({
     includeInactive,
     includeLiquidating,
     currentPage,
+    currentPageSize,
     sortField,
     sortOrder,
     returnPeriod,
@@ -1268,6 +1297,29 @@ export function SubfundsCatalog({
                 {Math.max(1, pageInfo.totalPages)}
               </strong>
             </span>
+            {/* Desktop Quick Page Size Selector */}
+            <span className="text-slate-300 dark:text-slate-700 hidden lg:inline">•</span>
+            <div className="hidden lg:inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 select-none">
+              <span>{t.catalog.perPage}</span>
+              <div className="inline-flex items-center bg-slate-100 dark:bg-[#030a16] p-0.5 rounded-lg border border-slate-300/80 dark:border-[#0e274d] shadow-2xs">
+                {pageSizeOptions.map((opt) => (
+                  <button
+                    key={opt}
+                    type="button"
+                    onClick={() => handlePageSizeChange(opt)}
+                    aria-pressed={currentPageSize === opt}
+                    className={`px-2 py-0.5 rounded text-[11px] font-semibold transition-all cursor-pointer ${
+                      currentPageSize === opt
+                        ? "bg-[#044CD0] text-white shadow-2xs font-bold"
+                        : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-[#071938]"
+                    }`}
+                    title={`${locale === "en" ? "Show" : "Pokaż"} ${opt} ${locale === "en" ? (viewMode === "grid" ? "cards per page" : "rows per page") : (viewMode === "grid" ? "kafelków na stronę" : "wierszy na stronę")}`}
+                  >
+                    {opt}
+                  </button>
+                ))}
+              </div>
+            </div>
             {isPending && (
               <span className="inline-flex items-center gap-1 text-[#3b82f6]">
                 <RefreshCw className="w-3 h-3 animate-spin" /> {t.common.filtering}
@@ -2190,11 +2242,38 @@ export function SubfundsCatalog({
       )}
 
       {/* Pagination Controls */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-200 dark:border-[#0e274d]">
-        <div className="text-xs text-slate-500 dark:text-slate-400">
-          {t.catalog.displayingPage} <strong className="text-slate-800 dark:text-slate-200">{pageInfo.number + 1}</strong> {t.common.of}{" "}
-          <strong className="text-slate-800 dark:text-slate-200">{Math.max(1, pageInfo.totalPages)}</strong> ({t.catalog.totalItems}{" "}
-          {formatNumber(pageInfo.totalElements, 0)} {t.common.items})
+      <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-200 dark:border-[#0e274d]">
+        <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 text-xs text-slate-500 dark:text-slate-400 w-full md:w-auto justify-between sm:justify-start">
+          <div>
+            {t.catalog.displayingPage} <strong className="text-slate-800 dark:text-slate-200">{pageInfo.number + 1}</strong> {t.common.of}{" "}
+            <strong className="text-slate-800 dark:text-slate-200">{Math.max(1, pageInfo.totalPages)}</strong> ({t.catalog.totalItems}{" "}
+            {formatNumber(pageInfo.totalElements, 0)} {t.common.items})
+          </div>
+
+          {/* Page size selector */}
+          <div className="flex items-center gap-2 border-t sm:border-t-0 sm:border-l border-slate-200 dark:border-[#0e274d] pt-2 sm:pt-0 sm:pl-4 select-none">
+            <span className="text-slate-500 dark:text-slate-400 font-medium whitespace-nowrap">
+              {viewMode === "grid" ? t.catalog.cardsPerPage : t.catalog.rowsPerPage}
+            </span>
+            <div className="inline-flex items-center bg-slate-100 dark:bg-[#030a16] p-0.5 rounded-lg border border-slate-300/80 dark:border-[#0e274d] shadow-2xs">
+              {pageSizeOptions.map((opt) => (
+                <button
+                  key={opt}
+                  type="button"
+                  onClick={() => handlePageSizeChange(opt)}
+                  aria-pressed={currentPageSize === opt}
+                  className={`px-2.5 py-1 rounded-md text-xs font-semibold transition-all cursor-pointer ${
+                    currentPageSize === opt
+                      ? "bg-[#044CD0] text-white shadow-2xs font-bold"
+                      : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-[#071938]"
+                  }`}
+                  title={`${locale === "en" ? "Show" : "Pokaż"} ${opt} ${locale === "en" ? (viewMode === "grid" ? "cards per page" : "rows per page") : (viewMode === "grid" ? "kafelków na stronę" : "wierszy na stronę")}`}
+                >
+                  {opt}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="flex items-center gap-2">

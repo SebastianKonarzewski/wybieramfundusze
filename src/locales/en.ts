@@ -128,6 +128,9 @@ export const en: Translations = {
     backToTop: "Back to top",
     displayingPage: "Showing page",
     totalItems: "total",
+    perPage: "Per page:",
+    cardsPerPage: "Cards per page:",
+    rowsPerPage: "Rows per page:",
     sort: {
       label: "Sort by",
       field: "Sort field",

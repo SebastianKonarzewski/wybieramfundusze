@@ -126,6 +126,9 @@ export const pl = {
     backToTop: "Wróć na górę",
     displayingPage: "Wyświetlanie strony",
     totalItems: "łącznie",
+    perPage: "Na stronę:",
+    cardsPerPage: "Kafelków na stronę:",
+    rowsPerPage: "Wierszy na stronę:",
     sort: {
       label: "Sortowanie",
       field: "Kryterium sortowania",
