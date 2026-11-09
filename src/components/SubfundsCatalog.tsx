@@ -1521,36 +1521,20 @@ export function SubfundsCatalog({
             return (
               <div
                 key={item.subfundId}
-                className="catalog-grid-card group relative bg-white dark:bg-[#051329]/90 hover:bg-slate-50 dark:hover:bg-[#071938] border border-slate-200 dark:border-[#0e274d] hover:border-[#044CD0]/60 rounded-2xl p-4 sm:p-5 transition-all flex flex-col justify-between shadow-xs hover:shadow-md dark:shadow-md dark:hover:shadow-xl"
+                className="catalog-grid-card group relative bg-white dark:bg-[#051329] hover:bg-slate-50/70 dark:hover:bg-[#071938] border border-slate-200 dark:border-[#0e274d] hover:border-[#044CD0]/60 rounded-2xl p-4 sm:p-5 transition-all flex flex-col justify-between shadow-xs hover:shadow-md dark:shadow-md dark:hover:shadow-xl"
               >
                 <div>
-                  {/* Top tags & status */}
+                  {/* Top Bar: Asset Class / Category tag + Status Badge */}
                   <div className="flex items-center justify-between gap-2 mb-2.5">
-                    <div className="flex items-center gap-1.5 flex-wrap min-w-0 leading-normal">
-                      <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-blue-50/80 dark:bg-[#030a16] text-[#044CD0] dark:text-blue-300 border border-blue-200/90 dark:border-[#0e274d] shadow-2xs shrink-0 uppercase tracking-wider leading-none">
-                        {item.name.toUpperCase().includes("ETF") ? "ETF" : item.type}
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[11px] font-semibold bg-slate-100/90 dark:bg-[#030a16] text-slate-700 dark:text-slate-300 border border-slate-200/90 dark:border-[#0e274d] shadow-2xs truncate max-w-[200px]">
+                      <Compass className="w-3 h-3 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
+                      <span className="truncate capitalize">
+                        {item.classification || item.category || (locale === "en" ? "Fund" : "Fundusz")}
                       </span>
-                      {item.companyName && (
-                        <span
-                          title={item.companyName}
-                          className="text-[11px] sm:text-xs text-slate-600 dark:text-slate-300 font-medium truncate max-w-[140px] sm:max-w-[180px] leading-normal"
-                        >
-                          {item.companyName}
-                        </span>
-                      )}
-                      {item.fundName && !item.isFundOnly && item.fundName.trim().toLowerCase() !== item.name.trim().toLowerCase() && (
-                        <>
-                          <span className="text-slate-300 dark:text-slate-600 text-xs select-none">•</span>
-                          <span
-                            title={item.fundName}
-                            className="text-[11px] sm:text-xs text-slate-400 dark:text-slate-400 font-normal truncate max-w-[140px] sm:max-w-[180px] leading-normal"
-                          >
-                            {item.fundName}
-                          </span>
-                        </>
-                      )}
-                    </div>
+                    </span>
+
                     <StatusBadge
+                      compact={true}
                       isActive={item.isActive}
                       isLiquidating={item.isLiquidating}
                       liquidationStartDate={item.liquidationStartDate}
@@ -1561,117 +1545,168 @@ export function SubfundsCatalog({
                   {/* Fund Name */}
                   <Link
                     href={`/fundusze/${item.subfundId}`}
-                    className="block font-bold text-base text-slate-900 dark:text-slate-100 group-hover:text-[#044CD0] dark:group-hover:text-[#60a5fa] transition-colors line-clamp-2 leading-snug mb-3"
+                    title={item.name}
+                    className="block font-bold text-base text-slate-900 dark:text-slate-100 group-hover:text-[#044CD0] dark:group-hover:text-[#60a5fa] transition-colors line-clamp-2 leading-snug break-words mb-1.5"
                   >
                     {item.name}
                   </Link>
 
-                  {/* Category & Classification */}
-                  {(item.classification || item.category) && (
-                    <div className="text-xs text-slate-700 dark:text-slate-300 mb-4 flex items-center gap-1.5 bg-white/80 dark:bg-[#030a16]/60 p-2 rounded-xl border border-blue-200/80 dark:border-[#0e274d]/80 shadow-2xs">
-                      <Compass className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
-                      <span className="truncate capitalize font-medium">
-                        {item.classification}
-                        {item.category ? ` • ${item.category}` : ""}
+                  {/* Managing Entity & Umbrella Fund (TFI + Parasol) */}
+                  <div className="flex items-center gap-1.5 mb-3 leading-normal flex-wrap">
+                    <span className="inline-flex items-center font-bold text-[10px] leading-none bg-blue-50/80 dark:bg-[#030a16] border border-blue-200/80 dark:border-[#0e274d] px-1.5 py-0.5 rounded text-[#044CD0] dark:text-blue-300 shadow-2xs shrink-0 uppercase tracking-wider">
+                      {item.name.toUpperCase().includes("ETF") ? "ETF" : item.type}
+                    </span>
+                    {item.companyName && (
+                      <span
+                        title={item.companyName}
+                        className="text-[11px] sm:text-xs leading-normal font-medium text-slate-600 dark:text-slate-300 truncate max-w-[180px] sm:max-w-[220px]"
+                      >
+                        {item.companyName}
                       </span>
+                    )}
+                    {item.fundName && !item.isFundOnly && item.fundName.trim().toLowerCase() !== item.name.trim().toLowerCase() && (
+                      <>
+                        <span className="text-slate-300 dark:text-slate-600 text-xs select-none">•</span>
+                        <span
+                          title={item.fundName}
+                          className="text-[11px] sm:text-xs leading-normal font-normal text-slate-400 dark:text-slate-400 truncate max-w-[170px] sm:max-w-[220px]"
+                        >
+                          {item.fundName}
+                        </span>
+                      </>
+                    )}
+                  </div>
+
+                  {/* Detailed Category tag if different from classification */}
+                  {item.category && item.classification && item.category.trim().toLowerCase() !== item.classification.trim().toLowerCase() && (
+                    <div
+                      title={item.category}
+                      className="text-[11px] text-slate-500 dark:text-slate-400 mb-3 flex items-center gap-1.5 line-clamp-1"
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#044CD0]/60 shrink-0" />
+                      <span className="truncate">{item.category}</span>
                     </div>
                   )}
 
-                  {/* Metrics preview */}
-                  <div className="grid grid-cols-3 gap-2 pt-3 border-t border-blue-200/80 dark:border-[#0e274d] mb-4 text-xs">
-                    <div>
-                      <span className="text-slate-500 dark:text-slate-400 text-[11px] block truncate">{t.catalog.card.riskProfile}</span>
-                      <RiskBadge level={item.riskLevel} showLabel={false} size="sm" />
-                    </div>
-
-                    <div>
-                      <span className="text-slate-500 dark:text-slate-400 text-[11px] block truncate">{t.catalog.card.ongoingCharge}</span>
-                      <span
-                        className="font-semibold text-slate-800 dark:text-slate-200"
-                        title={t.catalog.table.ongoingFeeTooltip}
-                      >
-                        {formatPercent(item.managementFee)}
-                      </span>
-                      {item.transactionCostsRate !== null && item.transactionCostsRate !== undefined && (
-                        <span
-                          className="block text-[10px] text-slate-500 dark:text-slate-400 leading-tight"
-                          title={t.catalog.table.transactionCostsTooltip}
-                        >
-                          +{formatPercent(item.transactionCostsRate)} tr.
+                  {/* Metrics Box: 3 Key Indicators + Valuation & AUM */}
+                  <div className="bg-slate-50/70 dark:bg-[#030a16]/60 border border-slate-200/70 dark:border-[#0e274d]/70 rounded-xl p-3 mb-4 space-y-2.5">
+                    {/* Top 3 Indicators: Risk, Fee, Return */}
+                    <div className="grid grid-cols-3 gap-2 text-xs">
+                      {/* 1. Risk */}
+                      <div>
+                        <span className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-[11px] block truncate font-medium">
+                          {t.catalog.card.riskProfile}
                         </span>
-                      )}
-                    </div>
-
-                    <div>
-                      <span className="text-slate-500 dark:text-slate-400 text-[11px] block truncate">
-                        {t.catalog.table.returnRate} <span className="font-bold text-[#044CD0] dark:text-[#60a5fa]">({activePeriodLabel})</span>
-                      </span>
-                      {renderReturnBadge(item, returnPeriod)}
-                    </div>
-
-                    {item.latestValuation !== null && item.latestValuation !== undefined && (
-                      <div className="col-span-3 pt-2 flex items-center justify-between text-slate-500 dark:text-slate-400 text-[11px] border-t border-dashed border-blue-100 dark:border-[#0e274d]/80">
-                        <span>{t.catalog.card.latestValuation}</span>
-                        <span className="inline-flex items-baseline gap-1">
-                          <FormattedCurrency
-                            value={item.latestValuation}
-                            currency={item.currency}
-                            valueClassName="font-bold text-slate-900 dark:text-slate-200"
-                            unitClassName="text-[10px] font-medium text-slate-500 dark:text-slate-400"
-                          />
-                          {item.latestValuationDate && (
-                            <span className="text-[10px] text-slate-500 font-normal ml-0.5">
-                              ({formatDate(item.latestValuationDate)})
-                            </span>
-                          )}
-                          {item.currency && item.currency !== "PLN" && item.latestValuationPln && (
-                            <span
-                              className="text-[10px] text-blue-600 dark:text-blue-400 font-medium ml-1"
-                              title={
-                                item.fxRate
-                                  ? t.catalog.fxTooltip
-                                      .replace("{curr}", item.currency)
-                                      .replace("{rate}", formatNumber(item.fxRate, 4))
-                                  : undefined
-                              }
-                            >
-                              (≈ {formatCurrency(item.latestValuationPln, "PLN")})
-                            </span>
-                          )}
-                        </span>
+                        <div className="mt-1">
+                          <RiskBadge level={item.riskLevel} showLabel={false} size="sm" />
+                        </div>
                       </div>
-                    )}
 
-                    {item.netAssets !== null && item.netAssets !== undefined && (
-                      <div className="col-span-3 pt-1.5 flex items-center justify-between text-slate-500 dark:text-slate-400 text-[11px]">
-                        <span>{t.catalog.card.netAssets}</span>
-                        <span className="inline-flex items-baseline gap-1">
-                          <FormattedLargeNumber
-                            value={item.netAssets}
-                            currency={item.currency}
-                            valueClassName="font-bold text-slate-900 dark:text-slate-200"
-                            unitClassName="text-[10px] font-medium text-slate-500 dark:text-slate-400"
-                          />
-                          {item.netAssetsDate && (
-                            <span className="text-[10px] text-slate-500 font-normal ml-0.5">
-                              ({formatDate(item.netAssetsDate)})
-                            </span>
-                          )}
-                          {item.currency && item.currency !== "PLN" && item.netAssetsPln && (
-                            <span
-                              className="text-[10px] text-blue-600 dark:text-blue-400 font-medium ml-1"
-                              title={
-                                item.fxRate
-                                  ? t.catalog.fxTooltip
-                                      .replace("{curr}", item.currency)
-                                      .replace("{rate}", formatNumber(item.fxRate, 4))
-                                  : undefined
-                              }
-                            >
-                              (≈ {formatLargeNumber(item.netAssetsPln, "PLN")})
-                            </span>
-                          )}
+                      {/* 2. Management Fee */}
+                      <div>
+                        <span className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-[11px] block truncate font-medium">
+                          {t.catalog.card.ongoingCharge}
                         </span>
+                        <div className="mt-1">
+                          <span
+                            className="font-bold text-slate-900 dark:text-slate-100 text-xs sm:text-sm"
+                            title={t.catalog.table.ongoingFeeTooltip}
+                          >
+                            {formatPercent(item.managementFee)}
+                          </span>
+                          {item.transactionCostsRate !== null && item.transactionCostsRate !== undefined && (
+                            <span
+                              className="block text-[10px] text-slate-500 dark:text-slate-400 leading-tight mt-0.5"
+                              title={t.catalog.table.transactionCostsTooltip}
+                            >
+                              +{formatPercent(item.transactionCostsRate)} tr.
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* 3. Return Rate */}
+                      <div>
+                        <span className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-[11px] block truncate font-medium">
+                          {locale === "en" ? "Return" : "Wynik"}{" "}
+                          <span className="font-bold text-[#044CD0] dark:text-[#60a5fa]">({activePeriodLabel})</span>
+                        </span>
+                        <div className="mt-1">
+                          {renderReturnBadge(item, returnPeriod)}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Valuation & Net Assets (AUM) */}
+                    {(item.latestValuation !== null || item.netAssets !== null) && (
+                      <div className="border-t border-slate-200/80 dark:border-[#0e274d]/80 pt-2 space-y-1.5 text-[11px]">
+                        {/* Latest Valuation */}
+                        {item.latestValuation !== null && item.latestValuation !== undefined && (
+                          <div className="flex items-center justify-between gap-1 text-slate-500 dark:text-slate-400">
+                            <span className="truncate">{t.catalog.card.latestValuation}</span>
+                            <span className="inline-flex items-baseline gap-1 shrink-0">
+                              <FormattedCurrency
+                                value={item.latestValuation}
+                                currency={item.currency}
+                                valueClassName="font-bold text-slate-900 dark:text-slate-200 text-xs"
+                                unitClassName="text-[10px] font-medium text-slate-500 dark:text-slate-400"
+                              />
+                              {item.latestValuationDate && (
+                                <span className="text-[10px] text-slate-400 dark:text-slate-500 font-normal">
+                                  ({formatDate(item.latestValuationDate)})
+                                </span>
+                              )}
+                              {item.currency && item.currency !== "PLN" && item.latestValuationPln && (
+                                <span
+                                  className="text-[10px] text-blue-600 dark:text-blue-400 font-medium ml-0.5"
+                                  title={
+                                    item.fxRate
+                                      ? t.catalog.fxTooltip
+                                          .replace("{curr}", item.currency)
+                                          .replace("{rate}", formatNumber(item.fxRate, 4))
+                                      : undefined
+                                  }
+                                >
+                                  (≈ {formatCurrency(item.latestValuationPln, "PLN")})
+                                </span>
+                              )}
+                            </span>
+                          </div>
+                        )}
+
+                        {/* Net Assets (AUM) */}
+                        {item.netAssets !== null && item.netAssets !== undefined && (
+                          <div className="flex items-center justify-between gap-1 text-slate-500 dark:text-slate-400">
+                            <span className="truncate">{t.catalog.card.netAssets}</span>
+                            <span className="inline-flex items-baseline gap-1 shrink-0">
+                              <FormattedLargeNumber
+                                value={item.netAssets}
+                                currency={item.currency}
+                                valueClassName="font-bold text-slate-900 dark:text-slate-200 text-xs"
+                                unitClassName="text-[10px] font-medium text-slate-500 dark:text-slate-400"
+                              />
+                              {item.netAssetsDate && (
+                                <span className="text-[10px] text-slate-400 dark:text-slate-500 font-normal">
+                                  ({formatDate(item.netAssetsDate)})
+                                </span>
+                              )}
+                              {item.currency && item.currency !== "PLN" && item.netAssetsPln && (
+                                <span
+                                  className="text-[10px] text-blue-600 dark:text-blue-400 font-medium ml-0.5"
+                                  title={
+                                    item.fxRate
+                                      ? t.catalog.fxTooltip
+                                          .replace("{curr}", item.currency)
+                                          .replace("{rate}", formatNumber(item.fxRate, 4))
+                                      : undefined
+                                  }
+                                >
+                                  (≈ {formatLargeNumber(item.netAssetsPln, "PLN")})
+                                </span>
+                              )}
+                            </span>
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>
@@ -1682,7 +1717,7 @@ export function SubfundsCatalog({
                   <Link
                     href={`/fundusze/${item.subfundId}`}
                     data-component="fund-details-btn"
-                    className="flex-1 text-center py-2 px-3 rounded-xl text-xs font-semibold bg-white hover:bg-blue-50/70 dark:bg-[#030a16] dark:hover:bg-[#071938] text-slate-800 dark:text-slate-200 hover:text-[#044CD0] dark:hover:text-white border border-slate-200 dark:border-[#0e274d] hover:border-blue-300 dark:hover:border-slate-600 transition-all shadow-2xs cursor-pointer"
+                    className="flex-1 h-10 flex items-center justify-center py-2 px-3 rounded-xl text-xs font-semibold bg-white hover:bg-blue-50/70 dark:bg-[#030a16] dark:hover:bg-[#071938] text-slate-800 dark:text-slate-200 hover:text-[#044CD0] dark:hover:text-white border border-slate-200 dark:border-[#0e274d] hover:border-blue-300 dark:hover:border-slate-600 transition-all shadow-2xs cursor-pointer"
                   >
                     {t.catalog.card.fundDetails}
                   </Link>
@@ -1697,7 +1732,7 @@ export function SubfundsCatalog({
                         category: item.category,
                       })
                     }
-                    className={`w-9 h-9 flex items-center justify-center rounded-xl text-xs font-medium border transition-all shadow-2xs shrink-0 cursor-pointer ${
+                    className={`w-10 h-10 flex items-center justify-center rounded-xl text-xs font-medium border transition-all shadow-2xs shrink-0 cursor-pointer ${
                       inCompare
                         ? "bg-[#044CD0] text-white border-[#044CD0] shadow-xs"
                         : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-slate-200 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-blue-300 dark:hover:border-blue-500/50 hover:bg-blue-50/50 dark:hover:bg-[#071938]"
@@ -1718,7 +1753,7 @@ export function SubfundsCatalog({
                         category: item.category,
                       })
                     }
-                    className={`w-9 h-9 flex items-center justify-center rounded-xl text-xs font-medium border transition-all shadow-2xs shrink-0 cursor-pointer ${
+                    className={`w-10 h-10 flex items-center justify-center rounded-xl text-xs font-medium border transition-all shadow-2xs shrink-0 cursor-pointer ${
                       inPortfolio
                         ? "bg-[#044CD0] text-white border-[#044CD0] shadow-xs"
                         : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-slate-200 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-blue-300 dark:hover:border-blue-500/50 hover:bg-blue-50/50 dark:hover:bg-[#071938]"
