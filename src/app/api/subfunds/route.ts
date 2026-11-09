@@ -45,6 +45,12 @@ export async function GET(request: NextRequest) {
     "return3Y,desc",
     "returnYTD,asc",
     "returnYTD,desc",
+    "fee,asc",
+    "fee,desc",
+    "risk,asc",
+    "risk,desc",
+    "valuation,asc",
+    "valuation,desc",
   ];
   const sort = allowedSorts.includes(rawSort) ? rawSort : "name,asc";
   const includeInactive = searchParams.get("includeInactive") === "true";

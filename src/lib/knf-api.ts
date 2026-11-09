@@ -19,6 +19,7 @@ import {
 } from "@/types/knf";
 import subfundsClassifications from "@/data/subfunds-classifications.json";
 import standaloneFundsData from "@/data/standalone-funds.json";
+import subfundsMetrics from "@/data/subfunds-metrics.json";
 
 const BASE_URL = "https://wybieramfundusze-api.knf.gov.pl";
 const DEFAULT_REVALIDATE = 3600; // 1 hour cache
@@ -83,6 +84,49 @@ if (!globalForKnf.knfRuntimeClassifications) {
           type: sf.type,
           isActive: sf.isActive,
           isLiquidating: sf.isLiquidating,
+        });
+      }
+    }
+  }
+
+  // Prepopulate return rates, valuations, fee, and risk from baseline metrics snapshot
+  if (subfundsMetrics && typeof subfundsMetrics === "object") {
+    for (const [idStr, m] of Object.entries(
+      subfundsMetrics as Record<
+        string,
+        {
+          r1m: number | null;
+          r3m: number | null;
+          r1y: number | null;
+          r2y: number | null;
+          r2ya: number | null;
+          r3y?: number | null;
+          r3ya?: number | null;
+          rytd: number | null;
+          v: number | null;
+          vd: string | null;
+          fee?: number | null;
+          risk?: number | null;
+        }
+      >
+    )) {
+      const id = parseInt(idStr, 10);
+      if (!isNaN(id)) {
+        const existing = runtimeClassifications.get(id);
+        runtimeClassifications.set(id, {
+          ...existing,
+          returnRate1M: m.r1m,
+          returnRate3M: m.r3m,
+          returnRate1Y: m.r1y,
+          returnRate2Y: m.r2y,
+          returnRate2YAnn: m.r2ya,
+          returnRate3Y: m.r3y ?? null,
+          returnRate3YAnn: m.r3ya ?? null,
+          returnRateYTD: m.rytd,
+          latestValuation: m.v,
+          latestValuationDate: m.vd,
+          managementFee: m.fee !== undefined && m.fee !== null ? m.fee : existing?.managementFee,
+          riskLevel: m.risk !== undefined && m.risk !== null ? m.risk : existing?.riskLevel,
         });
       }
     }
@@ -844,6 +888,10 @@ export const knfApi = {
         classification: sf.classification || meta?.classification || fallback.classification,
         category: sf.category || meta?.category || fallback.category,
         fullName: sf.fullName || meta?.fullName || sf.name,
+        riskLevel: meta?.riskLevel ?? null,
+        managementFee: meta?.managementFee ?? null,
+        latestValuation: meta?.latestValuation ?? null,
+        latestValuationDate: meta?.latestValuationDate ?? null,
         returnRate1M: meta?.returnRate1M ?? null,
         returnRate3M: meta?.returnRate3M ?? null,
         returnRate1Y: meta?.returnRate1Y ?? null,
@@ -968,6 +1016,18 @@ export const knfApi = {
       filtered.sort((a, b) => (b.returnRateYTD ?? -9999) - (a.returnRateYTD ?? -9999));
     } else if (params?.sort === "returnYTD,asc") {
       filtered.sort((a, b) => (a.returnRateYTD ?? 9999) - (b.returnRateYTD ?? 9999));
+    } else if (params?.sort === "fee,asc") {
+      filtered.sort((a, b) => (a.managementFee ?? 999) - (b.managementFee ?? 999));
+    } else if (params?.sort === "fee,desc") {
+      filtered.sort((a, b) => (b.managementFee ?? -1) - (a.managementFee ?? -1));
+    } else if (params?.sort === "risk,asc") {
+      filtered.sort((a, b) => (a.riskLevel ?? 999) - (b.riskLevel ?? 999));
+    } else if (params?.sort === "risk,desc") {
+      filtered.sort((a, b) => (b.riskLevel ?? -1) - (a.riskLevel ?? -1));
+    } else if (params?.sort === "valuation,asc") {
+      filtered.sort((a, b) => (a.latestValuation ?? 9999999) - (b.latestValuation ?? 9999999));
+    } else if (params?.sort === "valuation,desc") {
+      filtered.sort((a, b) => (b.latestValuation ?? -1) - (a.latestValuation ?? -1));
     }
 
     const totalElements = filtered.length;

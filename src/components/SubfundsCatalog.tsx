@@ -413,7 +413,7 @@ export function SubfundsCatalog({
           } else if (sortField === "return") {
             params.set("sort", `return${returnPeriod},${sortOrder}`);
           } else {
-            params.set("sort", "name,asc");
+            params.set("sort", `${sortField},${sortOrder}`);
           }
           params.set("enriched", "true");
 
@@ -447,8 +447,17 @@ export function SubfundsCatalog({
     returnPeriod,
   ]);
 
+  // Handle period change (resets page to 0 if sorted by return so user sees top performers)
+  const handlePeriodChange = (newPeriod: ReturnPeriod) => {
+    setReturnPeriod(newPeriod);
+    if (sortField === "return") {
+      setCurrentPage(0);
+    }
+  };
+
   // Handle header click sorting
   const handleSort = (field: "name" | "fee" | "risk" | "valuation" | "return") => {
+    setCurrentPage(0);
     if (sortField === field) {
       setSortOrder(sortOrder === "asc" ? "desc" : "asc");
     } else {
@@ -464,6 +473,7 @@ export function SubfundsCatalog({
       "asc" | "desc"
     ];
     if (field && order) {
+      setCurrentPage(0);
       setSortField(field);
       setSortOrder(order);
     }
@@ -974,7 +984,7 @@ export function SubfundsCatalog({
                     <button
                       key={p.id}
                       type="button"
-                      onClick={() => setReturnPeriod(p.id)}
+                      onClick={() => handlePeriodChange(p.id)}
                       aria-pressed={isSelected}
                       className={`px-2 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                         isSelected
@@ -1425,7 +1435,7 @@ export function SubfundsCatalog({
                               type="button"
                               onClick={(e) => {
                                 e.stopPropagation();
-                                setReturnPeriod(p.id);
+                                handlePeriodChange(p.id);
                               }}
                               aria-pressed={isSelected}
                               className={`px-1.5 py-0.5 rounded text-[10px] font-bold transition-all cursor-pointer ${

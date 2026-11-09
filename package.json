@@ -6,7 +6,8 @@
     "dev": "WATCHPACK_POLLING=true next dev --webpack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "sync:metrics": "node scripts/sync-metrics.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",
