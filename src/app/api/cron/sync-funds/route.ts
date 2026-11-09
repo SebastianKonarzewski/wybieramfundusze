@@ -34,8 +34,11 @@ export async function GET(request: NextRequest) {
   const limit = parseInt(searchParams.get("limit") || (mode === "quick" ? "50" : "500"), 10);
   const delayMs = parseInt(searchParams.get("delay") || "50", 10);
 
+  console.log(`[Cron] Sync started at ${new Date().toISOString()} (mode=${mode}, limit=${limit})`);
+
   try {
     const result = await knfApi.syncFunds({ limit, delayMs });
+    console.log(`[Cron] Sync finished successfully: updated ${result.updatedCount} funds in ${result.durationMs}ms`);
 
     // Invalidate Next.js Data Cache so fresh data is served immediately
     try {
