@@ -255,18 +255,14 @@ export function SubfundsCatalog({
     );
   };
 
-  // Sync if initialSearch or initialFundId props change (e.g. from TFI deep link navigation)
+  // Sync if initialSearch or initialFundId props change (e.g. from TFI deep link navigation or navigation back to /)
   useEffect(() => {
-    if (initialSearch || initialFundId) {
-      startTransition(() => {
-        if (initialSearch) setSearchTerm(initialSearch);
-        if (initialFundId) {
-          setFundId(initialFundId);
-          setFundName(initialFundName);
-        }
-        setCurrentPage(0);
-      });
-    }
+    startTransition(() => {
+      setSearchTerm(initialSearch || "");
+      setFundId(initialFundId);
+      setFundName(initialFundName);
+      setCurrentPage(0);
+    });
   }, [initialSearch, initialFundId, initialFundName]);
 
   // Set default view: "table" on full desktop (>=1280px), "grid" on mobile, tablet & intermediate (<1280px)
@@ -420,6 +416,19 @@ export function SubfundsCatalog({
     (includeInactive ? 1 : 0) +
     (includeLiquidating ? 1 : 0);
 
+  const clearUmbrellaFundFilter = () => {
+    setFundId(undefined);
+    setFundName(undefined);
+    setCurrentPage(0);
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      url.searchParams.delete("fundId");
+      url.searchParams.delete("fundName");
+      const newQuery = url.searchParams.toString();
+      window.history.replaceState(null, "", url.pathname + (newQuery ? `?${newQuery}` : ""));
+    }
+  };
+
   const resetAllFilters = () => {
     setSearchTerm("");
     setFundId(undefined);
@@ -431,6 +440,14 @@ export function SubfundsCatalog({
     setIncludeInactive(false);
     setIncludeLiquidating(false);
     setCurrentPage(0);
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      url.searchParams.delete("fundId");
+      url.searchParams.delete("fundName");
+      url.searchParams.delete("search");
+      const newQuery = url.searchParams.toString();
+      window.history.replaceState(null, "", url.pathname + (newQuery ? `?${newQuery}` : ""));
+    }
   };
 
   // Fetch data on filter changes
@@ -1194,11 +1211,7 @@ export function SubfundsCatalog({
             {fundId && (
               <button
                 type="button"
-                onClick={() => {
-                  setFundId(undefined);
-                  setFundName(undefined);
-                  setCurrentPage(0);
-                }}
+                onClick={clearUmbrellaFundFilter}
                 className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
                 title={`Usuń: ${fundName || `Parasol ID ${fundId}`}`}
               >
