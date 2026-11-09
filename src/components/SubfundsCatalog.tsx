@@ -54,10 +54,10 @@ export const RETURN_PERIODS: {
   fullPl: string;
   fullEn: string;
 }[] = [
-  { id: "1M", labelPl: "1M", labelEn: "1M", fullPl: "1 MIESIĄC", fullEn: "1 MONTH" },
-  { id: "3M", labelPl: "3M", labelEn: "3M", fullPl: "3 MIESIĄCE", fullEn: "3 MONTHS" },
-  { id: "1Y", labelPl: "12M", labelEn: "12M", fullPl: "12 MIESIĘCY", fullEn: "12 MONTHS" },
-  { id: "2Y", labelPl: "24M", labelEn: "24M", fullPl: "24 MIESIĄCE", fullEn: "24 MONTHS" },
+  { id: "1M", labelPl: "1M", labelEn: "1M", fullPl: "1M", fullEn: "1M" },
+  { id: "3M", labelPl: "3M", labelEn: "3M", fullPl: "3M", fullEn: "3M" },
+  { id: "1Y", labelPl: "12M", labelEn: "12M", fullPl: "12M", fullEn: "12M" },
+  { id: "2Y", labelPl: "24M", labelEn: "24M", fullPl: "24M", fullEn: "24M" },
   { id: "YTD", labelPl: "YTD", labelEn: "YTD", fullPl: "YTD", fullEn: "YTD" },
 ];
 
@@ -1304,18 +1304,14 @@ export function SubfundsCatalog({
                       <span className="text-slate-500 dark:text-slate-400 text-[11px] block truncate">{t.catalog.card.ongoingCharge}</span>
                       <span
                         className="font-semibold text-slate-800 dark:text-slate-200"
-                        title={
-                          item.managementFee !== null && item.managementFee !== undefined
-                            ? t.catalog.table.ongoingFeeTooltip.replace("{rate}", formatPercent(item.managementFee))
-                            : undefined
-                        }
+                        title={t.catalog.table.ongoingFeeTooltip}
                       >
                         {formatPercent(item.managementFee)}
                       </span>
                       {item.transactionCostsRate !== null && item.transactionCostsRate !== undefined && (
                         <span
                           className="block text-[10px] text-slate-500 dark:text-slate-400 leading-tight"
-                          title={t.catalog.table.transactionCostsTooltip.replace("{rate}", formatPercent(item.transactionCostsRate))}
+                          title={t.catalog.table.transactionCostsTooltip}
                         >
                           +{formatPercent(item.transactionCostsRate)} tr.
                         </span>
@@ -1604,18 +1600,14 @@ export function SubfundsCatalog({
                       <td className="py-2.5 px-2 sm:px-2.5 whitespace-nowrap">
                         <div
                           className="font-medium text-slate-800 dark:text-slate-200 text-xs sm:text-sm leading-tight"
-                          title={
-                            item.managementFee !== null && item.managementFee !== undefined
-                              ? t.catalog.table.ongoingFeeTooltip.replace("{rate}", formatPercent(item.managementFee))
-                              : undefined
-                          }
+                          title={t.catalog.table.ongoingFeeTooltip}
                         >
                           {formatPercent(item.managementFee)}
                         </div>
                         {item.transactionCostsRate !== null && item.transactionCostsRate !== undefined && (
                           <div
                             className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 whitespace-nowrap leading-tight"
-                            title={t.catalog.table.transactionCostsTooltip.replace("{rate}", formatPercent(item.transactionCostsRate))}
+                            title={t.catalog.table.transactionCostsTooltip}
                           >
                             +{formatPercent(item.transactionCostsRate)} tr.
                           </div>
