@@ -888,27 +888,48 @@ export const knfApi = {
       fundType: activeFundTypes.length === 1 ? activeFundTypes[0] : undefined,
       includeInactive: params?.includeInactive,
       includeLiquidating: params?.includeLiquidating,
-      search: params?.search,
       page: 0,
       size: 2000,
       sort: params?.sort?.startsWith("name") ? params.sort : "name,asc",
     });
 
+    let subfundSource = listRes.content;
+    // Fallback to static snapshot if KNF API returned 0 items (e.g. offline, rate limited, DNS error)
+    if (subfundSource.length === 0 && subfundsClassifications && typeof subfundsClassifications === "object") {
+      subfundSource = Object.entries(
+        subfundsClassifications as Record<string, { c: string; cat: string; fn: string; n?: string; t?: string }>
+      ).map(([idStr, meta]) => {
+        const id = parseInt(idStr, 10);
+        const runtime = runtimeClassifications.get(id);
+        const derivedName = meta.fn.replace(/^Subfundusz\s+/i, "");
+        return {
+          subfundId: id,
+          fundId: 0,
+          name: runtime?.name || derivedName,
+          fullName: runtime?.fullName || meta.fn,
+          classification: runtime?.classification || meta.c,
+          category: runtime?.category || meta.cat,
+          type: runtime?.type || meta.t || "FIO",
+          isActive: runtime?.isActive ?? true,
+          isLiquidating: runtime?.isLiquidating ?? false,
+          nationalCode: "",
+          startDate: null,
+          liquidationStartDate: null,
+          liquidationEndDate: null,
+          lastValuationDate: null,
+        } as unknown as KNFSubfund;
+      });
+    }
+
     // Exclude subfunds with no public valuations in API
-    const validSubfunds = listRes.content.filter((sf) => !UNQUOTED_SUBFUND_IDS.has(sf.subfundId));
+    const validSubfunds = subfundSource.filter((sf) => !UNQUOTED_SUBFUND_IDS.has(sf.subfundId));
 
     // Prepare standalone funds if general query (no specific umbrella fundId specified)
     let standalonePool: KNFSubfund[] = [];
-    if (!params?.fundId) {
-      const sTerm = (params?.search || "").toLowerCase().trim();
-      standalonePool = (standaloneFundsData as unknown as KNFSubfund[]).filter((f) => {
-        if (!sTerm) return true;
-        return (
-          (f.name || "").toLowerCase().includes(sTerm) ||
-          (f.fullName || "").toLowerCase().includes(sTerm) ||
-          (f.nationalCode || "").toLowerCase().includes(sTerm)
-        );
-      });
+    if (!params?.fundId && Array.isArray(standaloneFundsData)) {
+      standalonePool = (standaloneFundsData as unknown as KNFSubfund[]).filter(
+        (sf) => sf.subfundId && !UNQUOTED_SUBFUND_IDS.has(sf.subfundId)
+      );
     }
 
     const combinedPool = [...validSubfunds, ...standalonePool];
@@ -938,6 +959,26 @@ export const knfApi = {
         returnRateYTD: meta?.returnRateYTD ?? null,
       };
     });
+
+    // Filter by search terms across name, fullName, nationalCode, classification, category, type
+    if (params?.search && params.search.trim()) {
+      const searchTerms = params.search.toLowerCase().trim().split(/\s+/).filter(Boolean);
+      filtered = filtered.filter((sf) => {
+        const haystack = [
+          sf.name,
+          sf.fullName,
+          sf.nationalCode,
+          sf.classification,
+          sf.category,
+          sf.type,
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+
+        return searchTerms.every((term) => haystack.includes(term));
+      });
+    }
 
     // Filter by multiple fund types if selected
     if (activeFundTypes.length > 0) {
