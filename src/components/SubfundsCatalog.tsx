@@ -1414,7 +1414,7 @@ export function SubfundsCatalog({
                           )}
                           {item.currency && item.currency !== "PLN" && item.latestValuationPln && (
                             <span
-                              className="text-[10px] text-blue-600 dark:text-blue-400 font-medium ml-1 cursor-help"
+                              className="text-[10px] text-blue-600 dark:text-blue-400 font-medium ml-1"
                               title={`Wycena w PLN wg kursu NBP: ${formatCurrency(item.latestValuationPln, "PLN")}`}
                             >
                               (≈ {formatCurrency(item.latestValuationPln, "PLN")})
@@ -1441,7 +1441,7 @@ export function SubfundsCatalog({
                           )}
                           {item.currency && item.currency !== "PLN" && item.netAssetsPln && (
                             <span
-                              className="text-[10px] text-blue-600 dark:text-blue-400 font-medium ml-1 cursor-help"
+                              className="text-[10px] text-blue-600 dark:text-blue-400 font-medium ml-1"
                               title={`Aktywa w PLN wg kursu NBP: ${formatCurrency(item.netAssetsPln, "PLN")}`}
                             >
                               (≈ {formatLargeNumber(item.netAssetsPln, "PLN")})
@@ -1725,7 +1725,7 @@ export function SubfundsCatalog({
                             />
                             {item.currency && item.currency !== "PLN" && item.latestValuationPln && (
                               <div
-                                className="text-[10px] text-blue-600 dark:text-blue-400 font-medium cursor-help"
+                                className="text-[10px] text-blue-600 dark:text-blue-400 font-medium"
                                 title={`Wycena w PLN wg kursu NBP: ${formatCurrency(item.latestValuationPln, "PLN")}`}
                               >
                                 ≈ {formatCurrency(item.latestValuationPln, "PLN")}
@@ -1752,7 +1752,7 @@ export function SubfundsCatalog({
                             />
                             {item.currency && item.currency !== "PLN" && item.netAssetsPln && (
                               <div
-                                className="text-[10px] text-blue-600 dark:text-blue-400 font-medium cursor-help"
+                                className="text-[10px] text-blue-600 dark:text-blue-400 font-medium"
                                 title={`Aktywa w PLN wg kursu NBP: ${formatCurrency(item.netAssetsPln, "PLN")}`}
                               >
                                 ≈ {formatLargeNumber(item.netAssetsPln, "PLN")}
