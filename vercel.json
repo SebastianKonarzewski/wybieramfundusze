@@ -1,8 +1,17 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "crons": [
     {
       "path": "/api/cron/sync-funds?mode=quick",
       "schedule": "0 4 * * *"
     }
-  ]
+  ],
+  "schedules": {
+    "sync-funds": {
+      "path": "/api/cron/sync-funds?mode=quick",
+      "schedule": "0 4 * * *",
+      "timezone": "Europe/Warsaw",
+      "requestMethod": "GET"
+    }
+  }
 }
