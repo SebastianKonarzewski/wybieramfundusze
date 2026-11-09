@@ -1361,13 +1361,13 @@ export function SubfundsCatalog({
             </span>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm min-w-[840px] border-collapse bg-transparent">
+            <table className="w-full text-left text-sm min-w-[720px] lg:min-w-0 border-collapse bg-transparent">
               <thead className="bg-slate-50 dark:bg-[#030a16] text-xs uppercase tracking-wider text-slate-600 dark:text-slate-400 border-b border-slate-200 dark:border-[#0e274d]">
                 <tr>
-                  <th className="py-3.5 px-3 sm:px-4 font-semibold whitespace-nowrap">{t.catalog.table.typeCode}</th>
+                  <th className="py-2.5 px-2 sm:px-2.5 font-semibold whitespace-nowrap">{t.catalog.table.typeCode}</th>
                   <th
                     onClick={() => handleSort("name")}
-                    className="py-3.5 px-3 sm:px-4 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group whitespace-nowrap"
+                    className="py-2.5 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group whitespace-nowrap"
                   >
                     <div className="flex items-center gap-1.5">
                       <span>{t.catalog.table.name}</span>
@@ -1378,11 +1378,11 @@ export function SubfundsCatalog({
                       )}
                     </div>
                   </th>
-                  <th className="py-3.5 px-3 sm:px-4 font-semibold whitespace-nowrap">{t.catalog.table.assetClass}</th>
-                  <th className="py-3.5 px-3 sm:px-4 font-semibold whitespace-nowrap">{t.catalog.table.status}</th>
+                  <th className="py-2.5 px-2 sm:px-2.5 font-semibold whitespace-nowrap">{t.catalog.table.assetClass}</th>
+                  <th className="py-2.5 px-1.5 sm:px-2 font-semibold whitespace-nowrap text-center w-[52px]">{t.catalog.table.status}</th>
                   <th
                     onClick={() => handleSort("risk")}
-                    className="py-3.5 px-3 sm:px-4 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group whitespace-nowrap"
+                    className="py-2.5 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group whitespace-nowrap"
                   >
                     <div className="flex items-center gap-1.5">
                       <span>{t.catalog.table.risk}</span>
@@ -1395,7 +1395,7 @@ export function SubfundsCatalog({
                   </th>
                   <th
                     onClick={() => handleSort("fee")}
-                    className="py-3.5 px-3 sm:px-4 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group whitespace-nowrap"
+                    className="py-2.5 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group whitespace-nowrap"
                   >
                     <div className="flex items-center gap-1.5">
                       <span>{t.catalog.table.fee}</span>
@@ -1407,9 +1407,9 @@ export function SubfundsCatalog({
                     </div>
                   </th>
                   <th
-                    className="py-3.5 px-3 sm:px-4 font-semibold whitespace-nowrap select-none"
+                    className="py-2.5 px-2 sm:px-2.5 font-semibold whitespace-nowrap select-none"
                   >
-                    <div className="flex flex-col gap-1.5">
+                    <div className="flex flex-col gap-1">
                       <div
                         onClick={() => handleSort("return")}
                         className="flex items-center gap-1.5 cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 group"
@@ -1453,7 +1453,7 @@ export function SubfundsCatalog({
                   </th>
                   <th
                     onClick={() => handleSort("valuation")}
-                    className="py-3.5 px-3 sm:px-4 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group whitespace-nowrap"
+                    className="py-2.5 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group whitespace-nowrap"
                   >
                     <div className="flex items-center gap-1.5">
                       <span>{t.catalog.table.valuation}</span>
@@ -1464,7 +1464,7 @@ export function SubfundsCatalog({
                       )}
                     </div>
                   </th>
-                  <th className="py-3.5 px-3 sm:px-4 text-right font-semibold whitespace-nowrap">{t.catalog.table.compare}</th>
+                  <th className="py-2.5 px-2 sm:px-2.5 text-right font-semibold whitespace-nowrap">{t.catalog.table.compare}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-[#0e274d]/70 text-slate-800 dark:text-slate-300">
@@ -1477,53 +1477,58 @@ export function SubfundsCatalog({
                       key={item.subfundId}
                       className="bg-white dark:bg-transparent hover:bg-slate-50 dark:hover:bg-[#071938]/60 transition-colors group"
                     >
-                      <td className="py-3 px-4 whitespace-nowrap">
-                        <span className="font-bold text-xs bg-white dark:bg-[#030a16] border border-blue-200 dark:border-[#0e274d] px-2 py-0.5 rounded text-[#044CD0] dark:text-blue-300 shadow-2xs">
+                      <td className="py-2.5 px-2 sm:px-2.5 whitespace-nowrap">
+                        <span className="font-bold text-xs bg-white dark:bg-[#030a16] border border-blue-200 dark:border-[#0e274d] px-1.5 py-0.5 rounded text-[#044CD0] dark:text-blue-300 shadow-2xs">
                           {item.name.toUpperCase().includes("ETF") ? "ETF" : item.type}
                         </span>
                         <div className="text-[10px] text-slate-500 font-mono mt-0.5">
                           {item.nationalCode}
                         </div>
                       </td>
-                      <td className="py-3 px-4">
+                      <td className="py-2.5 px-2 sm:px-2.5 min-w-[150px] max-w-[220px] xl:max-w-xs">
                         <Link
                           href={`/fundusze/${item.subfundId}`}
-                          className="font-semibold text-slate-900 dark:text-slate-100 hover:text-[#044CD0] dark:hover:text-[#60a5fa] transition-colors block line-clamp-1"
+                          title={item.name}
+                          className="font-semibold text-slate-900 dark:text-slate-100 hover:text-[#044CD0] dark:hover:text-[#60a5fa] transition-colors block truncate"
                         >
                           {item.name}
                         </Link>
                       </td>
-                      <td className="py-3 px-4 whitespace-nowrap">
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-white dark:bg-[#030a16] border border-blue-200 dark:border-[#0e274d] text-slate-700 dark:text-slate-300 capitalize shadow-2xs">
+                      <td className="py-2.5 px-2 sm:px-2.5 whitespace-nowrap">
+                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-xs font-medium bg-white dark:bg-[#030a16] border border-blue-200 dark:border-[#0e274d] text-slate-700 dark:text-slate-300 capitalize shadow-2xs">
                           {item.classification || "—"}
                         </span>
                         {item.category && (
-                          <div className="text-[11px] text-slate-500 mt-0.5">
+                          <div
+                            title={item.category}
+                            className="text-[11px] text-slate-500 mt-0.5 max-w-[130px] truncate"
+                          >
                             {item.category}
                           </div>
                         )}
                       </td>
-                      <td className="py-3 px-4 whitespace-nowrap">
+                      <td className="py-2 px-1.5 sm:px-2 text-center whitespace-nowrap w-[52px]">
                         <StatusBadge
+                          compact={true}
                           isActive={item.isActive}
                           isLiquidating={item.isLiquidating}
                           liquidationStartDate={item.liquidationStartDate}
                           liquidationEndDate={item.liquidationEndDate}
                         />
                       </td>
-                      <td className="py-3 px-4 whitespace-nowrap">
-                        <RiskBadge level={item.riskLevel} showLabel={false} size="sm" />
+                      <td className="py-2.5 px-2 sm:px-2.5 whitespace-nowrap">
+                        <RiskBadge level={item.riskLevel} showLabel={false} showSriPrefix={false} size="sm" />
                       </td>
-                      <td className="py-3 px-4 whitespace-nowrap font-medium text-slate-800 dark:text-slate-200">
+                      <td className="py-2.5 px-2 sm:px-2.5 whitespace-nowrap font-medium text-slate-800 dark:text-slate-200 text-xs sm:text-sm">
                         {formatPercent(item.managementFee)}
                       </td>
-                      <td className="py-3 px-4 whitespace-nowrap">
+                      <td className="py-2.5 px-2 sm:px-2.5 whitespace-nowrap">
                         {renderReturnBadge(item, returnPeriod)}
                       </td>
-                      <td className="py-3 px-4 whitespace-nowrap">
+                      <td className="py-2.5 px-2 sm:px-2.5 whitespace-nowrap">
                         {item.latestValuation ? (
                           <div>
-                            <span className="font-bold text-slate-900 dark:text-slate-200">
+                            <span className="font-bold text-slate-900 dark:text-slate-200 text-xs sm:text-sm">
                               {formatCurrency(item.latestValuation)}
                             </span>
                             {item.latestValuationDate && (
@@ -1536,8 +1541,8 @@ export function SubfundsCatalog({
                           <span className="text-slate-400 dark:text-slate-600">—</span>
                         )}
                       </td>
-                      <td className="py-3 px-4 text-right whitespace-nowrap">
-                        <div className="flex items-center justify-end gap-2">
+                      <td className="py-2.5 px-2 sm:px-2.5 text-right whitespace-nowrap">
+                        <div className="flex items-center justify-end gap-1.5">
                           <button
                             onClick={() =>
                               togglePortfolioFund({
@@ -1577,7 +1582,7 @@ export function SubfundsCatalog({
                           <Link
                             href={`/fundusze/${item.subfundId}`}
                             data-component="fund-details-btn"
-                            className="px-2.5 py-1 text-xs rounded-lg bg-white hover:bg-blue-50 dark:bg-[#030a16] dark:hover:bg-[#071938] border border-blue-200 dark:border-[#0e274d] text-slate-700 dark:text-slate-200 font-medium transition-colors shadow-2xs"
+                            className="px-2 py-1 text-xs rounded-lg bg-white hover:bg-blue-50 dark:bg-[#030a16] dark:hover:bg-[#071938] border border-blue-200 dark:border-[#0e274d] text-slate-700 dark:text-slate-200 font-medium transition-colors shadow-2xs"
                           >
                             {t.common.profile}
                           </Link>

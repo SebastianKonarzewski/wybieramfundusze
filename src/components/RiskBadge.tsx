@@ -7,9 +7,15 @@ interface RiskBadgeProps {
   level: number | null | undefined;
   showLabel?: boolean;
   size?: "sm" | "md" | "lg";
+  showSriPrefix?: boolean;
 }
 
-export function RiskBadge({ level, showLabel = true, size = "md" }: RiskBadgeProps) {
+export function RiskBadge({
+  level,
+  showLabel = true,
+  size = "md",
+  showSriPrefix = true,
+}: RiskBadgeProps) {
   const { t } = useTranslation();
 
   if (level === null || level === undefined || level < 1 || level > 7) {
@@ -85,8 +91,8 @@ export function RiskBadge({ level, showLabel = true, size = "md" }: RiskBadgePro
   return (
     <div
       data-component="risk-badge"
-      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border font-semibold ${info.bg} ${
-        size === "sm" ? "text-xs" : size === "lg" ? "text-sm py-1.5 px-3" : "text-xs"
+      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md border font-semibold ${info.bg} ${
+        size === "sm" ? "text-xs" : size === "lg" ? "text-sm py-1.5 px-3" : "text-xs py-1 px-2.5"
       }`}
       title={tooltipText}
     >
@@ -101,7 +107,9 @@ export function RiskBadge({ level, showLabel = true, size = "md" }: RiskBadgePro
           />
         ))}
       </div>
-      <span className="font-extrabold ml-1 tracking-tight">SRI {level}/7</span>
+      <span className="font-extrabold ml-1 tracking-tight">
+        {showSriPrefix ? "SRI " : ""}{level}/7
+      </span>
       {showLabel && <span className="opacity-90 text-[10px] hidden sm:inline">({info.desc})</span>}
     </div>
   );
