@@ -34,7 +34,7 @@ export function KidDetailsCard({ kid }: { kid?: KNFKeyInformationDetail | null }
             </span>
           </div>
           <div className="text-sm font-semibold text-slate-200">
-            {kid.filename || "KID Subfunduszu"}
+            {kid.filename || "KID Funduszu"}
           </div>
           {kid.unit && (
             <div className="text-xs text-slate-400 mt-0.5">

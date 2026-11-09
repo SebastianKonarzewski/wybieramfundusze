@@ -16,14 +16,14 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id } = await params;
   const subfundId = parseInt(id, 10);
-  if (isNaN(subfundId)) return { title: "Subfundusz" };
+  if (isNaN(subfundId)) return { title: "Fundusz" };
 
   const subfund = await knfApi.getSubfund(subfundId);
-  if (!subfund) return { title: "Subfundusz" };
+  if (!subfund) return { title: "Fundusz" };
 
   return {
     title: subfund.name,
-    description: `Profil i wyceny subfunduszu ${subfund.name} (${subfund.type}) w rejestrze UKNF.`,
+    description: `Profil i wyceny funduszu ${subfund.name} (${subfund.type}) w rejestrze UKNF.`,
   };
 }
 
