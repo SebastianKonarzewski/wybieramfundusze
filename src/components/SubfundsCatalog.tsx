@@ -1733,10 +1733,11 @@ export function SubfundsCatalog({
                         category: item.category,
                       })
                     }
-                    className={`w-10 h-10 flex items-center justify-center rounded-xl text-xs font-medium border transition-all shadow-2xs shrink-0 cursor-pointer ${
+                    aria-pressed={inCompare}
+                    className={`table-action-btn w-10 h-10 flex items-center justify-center rounded-xl text-xs font-medium border transition-all shadow-2xs shrink-0 cursor-pointer ${
                       inCompare
                         ? "bg-[#044CD0] text-white border-[#044CD0] shadow-xs"
-                        : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-slate-200 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-blue-300 dark:hover:border-blue-500/50 hover:bg-blue-50/50 dark:hover:bg-[#071938]"
+                        : "bg-white dark:bg-[#030a16] text-slate-700 dark:text-slate-400 border-slate-200 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-[#044CD0] dark:hover:border-blue-500/50 hover:bg-blue-50/70 dark:hover:bg-[#071938]"
                     }`}
                     title={inCompare ? t.catalog.card.removeFromCompare : t.catalog.card.addToCompare}
                     aria-label={inCompare ? t.catalog.card.removeFromCompare : t.catalog.card.addToCompare}
@@ -1754,10 +1755,11 @@ export function SubfundsCatalog({
                         category: item.category,
                       })
                     }
-                    className={`w-10 h-10 flex items-center justify-center rounded-xl text-xs font-medium border transition-all shadow-2xs shrink-0 cursor-pointer ${
+                    aria-pressed={inPortfolio}
+                    className={`table-action-btn w-10 h-10 flex items-center justify-center rounded-xl text-xs font-medium border transition-all shadow-2xs shrink-0 cursor-pointer ${
                       inPortfolio
                         ? "bg-[#044CD0] text-white border-[#044CD0] shadow-xs"
-                        : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-slate-200 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-blue-300 dark:hover:border-blue-500/50 hover:bg-blue-50/50 dark:hover:bg-[#071938]"
+                        : "bg-white dark:bg-[#030a16] text-slate-700 dark:text-slate-400 border-slate-200 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-[#044CD0] dark:hover:border-blue-500/50 hover:bg-blue-50/70 dark:hover:bg-[#071938]"
                     }`}
                     title={inPortfolio ? t.portfolio.removeFromPortfolio : t.portfolio.addToPortfolio}
                     aria-label={inPortfolio ? t.portfolio.removeFromPortfolio : t.portfolio.addToPortfolio}
@@ -2060,10 +2062,11 @@ export function SubfundsCatalog({
                                 category: item.category,
                               })
                             }
-                            className={`w-9 h-9 flex items-center justify-center rounded-xl border text-xs transition-all shadow-2xs cursor-pointer ${
+                            aria-pressed={inCompare}
+                            className={`table-action-btn w-9 h-9 flex items-center justify-center rounded-xl border text-xs transition-all shadow-2xs cursor-pointer ${
                               inCompare
                                 ? "bg-[#044CD0] text-white border-[#044CD0] shadow-xs"
-                                : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-slate-200 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-blue-300 dark:hover:border-blue-500/50 hover:bg-blue-50/50 dark:hover:bg-[#071938]"
+                                : "bg-white dark:bg-[#030a16] text-slate-700 dark:text-slate-400 border-slate-200 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-[#044CD0] dark:hover:border-blue-500/50 hover:bg-blue-50/70 dark:hover:bg-[#071938]"
                             }`}
                             title={inCompare ? t.catalog.card.removeFromCompare : t.common.compare}
                             aria-label={inCompare ? t.catalog.card.removeFromCompare : t.common.compare}
@@ -2080,10 +2083,11 @@ export function SubfundsCatalog({
                                 category: item.category,
                               })
                             }
-                            className={`w-9 h-9 flex items-center justify-center rounded-xl border text-xs transition-all shadow-2xs cursor-pointer ${
+                            aria-pressed={inPortfolio}
+                            className={`table-action-btn w-9 h-9 flex items-center justify-center rounded-xl border text-xs transition-all shadow-2xs cursor-pointer ${
                               inPortfolio
                                 ? "bg-[#044CD0] text-white border-[#044CD0] shadow-xs"
-                                : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-slate-200 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-blue-300 dark:hover:border-blue-500/50 hover:bg-blue-50/50 dark:hover:bg-[#071938]"
+                                : "bg-white dark:bg-[#030a16] text-slate-700 dark:text-slate-400 border-slate-200 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-[#044CD0] dark:hover:border-blue-500/50 hover:bg-blue-50/70 dark:hover:bg-[#071938]"
                             }`}
                             title={inPortfolio ? t.portfolio.removeFromPortfolio : t.portfolio.addToPortfolio}
                             aria-label={inPortfolio ? t.portfolio.removeFromPortfolio : t.portfolio.addToPortfolio}
@@ -2093,7 +2097,7 @@ export function SubfundsCatalog({
                           <Link
                             href={`/fundusze/${item.subfundId}`}
                             data-component="fund-details-btn"
-                            className="w-9 h-9 flex items-center justify-center rounded-xl bg-white hover:bg-blue-50/70 dark:bg-[#030a16] dark:hover:bg-[#071938] border border-slate-200 dark:border-[#0e274d] text-slate-600 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-blue-300 dark:hover:border-blue-500/50 transition-all shadow-2xs cursor-pointer"
+                            className="table-action-btn w-9 h-9 flex items-center justify-center rounded-xl bg-white hover:bg-blue-50/70 dark:bg-[#030a16] dark:hover:bg-[#071938] border border-slate-200 dark:border-[#0e274d] text-slate-700 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-[#044CD0] dark:hover:border-blue-500/50 transition-all shadow-2xs cursor-pointer"
                             title={t.common.profile}
                             aria-label={t.common.profile}
                           >

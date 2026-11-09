@@ -513,17 +513,31 @@ html.light:not(.high-contrast) [class*="bg-[#044CD0]"]:not([class*="/20"]):not([
   color: #ffffff !important;
 }
 
-/* Fund details / profile button in card and table view */
+/* Action buttons (Compare, Portfolio, Profile/Details) in table and card view in light mode */
+html.light:not(.high-contrast) .table-action-btn:not([aria-pressed="true"]),
 html.light:not(.high-contrast) [data-component="fund-details-btn"] {
   background-color: #ffffff !important;
-  color: #1e293b !important;
-  border-color: #bfdbfe !important;
+  color: #334155 !important;
+  border-color: #e2e8f0 !important;
 }
 
+html.light:not(.high-contrast) .table-action-btn:not([aria-pressed="true"]) svg,
+html.light:not(.high-contrast) [data-component="fund-details-btn"] svg {
+  color: #334155 !important;
+  stroke: #334155 !important;
+}
+
+html.light:not(.high-contrast) .table-action-btn:not([aria-pressed="true"]):hover,
 html.light:not(.high-contrast) [data-component="fund-details-btn"]:hover {
   background-color: #eff6ff !important;
   color: #044CD0 !important;
-  border-color: #60a5fa !important;
+  border-color: #044CD0 !important;
+}
+
+html.light:not(.high-contrast) .table-action-btn:not([aria-pressed="true"]):hover svg,
+html.light:not(.high-contrast) [data-component="fund-details-btn"]:hover svg {
+  color: #044CD0 !important;
+  stroke: #044CD0 !important;
 }
 
 html.light:not(.high-contrast) [class*="bg-[#033eb0]"] {
