@@ -56,6 +56,11 @@ if (!globalForKnf.knfSubfundDetailCache) {
 const runtimeClassifications =
   globalForKnf.knfRuntimeClassifications ?? new Map<number, RuntimeSubfundMeta>();
 if (!globalForKnf.knfRuntimeClassifications) {
+  globalForKnf.knfRuntimeClassifications = runtimeClassifications;
+}
+
+// Ensure classifications and metrics are populated on initialization and hot-reloads
+function ensureClassificationsPopulated() {
   // Prepopulate from static classifications JSON
   if (subfundsClassifications && typeof subfundsClassifications === "object") {
     for (const [idStr, meta] of Object.entries(
@@ -63,11 +68,15 @@ if (!globalForKnf.knfRuntimeClassifications) {
     )) {
       const id = parseInt(idStr, 10);
       if (!isNaN(id)) {
-        runtimeClassifications.set(id, {
-          classification: meta.c,
-          category: meta.cat,
-          fullName: meta.fn,
-        });
+        const existing = runtimeClassifications.get(id);
+        if (!existing || !existing.classification) {
+          runtimeClassifications.set(id, {
+            ...existing,
+            classification: existing?.classification || meta.c,
+            category: existing?.category || meta.cat,
+            fullName: existing?.fullName || meta.fn,
+          });
+        }
       }
     }
   }
@@ -76,15 +85,19 @@ if (!globalForKnf.knfRuntimeClassifications) {
   if (Array.isArray(standaloneFundsData)) {
     for (const sf of standaloneFundsData as unknown as KNFSubfund[]) {
       if (sf.subfundId) {
-        runtimeClassifications.set(sf.subfundId, {
-          classification: sf.classification || "",
-          category: sf.category || "",
-          fullName: sf.fullName || sf.name || "",
-          name: sf.name,
-          type: sf.type,
-          isActive: sf.isActive,
-          isLiquidating: sf.isLiquidating,
-        });
+        const existing = runtimeClassifications.get(sf.subfundId);
+        if (!existing || !existing.name) {
+          runtimeClassifications.set(sf.subfundId, {
+            ...existing,
+            classification: existing?.classification || sf.classification || "",
+            category: existing?.category || sf.category || "",
+            fullName: existing?.fullName || sf.fullName || sf.name || "",
+            name: existing?.name || sf.name,
+            type: existing?.type || sf.type,
+            isActive: existing?.isActive ?? sf.isActive,
+            isLiquidating: existing?.isLiquidating ?? sf.isLiquidating,
+          });
+        }
       }
     }
   }
@@ -113,27 +126,31 @@ if (!globalForKnf.knfRuntimeClassifications) {
       const id = parseInt(idStr, 10);
       if (!isNaN(id)) {
         const existing = runtimeClassifications.get(id);
-        runtimeClassifications.set(id, {
-          ...existing,
-          returnRate1M: m.r1m,
-          returnRate3M: m.r3m,
-          returnRate1Y: m.r1y,
-          returnRate2Y: m.r2y,
-          returnRate2YAnn: m.r2ya,
-          returnRate3Y: m.r3y ?? null,
-          returnRate3YAnn: m.r3ya ?? null,
-          returnRateYTD: m.rytd,
-          latestValuation: m.v,
-          latestValuationDate: m.vd,
-          managementFee: m.fee !== undefined && m.fee !== null ? m.fee : existing?.managementFee,
-          riskLevel: m.risk !== undefined && m.risk !== null ? m.risk : existing?.riskLevel,
-        });
+        // If not populated yet with return rates, merge baseline metrics
+        if (!existing || existing.returnRate1Y === undefined) {
+          runtimeClassifications.set(id, {
+            ...existing,
+            returnRate1M: existing?.returnRate1M !== undefined ? existing.returnRate1M : m.r1m,
+            returnRate3M: existing?.returnRate3M !== undefined ? existing.returnRate3M : m.r3m,
+            returnRate1Y: existing?.returnRate1Y !== undefined ? existing.returnRate1Y : m.r1y,
+            returnRate2Y: existing?.returnRate2Y !== undefined ? existing.returnRate2Y : m.r2y,
+            returnRate2YAnn: existing?.returnRate2YAnn !== undefined ? existing.returnRate2YAnn : m.r2ya,
+            returnRate3Y: existing?.returnRate3Y !== undefined ? existing.returnRate3Y : (m.r3y ?? null),
+            returnRate3YAnn: existing?.returnRate3YAnn !== undefined ? existing.returnRate3YAnn : (m.r3ya ?? null),
+            returnRateYTD: existing?.returnRateYTD !== undefined ? existing.returnRateYTD : m.rytd,
+            latestValuation: existing?.latestValuation !== undefined ? existing.latestValuation : m.v,
+            latestValuationDate: existing?.latestValuationDate !== undefined ? existing.latestValuationDate : m.vd,
+            managementFee: existing?.managementFee !== undefined ? existing.managementFee : (m.fee ?? null),
+            riskLevel: existing?.riskLevel !== undefined ? existing.riskLevel : (m.risk ?? null),
+          });
+        }
       }
     }
   }
-
-  globalForKnf.knfRuntimeClassifications = runtimeClassifications;
 }
+
+// Always ensure classifications and metrics are populated
+ensureClassificationsPopulated();
 
 /**
  * Updates or enriches a subfund in the global runtime registry with fresh live data.
