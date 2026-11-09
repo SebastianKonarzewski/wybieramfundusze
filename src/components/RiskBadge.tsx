@@ -8,6 +8,7 @@ interface RiskBadgeProps {
   showLabel?: boolean;
   size?: "sm" | "md" | "lg";
   showSriPrefix?: boolean;
+  stacked?: boolean;
 }
 
 export function RiskBadge({
@@ -15,6 +16,7 @@ export function RiskBadge({
   showLabel = true,
   size = "md",
   showSriPrefix = true,
+  stacked = false,
 }: RiskBadgeProps) {
   const { t } = useTranslation();
 
@@ -87,6 +89,31 @@ export function RiskBadge({
   const tooltipText = t.common.riskLevels.tooltip
     .replace("{level}", String(level))
     .replace("{desc}", info.desc);
+
+  if (stacked) {
+    return (
+      <div
+        data-component="risk-badge"
+        className={`inline-flex flex-col items-center justify-center px-1.5 py-0.5 rounded-md border font-semibold ${info.bg}`}
+        title={tooltipText}
+      >
+        <span className="font-extrabold text-xs tracking-tight leading-tight">
+          {showSriPrefix ? "SRI " : ""}{level}<span className="text-[10px] font-semibold opacity-70">/7</span>
+        </span>
+        <div className="flex items-center gap-0.5 mt-0.5">
+          {[1, 2, 3, 4, 5, 6, 7].map((num) => (
+            <span
+              key={num}
+              data-active={num <= level ? "true" : "false"}
+              className={`w-1 h-1.5 rounded-2xs ${
+                num <= level ? info.dot : "bg-slate-200 dark:bg-slate-800 border border-slate-300/40 dark:border-transparent"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
