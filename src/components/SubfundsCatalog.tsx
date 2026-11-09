@@ -1537,7 +1537,7 @@ export function SubfundsCatalog({
                 <tr>
                   <th
                     onClick={() => handleSort("name")}
-                    className="py-2.5 px-3 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group w-full min-w-[240px]"
+                    className="py-2.5 px-3 font-bold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group w-full min-w-[240px]"
                   >
                     <div className="flex items-center gap-1.5">
                       <span>{t.catalog.table.name}</span>
@@ -1548,22 +1548,22 @@ export function SubfundsCatalog({
                       )}
                     </div>
                   </th>
-                  <th className="py-2.5 px-2.5 font-semibold text-xs leading-tight min-w-[100px] max-w-[140px]">
+                  <th className="py-2.5 px-2.5 font-bold leading-tight min-w-[100px] max-w-[140px]">
                     <div>
                       <span>{locale === "en" ? "Asset" : "Klasa"}</span>
                       <span className="block">{locale === "en" ? "Class" : "aktywów"}</span>
                     </div>
                   </th>
-                  <th className="py-2.5 px-1 font-semibold whitespace-nowrap text-center text-xs w-[48px]">{t.catalog.table.status}</th>
+                  <th className="py-2.5 px-1 font-bold whitespace-nowrap text-center w-[48px]">{t.catalog.table.status}</th>
                   <th
                     onClick={() => handleSort("risk")}
-                    className="py-2.5 px-1.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group text-xs leading-tight w-[64px] text-center"
+                    className="py-2.5 px-1.5 font-bold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group leading-tight w-[64px] text-center"
                     title={`${locale === "en" ? "Risk Level" : "Poziom ryzyka"} (SRI 1-7)`}
                   >
                     <div className="flex items-center justify-center gap-1">
-                      <div className="text-center">
+                      <div className="text-center font-bold">
                         <span>{locale === "en" ? "Risk" : "Ryzyko"}</span>
-                        <span className="block text-[10px] opacity-80">(SRI)</span>
+                        <span className="block font-bold">(SRI)</span>
                       </div>
                       {sortField === "risk" ? (
                         sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" />
@@ -1574,7 +1574,7 @@ export function SubfundsCatalog({
                   </th>
                   <th
                     onClick={() => handleSort("fee")}
-                    className="py-2.5 px-2 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group text-xs leading-tight min-w-[70px]"
+                    className="py-2.5 px-2 font-bold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group leading-tight min-w-[70px]"
                     title={
                       locale === "en"
                         ? "Fees: ongoing + transaction"
@@ -1582,12 +1582,7 @@ export function SubfundsCatalog({
                     }
                   >
                     <div className="flex items-center gap-1">
-                      <div>
-                        <span>{t.catalog.table.fee}</span>
-                        <span className="block text-[10px] opacity-75 font-normal">
-                          {locale === "en" ? "ongoing" : "stała"}
-                        </span>
-                      </div>
+                      <span>{t.catalog.table.fee}</span>
                       {sortField === "fee" ? (
                         sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#60a5fa] stroke-[2.5]" />
                       ) : (
@@ -1597,13 +1592,13 @@ export function SubfundsCatalog({
                   </th>
                   <th
                     onClick={() => handleSort("return")}
-                    className="py-2.5 px-2 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group text-xs leading-tight min-w-[75px]"
+                    className="py-2.5 px-2 font-bold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group leading-tight min-w-[75px]"
                     title={`${t.catalog.table.returnRate} (${activePeriodFullLabel})`}
                   >
                     <div className="flex items-center gap-1">
                       <div>
                         <span>{t.catalog.table.returnRate}</span>
-                        <span className="block text-[10px] font-semibold text-[#044CD0] dark:text-[#60a5fa]">
+                        <span className="block font-bold text-[#044CD0] dark:text-[#60a5fa]">
                           ({activePeriodLabel})
                         </span>
                       </div>
@@ -1616,7 +1611,7 @@ export function SubfundsCatalog({
                   </th>
                   <th
                     onClick={() => handleSort("valuation")}
-                    className="py-2.5 px-2 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group text-xs leading-tight min-w-[85px]"
+                    className="py-2.5 px-2 font-bold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group leading-tight min-w-[85px]"
                   >
                     <div className="flex items-center gap-1">
                       <div>
@@ -1632,7 +1627,7 @@ export function SubfundsCatalog({
                   </th>
                   <th
                     onClick={() => handleSort("assets")}
-                    className="py-2.5 px-2 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group text-xs leading-tight min-w-[85px]"
+                    className="py-2.5 px-2 font-bold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group leading-tight min-w-[85px]"
                     title={t.catalog.table.netAssets}
                   >
                     <div className="flex items-center gap-1">
@@ -1647,7 +1642,7 @@ export function SubfundsCatalog({
                       )}
                     </div>
                   </th>
-                  <th className="py-2.5 px-2.5 text-right font-semibold whitespace-nowrap text-xs w-[130px] min-w-[130px]">
+                  <th className="py-2.5 px-2.5 text-right font-bold whitespace-nowrap w-[130px] min-w-[130px]">
                     <span className="sr-only">{t.catalog.table.actions}</span>
                   </th>
                 </tr>
