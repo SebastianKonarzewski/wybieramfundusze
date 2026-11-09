@@ -1303,7 +1303,7 @@ export function SubfundsCatalog({
                     <div>
                       <span className="text-slate-500 dark:text-slate-400 text-[11px] block truncate">{t.catalog.card.ongoingCharge}</span>
                       <span
-                        className="font-semibold text-slate-800 dark:text-slate-200 cursor-help hover:text-[#044CD0] dark:hover:text-[#60a5fa] transition-colors inline-block"
+                        className="font-semibold text-slate-800 dark:text-slate-200"
                         title={
                           item.managementFee !== null && item.managementFee !== undefined
                             ? t.catalog.table.ongoingFeeTooltip.replace("{rate}", formatPercent(item.managementFee))
@@ -1314,7 +1314,7 @@ export function SubfundsCatalog({
                       </span>
                       {item.transactionCostsRate !== null && item.transactionCostsRate !== undefined && (
                         <span
-                          className="block text-[10px] text-slate-500 dark:text-slate-400 leading-tight cursor-help hover:text-slate-800 dark:hover:text-slate-200 transition-colors"
+                          className="block text-[10px] text-slate-500 dark:text-slate-400 leading-tight"
                           title={t.catalog.table.transactionCostsTooltip.replace("{rate}", formatPercent(item.transactionCostsRate))}
                         >
                           +{formatPercent(item.transactionCostsRate)} tr.
@@ -1477,8 +1477,8 @@ export function SubfundsCatalog({
                     className="py-2 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group text-xs leading-tight whitespace-nowrap"
                     title={
                       locale === "en"
-                        ? "Fees: ongoing management fee + portfolio transaction costs"
-                        : "Opłaty: opłata stała za zarządzanie + koszty transakcyjne portfela"
+                        ? "Fees: ongoing + transaction"
+                        : "Opłaty: stała + transakcyjna"
                     }
                   >
                     <div className="flex items-center gap-1">
@@ -1603,7 +1603,7 @@ export function SubfundsCatalog({
                       </td>
                       <td className="py-2.5 px-2 sm:px-2.5 whitespace-nowrap">
                         <div
-                          className="font-medium text-slate-800 dark:text-slate-200 text-xs sm:text-sm leading-tight cursor-help hover:text-[#044CD0] dark:hover:text-[#60a5fa] transition-colors"
+                          className="font-medium text-slate-800 dark:text-slate-200 text-xs sm:text-sm leading-tight"
                           title={
                             item.managementFee !== null && item.managementFee !== undefined
                               ? t.catalog.table.ongoingFeeTooltip.replace("{rate}", formatPercent(item.managementFee))
@@ -1614,7 +1614,7 @@ export function SubfundsCatalog({
                         </div>
                         {item.transactionCostsRate !== null && item.transactionCostsRate !== undefined && (
                           <div
-                            className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 whitespace-nowrap leading-tight cursor-help hover:text-slate-800 dark:hover:text-slate-200 transition-colors"
+                            className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 whitespace-nowrap leading-tight"
                             title={t.catalog.table.transactionCostsTooltip.replace("{rate}", formatPercent(item.transactionCostsRate))}
                           >
                             +{formatPercent(item.transactionCostsRate)} tr.
