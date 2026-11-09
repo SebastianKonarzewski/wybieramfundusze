@@ -119,6 +119,7 @@ export const en: Translations = {
     classesTagLabel: "classes:",
     typesTagLabel: "types:",
     categoryTagLabel: "category:",
+    returnPeriodLabel: "Return rate for:",
     horizontalScrollHint: "Scroll horizontally to view all columns (SRI, fee, return rate, NAV)",
     backToTop: "Back to top",
     displayingPage: "Showing page",
@@ -167,7 +168,8 @@ export const en: Translations = {
       returnRate: "Return Rate",
       annualizedSubtitle: "avg. {rate} p.a.",
       valuation: "Latest NAV",
-      compare: "Compare",
+      compare: "Actions",
+      actions: "Actions",
     },
   },
   compare: {

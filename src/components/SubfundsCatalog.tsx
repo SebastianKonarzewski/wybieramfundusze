@@ -21,6 +21,7 @@ import {
   ChevronUp,
   Layers,
   RotateCcw,
+  TrendingUp,
   X,
 } from "lucide-react";
 import { SubfundCardModel } from "@/types/knf";
@@ -972,11 +973,12 @@ export function SubfundsCatalog({
           {/* Right: Integrated Sort Dropdown & View Mode Switcher */}
           <div className="flex items-center justify-between md:justify-end gap-2.5 shrink-0 flex-wrap">
             {/* Period Switcher */}
-            <div className="h-[38px] flex items-center gap-1 bg-white dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] px-1.5 rounded-xl text-xs shadow-2xs">
-              <span className="text-slate-500 dark:text-slate-400 font-medium px-1 hidden sm:inline select-none text-xs">
-                {locale === "en" ? "Period:" : "Okres:"}
-              </span>
-              <div className="flex items-center gap-0.5">
+            <div className="h-[38px] flex items-center gap-1.5 bg-white dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] px-2.5 rounded-xl text-xs shadow-2xs">
+              <div className="flex items-center gap-1 text-slate-600 dark:text-slate-300 font-semibold select-none">
+                <TrendingUp className="w-3.5 h-3.5 text-[#044CD0] shrink-0" />
+                <span className="text-xs whitespace-nowrap">{t.catalog.returnPeriodLabel}</span>
+              </div>
+              <div className="flex items-center gap-0.5 ml-0.5">
                 {RETURN_PERIODS.map((p) => {
                   const isSelected = returnPeriod === p.id;
                   const label = locale === "en" ? p.labelEn : p.labelPl;
@@ -1407,48 +1409,22 @@ export function SubfundsCatalog({
                     </div>
                   </th>
                   <th
-                    className="py-2.5 px-2 sm:px-2.5 font-semibold whitespace-nowrap select-none"
+                    onClick={() => handleSort("return")}
+                    className="py-2.5 px-2 sm:px-2.5 font-semibold cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 select-none group whitespace-nowrap"
+                    title={`${t.catalog.table.returnRate} (${activePeriodLabel})`}
                   >
-                    <div className="flex flex-col gap-1">
-                      <div
-                        onClick={() => handleSort("return")}
-                        className="flex items-center gap-1.5 cursor-pointer hover:text-slate-900 dark:hover:text-slate-200 group"
-                        title={`${t.catalog.table.returnRate} (${activePeriodLabel})`}
-                      >
-                        <span>{t.catalog.table.returnRate}</span>
-                        {sortField === "return" ? (
-                          sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0]" />
-                        ) : (
-                          <ArrowUpDown className="w-3 h-3 opacity-40 group-hover:opacity-100" />
-                        )}
-                      </div>
-                      <div
-                        className="inline-flex items-center gap-0.5 bg-slate-200/80 dark:bg-[#071938] p-0.5 rounded-lg border border-slate-300/80 dark:border-[#0e274d] w-fit"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        {RETURN_PERIODS.map((p) => {
-                          const isSelected = returnPeriod === p.id;
-                          const label = locale === "en" ? p.labelEn : p.labelPl;
-                          return (
-                            <button
-                              key={p.id}
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handlePeriodChange(p.id);
-                              }}
-                              aria-pressed={isSelected}
-                              className={`px-1.5 py-0.5 rounded text-[10px] font-bold transition-all cursor-pointer ${
-                                isSelected
-                                  ? "bg-[#044CD0] text-white shadow-2xs"
-                                  : "text-slate-600 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-slate-200"
-                              }`}
-                            >
-                              {label}
-                            </button>
-                          );
-                        })}
-                      </div>
+                    <div className="flex items-center gap-1.5">
+                      <span>
+                        {t.catalog.table.returnRate}
+                        <span className="ml-1 text-[11px] font-bold text-[#044CD0] dark:text-[#60a5fa]">
+                          ({activePeriodLabel})
+                        </span>
+                      </span>
+                      {sortField === "return" ? (
+                        sortOrder === "asc" ? <ArrowUp className="w-3.5 h-3.5 text-[#044CD0]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#044CD0]" />
+                      ) : (
+                        <ArrowUpDown className="w-3 h-3 opacity-40 group-hover:opacity-100" />
+                      )}
                     </div>
                   </th>
                   <th
@@ -1464,7 +1440,7 @@ export function SubfundsCatalog({
                       )}
                     </div>
                   </th>
-                  <th className="py-2.5 px-2 sm:px-2.5 text-right font-semibold whitespace-nowrap">{t.catalog.table.compare}</th>
+                  <th className="py-2.5 px-2 sm:px-2.5 text-right font-semibold whitespace-nowrap w-[125px]">{t.catalog.table.actions}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-[#0e274d]/70 text-slate-800 dark:text-slate-300">
@@ -1485,11 +1461,11 @@ export function SubfundsCatalog({
                           {item.nationalCode}
                         </div>
                       </td>
-                      <td className="py-2.5 px-2 sm:px-2.5 min-w-[150px] max-w-[220px] xl:max-w-xs">
+                      <td className="py-2.5 px-2 sm:px-2.5 min-w-[150px]">
                         <Link
                           href={`/fundusze/${item.subfundId}`}
                           title={item.name}
-                          className="font-semibold text-slate-900 dark:text-slate-100 hover:text-[#044CD0] dark:hover:text-[#60a5fa] transition-colors block truncate"
+                          className="font-semibold text-slate-900 dark:text-slate-100 hover:text-[#044CD0] dark:hover:text-[#60a5fa] transition-colors block truncate max-w-[170px] sm:max-w-[210px] md:max-w-[240px] lg:max-w-[270px] xl:max-w-[340px]"
                         >
                           {item.name}
                         </Link>
@@ -1541,8 +1517,8 @@ export function SubfundsCatalog({
                           <span className="text-slate-400 dark:text-slate-600">—</span>
                         )}
                       </td>
-                      <td className="py-2.5 px-2 sm:px-2.5 text-right whitespace-nowrap">
-                        <div className="flex items-center justify-end gap-1.5">
+                      <td className="py-2.5 px-2 sm:px-2.5 text-right whitespace-nowrap w-[125px]">
+                        <div className="flex items-center justify-end gap-1">
                           <button
                             onClick={() =>
                               togglePortfolioFund({
@@ -1552,12 +1528,13 @@ export function SubfundsCatalog({
                                 category: item.category,
                               })
                             }
-                            className={`p-1.5 rounded-lg border text-xs transition-colors shadow-2xs ${
+                            className={`w-7 h-7 flex items-center justify-center rounded-lg border text-xs transition-colors shadow-2xs ${
                               inPortfolio
                                 ? "bg-emerald-600 text-white border-emerald-400"
                                 : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-blue-200 dark:border-[#0e274d] hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-400"
                             }`}
                             title={inPortfolio ? t.portfolio.removeFromPortfolio : t.portfolio.addToPortfolio}
+                            aria-label={inPortfolio ? t.portfolio.removeFromPortfolio : t.portfolio.addToPortfolio}
                           >
                             {inPortfolio ? <Check className="w-3.5 h-3.5" /> : <Briefcase className="w-3.5 h-3.5" />}
                           </button>
@@ -1570,19 +1547,20 @@ export function SubfundsCatalog({
                                 category: item.category,
                               })
                             }
-                            className={`p-1.5 rounded-lg border text-xs transition-colors shadow-2xs ${
+                            className={`w-7 h-7 flex items-center justify-center rounded-lg border text-xs transition-colors shadow-2xs ${
                               inCompare
                                 ? "bg-[#044CD0] text-white border-blue-400"
                                 : "bg-white dark:bg-[#030a16] text-slate-600 dark:text-slate-400 border-blue-200 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-blue-400"
                             }`}
                             title={inCompare ? t.catalog.card.removeFromCompare : t.common.compare}
+                            aria-label={inCompare ? t.catalog.card.removeFromCompare : t.common.compare}
                           >
                             <Scale className="w-3.5 h-3.5" />
                           </button>
                           <Link
                             href={`/fundusze/${item.subfundId}`}
                             data-component="fund-details-btn"
-                            className="px-2 py-1 text-xs rounded-lg bg-white hover:bg-blue-50 dark:bg-[#030a16] dark:hover:bg-[#071938] border border-blue-200 dark:border-[#0e274d] text-slate-700 dark:text-slate-200 font-medium transition-colors shadow-2xs"
+                            className="h-7 px-2 flex items-center text-xs rounded-lg bg-white hover:bg-blue-50 dark:bg-[#030a16] dark:hover:bg-[#071938] border border-blue-200 dark:border-[#0e274d] text-slate-700 dark:text-slate-200 font-medium transition-colors shadow-2xs"
                           >
                             {t.common.profile}
                           </Link>

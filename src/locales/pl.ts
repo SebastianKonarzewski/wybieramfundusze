@@ -117,6 +117,7 @@ export const pl = {
     classesTagLabel: "klasy:",
     typesTagLabel: "typy:",
     categoryTagLabel: "kategoria:",
+    returnPeriodLabel: "Stopa zwrotu za:",
     horizontalScrollHint: "Przesuń tabelę w bok, aby zobaczyć wszystkie kolumny (SRI, opłata, stopa zwrotu, wycena)",
     backToTop: "Wróć na górę",
     displayingPage: "Wyświetlanie strony",
@@ -165,7 +166,8 @@ export const pl = {
       returnRate: "Stopa zwrotu",
       annualizedSubtitle: "śr. {rate} r/r",
       valuation: "Ostatnia wycena",
-      compare: "Porównaj",
+      compare: "Akcje",
+      actions: "Akcje",
     },
   },
   compare: {
