@@ -9,6 +9,7 @@ interface RiskBadgeProps {
   size?: "sm" | "md" | "lg";
   showSriPrefix?: boolean;
   stacked?: boolean;
+  align?: "start" | "center";
 }
 
 export function RiskBadge({
@@ -17,6 +18,7 @@ export function RiskBadge({
   size = "md",
   showSriPrefix = true,
   stacked = false,
+  align = "center",
 }: RiskBadgeProps) {
   const { t } = useTranslation();
 
@@ -91,10 +93,13 @@ export function RiskBadge({
     .replace("{desc}", info.desc);
 
   if (stacked) {
+    const isStart = align === "start";
     return (
       <div
         data-component="risk-badge"
-        className="inline-flex flex-col items-center justify-center cursor-default select-none py-0.5"
+        className={`inline-flex flex-col ${
+          isStart ? "items-start justify-start" : "items-center justify-center"
+        } cursor-default select-none py-0.5`}
         title={tooltipText}
       >
         <div className="flex items-baseline gap-0.5 leading-none">

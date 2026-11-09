@@ -1525,25 +1525,7 @@ export function SubfundsCatalog({
                 className="catalog-grid-card group relative bg-white dark:bg-[#051329] hover:bg-slate-50/70 dark:hover:bg-[#071938] border border-slate-200 dark:border-[#0e274d] hover:border-[#044CD0]/60 rounded-2xl p-4 sm:p-5 transition-all flex flex-col justify-between shadow-xs hover:shadow-md dark:shadow-md dark:hover:shadow-xl"
               >
                 <div>
-                  {/* Top Bar: Asset Class / Category tag + Status Badge */}
-                  <div className="flex items-center justify-between gap-2 mb-2.5">
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[11px] font-semibold bg-slate-100/90 dark:bg-[#030a16] text-slate-700 dark:text-slate-300 border border-slate-200/90 dark:border-[#0e274d] shadow-2xs truncate max-w-[200px]">
-                      <Compass className="w-3 h-3 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
-                      <span className="truncate capitalize">
-                        {item.classification || item.category || (locale === "en" ? "Fund" : "Fundusz")}
-                      </span>
-                    </span>
-
-                    <StatusBadge
-                      compact={true}
-                      isActive={item.isActive}
-                      isLiquidating={item.isLiquidating}
-                      liquidationStartDate={item.liquidationStartDate}
-                      liquidationEndDate={item.liquidationEndDate}
-                    />
-                  </div>
-
-                  {/* Fund Name */}
+                  {/* 1. Top: Fund Name */}
                   <Link
                     href={`/fundusze/${item.subfundId}`}
                     title={item.name}
@@ -1552,8 +1534,8 @@ export function SubfundsCatalog({
                     {item.name}
                   </Link>
 
-                  {/* Managing Entity & Umbrella Fund (TFI + Parasol) */}
-                  <div className="flex items-center gap-1.5 mb-3 leading-normal flex-wrap">
+                  {/* 2. Typ funduszu + Nazwa TFI + Parasol */}
+                  <div className="flex items-center gap-1.5 mb-2.5 leading-normal flex-wrap">
                     <span className="fund-type-badge inline-flex items-center font-bold text-[10px] leading-none bg-slate-100 dark:bg-[#030a16] border border-slate-300/80 dark:border-[#0e274d] px-1.5 py-0.5 rounded text-black dark:text-blue-300 shadow-2xs shrink-0 uppercase tracking-wider">
                       {item.name.toUpperCase().includes("ETF") ? "ETF" : item.type}
                     </span>
@@ -1578,28 +1560,57 @@ export function SubfundsCatalog({
                     )}
                   </div>
 
-                  {/* Detailed Category tag if different from classification */}
-                  {item.category && item.classification && item.category.trim().toLowerCase() !== item.classification.trim().toLowerCase() && (
-                    <div
-                      title={item.category}
-                      className="text-[11px] text-slate-500 dark:text-slate-400 mb-3 flex items-center gap-1.5 line-clamp-1"
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#044CD0]/60 shrink-0" />
-                      <span className="truncate">{item.category}</span>
-                    </div>
-                  )}
+                  {/* 3. Klasa aktywów + Status */}
+                  {(() => {
+                    const hasDetailedCategory = Boolean(
+                      item.category &&
+                      item.classification &&
+                      item.category.trim().toLowerCase() !== item.classification.trim().toLowerCase()
+                    );
+                    return (
+                      <>
+                        <div className={`flex items-center justify-between gap-2 ${hasDetailedCategory ? "mb-1.5" : "mb-3"}`}>
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[11px] font-semibold bg-slate-100/90 dark:bg-[#030a16] text-slate-700 dark:text-slate-300 border border-slate-200/90 dark:border-[#0e274d] shadow-2xs truncate max-w-[200px]">
+                            <Compass className="w-3 h-3 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
+                            <span className="truncate capitalize">
+                              {item.classification || item.category || (locale === "en" ? "Fund" : "Fundusz")}
+                            </span>
+                          </span>
+
+                          <StatusBadge
+                            compact={true}
+                            isActive={item.isActive}
+                            isLiquidating={item.isLiquidating}
+                            liquidationStartDate={item.liquidationStartDate}
+                            liquidationEndDate={item.liquidationEndDate}
+                          />
+                        </div>
+
+                        {/* 4. Szczegółowa klasa aktywów */}
+                        {hasDetailedCategory && (
+                          <div
+                            title={item.category || undefined}
+                            className="text-[11px] text-slate-500 dark:text-slate-400 mb-3 flex items-center gap-1.5 line-clamp-1"
+                          >
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#044CD0]/60 shrink-0" />
+                            <span className="truncate">{item.category}</span>
+                          </div>
+                        )}
+                      </>
+                    );
+                  })()}
 
                   {/* Metrics Box: 3 Key Indicators + Valuation & AUM */}
                   <div className="bg-slate-50/70 dark:bg-[#030a16]/60 border border-slate-200/70 dark:border-[#0e274d]/70 rounded-xl p-3 mb-4 space-y-2.5">
                     {/* Top 3 Indicators: Risk, Fee, Return */}
                     <div className="grid grid-cols-3 gap-2 text-xs">
-                      {/* 1. Risk */}
+                      {/* 1. Risk (SRI stacked dots and level matching table) */}
                       <div>
                         <span className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-[11px] block truncate font-medium">
                           {t.catalog.card.riskProfile}
                         </span>
                         <div className="mt-1">
-                          <RiskBadge level={item.riskLevel} showLabel={false} size="sm" />
+                          <RiskBadge level={item.riskLevel} showLabel={false} showSriPrefix={false} stacked={true} align="start" size="sm" />
                         </div>
                       </div>
 
@@ -1630,7 +1641,7 @@ export function SubfundsCatalog({
                       <div>
                         <span className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-[11px] block truncate font-medium">
                           {locale === "en" ? "Return" : "Wynik"}{" "}
-                          <span className="font-bold text-[#044CD0] dark:text-[#60a5fa]">({activePeriodLabel})</span>
+                          <span className="font-semibold text-slate-500 dark:text-slate-400">({activePeriodLabel})</span>
                         </span>
                         <div className="mt-1">
                           {renderReturnBadge(item, returnPeriod)}
