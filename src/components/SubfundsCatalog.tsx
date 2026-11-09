@@ -186,6 +186,8 @@ export function SubfundsCatalog({
   const resultsTopRef = useRef<HTMLDivElement>(null);
   const [sortField, setSortField] = useState<"name" | "fee" | "risk" | "valuation" | "return" | "assets">("name");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [isSortOpen, setIsSortOpen] = useState(false);
+  const sortDropdownRef = useRef<HTMLDivElement>(null);
   const [returnPeriod, setReturnPeriod] = useState<ReturnPeriod>("1Y");
   const [currentPage, setCurrentPage] = useState(0);
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
@@ -397,6 +399,33 @@ export function SubfundsCatalog({
     };
   }, [isCategoryOpen]);
 
+  // Close sort dropdown on click outside or Escape
+  useEffect(() => {
+    if (!isSortOpen) return;
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        sortDropdownRef.current &&
+        !sortDropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsSortOpen(false);
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsSortOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isSortOpen]);
+
   const hasActiveAdvancedFilters =
     selectedCategories.length > 0 || includeInactive || includeLiquidating;
 
@@ -552,6 +581,100 @@ export function SubfundsCatalog({
       setSortOrder(order);
     }
   };
+
+  const sortGroups = useMemo(() => [
+    {
+      group: locale === "en" ? "Return Rate" : "Stopa zwrotu",
+      options: [
+        {
+          value: "return_desc",
+          label: `${t.catalog.sort.returnDesc} (${activePeriodLabel})`,
+        },
+        {
+          value: "return_asc",
+          label: `${t.catalog.sort.returnAsc} (${activePeriodLabel})`,
+        },
+      ],
+    },
+    {
+      group: locale === "en" ? "Name" : "Nazwa",
+      options: [
+        {
+          value: "name_asc",
+          label: t.catalog.sort.nameAsc,
+        },
+        {
+          value: "name_desc",
+          label: t.catalog.sort.nameDesc,
+        },
+      ],
+    },
+    {
+      group: locale === "en" ? "Net Assets (AUM)" : "Wartość aktywów (AUM)",
+      options: [
+        {
+          value: "assets_desc",
+          label: t.catalog.sort.assetsDesc,
+        },
+        {
+          value: "assets_asc",
+          label: t.catalog.sort.assetsAsc,
+        },
+      ],
+    },
+    {
+      group: locale === "en" ? "Management Fee" : "Opłata za zarządzanie",
+      options: [
+        {
+          value: "fee_asc",
+          label: t.catalog.sort.feeAsc,
+        },
+        {
+          value: "fee_desc",
+          label: t.catalog.sort.feeDesc,
+        },
+      ],
+    },
+    {
+      group: locale === "en" ? "Risk Level (SRI)" : "Poziom ryzyka (SRI)",
+      options: [
+        {
+          value: "risk_asc",
+          label: t.catalog.sort.riskAsc,
+        },
+        {
+          value: "risk_desc",
+          label: t.catalog.sort.riskDesc,
+        },
+      ],
+    },
+    {
+      group: locale === "en" ? "Latest Valuation" : "Wycena jednostki",
+      options: [
+        {
+          value: "valuation_desc",
+          label: t.catalog.sort.valuationDesc,
+        },
+        {
+          value: "valuation_asc",
+          label: t.catalog.sort.valuationAsc,
+        },
+      ],
+    },
+  ], [t, locale, activePeriodLabel]);
+
+  const currentSortValue = `${sortField}_${sortOrder}`;
+
+  const currentSortLabel = useMemo(() => {
+    for (const grp of sortGroups) {
+      for (const opt of grp.options) {
+        if (opt.value === currentSortValue) {
+          return opt.label;
+        }
+      }
+    }
+    return t.catalog.sort.nameAsc;
+  }, [sortGroups, currentSortValue, t.catalog.sort.nameAsc]);
 
   // Handle page change with smooth scroll to results header
   const handlePageChange = (newPage: number) => {
@@ -1087,16 +1210,16 @@ export function SubfundsCatalog({
           </div>
 
           {/* Right: Integrated Sort Dropdown & View Mode Switcher */}
-          <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap justify-between sm:justify-start xl:justify-end">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-2.5 w-full xl:w-auto justify-between sm:justify-start xl:justify-end">
             {/* Period Switcher */}
-            <div className="h-[38px] flex items-center gap-1.5 sm:gap-2 bg-white dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-[#044CD0]/60 px-2 sm:px-2.5 rounded-xl transition-colors shadow-2xs">
+            <div className="h-[38px] w-full sm:w-auto flex items-center justify-between sm:justify-start gap-1.5 sm:gap-2 bg-white dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-[#044CD0]/60 px-2 sm:px-2.5 rounded-xl transition-colors shadow-2xs">
               <div className="flex items-center gap-1 select-none shrink-0" title={t.catalog.returnPeriodLabel}>
                 <TrendingUp className="w-3.5 h-3.5 text-[#044CD0] shrink-0" />
-                <span className="text-xs font-medium text-slate-500 dark:text-slate-400 whitespace-nowrap hidden sm:inline">
-                  {locale === "en" ? "Period:" : "Wynik:"}
+                <span className="text-xs font-medium text-slate-500 dark:text-slate-400 whitespace-nowrap">
+                  {t.catalog.returnPeriodLabel}
                 </span>
               </div>
-              <div className="flex items-center gap-0.5">
+              <div className="flex items-center gap-0.5 overflow-x-auto no-scrollbar scroll-smooth py-0.5">
                 {RETURN_PERIODS.map((p) => {
                   const isSelected = returnPeriod === p.id;
                   const label = locale === "en" ? p.labelEn : p.labelPl;
@@ -1106,7 +1229,7 @@ export function SubfundsCatalog({
                       type="button"
                       onClick={() => handlePeriodChange(p.id)}
                       aria-pressed={isSelected}
-                      className={`px-1.5 sm:px-2 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                      className={`px-1.5 sm:px-2 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer shrink-0 ${
                         isSelected
                           ? "bg-[#044CD0] text-white shadow-xs font-bold"
                           : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#071938]"
@@ -1120,91 +1243,115 @@ export function SubfundsCatalog({
               </div>
             </div>
 
-            {/* Integrated Sort Dropdown */}
-            <div className="h-[38px] flex items-center gap-1.5 sm:gap-2 bg-white dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-[#044CD0]/60 px-2 sm:px-2.5 rounded-xl transition-colors shadow-2xs">
-              <div className="flex items-center gap-1 select-none shrink-0">
-                <ArrowUpDown className="w-3.5 h-3.5 text-[#044CD0] shrink-0" />
-                <label
-                  htmlFor="catalog-sort-select"
-                  className="text-xs font-medium text-slate-500 dark:text-slate-400 hidden 2xl:inline whitespace-nowrap cursor-pointer"
+            {/* Controls Cluster: Sort Dropdown + View Mode Switcher */}
+            <div className="flex items-center gap-2 sm:gap-2.5 w-full sm:w-auto justify-between sm:justify-start">
+              {/* Modern Custom Sort Dropdown */}
+              <div ref={sortDropdownRef} className="relative flex-1 sm:flex-none">
+                <button
+                  type="button"
+                  id="catalog-sort-button"
+                  aria-haspopup="listbox"
+                  aria-expanded={isSortOpen}
+                  onClick={() => setIsSortOpen((prev) => !prev)}
+                  className={`h-[38px] w-full sm:w-auto flex items-center justify-between gap-1.5 sm:gap-2 px-2.5 sm:px-3 rounded-xl border transition-all cursor-pointer select-none shadow-2xs ${
+                    isSortOpen
+                      ? "border-[#044CD0] ring-2 ring-[#044CD0]/20 bg-blue-50/50 dark:bg-[#044CD0]/15"
+                      : "bg-white dark:bg-[#030a16] border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-[#044CD0]/60"
+                  }`}
                 >
-                  {t.catalog.sort.label}:
-                </label>
-              </div>
-              <select
-                id="catalog-sort-select"
-                value={`${sortField}_${sortOrder}`}
-                onChange={(e) => handleCombinedSortChange(e.target.value)}
-                aria-label={t.catalog.sort.label}
-                className="bg-transparent text-slate-800 dark:text-slate-200 font-sans font-medium text-xs focus:outline-hidden cursor-pointer max-w-[140px] sm:max-w-[175px] truncate pr-1"
-              >
-                <option value="name_asc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
-                  {t.catalog.sort.nameAsc}
-                </option>
-                <option value="name_desc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
-                  {t.catalog.sort.nameDesc}
-                </option>
-                <option value="return_desc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
-                  {t.catalog.sort.returnDesc} ({activePeriodLabel})
-                </option>
-                <option value="return_asc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
-                  {t.catalog.sort.returnAsc} ({activePeriodLabel})
-                </option>
-                <option value="fee_asc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
-                  {t.catalog.sort.feeAsc}
-                </option>
-                <option value="fee_desc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
-                  {t.catalog.sort.feeDesc}
-                </option>
-                <option value="risk_asc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
-                  {t.catalog.sort.riskAsc}
-                </option>
-                <option value="risk_desc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
-                  {t.catalog.sort.riskDesc}
-                </option>
-                <option value="valuation_desc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
-                  {t.catalog.sort.valuationDesc}
-                </option>
-                <option value="valuation_asc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
-                  {t.catalog.sort.valuationAsc}
-                </option>
-                <option value="assets_desc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
-                  {t.catalog.sort.assetsDesc}
-                </option>
-                <option value="assets_asc" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-200">
-                  {t.catalog.sort.assetsAsc}
-                </option>
-              </select>
-            </div>
+                  <div className="flex items-center gap-1.5 min-w-0">
+                    <ArrowUpDown className="w-3.5 h-3.5 text-[#044CD0] shrink-0" />
+                    <span className="text-xs font-medium text-slate-500 dark:text-slate-400 hidden 2xl:inline whitespace-nowrap">
+                      {t.catalog.sort.label}:
+                    </span>
+                    <span
+                      className="text-xs font-semibold text-slate-800 dark:text-slate-200 truncate max-w-[150px] sm:max-w-[185px] text-left"
+                      title={currentSortLabel}
+                    >
+                      {currentSortLabel}
+                    </span>
+                  </div>
+                  <ChevronDown
+                    className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 shrink-0 ${
+                      isSortOpen ? "rotate-180 text-[#044CD0] dark:text-[#3b82f6]" : ""
+                    }`}
+                  />
+                </button>
 
-            {/* View Mode Toggle */}
-            <div className="flex items-center bg-white dark:bg-[#030a16] p-1 rounded-xl border border-slate-300 dark:border-[#0e274d] shrink-0 shadow-2xs">
-              <button
-                onClick={() => handleViewModeChange("grid")}
-                aria-pressed={viewMode === "grid"}
-                className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
-                  viewMode === "grid"
-                    ? "bg-[#044CD0] text-white shadow-xs"
-                    : "text-slate-500 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#071938]"
-                }`}
-                title={t.catalog.viewModeGrid}
-                aria-label={t.catalog.viewModeGrid}
-              >
-                <LayoutGrid className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => handleViewModeChange("table")}
-                aria-pressed={viewMode === "table"}
-                className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
-                  viewMode === "table"
-                    ? "bg-[#044CD0] text-white shadow-xs"
-                    : "text-slate-500 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#071938]"
-                }`}
-                title={t.catalog.viewModeTable}
-                aria-label={t.catalog.viewModeTable}
-              >
-                <TableIcon className="w-4 h-4" />
-              </button>
+                {/* Popover Listbox */}
+                {isSortOpen && (
+                  <div
+                    role="listbox"
+                    aria-labelledby="catalog-sort-button"
+                    className="absolute top-full left-0 sm:left-auto sm:right-0 mt-1.5 w-full sm:w-[310px] bg-white dark:bg-[#030c1c] border border-slate-200 dark:border-[#0e274d] rounded-xl shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-100 max-h-84 overflow-y-auto p-1.5 space-y-1"
+                  >
+                    {sortGroups.map((grp) => (
+                      <div key={grp.group} className="pt-1.5 border-t border-slate-100 dark:border-[#0e274d]/50 first:border-t-0 first:pt-0">
+                        <div className="px-2.5 py-1 text-[10px] font-bold text-[#044CD0] dark:text-[#60a5fa] uppercase tracking-wide select-none">
+                          {grp.group}
+                        </div>
+                        <div className="space-y-0.5">
+                          {grp.options.map((opt) => {
+                            const isSelected = currentSortValue === opt.value;
+                            return (
+                              <button
+                                key={opt.value}
+                                type="button"
+                                role="option"
+                                aria-selected={isSelected}
+                                onClick={() => {
+                                  handleCombinedSortChange(opt.value);
+                                  setIsSortOpen(false);
+                                }}
+                                className={`w-full text-left px-2.5 py-1.5 text-xs rounded-lg flex items-center justify-between transition-colors cursor-pointer select-none ${
+                                  isSelected
+                                    ? "bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-200 font-semibold"
+                                    : "text-slate-700 dark:text-slate-300 hover:bg-blue-50/70 dark:hover:bg-[#071938] hover:text-[#044CD0] dark:hover:text-white"
+                                }`}
+                              >
+                                <span className="truncate pr-2">{opt.label}</span>
+                                {isSelected && (
+                                  <Check className="w-3.5 h-3.5 stroke-[3] text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
+                                )}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* View Mode Toggle */}
+              <div className="flex items-center bg-white dark:bg-[#030a16] p-1 rounded-xl border border-slate-300 dark:border-[#0e274d] shrink-0 shadow-2xs">
+                <button
+                  onClick={() => handleViewModeChange("grid")}
+                  aria-pressed={viewMode === "grid"}
+                  className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
+                    viewMode === "grid"
+                      ? "bg-[#044CD0] text-white shadow-xs"
+                      : "text-slate-500 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#071938]"
+                  }`}
+                  title={t.catalog.viewModeGrid}
+                  aria-label={t.catalog.viewModeGrid}
+                >
+                  <LayoutGrid className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => handleViewModeChange("table")}
+                  aria-pressed={viewMode === "table"}
+                  className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
+                    viewMode === "table"
+                      ? "bg-[#044CD0] text-white shadow-xs"
+                      : "text-slate-500 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#071938]"
+                  }`}
+                  title={t.catalog.viewModeTable}
+                  aria-label={t.catalog.viewModeTable}
+                >
+                  <TableIcon className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
