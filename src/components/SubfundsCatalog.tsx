@@ -56,12 +56,12 @@ export const RETURN_PERIODS: {
   fullPl: string;
   fullEn: string;
 }[] = [
-  { id: "1M", labelPl: "1M", labelEn: "1M", fullPl: "1M", fullEn: "1M" },
-  { id: "3M", labelPl: "3M", labelEn: "3M", fullPl: "3M", fullEn: "3M" },
-  { id: "6M", labelPl: "6M", labelEn: "6M", fullPl: "6M", fullEn: "6M" },
-  { id: "1Y", labelPl: "12M", labelEn: "12M", fullPl: "12M", fullEn: "12M" },
-  { id: "2Y", labelPl: "24M", labelEn: "24M", fullPl: "24M", fullEn: "24M" },
-  { id: "YTD", labelPl: "YTD", labelEn: "YTD", fullPl: "YTD", fullEn: "YTD" },
+  { id: "1M", labelPl: "1M", labelEn: "1M", fullPl: "1 miesiąc", fullEn: "1 month" },
+  { id: "3M", labelPl: "3M", labelEn: "3M", fullPl: "3 miesiące", fullEn: "3 months" },
+  { id: "6M", labelPl: "6M", labelEn: "6M", fullPl: "6 miesięcy", fullEn: "6 months" },
+  { id: "1Y", labelPl: "12M", labelEn: "12M", fullPl: "12 miesięcy", fullEn: "12 months" },
+  { id: "2Y", labelPl: "24M", labelEn: "24M", fullPl: "24 miesiące", fullEn: "24 months" },
+  { id: "YTD", labelPl: "YTD", labelEn: "YTD", fullPl: "Od początku roku (YTD)", fullEn: "Year to date (YTD)" },
 ];
 
 const CATEGORY_GROUPS: CategoryGroup[] = [
@@ -1277,6 +1277,7 @@ export function SubfundsCatalog({
                 {RETURN_PERIODS.map((p) => {
                   const isSelected = returnPeriod === p.id;
                   const label = locale === "en" ? p.labelEn : p.labelPl;
+                  const fullLabel = locale === "en" ? p.fullEn : p.fullPl;
                   return (
                     <button
                       key={p.id}
@@ -1288,7 +1289,7 @@ export function SubfundsCatalog({
                           ? "bg-[#044CD0] text-white shadow-xs font-bold"
                           : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#071938]"
                       }`}
-                      title={`${t.catalog.table.returnRate}: ${label}`}
+                      title={fullLabel}
                     >
                       {label}
                     </button>
@@ -1687,7 +1688,10 @@ export function SubfundsCatalog({
 
                       {/* 3. Return Rate */}
                       <div>
-                        <span className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-[11px] block truncate font-medium">
+                        <span
+                          className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-[11px] block truncate font-medium cursor-help"
+                          title={activePeriodFullLabel}
+                        >
                           {locale === "en" ? "Return" : "Wynik"}{" "}
                           <span className="font-semibold text-slate-500 dark:text-slate-400">({activePeriodLabel})</span>
                         </span>
