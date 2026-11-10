@@ -1205,9 +1205,11 @@ export const knfApi = {
     }
 
     // Filter by maximum management / ongoing fee if provided
+    // (normalizes percent e.g. 0.5% or 1.0% to decimal ratio e.g. 0.005 or 0.010 to match sf.managementFee)
     if (params?.maxFee !== undefined && params.maxFee !== null && !isNaN(params.maxFee) && params.maxFee > 0) {
+      const feeThreshold = params.maxFee > 0.05 ? params.maxFee / 100 : params.maxFee;
       filtered = filtered.filter(
-        (sf) => sf.managementFee !== null && sf.managementFee !== undefined && sf.managementFee <= params.maxFee!
+        (sf) => sf.managementFee !== null && sf.managementFee !== undefined && sf.managementFee <= feeThreshold + 0.00001
       );
     }
 

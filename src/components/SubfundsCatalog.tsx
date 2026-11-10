@@ -207,16 +207,6 @@ export const ALL_TFIS = [
   "White Berg TFI",
 ];
 
-const SRI_LEVELS = [
-  { level: 1, label: "1", color: "bg-emerald-500", text: "text-emerald-700 dark:text-emerald-300", border: "border-emerald-400" },
-  { level: 2, label: "2", color: "bg-green-500", text: "text-green-700 dark:text-green-300", border: "border-green-400" },
-  { level: 3, label: "3", color: "bg-lime-500", text: "text-lime-700 dark:text-lime-300", border: "border-lime-400" },
-  { level: 4, label: "4", color: "bg-yellow-400", text: "text-yellow-700 dark:text-yellow-300", border: "border-yellow-400" },
-  { level: 5, label: "5", color: "bg-amber-500", text: "text-amber-700 dark:text-amber-300", border: "border-amber-400" },
-  { level: 6, label: "6", color: "bg-orange-500", text: "text-orange-700 dark:text-orange-300", border: "border-orange-400" },
-  { level: 7, label: "7", color: "bg-rose-600", text: "text-rose-700 dark:text-rose-300", border: "border-rose-400" },
-];
-
 interface SubfundsCatalogProps {
   initialItems: SubfundCardModel[];
   initialPage: {
@@ -258,17 +248,19 @@ export function SubfundsCatalog({
   const [selectedCurrencies, setSelectedCurrencies] = useState<string[]>([]);
   const [selectedClassifications, setSelectedClassifications] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
-  const categoryDropdownRef = useRef<HTMLDivElement>(null);
 
-  // Advanced filters state: TFI, SRI, Max fee, Only profitable
+  // TFI, SRI, Max fee, Only profitable filters
   const [selectedCompanies, setSelectedCompanies] = useState<string[]>([]);
-  const [isTfiOpen, setIsTfiOpen] = useState(false);
   const [tfiSearchTerm, setTfiSearchTerm] = useState("");
-  const tfiDropdownRef = useRef<HTMLDivElement>(null);
   const [selectedSri, setSelectedSri] = useState<number[]>([]);
   const [maxFee, setMaxFee] = useState<number | null>(null);
-  const [onlyProfitable, setOnlyProfitable] = useState(false);
+
+  // Unified popover state for screener toolbar & advanced filters
+  type FilterDropdown = "tfi" | "category" | null;
+  const [openFilterDropdown, setOpenFilterDropdown] = useState<FilterDropdown>(null);
+  const tfiDropdownRef = useRef<HTMLDivElement>(null);
+  const categoryDropdownRef = useRef<HTMLDivElement>(null);
+  const filterToolbarRef = useRef<HTMLDivElement>(null);
   const resultsTopRef = useRef<HTMLDivElement>(null);
   const [sortField, setSortField] = useState<"name" | "fee" | "risk" | "valuation" | "return" | "assets">("name");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
@@ -429,7 +421,7 @@ export function SubfundsCatalog({
 
   const toggleAdvancedFilters = () => {
     setShowAdvancedFilters((prev) => {
-      if (prev) setIsCategoryOpen(false);
+      if (prev && openFilterDropdown === "category") setOpenFilterDropdown(null);
       return !prev;
     });
   };
@@ -490,22 +482,26 @@ export function SubfundsCatalog({
     return selectedCategories.map((c) => getCategoryLabel(c, locale === "en")).join(", ");
   }, [selectedCategories, t.catalog.allCategories, locale]);
 
-  // Close category dropdown on click outside or Escape
+  // Close any open filter popover on click outside or Escape
   useEffect(() => {
-    if (!isCategoryOpen) return;
+    if (!openFilterDropdown) return;
 
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        categoryDropdownRef.current &&
-        !categoryDropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsCategoryOpen(false);
+      const target = event.target as Node;
+      if (openFilterDropdown === "tfi") {
+        if (tfiDropdownRef.current && !tfiDropdownRef.current.contains(target)) {
+          setOpenFilterDropdown(null);
+        }
+      } else if (openFilterDropdown === "category") {
+        if (categoryDropdownRef.current && !categoryDropdownRef.current.contains(target)) {
+          setOpenFilterDropdown(null);
+        }
       }
     };
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setIsCategoryOpen(false);
+        setOpenFilterDropdown(null);
       }
     };
 
@@ -515,34 +511,7 @@ export function SubfundsCatalog({
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isCategoryOpen]);
-
-  // Close TFI dropdown on click outside or Escape
-  useEffect(() => {
-    if (!isTfiOpen) return;
-
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        tfiDropdownRef.current &&
-        !tfiDropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsTfiOpen(false);
-      }
-    };
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setIsTfiOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [isTfiOpen]);
+  }, [openFilterDropdown]);
 
   const filteredTfis = useMemo(() => {
     if (!tfiSearchTerm.trim()) return ALL_TFIS;
@@ -607,37 +576,35 @@ export function SubfundsCatalog({
   }, [isSortOpen]);
 
   const hasActiveAdvancedFilters =
-    selectedCompanies.length > 0 ||
     selectedCategories.length > 0 ||
+    selectedCurrencies.length > 0 ||
     selectedSri.length > 0 ||
     maxFee !== null ||
-    onlyProfitable ||
     includeInactive ||
     includeLiquidating;
 
   const activeAdvancedFiltersCount =
-    selectedCompanies.length +
     selectedCategories.length +
-    selectedSri.length +
+    selectedCurrencies.length +
+    (selectedSri.length > 0 ? 1 : 0) +
     (maxFee !== null ? 1 : 0) +
-    (onlyProfitable ? 1 : 0) +
     (includeInactive ? 1 : 0) +
     (includeLiquidating ? 1 : 0);
 
   const hasAnyActiveFilters =
     searchTerm.trim() !== "" ||
     Boolean(fundId) ||
+    selectedCompanies.length > 0 ||
     selectedClassifications.length > 0 ||
     selectedTypes.length > 0 ||
-    selectedCurrencies.length > 0 ||
     hasActiveAdvancedFilters;
 
   const activeFiltersCount =
     (searchTerm.trim() !== "" ? 1 : 0) +
     (fundId ? 1 : 0) +
+    selectedCompanies.length +
     selectedClassifications.length +
     selectedTypes.length +
-    selectedCurrencies.length +
     activeAdvancedFiltersCount;
 
   const clearUmbrellaFundFilter = () => {
@@ -654,11 +621,10 @@ export function SubfundsCatalog({
   };
 
   const resetAdvancedFilters = () => {
-    setSelectedCompanies([]);
     setSelectedCategories([]);
+    setSelectedCurrencies([]);
     setSelectedSri([]);
     setMaxFee(null);
-    setOnlyProfitable(false);
     setIncludeInactive(false);
     setIncludeLiquidating(false);
     setCurrentPage(0);
@@ -675,10 +641,10 @@ export function SubfundsCatalog({
     setSelectedCompanies([]);
     setSelectedSri([]);
     setMaxFee(null);
-    setOnlyProfitable(false);
     setIncludeInactive(false);
     setIncludeLiquidating(false);
     setCurrentPage(0);
+    setOpenFilterDropdown(null);
     if (typeof window !== "undefined") {
       const url = new URL(window.location.href);
       url.searchParams.delete("fundId");
@@ -717,9 +683,6 @@ export function SubfundsCatalog({
           }
           if (maxFee !== null) {
             params.set("maxFee", String(maxFee));
-          }
-          if (onlyProfitable) {
-            params.set("onlyProfitable", "true");
           }
           if (includeInactive) params.set("includeInactive", "true");
           if (includeLiquidating) params.set("includeLiquidating", "true");
@@ -764,7 +727,6 @@ export function SubfundsCatalog({
     selectedCategories,
     selectedSri,
     maxFee,
-    onlyProfitable,
     includeInactive,
     includeLiquidating,
     currentPage,
@@ -961,236 +923,331 @@ export function SubfundsCatalog({
     return result;
   }, [items, sortField, sortOrder, returnPeriod]);
 
-  const classificationOptions = [
+  const classificationOptions = useMemo(() => [
     { id: "ALL", label: t.catalog.classes.ALL },
     { id: "akcji", label: t.catalog.classes.akcji },
     { id: "dłużn", label: t.catalog.classes.dłużn },
     { id: "mieszan", label: t.catalog.classes.mieszan },
     { id: "alternatyw", label: t.catalog.classes.alternatyw },
-  ];
+  ], [t.catalog.classes]);
 
   return (
     <div className="space-y-6">
-      {/* Search & Filter Toolbar */}
-      <div className="bg-white dark:bg-[#051329] border border-slate-200 dark:border-[#0e274d] rounded-2xl p-4 sm:p-6 shadow-sm dark:shadow-xl space-y-4">
-        {/* Search input (constrained max width, professional look) */}
-        <div className="relative w-full max-w-xl">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-          <input
-            type="text"
-            placeholder={isMobile ? t.catalog.searchPlaceholderMobile : t.catalog.searchPlaceholder}
-            value={searchTerm}
-            onChange={(e) => {
-              setSearchTerm(e.target.value);
-              setCurrentPage(0);
-            }}
-            className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-50/80 dark:bg-[#030c1c] border border-slate-300/80 dark:border-[#0e274d] text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-hidden focus:border-[#044CD0] focus:ring-2 focus:ring-[#044CD0]/15 transition-all shadow-2xs"
-          />
-          {searchTerm && (
-            <button
-              type="button"
-              onClick={() => {
-                setSearchTerm("");
-                setCurrentPage(0);
-              }}
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 rounded-md transition-colors cursor-pointer"
-              aria-label="Wyczyść szukanie"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          )}
+      {/* Search & Screener Toolbar */}
+      <div
+        ref={filterToolbarRef}
+        className="bg-white dark:bg-[#051329] border border-slate-200 dark:border-[#0e274d] rounded-2xl p-3 sm:p-4 shadow-sm dark:shadow-xl space-y-3 relative z-30"
+      >
+        {/* Row 1: Surface Quick-Select (Klasa aktywów left + Typ prawny right) */}
+        <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-2.5 pb-3 border-b border-slate-100 dark:border-[#0e274d]/70">
+          {/* Left: Klasa aktywów surface pills */}
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mr-1 shrink-0 items-center gap-1 inline-flex">
+              <Compass className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#3b82f6]" />
+              <span>{t.catalog.assetClassFilter}:</span>
+            </span>
+            {classificationOptions.map((cls) => {
+              const isSelected =
+                cls.id === "ALL"
+                  ? selectedClassifications.length === 0
+                  : selectedClassifications.includes(cls.id);
+              return (
+                <button
+                  key={cls.id}
+                  type="button"
+                  onClick={() => toggleClassification(cls.id)}
+                  className={`h-8 sm:h-[34px] px-2.5 sm:px-3 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer select-none shrink-0 inline-flex items-center justify-center ${
+                    isSelected
+                      ? "bg-[#044CD0] text-white shadow-xs font-bold ring-2 ring-[#044CD0]/20"
+                      : "bg-slate-100/90 dark:bg-[#030c1c] text-slate-700 dark:text-slate-300 hover:bg-slate-200/80 dark:hover:bg-[#071938] hover:text-[#044CD0] dark:hover:text-white border border-slate-200/90 dark:border-[#0e274d]"
+                  }`}
+                >
+                  <span>{cls.label}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Right: Typ prawny surface pills */}
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mr-1 shrink-0 items-center gap-1 inline-flex">
+              <Scale className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#3b82f6]" />
+              <span>{t.catalog.legalTypeFilter}:</span>
+            </span>
+            {["ALL", "FIO", "SFIO", "FIZ", "ETF", "PPK"].map((type) => {
+              const isSelected =
+                type === "ALL"
+                  ? selectedTypes.length === 0
+                  : selectedTypes.includes(type);
+              return (
+                <button
+                  key={type}
+                  type="button"
+                  onClick={() => toggleType(type)}
+                  className={`h-8 sm:h-[34px] px-2.5 sm:px-3 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer select-none shrink-0 inline-flex items-center justify-center ${
+                    isSelected
+                      ? "bg-[#044CD0] text-white shadow-xs font-bold ring-2 ring-[#044CD0]/20"
+                      : "bg-slate-100/90 dark:bg-[#030c1c] text-slate-700 dark:text-slate-300 hover:bg-slate-200/80 dark:hover:bg-[#071938] hover:text-[#044CD0] dark:hover:text-white border border-slate-200/90 dark:border-[#0e274d]"
+                  }`}
+                >
+                  <span>{type === "ALL" ? t.catalog.allTypes : type}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Filter Rows: Asset Class, Risk Profile, Legal Type & Currency */}
-        <div className="pt-3 border-t border-slate-200 dark:border-[#0e274d] space-y-3">
-          {/* Row 1: Asset Class */}
-          <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-xs sm:text-sm">
-            <span className="text-slate-700 dark:text-slate-300 sm:w-[124px] shrink-0 font-semibold flex items-center gap-1.5 select-none">
-              <Compass className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
-              {t.catalog.assetClass}
-            </span>
-            <div className="inline-flex items-center p-1 rounded-xl bg-slate-100/90 dark:bg-[#030c1c] border border-slate-200/80 dark:border-[#0e274d]/80 gap-1 flex-wrap">
-              {classificationOptions.map((cls) => {
-                const isSelected =
-                  cls.id === "ALL"
-                    ? selectedClassifications.length === 0
-                    : selectedClassifications.includes(cls.id);
-
-                return (
-                  <button
-                    key={cls.id}
-                    onClick={() => toggleClassification(cls.id)}
-                    aria-pressed={isSelected}
-                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all duration-150 cursor-pointer select-none ${
-                      isSelected
-                        ? "bg-[#044CD0] text-white shadow-xs font-semibold"
-                        : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-[#081a38]"
-                    }`}
-                  >
-                    {isSelected && cls.id !== "ALL" && (
-                      <Check className="w-3.5 h-3.5 stroke-[3]" />
-                    )}
-                    {cls.label}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Row 2: SRI Risk Profile */}
-          <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-xs sm:text-sm">
-            <span className="text-slate-700 dark:text-slate-300 sm:w-[124px] shrink-0 font-semibold flex items-center gap-1.5 select-none">
-              <ShieldAlert className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
-              {t.catalog.sriLabel}
-            </span>
-            <div className="inline-flex items-center p-1 rounded-xl bg-slate-100/90 dark:bg-[#030c1c] border border-slate-200/80 dark:border-[#0e274d]/80 gap-1 flex-wrap">
+        {/* Row 2: Precision Filter Toolbar (Search + TFI + Waluta + Actions) */}
+        <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
+          {/* 1. Search Bar */}
+          <div className="relative w-full sm:w-auto sm:flex-1 min-w-[200px] sm:min-w-[260px] md:min-w-[300px] max-w-full sm:max-w-[360px]">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+            <input
+              type="text"
+              placeholder={isMobile ? t.catalog.searchPlaceholderMobile : t.catalog.searchPlaceholder}
+              value={searchTerm}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                setCurrentPage(0);
+              }}
+              className="h-[38px] w-full pl-9 pr-8 rounded-xl bg-slate-50/90 dark:bg-[#030c1c] border border-slate-300 dark:border-[#0e274d] text-xs sm:text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-hidden focus:border-[#044CD0] focus:ring-2 focus:ring-[#044CD0]/15 transition-all shadow-2xs"
+            />
+            {searchTerm && (
               <button
                 type="button"
-                onClick={() => toggleSri(0)}
-                className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all duration-150 cursor-pointer select-none ${
-                  selectedSri.length === 0
-                    ? "bg-[#044CD0] text-white shadow-xs font-semibold"
-                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-[#081a38]"
-                }`}
+                onClick={() => {
+                  setSearchTerm("");
+                  setCurrentPage(0);
+                }}
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 rounded-md transition-colors cursor-pointer"
+                aria-label="Wyczyść szukanie"
               >
-                {t.catalog.sriAll}
+                <X className="w-3.5 h-3.5" />
               </button>
-              {SRI_LEVELS.map((sri) => {
-                const isSelected = selectedSri.includes(sri.level);
-                return (
-                  <button
-                    key={sri.level}
-                    type="button"
-                    onClick={() => toggleSri(sri.level)}
-                    aria-pressed={isSelected}
-                    className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center select-none ${
-                      isSelected
-                        ? `${sri.color} text-white shadow-md scale-105 ring-2 ring-offset-1 ring-slate-400 dark:ring-offset-[#051329]`
-                        : `bg-white/80 dark:bg-[#051329] ${sri.text} hover:opacity-100 opacity-80 border border-slate-200/80 dark:border-[#0e274d]`
-                    }`}
-                    title={`SRI ${sri.level}`}
-                  >
-                    {sri.label}
-                  </button>
-                );
-              })}
-            </div>
+            )}
           </div>
 
-          {/* Row 3: Legal Type */}
-          <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-xs sm:text-sm">
-            <span className="text-slate-700 dark:text-slate-300 sm:w-[124px] shrink-0 font-semibold flex items-center gap-1.5 select-none">
-              <Scale className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
-              {t.catalog.legalType}
-            </span>
-            <div className="inline-flex items-center p-1 rounded-xl bg-slate-100/90 dark:bg-[#030c1c] border border-slate-200/80 dark:border-[#0e274d]/80 gap-1 flex-wrap">
-              {["ALL", "FIO", "SFIO", "FIZ", "ETF", "PPK"].map((type) => {
-                const isSelected =
-                  type === "ALL"
-                    ? selectedTypes.length === 0
-                    : selectedTypes.includes(type);
-
-                return (
-                  <button
-                    key={type}
-                    onClick={() => toggleType(type)}
-                    aria-pressed={isSelected}
-                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all duration-150 cursor-pointer select-none ${
-                      isSelected
-                        ? "bg-[#044CD0] text-white shadow-xs font-semibold"
-                        : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-[#081a38]"
-                    }`}
-                  >
-                    {isSelected && type !== "ALL" && (
-                      <Check className="w-3.5 h-3.5 stroke-[3]" />
-                    )}
-                    {type === "ALL" ? t.catalog.allTypes : type}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Row 4: Currency & Actions */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs sm:text-sm">
-            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-              <span className="text-slate-700 dark:text-slate-300 sm:w-[124px] shrink-0 font-semibold flex items-center gap-1.5 select-none">
-                <Coins className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
-                {t.catalog.currencyLabel}
+          {/* 2. Zarządzający Dropdown Pill */}
+          <div ref={tfiDropdownRef} className="relative flex-1 sm:flex-initial">
+            <button
+              type="button"
+              onClick={() => setOpenFilterDropdown(openFilterDropdown === "tfi" ? null : "tfi")}
+              aria-haspopup="listbox"
+              aria-expanded={openFilterDropdown === "tfi"}
+              className={`h-[38px] w-full sm:w-auto inline-flex items-center justify-between sm:justify-start gap-1.5 px-3 rounded-xl border text-xs sm:text-sm transition-all cursor-pointer select-none shadow-2xs ${
+                openFilterDropdown === "tfi"
+                  ? "border-[#044CD0] ring-2 ring-[#044CD0]/20 bg-blue-50/70 dark:bg-[#044CD0]/15 text-[#044CD0] dark:text-blue-300 font-semibold"
+                  : selectedCompanies.length > 0
+                  ? "border-blue-400 dark:border-[#044CD0]/60 bg-blue-50/80 dark:bg-[#044CD0]/15 text-[#044CD0] dark:text-blue-300 font-semibold"
+                  : "border-slate-300 dark:border-[#0e274d] bg-white dark:bg-[#030c1c] text-slate-700 dark:text-slate-300 hover:border-[#044CD0] dark:hover:border-slate-500 font-medium"
+              }`}
+            >
+              <Building2 className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
+              <span className="truncate max-w-[130px] sm:max-w-[200px] md:max-w-[260px]">
+                {selectedCompanies.length === 0
+                  ? t.catalog.tfiFilter
+                  : selectedCompanies[0]}
               </span>
-              <div className="inline-flex items-center p-1 rounded-xl bg-slate-100/90 dark:bg-[#030c1c] border border-slate-200/80 dark:border-[#0e274d]/80 gap-1 flex-wrap">
-                {["ALL", "PLN", "USD", "EUR"].map((curr) => {
-                  const isSelected =
-                    curr === "ALL"
-                      ? selectedCurrencies.length === 0
-                      : selectedCurrencies.includes(curr);
-
-                  return (
-                    <button
-                      key={curr}
-                      onClick={() => toggleCurrency(curr)}
-                      aria-pressed={isSelected}
-                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all duration-150 cursor-pointer select-none ${
-                        isSelected
-                          ? "bg-[#044CD0] text-white shadow-xs font-semibold"
-                          : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-[#081a38]"
-                      }`}
-                    >
-                      {isSelected && curr !== "ALL" && (
-                        <Check className="w-3.5 h-3.5 stroke-[3]" />
-                      )}
-                      {curr === "ALL" ? t.catalog.allCurrencies : curr}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Actions: Clear All Filters & Advanced Options Toggle */}
-            <div className="flex items-center gap-2 self-start sm:self-auto shrink-0 flex-wrap">
-              {hasAnyActiveFilters && (
-                <button
-                  type="button"
-                  data-component="clear-filters-btn"
-                  onClick={resetAllFilters}
-                  className="h-[38px] inline-flex items-center gap-1.5 text-xs sm:text-sm py-1.5 px-3 sm:px-3.5 rounded-xl border border-rose-300/80 dark:border-rose-900/60 bg-rose-50/80 dark:bg-rose-950/30 text-rose-700 dark:text-rose-300 hover:bg-rose-100/90 dark:hover:bg-rose-900/50 hover:border-rose-400 dark:hover:border-rose-700 hover:text-rose-800 dark:hover:text-rose-200 font-medium transition-all cursor-pointer shadow-2xs hover:shadow-xs group"
-                  title={t.catalog.clearAllFilters}
-                  aria-label={t.catalog.clearAllFilters}
-                >
-                  <RotateCcw className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400 group-hover:-rotate-45 transition-transform" />
-                  <span>{t.catalog.clearAllFilters}</span>
-                  <span className="px-1.5 py-0.5 rounded-full bg-rose-200/80 dark:bg-rose-900/80 text-rose-800 dark:text-rose-200 text-[11px] font-bold border border-rose-300/80 dark:border-rose-800 transition-colors">
-                    {activeFiltersCount}
-                  </span>
-                </button>
+              {selectedCompanies.length > 1 && (
+                <span className="px-1.5 py-0.2 rounded-full bg-[#044CD0] text-white text-[10px] font-bold shrink-0">
+                  +{selectedCompanies.length - 1}
+                </span>
               )}
-
-              {/* Toggle Button for Advanced Options */}
-              <button
-                onClick={toggleAdvancedFilters}
-                className={`h-[38px] inline-flex items-center gap-1.5 text-xs sm:text-sm py-1.5 px-3 sm:px-3.5 rounded-xl border transition-all cursor-pointer ${
-                  hasActiveAdvancedFilters
-                    ? "text-[#044CD0] dark:text-blue-300 border-blue-400 dark:border-blue-500/50 bg-blue-50/90 dark:bg-[#044CD0]/15 hover:bg-blue-100/90 dark:hover:bg-[#044CD0]/25 font-semibold shadow-2xs"
-                    : "text-slate-600 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-slate-200 border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-slate-600 bg-white dark:bg-transparent hover:bg-blue-50/70 dark:hover:bg-[#071938]"
+              {selectedCompanies.length > 0 && (
+                <span
+                  role="button"
+                  tabIndex={0}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedCompanies([]);
+                    setCurrentPage(0);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.stopPropagation();
+                      setSelectedCompanies([]);
+                      setCurrentPage(0);
+                    }
+                  }}
+                  className="p-0.5 hover:bg-blue-200/60 dark:hover:bg-blue-800/60 rounded-full transition-colors cursor-pointer"
+                  title={t.catalog.clearTfi}
+                >
+                  <X className="w-3 h-3 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200" />
+                </span>
+              )}
+              <ChevronDown
+                className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${
+                  openFilterDropdown === "tfi" ? "rotate-180 text-[#044CD0] dark:text-blue-400" : ""
                 }`}
+              />
+            </button>
+
+            {/* TFI Dropdown Popover */}
+            {openFilterDropdown === "tfi" && (
+              <div
+                role="listbox"
+                aria-multiselectable="true"
+                className="absolute top-full left-0 mt-1.5 w-72 sm:w-80 max-w-[calc(100vw-32px)] bg-white dark:bg-[#030c1c] border border-slate-200 dark:border-[#0e274d] rounded-xl shadow-2xl z-50 flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-100"
               >
-                <SlidersHorizontal className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6]" />
-                <span>{t.catalog.advancedFilters}</span>
-                {hasActiveAdvancedFilters && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#044CD0] dark:bg-blue-400 animate-pulse" />
-                )}
-                {showAdvancedFilters ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-              </button>
-            </div>
+                {/* Search inside TFI Popover */}
+                <div className="p-2 border-b border-slate-200 dark:border-[#0e274d] bg-slate-50/70 dark:bg-[#051329]">
+                  <div className="relative">
+                    <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                    <input
+                      type="text"
+                      value={tfiSearchTerm}
+                      onChange={(e) => setTfiSearchTerm(e.target.value)}
+                      placeholder={t.catalog.searchTfiPlaceholder}
+                      className="w-full bg-white dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] rounded-lg pl-8 pr-7 py-1.5 text-xs text-slate-800 dark:text-slate-200 placeholder:text-slate-400 focus:outline-hidden focus:border-[#044CD0] focus:ring-1 focus:ring-[#044CD0]"
+                      autoFocus
+                    />
+                    {tfiSearchTerm && (
+                      <button
+                        type="button"
+                        onClick={() => setTfiSearchTerm("")}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-0.5 cursor-pointer"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                {/* Scrollable list */}
+                <div className="max-h-64 overflow-y-auto p-1.5 space-y-0.5">
+                  <button
+                    type="button"
+                    role="option"
+                    aria-selected={selectedCompanies.length === 0}
+                    onClick={() => {
+                      setSelectedCompanies([]);
+                      setCurrentPage(0);
+                    }}
+                    className={`w-full text-left px-2.5 py-1.5 text-xs rounded-lg flex items-center justify-between transition-colors cursor-pointer select-none ${
+                      selectedCompanies.length === 0
+                        ? "bg-blue-50 dark:bg-[#044CD0]/25 text-[#044CD0] dark:text-blue-300 font-semibold"
+                        : "text-slate-700 dark:text-slate-200 hover:bg-blue-50/70 dark:hover:bg-[#071938] hover:text-[#044CD0] dark:hover:text-white"
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <div
+                        className={`w-4 h-4 rounded-sm flex items-center justify-center transition-colors ${
+                          selectedCompanies.length === 0
+                            ? "bg-[#044CD0] border border-[#044CD0] text-white"
+                            : "border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#051329]"
+                        }`}
+                      >
+                        {selectedCompanies.length === 0 && <Check className="w-3 h-3 stroke-[3]" />}
+                      </div>
+                      <span>{t.catalog.allTfi}</span>
+                    </div>
+                  </button>
+
+                  {filteredTfis.length === 0 ? (
+                    <div className="p-4 text-center text-xs text-slate-400 dark:text-slate-500">
+                      {t.catalog.noTfiResults}
+                    </div>
+                  ) : (
+                    filteredTfis.map((tfi) => {
+                      const isSelected = selectedCompanies.includes(tfi);
+                      return (
+                        <button
+                          key={tfi}
+                          type="button"
+                          role="option"
+                          aria-selected={isSelected}
+                          onClick={() => toggleCompany(tfi)}
+                          className={`w-full text-left px-2.5 py-1.5 text-xs rounded-lg flex items-center justify-between transition-colors cursor-pointer select-none ${
+                            isSelected
+                              ? "bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-200 font-semibold"
+                              : "text-slate-700 dark:text-slate-300 hover:bg-blue-50/70 dark:hover:bg-[#071938] hover:text-[#044CD0] dark:hover:text-white"
+                          }`}
+                        >
+                          <div className="flex items-center gap-2.5 min-w-0 flex-1 mr-2">
+                            <div
+                              className={`w-4 h-4 rounded-sm flex items-center justify-center shrink-0 transition-colors ${
+                                isSelected
+                                  ? "bg-[#044CD0] border border-[#044CD0] text-white"
+                                  : "border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#051329]"
+                              }`}
+                            >
+                              {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
+                            </div>
+                            <span className="truncate">{tfi}</span>
+                          </div>
+                        </button>
+                      );
+                    })
+                  )}
+                </div>
+
+                {/* Popover footer */}
+                <div className="px-3 py-2 bg-slate-50 dark:bg-[#051329] border-t border-slate-200 dark:border-[#0e274d] flex items-center justify-between text-xs shrink-0 select-none">
+                  <span className="text-slate-500 dark:text-slate-400 font-medium">
+                    {locale === "en" ? "Selected:" : "Wybrano:"}{" "}
+                    <strong className="text-slate-900 dark:text-white font-bold">
+                      {selectedCompanies.length === 0
+                        ? locale === "en"
+                          ? "All"
+                          : "Wszystkie"
+                        : selectedCompanies.length}
+                    </strong>
+                  </span>
+                  <div className="flex items-center gap-1.5">
+                    {selectedCompanies.length > 0 && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSelectedCompanies([]);
+                          setCurrentPage(0);
+                        }}
+                        className="px-2 py-1 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/80 dark:hover:bg-slate-800 transition-colors cursor-pointer font-medium"
+                      >
+                        {t.common.clear}
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => setOpenFilterDropdown(null)}
+                      className="px-3 py-1 rounded-lg bg-[#044CD0] hover:bg-blue-600 text-white font-medium transition-colors cursor-pointer shadow-xs"
+                    >
+                      {locale === "en" ? "Done" : "Gotowe"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* 3. Right-Aligned Action: Advanced Filters Drawer Toggle */}
+          <div className="sm:ml-auto shrink-0">
+            <button
+              type="button"
+              onClick={toggleAdvancedFilters}
+              className={`h-[38px] inline-flex items-center gap-1.5 text-xs sm:text-sm py-1.5 px-3 sm:px-3.5 rounded-xl border transition-all cursor-pointer ${
+                hasActiveAdvancedFilters || showAdvancedFilters
+                  ? "text-[#044CD0] dark:text-blue-300 border-blue-400 dark:border-blue-500/50 bg-blue-50/90 dark:bg-[#044CD0]/15 hover:bg-blue-100/90 dark:hover:bg-[#044CD0]/25 font-semibold shadow-2xs"
+                  : "text-slate-600 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-slate-200 border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-slate-600 bg-white dark:bg-transparent hover:bg-blue-50/70 dark:hover:bg-[#071938]"
+              }`}
+            >
+              <SlidersHorizontal className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6]" />
+              <span>{t.catalog.advancedFilters}</span>
+              {activeAdvancedFiltersCount > 0 && (
+                <span className="px-1.5 py-0.2 rounded-full bg-[#044CD0] text-white text-[10px] font-bold">
+                  {activeAdvancedFiltersCount}
+                </span>
+              )}
+              {showAdvancedFilters ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+            </button>
           </div>
         </div>
 
         {/* Collapsible Advanced Filters Section */}
         {showAdvancedFilters && (
           <div className="p-4 sm:p-5 rounded-2xl bg-slate-50/90 dark:bg-[#030a16] border border-slate-200 dark:border-[#0e274d] space-y-4 text-xs sm:text-sm text-slate-700 dark:text-slate-300 animate-in fade-in duration-150 relative z-20 shadow-inner">
-            {/* Header with active count & quick reset */}
-            <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-[#0e274d]/80">
-              <div className="flex items-center gap-2">
+            {/* Header with active count & status toggles */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 border-b border-slate-200 dark:border-[#0e274d]/80">
+              <div className="flex items-center gap-2 shrink-0">
                 <SlidersHorizontal className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6]" />
                 <span className="font-semibold text-slate-900 dark:text-white text-xs sm:text-sm">
                   {t.catalog.advancedFilters}
@@ -1201,700 +1258,472 @@ export function SubfundsCatalog({
                   </span>
                 )}
               </div>
-              {hasActiveAdvancedFilters && (
-                <button
-                  type="button"
-                  onClick={resetAdvancedFilters}
-                  className="text-xs text-slate-500 hover:text-rose-600 dark:text-slate-400 dark:hover:text-rose-400 font-medium transition-colors cursor-pointer flex items-center gap-1"
+
+              {/* Status switches inline in header */}
+              <div className="flex items-center flex-wrap gap-2">
+                {/* 1. Include funds in liquidation toggle */}
+                <label
+                  className={`group relative inline-flex items-center gap-2 px-2.5 py-1 rounded-xl border text-xs cursor-pointer select-none transition-all shadow-2xs ${
+                    includeLiquidating
+                      ? "border-blue-300 dark:border-blue-800/80 bg-blue-50/70 dark:bg-blue-950/30 text-[#044CD0] dark:text-blue-300 font-semibold"
+                      : "border-slate-200/90 dark:border-[#0e274d] bg-white dark:bg-[#030a16]/60 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-[#071938] hover:border-slate-300 dark:hover:border-[#1e3a6a] font-medium"
+                  }`}
+                  title={t.catalog.showLiquidating}
                 >
-                  <RotateCcw className="w-3 h-3" />
-                  <span>{t.common.clear}</span>
-                </button>
-              )}
-            </div>
-
-            {/* 2-Column Responsive Grid for Main Advanced Controls */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              {/* Column 1: Entities & Detailed Category */}
-              <div className="space-y-3.5 bg-white dark:bg-[#051329] p-3.5 sm:p-4 rounded-xl border border-slate-200/90 dark:border-[#0e274d]">
-                <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 flex items-center gap-1.5">
-                  <Building2 className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#3b82f6]" />
-                  <span>{t.catalog.filterSectionEntities}</span>
-                </div>
-
-                {/* 1. Towarzystwo (TFI) */}
-                <div className="space-y-1.5">
-                  <label id="tfi-select-label" className="block text-xs font-semibold text-slate-700 dark:text-slate-300">
-                    {t.catalog.tfiLabel}
-                  </label>
-                  <div ref={tfiDropdownRef} className="relative w-full">
-                    <div
-                      className={`h-[38px] w-full bg-white dark:bg-[#030a16] border ${
-                        isTfiOpen
-                          ? "border-[#044CD0] ring-2 ring-[#044CD0]/20"
-                          : selectedCompanies.length > 0
-                          ? "border-blue-400 dark:border-[#044CD0]/60 bg-blue-50/70 dark:bg-[#044CD0]/10"
-                          : "border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-[#19407a]"
-                      } text-slate-800 dark:text-slate-200 font-sans font-medium text-xs sm:text-sm rounded-xl pl-3 pr-2.5 flex items-center justify-between gap-1 transition-all select-none shadow-2xs`}
-                    >
-                      <button
-                        type="button"
-                        id="tfi-select-btn"
-                        aria-labelledby="tfi-select-label"
-                        aria-haspopup="listbox"
-                        aria-expanded={isTfiOpen}
-                        onClick={() => setIsTfiOpen((prev) => !prev)}
-                        className="flex-1 min-w-0 h-full flex items-center gap-1.5 text-left cursor-pointer focus:outline-none"
-                      >
-                        <span className="truncate" title={tfiTriggerTitle}>
-                          {selectedCompanies.length === 0
-                            ? t.catalog.allTfi
-                            : selectedCompanies[0]}
-                        </span>
-                        {selectedCompanies.length > 1 && (
-                          <span className="px-1.5 py-0.5 rounded-full bg-[#044CD0] text-white text-[10px] font-bold shrink-0">
-                            +{selectedCompanies.length - 1}
-                          </span>
-                        )}
-                      </button>
-
-                      <div className="flex items-center gap-1 shrink-0 text-slate-400">
-                        {selectedCompanies.length > 0 && (
-                          <>
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                setSelectedCompanies([]);
-                                setCurrentPage(0);
-                                setIsTfiOpen(false);
-                              }}
-                              title={t.catalog.clearTfi}
-                              className="p-1 text-slate-400 hover:text-slate-800 dark:hover:text-white hover:bg-slate-200/80 dark:hover:bg-slate-700/60 active:bg-slate-300 dark:active:bg-slate-600 rounded-lg transition-colors cursor-pointer flex items-center justify-center focus:outline-none"
-                              aria-label={t.catalog.clearTfi}
-                            >
-                              <X className="w-3.5 h-3.5" />
-                            </button>
-                            <div className="w-px h-3.5 bg-slate-300 dark:bg-[#0e274d]" />
-                          </>
-                        )}
-                        <button
-                          type="button"
-                          tabIndex={-1}
-                          aria-hidden="true"
-                          onClick={() => setIsTfiOpen((prev) => !prev)}
-                          className="p-1 hover:text-slate-700 dark:hover:text-slate-200 cursor-pointer flex items-center justify-center focus:outline-none"
-                        >
-                          <ChevronDown
-                            className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                              isTfiOpen ? "rotate-180 text-blue-600 dark:text-blue-400" : ""
-                            }`}
-                          />
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* TFI Popover */}
-                    {isTfiOpen && (
-                      <div
-                        role="listbox"
-                        aria-labelledby="tfi-select-label"
-                        aria-multiselectable="true"
-                        className="absolute top-full left-0 mt-1.5 w-full bg-white dark:bg-[#030c1c] border border-slate-200 dark:border-[#0e274d] rounded-xl shadow-2xl z-50 flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-100"
-                      >
-                        {/* Search TFI input */}
-                        <div className="p-2 border-b border-slate-200 dark:border-[#0e274d] bg-slate-50/70 dark:bg-[#051329]">
-                          <div className="relative">
-                            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
-                            <input
-                              type="text"
-                              autoFocus
-                              placeholder={t.catalog.searchTfiPlaceholder}
-                              value={tfiSearchTerm}
-                              onChange={(e) => setTfiSearchTerm(e.target.value)}
-                              className="w-full pl-8 pr-7 py-1.5 rounded-lg bg-white dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] text-xs text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:border-[#044CD0]"
-                            />
-                            {tfiSearchTerm && (
-                              <button
-                                type="button"
-                                onClick={() => setTfiSearchTerm("")}
-                                className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 cursor-pointer"
-                              >
-                                <X className="w-3 h-3" />
-                              </button>
-                            )}
-                          </div>
-                        </div>
-
-                        {/* TFI List */}
-                        <div className="max-h-60 overflow-y-auto p-1.5 space-y-0.5">
-                          {/* All TFI option */}
-                          <button
-                            type="button"
-                            role="option"
-                            aria-selected={selectedCompanies.length === 0}
-                            onClick={() => {
-                              setSelectedCompanies([]);
-                              setCurrentPage(0);
-                            }}
-                            className={`w-full text-left px-3 py-1.5 text-xs rounded-lg flex items-center justify-between transition-colors cursor-pointer select-none ${
-                              selectedCompanies.length === 0
-                                ? "bg-blue-50 dark:bg-[#044CD0]/25 text-[#044CD0] dark:text-blue-300 font-semibold"
-                                : "text-slate-700 dark:text-slate-200 hover:bg-blue-50/70 dark:hover:bg-[#071938] hover:text-[#044CD0] dark:hover:text-white"
-                            }`}
-                          >
-                            <div className="flex items-center gap-2.5">
-                              <div
-                                className={`w-4 h-4 rounded-sm flex items-center justify-center transition-colors ${
-                                  selectedCompanies.length === 0
-                                    ? "bg-[#044CD0] border border-[#044CD0] text-white"
-                                    : "border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#051329]"
-                                }`}
-                              >
-                                {selectedCompanies.length === 0 && <Check className="w-3 h-3 stroke-[3]" />}
-                              </div>
-                              <span>{t.catalog.allTfi}</span>
-                            </div>
-                          </button>
-
-                          {filteredTfis.length === 0 ? (
-                            <div className="px-3 py-4 text-center text-xs text-slate-400">
-                              {locale === "en" ? "No matching TFI found" : "Brak wyników dla podanej frazy"}
-                            </div>
-                          ) : (
-                            filteredTfis.map((company) => {
-                              const isSelected = selectedCompanies.includes(company);
-                              return (
-                                <button
-                                  key={company}
-                                  type="button"
-                                  role="option"
-                                  aria-selected={isSelected}
-                                  onClick={() => toggleCompany(company)}
-                                  className={`w-full text-left px-3 py-1.5 text-xs rounded-lg flex items-center justify-between transition-colors cursor-pointer select-none ${
-                                    isSelected
-                                      ? "bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-200 font-semibold"
-                                      : "text-slate-700 dark:text-slate-300 hover:bg-blue-50/70 dark:hover:bg-[#071938] hover:text-[#044CD0] dark:hover:text-white"
-                                  }`}
-                                >
-                                  <div className="flex items-center gap-2.5 min-w-0 flex-1 mr-2">
-                                    <div
-                                      className={`w-4 h-4 rounded-sm flex items-center justify-center shrink-0 transition-colors ${
-                                        isSelected
-                                          ? "bg-[#044CD0] border border-[#044CD0] text-white"
-                                          : "border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#051329]"
-                                      }`}
-                                    >
-                                      {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
-                                    </div>
-                                    <span className="truncate">{company}</span>
-                                  </div>
-                                </button>
-                              );
-                            })
-                          )}
-                        </div>
-
-                        {/* TFI Footer */}
-                        <div className="px-3 py-2 bg-slate-50 dark:bg-[#051329] border-t border-slate-200 dark:border-[#0e274d] flex items-center justify-between text-xs shrink-0 select-none">
-                          <span className="text-slate-500 dark:text-slate-400 font-medium">
-                            {locale === "en" ? "Selected:" : "Wybrano:"}{" "}
-                            <strong className="text-slate-900 dark:text-white font-bold">
-                              {selectedCompanies.length === 0
-                                ? locale === "en"
-                                  ? "All"
-                                  : "Wszystkie"
-                                : selectedCompanies.length}
-                            </strong>
-                          </span>
-                          <div className="flex items-center gap-1.5">
-                            {selectedCompanies.length > 0 && (
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  setSelectedCompanies([]);
-                                  setCurrentPage(0);
-                                }}
-                                className="px-2 py-1 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/80 dark:hover:bg-slate-800 transition-colors cursor-pointer font-medium"
-                              >
-                                {t.common.clear}
-                              </button>
-                            )}
-                            <button
-                              type="button"
-                              onClick={() => setIsTfiOpen(false)}
-                              className="px-3 py-1 rounded-lg bg-[#044CD0] hover:bg-blue-600 text-white font-medium transition-colors cursor-pointer shadow-xs"
-                            >
-                              {locale === "en" ? "Done" : "Gotowe"}
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* 2. Kategoria szczegółowa */}
-                <div className="space-y-1.5">
-                  <label id="detailed-category-label" className="block text-xs font-semibold text-slate-700 dark:text-slate-300">
-                    {t.catalog.detailedCategory}
-                  </label>
-                  <div ref={categoryDropdownRef} className="relative w-full">
-                {/* Custom Trigger Container */}
-                <div
-                  className={`h-[38px] w-full bg-white dark:bg-[#051329] border ${
-                    isCategoryOpen
-                      ? "border-[#044CD0] ring-2 ring-[#044CD0]/20"
-                      : selectedCategories.length > 0
-                      ? "border-blue-400 dark:border-[#044CD0]/60 bg-blue-50/70 dark:bg-[#044CD0]/10"
-                      : "border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-[#19407a]"
-                  } text-slate-800 dark:text-slate-200 font-sans font-medium text-xs sm:text-sm rounded-xl pl-3 pr-2.5 flex items-center justify-between gap-1 transition-all select-none shadow-2xs`}
-                >
-                  {/* Left Clickable Area: Opens/Closes Dropdown */}
-                  <button
-                    type="button"
-                    id="detailed-category-select"
-                    aria-labelledby="detailed-category-label"
-                    aria-haspopup="listbox"
-                    aria-expanded={isCategoryOpen}
-                    onClick={() => setIsCategoryOpen((prev) => !prev)}
-                    className="flex-1 min-w-0 h-full flex items-center gap-1.5 text-left cursor-pointer focus:outline-none"
-                  >
-                    <span className="truncate" title={categoryTriggerTitle}>
-                      {selectedCategories.length === 0
-                        ? t.catalog.allCategories
-                        : getCategoryLabel(selectedCategories[0], locale === "en")}
-                    </span>
-                    {selectedCategories.length > 1 && (
-                      <span className="px-1.5 py-0.5 rounded-full bg-[#044CD0] text-white text-[10px] font-bold shrink-0">
-                        +{selectedCategories.length - 1}
-                      </span>
-                    )}
-                  </button>
-
-                  {/* Right Actions Area: Separate Clear Button & Chevron */}
-                  <div className="flex items-center gap-1 shrink-0 text-slate-400">
-                    {selectedCategories.length > 0 && (
-                      <>
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            setSelectedCategories([]);
-                            setCurrentPage(0);
-                            setIsCategoryOpen(false);
-                          }}
-                          title={t.catalog.clearCategory}
-                          className="p-1 text-slate-400 hover:text-slate-800 dark:hover:text-white hover:bg-slate-200/80 dark:hover:bg-slate-700/60 active:bg-slate-300 dark:active:bg-slate-600 rounded-lg transition-colors cursor-pointer flex items-center justify-center focus:outline-none"
-                          aria-label={t.catalog.clearCategory}
-                        >
-                          <X className="w-3.5 h-3.5" />
-                        </button>
-                        <div className="w-px h-3.5 bg-slate-300 dark:bg-[#0e274d]" />
-                      </>
-                    )}
-                    <button
-                      type="button"
-                      tabIndex={-1}
-                      aria-hidden="true"
-                      onClick={() => setIsCategoryOpen((prev) => !prev)}
-                      className="p-1 hover:text-slate-700 dark:hover:text-slate-200 cursor-pointer flex items-center justify-center focus:outline-none"
-                    >
-                      <ChevronDown
-                        className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                          isCategoryOpen ? "rotate-180 text-blue-600 dark:text-blue-400" : ""
-                        }`}
-                      />
-                    </button>
-                  </div>
-                </div>
-
-                {/* Dropdown Menu Popover */}
-                {isCategoryOpen && (
+                  <input
+                    type="checkbox"
+                    checked={includeLiquidating}
+                    onChange={(e) => {
+                      setIncludeLiquidating(e.target.checked);
+                      setCurrentPage(0);
+                    }}
+                    className="sr-only peer"
+                  />
                   <div
-                    role="listbox"
-                    aria-labelledby="detailed-category-label"
-                    aria-multiselectable="true"
-                    className="absolute top-full left-0 mt-1.5 w-full sm:w-[420px] bg-white dark:bg-[#030c1c] border border-slate-200 dark:border-[#0e274d] rounded-xl shadow-2xl z-50 flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-100"
+                    className={`relative inline-flex h-4 w-7 shrink-0 items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out ${
+                      includeLiquidating ? "bg-[#044CD0]" : "bg-slate-300 dark:bg-slate-700"
+                    }`}
                   >
-                    {/* Scrollable Items Container */}
-                    <div className="max-h-72 overflow-y-auto p-1.5 space-y-1">
-                      {/* Option: All categories (resets multi-selection) */}
-                      <button
-                        type="button"
-                        role="option"
-                        aria-selected={selectedCategories.length === 0}
-                        onClick={() => {
-                          setSelectedCategories([]);
-                          setCurrentPage(0);
-                        }}
-                        className={`w-full text-left px-3 py-2 text-xs sm:text-sm rounded-lg flex items-center justify-between transition-colors cursor-pointer select-none ${
-                          selectedCategories.length === 0
-                            ? "bg-blue-50 dark:bg-[#044CD0]/25 text-[#044CD0] dark:text-blue-300 font-semibold"
-                            : "text-slate-700 dark:text-slate-200 hover:bg-blue-50/70 dark:hover:bg-[#071938] hover:text-[#044CD0] dark:hover:text-white"
-                        }`}
-                      >
-                        <div className="flex items-center gap-2.5">
-                          <div
-                            className={`w-4 h-4 rounded-sm flex items-center justify-center transition-colors ${
-                              selectedCategories.length === 0
-                                ? "bg-[#044CD0] border border-[#044CD0] text-white"
-                                : "border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#051329]"
-                            }`}
-                          >
-                            {selectedCategories.length === 0 && <Check className="w-3 h-3 stroke-[3]" />}
-                          </div>
-                          <span>{t.catalog.allCategories}</span>
-                        </div>
-                      </button>
+                    <span
+                      aria-hidden="true"
+                      className={`pointer-events-none inline-block h-3 w-3 transform rounded-full bg-white shadow-xs transition duration-200 ease-in-out ${
+                        includeLiquidating ? "translate-x-3" : "translate-x-0"
+                      }`}
+                    />
+                  </div>
+                  <span className="whitespace-nowrap">
+                    {t.catalog.showLiquidating}
+                  </span>
+                </label>
 
-                      {/* Grouped categories */}
-                      {visibleCategoryGroups.map((grp) => (
-                        <div key={grp.classId} className="pt-1.5 border-t border-slate-100 dark:border-[#0e274d]/50 first:border-t-0">
-                          {/* Group Header - unclickable, highlighted and distinct for eye scanning */}
-                          <div className="px-3 py-1.5 text-[11px] font-bold text-[#044CD0] dark:text-[#60a5fa] uppercase tracking-wide select-none">
-                            {locale === "en" ? grp.groupEn : grp.groupPl}
-                          </div>
+                {/* 2. Include inactive / merged funds toggle */}
+                <label
+                  className={`group relative inline-flex items-center gap-2 px-2.5 py-1 rounded-xl border text-xs cursor-pointer select-none transition-all shadow-2xs ${
+                    includeInactive
+                      ? "border-blue-300 dark:border-blue-800/80 bg-blue-50/70 dark:bg-blue-950/30 text-[#044CD0] dark:text-blue-300 font-semibold"
+                      : "border-slate-200/90 dark:border-[#0e274d] bg-white dark:bg-[#030a16]/60 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-[#071938] hover:border-slate-300 dark:hover:border-[#1e3a6a] font-medium"
+                  }`}
+                  title={t.catalog.showInactive}
+                >
+                  <input
+                    type="checkbox"
+                    checked={includeInactive}
+                    onChange={(e) => {
+                      setIncludeInactive(e.target.checked);
+                      setCurrentPage(0);
+                    }}
+                    className="sr-only peer"
+                  />
+                  <div
+                    className={`relative inline-flex h-4 w-7 shrink-0 items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out ${
+                      includeInactive ? "bg-[#044CD0]" : "bg-slate-300 dark:bg-slate-700"
+                    }`}
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={`pointer-events-none inline-block h-3 w-3 transform rounded-full bg-white shadow-xs transition duration-200 ease-in-out ${
+                        includeInactive ? "translate-x-3" : "translate-x-0"
+                      }`}
+                    />
+                  </div>
+                  <span className="whitespace-nowrap">
+                    {t.catalog.showInactive}
+                  </span>
+                </label>
+              </div>
+            </div>
 
-                          {/* Options under this group */}
-                          <div className="space-y-0.5">
-                            {grp.options.map((opt) => {
-                              const isSelected = selectedCategories.includes(opt.id);
-                              const label = locale === "en" ? opt.labelEn : opt.labelPl;
-
-                              return (
-                                <button
-                                  key={opt.id}
-                                  type="button"
-                                  role="option"
-                                  aria-selected={isSelected}
-                                  onClick={() => toggleCategory(opt.id)}
-                                  className={`w-full text-left pl-3 pr-3 py-1.5 text-xs sm:text-sm rounded-lg flex items-center justify-between transition-colors cursor-pointer select-none ${
-                                    isSelected
-                                      ? "bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-200 font-semibold"
-                                      : "text-slate-700 dark:text-slate-300 hover:bg-blue-50/70 dark:hover:bg-[#071938] hover:text-[#044CD0] dark:hover:text-white"
-                                  }`}
-                                >
-                                  <div className="flex items-center gap-2.5 min-w-0 flex-1 mr-2">
-                                    <div
-                                      className={`w-4 h-4 rounded-sm flex items-center justify-center shrink-0 transition-colors ${
-                                        isSelected
-                                          ? "bg-[#044CD0] border border-[#044CD0] text-white"
-                                          : "border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#051329]"
-                                      }`}
-                                    >
-                                      {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
-                                    </div>
-                                    <span className="truncate">{label}</span>
-                                  </div>
-                                </button>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      ))}
+            {/* 2x2 Responsive Grid: Kategoria, SRI, Opłata, Waluta */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4">
+              {/* Card 1: Kategoria szczegółowa */}
+              <div className="bg-white dark:bg-[#051329] p-3.5 sm:p-4 rounded-xl border border-slate-200/90 dark:border-[#0e274d] space-y-2.5">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 flex items-center gap-1.5">
+                      <Compass className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#3b82f6]" />
+                      <span>{t.catalog.detailedCategory}</span>
                     </div>
-
-                    {/* Popover solid footer pinned to bottom (no gap, no bleed) */}
-                    <div data-component="category-dropdown-footer" className="px-3 py-2 bg-slate-50 dark:bg-[#051329] border-t border-slate-200 dark:border-[#0e274d] flex items-center justify-between text-xs shrink-0 select-none">
-                      <span className="text-slate-500 dark:text-slate-400 font-medium">
-                        {locale === "en" ? "Selected:" : "Wybrano:"}{" "}
-                        <strong className="text-slate-900 dark:text-white font-bold">
-                          {selectedCategories.length === 0
-                            ? locale === "en"
-                              ? "All"
-                              : "Wszystkie"
-                            : selectedCategories.length}
-                        </strong>
+                    {selectedCategories.length > 0 && (
+                      <span className="px-1.5 py-0.2 rounded-full bg-[#044CD0] text-white text-[10px] font-bold">
+                        {selectedCategories.length}
                       </span>
-                      <div className="flex items-center gap-1.5">
-                        {selectedCategories.length > 0 && (
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setSelectedCategories([]);
-                              setCurrentPage(0);
-                            }}
-                            className="px-2 py-1 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/80 dark:hover:bg-slate-800 transition-colors cursor-pointer font-medium"
-                          >
-                            {t.common.clear}
-                          </button>
-                        )}
+                    )}
+                  </div>
+
+                  <div ref={categoryDropdownRef} className="relative w-full">
+                      <div
+                        className={`h-[32px] sm:h-[34px] w-full bg-white dark:bg-[#030a16] border ${
+                          openFilterDropdown === "category"
+                            ? "border-[#044CD0] ring-2 ring-[#044CD0]/20"
+                            : selectedCategories.length > 0
+                            ? "border-blue-400 dark:border-[#044CD0]/60 bg-blue-50/70 dark:bg-[#044CD0]/10"
+                            : "border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-[#19407a]"
+                        } text-slate-800 dark:text-slate-200 font-sans font-medium text-xs rounded-xl pl-2.5 pr-2 flex items-center justify-between gap-1 transition-all select-none shadow-2xs`}
+                      >
                         <button
                           type="button"
-                          onClick={() => setIsCategoryOpen(false)}
-                          className="px-3 py-1 rounded-lg bg-[#044CD0] hover:bg-blue-600 text-white font-medium transition-colors cursor-pointer shadow-xs"
+                          id="detailed-category-select"
+                          aria-labelledby="detailed-category-label"
+                          aria-haspopup="listbox"
+                          aria-expanded={openFilterDropdown === "category"}
+                          onClick={() => setOpenFilterDropdown(openFilterDropdown === "category" ? null : "category")}
+                          className="flex-1 min-w-0 h-full flex items-center gap-1.5 text-left cursor-pointer focus:outline-none"
                         >
-                          {locale === "en" ? "Done" : "Gotowe"}
+                          <span className="truncate" title={categoryTriggerTitle}>
+                            {selectedCategories.length === 0
+                              ? t.catalog.allCategories
+                              : getCategoryLabel(selectedCategories[0], locale === "en")}
+                          </span>
+                          {selectedCategories.length > 1 && (
+                            <span className="px-1.5 py-0.5 rounded-full bg-[#044CD0] text-white text-[10px] font-bold shrink-0">
+                              +{selectedCategories.length - 1}
+                            </span>
+                          )}
                         </button>
+
+                        <div className="flex items-center gap-1 shrink-0 text-slate-400">
+                          {selectedCategories.length > 0 && (
+                            <>
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  setSelectedCategories([]);
+                                  setCurrentPage(0);
+                                  setOpenFilterDropdown(null);
+                                }}
+                                title={t.catalog.clearCategory}
+                                className="p-1 text-slate-400 hover:text-slate-800 dark:hover:text-white hover:bg-slate-200/80 dark:hover:bg-slate-700/60 active:bg-slate-300 dark:active:bg-slate-600 rounded-lg transition-colors cursor-pointer flex items-center justify-center focus:outline-none"
+                                aria-label={t.catalog.clearCategory}
+                              >
+                                <X className="w-3.5 h-3.5" />
+                              </button>
+                              <div className="w-px h-3.5 bg-slate-300 dark:bg-[#0e274d]" />
+                            </>
+                          )}
+                          <button
+                            type="button"
+                            tabIndex={-1}
+                            aria-hidden="true"
+                            onClick={() => setOpenFilterDropdown(openFilterDropdown === "category" ? null : "category")}
+                            className="p-1 hover:text-slate-700 dark:hover:text-slate-200 cursor-pointer flex items-center justify-center focus:outline-none"
+                          >
+                            <ChevronDown
+                              className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                                openFilterDropdown === "category" ? "rotate-180 text-blue-600 dark:text-blue-400" : ""
+                              }`}
+                            />
+                          </button>
+                        </div>
                       </div>
+
+                      {openFilterDropdown === "category" && (
+                        <div
+                          role="listbox"
+                          aria-labelledby="detailed-category-label"
+                          aria-multiselectable="true"
+                          className="absolute top-full left-0 mt-1.5 w-full sm:w-[380px] max-w-[calc(100vw-32px)] bg-white dark:bg-[#030c1c] border border-slate-200 dark:border-[#0e274d] rounded-xl shadow-2xl z-50 flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-100"
+                        >
+                          <div className="max-h-72 overflow-y-auto p-1.5 space-y-1">
+                            <button
+                              type="button"
+                              role="option"
+                              aria-selected={selectedCategories.length === 0}
+                              onClick={() => {
+                                setSelectedCategories([]);
+                                setCurrentPage(0);
+                              }}
+                              className={`w-full text-left px-2.5 py-1.5 text-xs rounded-lg flex items-center justify-between transition-colors cursor-pointer select-none ${
+                                selectedCategories.length === 0
+                                  ? "bg-blue-50 dark:bg-[#044CD0]/25 text-[#044CD0] dark:text-blue-300 font-semibold"
+                                  : "text-slate-700 dark:text-slate-200 hover:bg-blue-50/70 dark:hover:bg-[#071938] hover:text-[#044CD0] dark:hover:text-white"
+                              }`}
+                            >
+                              <div className="flex items-center gap-2">
+                                <div
+                                  className={`w-4 h-4 rounded-sm flex items-center justify-center transition-colors ${
+                                    selectedCategories.length === 0
+                                      ? "bg-[#044CD0] border border-[#044CD0] text-white"
+                                      : "border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#051329]"
+                                  }`}
+                                >
+                                  {selectedCategories.length === 0 && <Check className="w-3 h-3 stroke-[3]" />}
+                                </div>
+                                <span>{t.catalog.allCategories}</span>
+                              </div>
+                            </button>
+
+                            {visibleCategoryGroups.map((grp) => (
+                              <div key={grp.classId} className="pt-1.5 border-t border-slate-100 dark:border-[#0e274d]/50 first:border-t-0">
+                                <div className="px-2.5 py-1 text-[11px] font-bold text-[#044CD0] dark:text-[#60a5fa] uppercase tracking-wide select-none">
+                                  {locale === "en" ? grp.groupEn : grp.groupPl}
+                                </div>
+
+                                <div className="space-y-0.5">
+                                  {grp.options.map((opt) => {
+                                    const isSelected = selectedCategories.includes(opt.id);
+                                    const label = locale === "en" ? opt.labelEn : opt.labelPl;
+
+                                    return (
+                                      <button
+                                        key={opt.id}
+                                        type="button"
+                                        role="option"
+                                        aria-selected={isSelected}
+                                        onClick={() => toggleCategory(opt.id)}
+                                        className={`w-full text-left px-2.5 py-1.5 text-xs rounded-lg flex items-center justify-between transition-colors cursor-pointer select-none ${
+                                          isSelected
+                                            ? "bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-200 font-semibold"
+                                            : "text-slate-700 dark:text-slate-300 hover:bg-blue-50/70 dark:hover:bg-[#071938] hover:text-[#044CD0] dark:hover:text-white"
+                                        }`}
+                                      >
+                                        <div className="flex items-center gap-2 min-w-0 flex-1 mr-2">
+                                          <div
+                                            className={`w-4 h-4 rounded-sm flex items-center justify-center shrink-0 transition-colors ${
+                                              isSelected
+                                                ? "bg-[#044CD0] border border-[#044CD0] text-white"
+                                                : "border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#051329]"
+                                            }`}
+                                          >
+                                            {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
+                                          </div>
+                                          <span className="truncate">{label}</span>
+                                        </div>
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+
+                          <div data-component="category-dropdown-footer" className="px-3 py-2 bg-slate-50 dark:bg-[#051329] border-t border-slate-200 dark:border-[#0e274d] flex items-center justify-between text-xs shrink-0 select-none">
+                            <span className="text-slate-500 dark:text-slate-400 font-medium">
+                              {locale === "en" ? "Selected:" : "Wybrano:"}{" "}
+                              <strong className="text-slate-900 dark:text-white font-bold">
+                                {selectedCategories.length === 0
+                                  ? locale === "en"
+                                    ? "All"
+                                    : "Wszystkie"
+                                  : selectedCategories.length}
+                              </strong>
+                            </span>
+                            <div className="flex items-center gap-1.5">
+                              {selectedCategories.length > 0 && (
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setSelectedCategories([]);
+                                    setCurrentPage(0);
+                                  }}
+                                  className="px-2 py-1 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/80 dark:hover:bg-slate-800 transition-colors cursor-pointer font-medium"
+                                >
+                                  {t.common.clear}
+                                </button>
+                              )}
+                              <button
+                                type="button"
+                                onClick={() => setOpenFilterDropdown(null)}
+                                className="px-3 py-1 rounded-lg bg-[#044CD0] hover:bg-blue-600 text-white font-medium transition-colors cursor-pointer shadow-xs"
+                              >
+                                {locale === "en" ? "Done" : "Gotowe"}
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
-                )}
-              </div>
-            </div>
-          </div>
+                </div>
 
-          {/* Column 2: SRI Risk Profile & Cost Slider */}
-          <div className="space-y-3.5 bg-white dark:bg-[#051329] p-3.5 sm:p-4 rounded-xl border border-slate-200/90 dark:border-[#0e274d]">
-            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 flex items-center gap-1.5">
-              <ShieldAlert className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#3b82f6]" />
-              <span>{t.catalog.filterSectionRiskFee}</span>
-            </div>
+              {/* Card 2: Ryzyko SRI */}
+              <div className="bg-white dark:bg-[#051329] p-3.5 sm:p-4 rounded-xl border border-slate-200/90 dark:border-[#0e274d] space-y-2.5">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 flex items-center gap-1.5">
+                      <ShieldAlert className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#3b82f6]" />
+                      <span>{t.catalog.sriFilterLabel}</span>
+                    </div>
+                    {selectedSri.length > 0 && (
+                      <span className="px-1.5 py-0.2 rounded-full bg-[#044CD0] text-white text-[10px] font-bold">
+                        {selectedSri.length}
+                      </span>
+                    )}
+                  </div>
 
-            {/* SRI Risk Profile (Pills 1 to 7) */}
-            <div className="space-y-1.5">
-              <div className="flex items-center justify-between">
-                <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
-                  {t.catalog.sriFilterLabel}
-                </label>
-                <span className="text-[11px] text-slate-400 dark:text-slate-500">
-                  {t.catalog.sriFilterHint}
-                </span>
-              </div>
-              <div className="flex items-center gap-1.5 flex-wrap">
-                <button
-                  type="button"
-                  onClick={() => toggleSri(0)}
-                  className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                    selectedSri.length === 0
-                      ? "bg-slate-800 text-white dark:bg-slate-200 dark:text-slate-900 shadow-xs"
-                      : "bg-slate-100 dark:bg-[#030a16] text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-[#0e274d]"
-                  }`}
-                >
-                  {t.catalog.sriAll}
-                </button>
-                {SRI_LEVELS.map((sri) => {
-                  const isSelected = selectedSri.includes(sri.level);
-                  return (
+                  {/* SRI Presets */}
+                  <div className="flex items-center gap-1.5 flex-wrap">
                     <button
-                      key={sri.level}
                       type="button"
-                      onClick={() => toggleSri(sri.level)}
-                      aria-pressed={isSelected}
-                      className={`w-8 h-8 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center ${
-                        isSelected
-                          ? `${sri.color} text-white shadow-md scale-105 ring-2 ring-offset-1 ring-slate-400 dark:ring-offset-[#051329]`
-                          : `bg-slate-100 dark:bg-[#030a16] ${sri.text} hover:opacity-100 opacity-80 border border-slate-200 dark:border-[#0e274d]`
-                      }`}
-                      title={`SRI ${sri.level}`}
-                    >
-                      {sri.label}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Management Fee Max Slider + Presets */}
-            <div className="space-y-1.5 pt-1">
-              <div className="flex items-center justify-between">
-                <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                  <Percent className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#3b82f6]" />
-                  <span>{t.catalog.feeFilterLabel}</span>
-                </label>
-                <span className="text-xs font-bold text-[#044CD0] dark:text-blue-300">
-                  {maxFee === null
-                    ? t.catalog.feeAny
-                    : t.catalog.feeSliderValue.replace("{val}", maxFee.toFixed(2).replace(".", ","))}
-                </span>
-              </div>
-
-              {/* Range Slider */}
-              <div className="flex items-center gap-3">
-                <input
-                  type="range"
-                  min="0.2"
-                  max="3.0"
-                  step="0.05"
-                  value={maxFee === null ? 3.0 : maxFee}
-                  onChange={(e) => {
-                    const val = parseFloat(e.target.value);
-                    setMaxFee(val >= 3.0 ? null : val);
-                    setCurrentPage(0);
-                  }}
-                  className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-[#044CD0]"
-                />
-              </div>
-
-              {/* Quick Fee Presets */}
-              <div className="flex items-center gap-1.5 pt-1 flex-wrap">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setMaxFee(null);
-                    setCurrentPage(0);
-                  }}
-                  className={`px-2 py-1 rounded-md text-[11px] font-medium transition-all cursor-pointer ${
-                    maxFee === null
-                      ? "bg-[#044CD0] text-white shadow-xs font-bold"
-                      : "bg-slate-100 dark:bg-[#030a16] text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-[#0e274d]"
-                  }`}
-                >
-                  {t.catalog.feePresets.any}
-                </button>
-                {[0.5, 1.0, 1.5, 2.0].map((presetVal) => {
-                  const isSelected = maxFee === presetVal;
-                  return (
-                    <button
-                      key={presetVal}
-                      type="button"
-                      onClick={() => {
-                        setMaxFee(isSelected ? null : presetVal);
-                        setCurrentPage(0);
-                      }}
-                      className={`px-2 py-1 rounded-md text-[11px] font-medium transition-all cursor-pointer ${
-                        isSelected
-                          ? "bg-[#044CD0] text-white shadow-xs font-bold"
+                      onClick={() => toggleSri(0)}
+                      className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer select-none ${
+                        selectedSri.length === 0
+                          ? "bg-[#044CD0] text-white shadow-xs font-bold ring-2 ring-[#044CD0]/20"
                           : "bg-slate-100 dark:bg-[#030a16] text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-[#0e274d]"
                       }`}
                     >
-                      ≤ {presetVal.toFixed(1).replace(".", ",")}%
+                      {t.catalog.sriAll}
                     </button>
-                  );
-                })}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (selectedSri.length === 2 && selectedSri.includes(1) && selectedSri.includes(2)) {
+                          setSelectedSri([]);
+                        } else {
+                          setSelectedSri([1, 2]);
+                        }
+                        setCurrentPage(0);
+                      }}
+                      className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer select-none ${
+                        selectedSri.length === 2 && selectedSri.includes(1) && selectedSri.includes(2)
+                          ? "bg-[#044CD0] text-white shadow-xs font-bold ring-2 ring-[#044CD0]/20"
+                          : "bg-slate-100 dark:bg-[#030a16] text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-[#0e274d]"
+                      }`}
+                    >
+                      {t.catalog.sriLow}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (selectedSri.length === 2 && selectedSri.includes(3) && selectedSri.includes(4)) {
+                          setSelectedSri([]);
+                        } else {
+                          setSelectedSri([3, 4]);
+                        }
+                        setCurrentPage(0);
+                      }}
+                      className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer select-none ${
+                        selectedSri.length === 2 && selectedSri.includes(3) && selectedSri.includes(4)
+                          ? "bg-[#044CD0] text-white shadow-xs font-bold ring-2 ring-[#044CD0]/20"
+                          : "bg-slate-100 dark:bg-[#030a16] text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-[#0e274d]"
+                      }`}
+                    >
+                      {t.catalog.sriMid}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (selectedSri.length === 3 && selectedSri.includes(5) && selectedSri.includes(6) && selectedSri.includes(7)) {
+                          setSelectedSri([]);
+                        } else {
+                          setSelectedSri([5, 6, 7]);
+                        }
+                        setCurrentPage(0);
+                      }}
+                      className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer select-none ${
+                        selectedSri.length === 3 && selectedSri.includes(5) && selectedSri.includes(6) && selectedSri.includes(7)
+                          ? "bg-[#044CD0] text-white shadow-xs font-bold ring-2 ring-[#044CD0]/20"
+                          : "bg-slate-100 dark:bg-[#030a16] text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-[#0e274d]"
+                      }`}
+                    >
+                      {t.catalog.sriHigh}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 3: Maksymalna opłata */}
+              <div className="bg-white dark:bg-[#051329] p-3.5 sm:p-4 rounded-xl border border-slate-200/90 dark:border-[#0e274d] space-y-2.5">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 flex items-center gap-1.5">
+                      <Percent className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#3b82f6]" />
+                      <span>{t.catalog.feeFilterLabel}</span>
+                    </div>
+                    {maxFee !== null && (
+                      <span className="text-xs font-bold text-[#044CD0] dark:text-blue-300">
+                        ≤ {maxFee.toFixed(1).replace(".", ",")}%
+                      </span>
+                    )}
+                  </div>
+
+                  {/* 5 Preset Pills */}
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setMaxFee(null);
+                        setCurrentPage(0);
+                      }}
+                      className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer select-none ${
+                        maxFee === null
+                          ? "bg-[#044CD0] text-white shadow-xs font-bold ring-2 ring-[#044CD0]/20"
+                          : "bg-slate-100 dark:bg-[#030a16] text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-[#0e274d]"
+                      }`}
+                    >
+                      {t.catalog.feePresets.any}
+                    </button>
+                    {[0.5, 1.0, 1.5, 2.0].map((presetVal) => {
+                      const isSelected = maxFee === presetVal;
+                      return (
+                        <button
+                          key={presetVal}
+                          type="button"
+                          onClick={() => {
+                            setMaxFee(isSelected ? null : presetVal);
+                            setCurrentPage(0);
+                          }}
+                          className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer select-none ${
+                            isSelected
+                              ? "bg-[#044CD0] text-white shadow-xs font-bold ring-2 ring-[#044CD0]/20"
+                              : "bg-slate-100 dark:bg-[#030a16] text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-[#0e274d]"
+                          }`}
+                        >
+                          ≤ {presetVal.toFixed(1).replace(".", ",")}%
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 4: Waluta */}
+              <div className="bg-white dark:bg-[#051329] p-3.5 sm:p-4 rounded-xl border border-slate-200/90 dark:border-[#0e274d] space-y-2.5">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 flex items-center gap-1.5">
+                      <Coins className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#3b82f6]" />
+                      <span>{t.catalog.currencyFilter}</span>
+                    </div>
+                    {selectedCurrencies.length > 0 && (
+                      <span className="px-1.5 py-0.2 rounded-full bg-[#044CD0] text-white text-[10px] font-bold">
+                        {selectedCurrencies.length}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* 4 Currency Pills */}
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    {["ALL", "PLN", "EUR", "USD"].map((curr) => {
+                      const isSelected =
+                        curr === "ALL"
+                          ? selectedCurrencies.length === 0
+                          : selectedCurrencies.includes(curr);
+                      return (
+                        <button
+                          key={curr}
+                          type="button"
+                          onClick={() => toggleCurrency(curr)}
+                          className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer select-none ${
+                            isSelected
+                              ? "bg-[#044CD0] text-white shadow-xs font-bold ring-2 ring-[#044CD0]/20"
+                              : "bg-slate-100 dark:bg-[#030a16] text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-[#0e274d]"
+                          }`}
+                        >
+                          {curr === "ALL" ? t.catalog.allCurrencies : curr}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Bottom Row: Status & Profitability Toggles */}
-        <div className="pt-2 border-t border-slate-200 dark:border-[#0e274d]/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 flex items-center gap-1.5">
-            <Briefcase className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#3b82f6]" />
-            <span>{t.catalog.filterSectionStatus}</span>
-          </div>
-
-          <div className="flex items-center flex-wrap gap-2.5 sm:gap-3">
-            {/* 1. Only profitable funds toggle */}
-            <label
-              className={`group relative inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xl border text-xs sm:text-sm cursor-pointer select-none transition-all shadow-2xs ${
-                onlyProfitable
-                  ? "border-emerald-300 dark:border-emerald-800/80 bg-emerald-50/70 dark:bg-emerald-950/30"
-                  : "border-slate-200/90 dark:border-[#0e274d] bg-white dark:bg-[#030a16]/60 hover:bg-slate-50 dark:hover:bg-[#071938] hover:border-slate-300 dark:hover:border-[#1e3a6a]"
-              }`}
-              title={t.catalog.onlyProfitableDesc.replace("{period}", activePeriodLabel)}
-            >
-              <input
-                type="checkbox"
-                checked={onlyProfitable}
-                onChange={(e) => {
-                  setOnlyProfitable(e.target.checked);
-                  setCurrentPage(0);
-                }}
-                className="sr-only peer"
-              />
-              <div
-                className={`relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out peer-focus-visible:ring-2 peer-focus-visible:ring-emerald-500 peer-focus-visible:ring-offset-2 ${
-                  onlyProfitable ? "bg-emerald-600" : "bg-slate-300 dark:bg-slate-700"
-                }`}
-              >
-                <span
-                  aria-hidden="true"
-                  className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-xs transition duration-200 ease-in-out ${
-                    onlyProfitable ? "translate-x-4" : "translate-x-0"
-                  }`}
-                />
-              </div>
-              <span
-                className={`whitespace-nowrap transition-colors ${
-                  onlyProfitable
-                    ? "text-emerald-700 dark:text-emerald-300 font-semibold"
-                    : "text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white font-medium"
-                }`}
-              >
-                {t.catalog.onlyProfitable} ({activePeriodLabel})
-              </span>
-            </label>
-
-            {/* 2. Fundusze w likwidacji */}
-            <label
-              className={`group relative inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xl border text-xs sm:text-sm cursor-pointer select-none transition-all shadow-2xs ${
-                includeLiquidating
-                  ? "border-blue-300 dark:border-blue-800/80 bg-blue-50/60 dark:bg-[#044CD0]/15"
-                  : "border-slate-200/90 dark:border-[#0e274d] bg-white dark:bg-[#030a16]/60 hover:bg-slate-50 dark:hover:bg-[#071938] hover:border-slate-300 dark:hover:border-[#1e3a6a]"
-              }`}
-            >
-              <input
-                type="checkbox"
-                checked={includeLiquidating}
-                onChange={(e) => {
-                  setIncludeLiquidating(e.target.checked);
-                  setCurrentPage(0);
-                }}
-                className="sr-only peer"
-              />
-              <div
-                className={`relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out peer-focus-visible:ring-2 peer-focus-visible:ring-[#044CD0] peer-focus-visible:ring-offset-2 ${
-                  includeLiquidating ? "bg-[#044CD0]" : "bg-slate-300 dark:bg-slate-700"
-                }`}
-              >
-                <span
-                  aria-hidden="true"
-                  className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-xs transition duration-200 ease-in-out ${
-                    includeLiquidating ? "translate-x-4" : "translate-x-0"
-                  }`}
-                />
-              </div>
-              <span
-                className={`whitespace-nowrap transition-colors ${
-                  includeLiquidating
-                    ? "text-[#044CD0] dark:text-blue-300 font-semibold"
-                    : "text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white font-medium"
-                }`}
-              >
-                {t.catalog.showLiquidating}
-              </span>
-            </label>
-
-            {/* 3. Fundusze nieaktywne */}
-            <label
-              className={`group relative inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xl border text-xs sm:text-sm cursor-pointer select-none transition-all shadow-2xs ${
-                includeInactive
-                  ? "border-blue-300 dark:border-blue-800/80 bg-blue-50/60 dark:bg-[#044CD0]/15"
-                  : "border-slate-200/90 dark:border-[#0e274d] bg-white dark:bg-[#030a16]/60 hover:bg-slate-50 dark:hover:bg-[#071938] hover:border-slate-300 dark:hover:border-[#1e3a6a]"
-              }`}
-            >
-              <input
-                type="checkbox"
-                checked={includeInactive}
-                onChange={(e) => {
-                  setIncludeInactive(e.target.checked);
-                  setCurrentPage(0);
-                }}
-                className="sr-only peer"
-              />
-              <div
-                className={`relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out peer-focus-visible:ring-2 peer-focus-visible:ring-[#044CD0] peer-focus-visible:ring-offset-2 ${
-                  includeInactive ? "bg-[#044CD0]" : "bg-slate-300 dark:bg-slate-700"
-                }`}
-              >
-                <span
-                  aria-hidden="true"
-                  className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-xs transition duration-200 ease-in-out ${
-                    includeInactive ? "translate-x-4" : "translate-x-0"
-                  }`}
-                />
-              </div>
-              <span
-                className={`whitespace-nowrap transition-colors ${
-                  includeInactive
-                    ? "text-[#044CD0] dark:text-blue-300 font-semibold"
-                    : "text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white font-medium"
-                }`}
-              >
-                {t.catalog.showInactive}
-              </span>
-            </label>
-          </div>
-        </div>
-      </div>
-    )}
+        )}
       </div>
 
-      {/* Results Header & Presentation Controls */}
+{/* Results Header & Presentation Controls */}
       <div ref={resultsTopRef} className="space-y-2.5 px-1 scroll-mt-24">
         <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-2.5 sm:gap-3 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
           {/* Left: Results Count, Page Info & Filtering Status */}
@@ -2176,18 +2005,68 @@ export function SubfundsCatalog({
             ))}
 
             {/* SRI risk chips */}
-            {selectedSri.map((sri) => (
-              <button
-                key={sri}
-                type="button"
-                onClick={() => toggleSri(sri)}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-300 border border-blue-200 dark:border-[#044CD0]/40 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
-                title={`Usuń: SRI ${sri}`}
-              >
-                <span>{t.catalog.sriTagLabel} {sri}</span>
-                <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
-              </button>
-            ))}
+            {(() => {
+              if (selectedSri.length === 2 && selectedSri.includes(1) && selectedSri.includes(2)) {
+                return (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedSri([]);
+                      setCurrentPage(0);
+                    }}
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-300 border border-blue-200 dark:border-[#044CD0]/40 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
+                    title={`Usuń: ${t.catalog.sriTagLabel} ${t.catalog.sriLow}`}
+                  >
+                    <span>{t.catalog.sriTagLabel} {t.catalog.sriLow}</span>
+                    <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
+                  </button>
+                );
+              }
+              if (selectedSri.length === 2 && selectedSri.includes(3) && selectedSri.includes(4)) {
+                return (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedSri([]);
+                      setCurrentPage(0);
+                    }}
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-300 border border-blue-200 dark:border-[#044CD0]/40 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
+                    title={`Usuń: ${t.catalog.sriTagLabel} ${t.catalog.sriMid}`}
+                  >
+                    <span>{t.catalog.sriTagLabel} {t.catalog.sriMid}</span>
+                    <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
+                  </button>
+                );
+              }
+              if (selectedSri.length === 3 && selectedSri.includes(5) && selectedSri.includes(6) && selectedSri.includes(7)) {
+                return (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedSri([]);
+                      setCurrentPage(0);
+                    }}
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-300 border border-blue-200 dark:border-[#044CD0]/40 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
+                    title={`Usuń: ${t.catalog.sriTagLabel} ${t.catalog.sriHigh}`}
+                  >
+                    <span>{t.catalog.sriTagLabel} {t.catalog.sriHigh}</span>
+                    <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
+                  </button>
+                );
+              }
+              return selectedSri.map((sri) => (
+                <button
+                  key={sri}
+                  type="button"
+                  onClick={() => toggleSri(sri)}
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-300 border border-blue-200 dark:border-[#044CD0]/40 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
+                  title={`Usuń: SRI ${sri}`}
+                >
+                  <span>{t.catalog.sriTagLabel} {sri}</span>
+                  <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
+                </button>
+              ));
+            })()}
 
             {/* Max fee chip */}
             {maxFee !== null && (
@@ -2201,22 +2080,6 @@ export function SubfundsCatalog({
                 title="Usuń limit opłaty"
               >
                 <span>{t.catalog.feeTagLabel} ≤ {maxFee.toFixed(2).replace(".", ",")}%</span>
-                <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
-              </button>
-            )}
-
-            {/* Only profitable funds chip */}
-            {onlyProfitable && (
-              <button
-                type="button"
-                onClick={() => {
-                  setOnlyProfitable(false);
-                  setCurrentPage(0);
-                }}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
-                title="Usuń filtr dodatniego wyniku"
-              >
-                <span>{t.catalog.profitableTagLabel} ({activePeriodLabel})</span>
                 <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
               </button>
             )}
@@ -2252,15 +2115,19 @@ export function SubfundsCatalog({
               </button>
             )}
 
-            {/* Reset All Filters button */}
+            {/* Reset All Filters pill button */}
             <button
               type="button"
+              data-component="clear-filters-btn"
               onClick={resetAllFilters}
-              className="inline-flex items-center gap-1 text-xs text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 font-semibold hover:underline cursor-pointer ml-1 select-none py-1 px-1.5"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 border border-rose-200/90 dark:border-rose-900/60 hover:bg-rose-100 dark:hover:bg-rose-900/60 hover:border-rose-300 dark:hover:border-rose-700 transition-all cursor-pointer select-none shadow-2xs group ml-0.5"
               title={t.catalog.clearAllFilters}
             >
-              <RotateCcw className="w-3 h-3" />
+              <RotateCcw className="w-3 h-3 text-rose-600 dark:text-rose-400 group-hover:-rotate-45 transition-transform" />
               <span>{t.catalog.clearAllFilters}</span>
+              <span className="px-1.5 py-0.2 rounded-full bg-rose-200/80 dark:bg-rose-900/80 text-rose-800 dark:text-rose-200 text-[10px] font-bold">
+                {activeFiltersCount}
+              </span>
             </button>
           </div>
         )}
