@@ -8,7 +8,8 @@ export const en: Translations = {
     all: "All",
     back: "Back",
     details: "Details",
-    profile: "Profile",
+    profile: "Go to profile",
+    goToProfile: "Go to profile",
     compare: "Compare",
     compareNow: "Compare Now",
     clear: "Clear",
@@ -205,7 +206,7 @@ export const en: Translations = {
       netAssets: "Net Assets:",
       returnRate: "Return Rate:",
       fundDetails: "Fund Details",
-      addToCompare: "Add to Comparator",
+      addToCompare: "Add to comparison",
       removeFromCompare: "Remove from Comparison",
     },
     table: {

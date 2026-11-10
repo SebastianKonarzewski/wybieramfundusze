@@ -6,7 +6,8 @@ export const pl = {
     all: "Wszystkie",
     back: "Wróć",
     details: "Szczegóły",
-    profile: "Profil",
+    profile: "Przejdź do profilu",
+    goToProfile: "Przejdź do profilu",
     compare: "Porównaj",
     compareNow: "Porównaj teraz",
     clear: "Wyczyść",
@@ -203,7 +204,7 @@ export const pl = {
       netAssets: "Aktywa netto:",
       returnRate: "Stopa zwrotu:",
       fundDetails: "Szczegóły funduszu",
-      addToCompare: "Dodaj do porównywarki",
+      addToCompare: "Dodaj do porównania",
       removeFromCompare: "Usuń z porównania",
     },
     table: {

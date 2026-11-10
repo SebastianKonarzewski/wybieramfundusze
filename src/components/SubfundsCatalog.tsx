@@ -2748,8 +2748,8 @@ export function SubfundsCatalog({
                                 ? "bg-[#044CD0] text-white border-[#044CD0] shadow-xs"
                                 : "bg-white dark:bg-[#030a16] text-slate-700 dark:text-slate-400 border-slate-200 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-[#044CD0] dark:hover:border-blue-500/50 hover:bg-blue-50/70 dark:hover:bg-[#071938]"
                             }`}
-                            title={inCompare ? t.catalog.card.removeFromCompare : t.common.compare}
-                            aria-label={inCompare ? t.catalog.card.removeFromCompare : t.common.compare}
+                            title={inCompare ? t.catalog.card.removeFromCompare : t.catalog.card.addToCompare}
+                            aria-label={inCompare ? t.catalog.card.removeFromCompare : t.catalog.card.addToCompare}
                           >
                             <Scale className="w-4 h-4" />
                           </button>
@@ -2778,8 +2778,8 @@ export function SubfundsCatalog({
                             href={`/fundusze/${item.subfundId}`}
                             data-component="fund-details-btn"
                             className="table-action-btn w-9 h-9 flex items-center justify-center rounded-xl bg-white hover:bg-blue-50/70 dark:bg-[#030a16] dark:hover:bg-[#071938] border border-slate-200 dark:border-[#0e274d] text-slate-700 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-[#044CD0] dark:hover:border-blue-500/50 transition-all shadow-2xs cursor-pointer"
-                            title={t.common.profile}
-                            aria-label={t.common.profile}
+                            title={t.common.goToProfile}
+                            aria-label={t.common.goToProfile}
                           >
                             <ArrowRight className="w-4 h-4" />
                           </Link>
