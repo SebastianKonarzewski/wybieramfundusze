@@ -973,79 +973,39 @@ export function SubfundsCatalog({
     <div className="space-y-6">
       {/* Search & Filter Toolbar */}
       <div className="bg-white dark:bg-[#051329] border border-slate-200 dark:border-[#0e274d] rounded-2xl p-4 sm:p-6 shadow-sm dark:shadow-xl space-y-4">
-        {/* Top Command Bar: Search (constrained width) + Actions (Right) */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          {/* Search input (constrained width, professional look) */}
-          <div className="relative w-full sm:max-w-md lg:max-w-lg">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-            <input
-              type="text"
-              placeholder={isMobile ? t.catalog.searchPlaceholderMobile : t.catalog.searchPlaceholder}
-              value={searchTerm}
-              onChange={(e) => {
-                setSearchTerm(e.target.value);
+        {/* Search input (constrained max width, professional look) */}
+        <div className="relative w-full max-w-xl">
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <input
+            type="text"
+            placeholder={isMobile ? t.catalog.searchPlaceholderMobile : t.catalog.searchPlaceholder}
+            value={searchTerm}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              setCurrentPage(0);
+            }}
+            className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-50/80 dark:bg-[#030c1c] border border-slate-300/80 dark:border-[#0e274d] text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-hidden focus:border-[#044CD0] focus:ring-2 focus:ring-[#044CD0]/15 transition-all shadow-2xs"
+          />
+          {searchTerm && (
+            <button
+              type="button"
+              onClick={() => {
+                setSearchTerm("");
                 setCurrentPage(0);
               }}
-              className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-50/80 dark:bg-[#030c1c] border border-slate-300/80 dark:border-[#0e274d] text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-hidden focus:border-[#044CD0] focus:ring-2 focus:ring-[#044CD0]/15 transition-all shadow-2xs"
-            />
-            {searchTerm && (
-              <button
-                type="button"
-                onClick={() => {
-                  setSearchTerm("");
-                  setCurrentPage(0);
-                }}
-                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 rounded-md transition-colors cursor-pointer"
-                aria-label="Wyczyść szukanie"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            )}
-          </div>
-
-          {/* Top Actions: Clear All Filters & Advanced Options Toggle */}
-          <div className="flex items-center gap-2 self-start sm:self-auto shrink-0 flex-wrap">
-            {hasAnyActiveFilters && (
-              <button
-                type="button"
-                data-component="clear-filters-btn"
-                onClick={resetAllFilters}
-                className="h-[38px] inline-flex items-center gap-1.5 text-xs sm:text-sm py-1.5 px-3 sm:px-3.5 rounded-xl border border-rose-300/80 dark:border-rose-900/60 bg-rose-50/80 dark:bg-rose-950/30 text-rose-700 dark:text-rose-300 hover:bg-rose-100/90 dark:hover:bg-rose-900/50 hover:border-rose-400 dark:hover:border-rose-700 hover:text-rose-800 dark:hover:text-rose-200 font-medium transition-all cursor-pointer shadow-2xs hover:shadow-xs group"
-                title={t.catalog.clearAllFilters}
-                aria-label={t.catalog.clearAllFilters}
-              >
-                <RotateCcw className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400 group-hover:-rotate-45 transition-transform" />
-                <span>{t.catalog.clearAllFilters}</span>
-                <span className="px-1.5 py-0.5 rounded-full bg-rose-200/80 dark:bg-rose-900/80 text-rose-800 dark:text-rose-200 text-[11px] font-bold border border-rose-300/80 dark:border-rose-800 transition-colors">
-                  {activeFiltersCount}
-                </span>
-              </button>
-            )}
-
-            {/* Toggle Button for Advanced Options */}
-            <button
-              onClick={toggleAdvancedFilters}
-              className={`h-[38px] inline-flex items-center gap-1.5 text-xs sm:text-sm py-1.5 px-3 sm:px-3.5 rounded-xl border transition-all cursor-pointer ${
-                hasActiveAdvancedFilters
-                  ? "text-[#044CD0] dark:text-blue-300 border-blue-400 dark:border-blue-500/50 bg-blue-50/90 dark:bg-[#044CD0]/15 hover:bg-blue-100/90 dark:hover:bg-[#044CD0]/25 font-semibold shadow-2xs"
-                  : "text-slate-600 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-slate-200 border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-slate-600 bg-white dark:bg-transparent hover:bg-blue-50/70 dark:hover:bg-[#071938]"
-              }`}
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 rounded-md transition-colors cursor-pointer"
+              aria-label="Wyczyść szukanie"
             >
-              <SlidersHorizontal className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6]" />
-              <span>{t.catalog.advancedFilters}</span>
-              {hasActiveAdvancedFilters && (
-                <span className="w-1.5 h-1.5 rounded-full bg-[#044CD0] dark:bg-blue-400 animate-pulse" />
-              )}
-              {showAdvancedFilters ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+              <X className="w-4 h-4" />
             </button>
-          </div>
+          )}
         </div>
 
-        {/* Filter Rows: Asset Class, Legal Type & Currency */}
-        <div className="pt-3 border-t border-slate-200 dark:border-[#0e274d] space-y-3">
-          {/* Row 1: Asset Class (Left) & Currency (Right) */}
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-            {/* Asset Class */}
+        {/* 2-Column Responsive Grid for Quick Filters & Bottom Actions */}
+        <div className="pt-3 border-t border-slate-200 dark:border-[#0e274d] grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-6 items-center">
+          {/* Column 1 (Left): Asset Class & Legal Type */}
+          <div className="space-y-3">
+            {/* Row 1: Asset Class */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-xs sm:text-sm">
               <span className="text-slate-700 dark:text-slate-300 sm:w-[124px] shrink-0 font-semibold flex items-center gap-1.5 select-none">
                 <Compass className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
@@ -1079,7 +1039,44 @@ export function SubfundsCatalog({
               </div>
             </div>
 
-            {/* Currency */}
+            {/* Row 2: Legal Type */}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-xs sm:text-sm">
+              <span className="text-slate-700 dark:text-slate-300 sm:w-[124px] shrink-0 font-semibold flex items-center gap-1.5 select-none">
+                <Scale className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
+                {t.catalog.legalType}
+              </span>
+              <div className="inline-flex items-center p-1 rounded-xl bg-slate-100/90 dark:bg-[#030c1c] border border-slate-200/80 dark:border-[#0e274d]/80 gap-1 flex-wrap">
+                {["ALL", "FIO", "SFIO", "FIZ", "ETF", "PPK"].map((type) => {
+                  const isSelected =
+                    type === "ALL"
+                      ? selectedTypes.length === 0
+                      : selectedTypes.includes(type);
+
+                  return (
+                    <button
+                      key={type}
+                      onClick={() => toggleType(type)}
+                      aria-pressed={isSelected}
+                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all duration-150 cursor-pointer select-none ${
+                        isSelected
+                          ? "bg-[#044CD0] text-white shadow-xs font-semibold"
+                          : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-[#081a38]"
+                      }`}
+                    >
+                      {isSelected && type !== "ALL" && (
+                        <Check className="w-3.5 h-3.5 stroke-[3]" />
+                      )}
+                      {type === "ALL" ? t.catalog.allTypes : type}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          {/* Column 2 (Right): Currency & Actions directly above expandable panel */}
+          <div className="space-y-3 flex flex-col justify-between h-full">
+            {/* Row 1: Currency */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-xs sm:text-sm">
               <span className="text-slate-700 dark:text-slate-300 sm:w-[84px] shrink-0 font-semibold flex items-center gap-1.5 select-none">
                 <Coins className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
@@ -1112,39 +1109,42 @@ export function SubfundsCatalog({
                 })}
               </div>
             </div>
-          </div>
 
-          {/* Row 2: Legal Type */}
-          <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-xs sm:text-sm">
-            <span className="text-slate-700 dark:text-slate-300 sm:w-[124px] shrink-0 font-semibold flex items-center gap-1.5 select-none">
-              <Scale className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
-              {t.catalog.legalType}
-            </span>
-            <div className="inline-flex items-center p-1 rounded-xl bg-slate-100/90 dark:bg-[#030c1c] border border-slate-200/80 dark:border-[#0e274d]/80 gap-1 flex-wrap">
-              {["ALL", "FIO", "SFIO", "FIZ", "ETF", "PPK"].map((type) => {
-                const isSelected =
-                  type === "ALL"
-                    ? selectedTypes.length === 0
-                    : selectedTypes.includes(type);
+            {/* Row 2: Actions anchored at bottom right */}
+            <div className="flex items-center gap-2 self-start lg:self-end flex-wrap pt-0.5">
+              {hasAnyActiveFilters && (
+                <button
+                  type="button"
+                  data-component="clear-filters-btn"
+                  onClick={resetAllFilters}
+                  className="h-[38px] inline-flex items-center gap-1.5 text-xs sm:text-sm py-1.5 px-3 sm:px-3.5 rounded-xl border border-rose-300/80 dark:border-rose-900/60 bg-rose-50/80 dark:bg-rose-950/30 text-rose-700 dark:text-rose-300 hover:bg-rose-100/90 dark:hover:bg-rose-900/50 hover:border-rose-400 dark:hover:border-rose-700 hover:text-rose-800 dark:hover:text-rose-200 font-medium transition-all cursor-pointer shadow-2xs hover:shadow-xs group"
+                  title={t.catalog.clearAllFilters}
+                  aria-label={t.catalog.clearAllFilters}
+                >
+                  <RotateCcw className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400 group-hover:-rotate-45 transition-transform" />
+                  <span>{t.catalog.clearAllFilters}</span>
+                  <span className="px-1.5 py-0.5 rounded-full bg-rose-200/80 dark:bg-rose-900/80 text-rose-800 dark:text-rose-200 text-[11px] font-bold border border-rose-300/80 dark:border-rose-800 transition-colors">
+                    {activeFiltersCount}
+                  </span>
+                </button>
+              )}
 
-                return (
-                  <button
-                    key={type}
-                    onClick={() => toggleType(type)}
-                    aria-pressed={isSelected}
-                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all duration-150 cursor-pointer select-none ${
-                      isSelected
-                        ? "bg-[#044CD0] text-white shadow-xs font-semibold"
-                        : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-[#081a38]"
-                    }`}
-                  >
-                    {isSelected && type !== "ALL" && (
-                      <Check className="w-3.5 h-3.5 stroke-[3]" />
-                    )}
-                    {type === "ALL" ? t.catalog.allTypes : type}
-                  </button>
-                );
-              })}
+              {/* Toggle Button for Advanced Options */}
+              <button
+                onClick={toggleAdvancedFilters}
+                className={`h-[38px] inline-flex items-center gap-1.5 text-xs sm:text-sm py-1.5 px-3 sm:px-3.5 rounded-xl border transition-all cursor-pointer ${
+                  hasActiveAdvancedFilters
+                    ? "text-[#044CD0] dark:text-blue-300 border-blue-400 dark:border-blue-500/50 bg-blue-50/90 dark:bg-[#044CD0]/15 hover:bg-blue-100/90 dark:hover:bg-[#044CD0]/25 font-semibold shadow-2xs"
+                    : "text-slate-600 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-slate-200 border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-slate-600 bg-white dark:bg-transparent hover:bg-blue-50/70 dark:hover:bg-[#071938]"
+                }`}
+              >
+                <SlidersHorizontal className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6]" />
+                <span>{t.catalog.advancedFilters}</span>
+                {hasActiveAdvancedFilters && (
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#044CD0] dark:bg-blue-400 animate-pulse" />
+                )}
+                {showAdvancedFilters ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+              </button>
             </div>
           </div>
         </div>
