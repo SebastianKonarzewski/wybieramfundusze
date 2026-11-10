@@ -1053,9 +1053,9 @@ export function SubfundsCatalog({
         </div>
 
         {/* Row 2: Precision Filter Toolbar (Search + TFI + Waluta + Actions) */}
-        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-2.5">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap lg:flex-nowrap items-stretch sm:items-center gap-2 sm:gap-2.5">
           {/* 1. Search Bar */}
-          <div className="relative w-full sm:flex-1 min-w-0 sm:min-w-[220px] sm:max-w-[360px]">
+          <div className="relative w-full sm:flex-1 min-w-0 sm:min-w-[280px] lg:max-w-[360px]">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
             <input
               type="text"
@@ -1083,7 +1083,7 @@ export function SubfundsCatalog({
           </div>
 
           {/* 2. Zarządzający Dropdown Pill */}
-          <div ref={tfiDropdownRef} className="relative w-full sm:w-auto">
+          <div ref={tfiDropdownRef} className="relative w-full sm:w-auto shrink-0">
             <button
               type="button"
               onClick={() => setOpenFilterDropdown(openFilterDropdown === "tfi" ? null : "tfi")}
@@ -1146,7 +1146,7 @@ export function SubfundsCatalog({
               <div
                 role="listbox"
                 aria-multiselectable="true"
-                className="absolute top-full left-0 mt-1.5 w-72 sm:w-80 max-w-[calc(100vw-32px)] bg-white dark:bg-[#030c1c] border border-slate-200 dark:border-[#0e274d] rounded-xl shadow-2xl z-50 flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-100"
+                className="absolute top-full left-0 sm:right-0 sm:left-auto lg:left-0 lg:right-auto mt-1.5 w-72 sm:w-80 max-w-[calc(100vw-32px)] bg-white dark:bg-[#030c1c] border border-slate-200 dark:border-[#0e274d] rounded-xl shadow-2xl z-50 flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-100"
               >
                 {/* Search inside TFI Popover */}
                 <div className="p-2 border-b border-slate-200 dark:border-[#0e274d] bg-slate-50/70 dark:bg-[#051329]">
@@ -1279,24 +1279,30 @@ export function SubfundsCatalog({
           </div>
 
           {/* 3. Right-Aligned Action: Advanced Filters Drawer Toggle */}
-          <div className="sm:ml-auto shrink-0">
+          <div className="w-full sm:w-auto sm:ml-auto shrink-0 flex justify-end">
             <button
               type="button"
               onClick={toggleAdvancedFilters}
-              className={`h-[38px] inline-flex items-center gap-1.5 text-xs sm:text-sm py-1.5 px-3 sm:px-3.5 rounded-xl border transition-all cursor-pointer ${
+              className={`h-[38px] w-full sm:w-auto inline-flex items-center justify-between sm:justify-start gap-1.5 text-xs sm:text-sm py-1.5 px-3 sm:px-3.5 rounded-xl border transition-all cursor-pointer ${
                 hasActiveAdvancedFilters || showAdvancedFilters
                   ? "text-[#044CD0] dark:text-blue-300 border-blue-400 dark:border-blue-500/50 bg-blue-50/90 dark:bg-[#044CD0]/15 hover:bg-blue-100/90 dark:hover:bg-[#044CD0]/25 font-semibold shadow-2xs"
                   : "text-slate-600 dark:text-slate-400 hover:text-[#044CD0] dark:hover:text-slate-200 border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-slate-600 bg-white dark:bg-transparent hover:bg-blue-50/70 dark:hover:bg-[#071938]"
               }`}
             >
-              <SlidersHorizontal className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6]" />
-              <span>{t.catalog.advancedFilters}</span>
-              {activeAdvancedFiltersCount > 0 && (
-                <span className="px-1.5 py-0.2 rounded-full bg-[#044CD0] text-white text-[10px] font-bold">
-                  {activeAdvancedFiltersCount}
-                </span>
+              <div className="inline-flex items-center gap-1.5">
+                <SlidersHorizontal className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6]" />
+                <span>{t.catalog.advancedFilters}</span>
+                {activeAdvancedFiltersCount > 0 && (
+                  <span className="px-1.5 py-0.2 rounded-full bg-[#044CD0] text-white text-[10px] font-bold">
+                    {activeAdvancedFiltersCount}
+                  </span>
+                )}
+              </div>
+              {showAdvancedFilters ? (
+                <ChevronUp className="w-3.5 h-3.5 ml-auto sm:ml-0" />
+              ) : (
+                <ChevronDown className="w-3.5 h-3.5 ml-auto sm:ml-0" />
               )}
-              {showAdvancedFilters ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
             </button>
           </div>
         </div>
