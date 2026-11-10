@@ -1841,13 +1841,13 @@ export function SubfundsCatalog({
                       : "bg-white dark:bg-[#030a16] border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-[#044CD0]/60"
                   }`}
                 >
-                  <div className="flex items-center gap-1.5 min-w-0">
+                  <div className="flex items-center gap-1.5 min-w-0 flex-1">
                     <ArrowUpDown className="w-3.5 h-3.5 text-[#044CD0] shrink-0" />
                     <span className="text-xs font-medium text-slate-500 dark:text-slate-400 hidden 2xl:inline whitespace-nowrap">
                       {t.catalog.sort.label}:
                     </span>
                     <span
-                      className="text-xs font-semibold text-slate-800 dark:text-slate-200 truncate max-w-[150px] sm:max-w-[185px] text-left"
+                      className="text-xs font-semibold text-slate-800 dark:text-slate-200 truncate flex-1 min-w-0 text-left"
                       title={currentSortLabel}
                     >
                       {currentSortLabel}
