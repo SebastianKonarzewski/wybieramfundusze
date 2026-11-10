@@ -237,7 +237,7 @@ export const en: Translations = {
     emptySlot: "Empty slot",
     addMoreHint: "+ Select fund",
     selectedCountBadge: "{count} of 4",
-    toastAdded: "Added to comparison ({count}/4)",
+    toastAdded: "Added to comparison",
     toastRemoved: "Removed from comparison",
     toastLimitReached: "You can compare up to 4 funds at a time.",
     limitWarningTitle: "Comparison limit reached",

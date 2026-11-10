@@ -53,7 +53,7 @@ export function AppToast() {
 
   const { type, title, message, category, action, duration = 4500 } = activeToast;
 
-  // Single representative icon (no duplicates, no redundant ticks)
+  // Single clean icon matching the category
   let Icon = Briefcase;
   if (category === "compare") {
     Icon = Scale;
@@ -67,24 +67,24 @@ export function AppToast() {
     Icon = Info;
   }
 
-  // Muted, refined color palette harmonized with the app theme
-  let borderClasses = "border-slate-200 dark:border-[#0e274d]";
-  let badgeClasses = "bg-blue-50 dark:bg-[#071938] text-[#044CD0] dark:text-[#60a5fa] border border-blue-100 dark:border-[#0e274d]";
-  let titleColorClasses = "text-slate-600 dark:text-slate-400";
+  // Refined palette matching the comparison dock aesthetic
+  let borderClasses = "border-[#044CD0]/35 dark:border-[#044CD0]/55";
+  let badgeClasses = "bg-blue-50 dark:bg-[#071938] text-[#044CD0] dark:text-[#60a5fa] border border-blue-200/60 dark:border-[#0e274d]";
+  let titleColorClasses = "text-[#044CD0] dark:text-[#60a5fa]";
   let progressBarClasses = "bg-[#044CD0] dark:bg-blue-500";
 
   if (type === "warning") {
-    borderClasses = "border-amber-400/40 dark:border-amber-500/40";
+    borderClasses = "border-amber-400/50 dark:border-amber-500/60";
     badgeClasses = "bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800/60";
     titleColorClasses = "text-amber-600 dark:text-amber-400";
     progressBarClasses = "bg-amber-500";
   } else if (type === "error") {
-    borderClasses = "border-rose-400/40 dark:border-rose-500/40";
+    borderClasses = "border-rose-400/50 dark:border-rose-500/60";
     badgeClasses = "bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800/60";
     titleColorClasses = "text-rose-600 dark:text-rose-400";
     progressBarClasses = "bg-rose-500";
   } else if (type === "info") {
-    borderClasses = "border-slate-200 dark:border-[#0e274d]";
+    borderClasses = "border-slate-300/80 dark:border-[#0e274d]";
     badgeClasses = "bg-slate-100 dark:bg-[#071938] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-[#0e274d]";
     titleColorClasses = "text-slate-500 dark:text-slate-400";
     progressBarClasses = "bg-slate-400 dark:bg-slate-500";
@@ -94,26 +94,29 @@ export function AppToast() {
     <div
       role="status"
       aria-live="polite"
-      className="fixed top-18 sm:top-20 right-3 sm:right-6 left-3 sm:left-auto z-[80] w-auto sm:w-[420px] max-w-[calc(100vw-1.5rem)] animate-in fade-in slide-in-from-top-3 duration-200"
+      className="fixed top-18 sm:top-20 right-3 sm:right-6 left-3 sm:left-auto z-[80] w-auto sm:w-[460px] md:w-[480px] max-w-[calc(100vw-1.5rem)] animate-in fade-in slide-in-from-top-3 duration-200"
     >
       <div
         key={activeToast.id}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className={`toast-container relative overflow-hidden bg-white/95 dark:bg-[#051329]/95 border ${borderClasses} rounded-2xl p-3 sm:p-3.5 shadow-xl sm:shadow-2xl backdrop-blur-md flex items-center justify-between gap-3 text-slate-800 dark:text-slate-100 transition-all group`}
+        className={`toast-container relative overflow-hidden bg-white/98 dark:bg-[#030d22]/98 border-2 ${borderClasses} rounded-2xl p-3 sm:p-3.5 shadow-[0_12px_36px_rgba(4,76,208,0.15),0_4px_12px_rgba(0,0,0,0.06)] dark:shadow-[0_18px_45px_rgba(0,0,0,0.85),0_0_20px_rgba(4,76,208,0.22)] backdrop-blur-md flex items-center justify-between gap-3 text-slate-800 dark:text-slate-100 transition-all group`}
       >
-        {/* Left: Single Icon & Text content */}
+        {/* Left: Icon & Spacious Text Content */}
         <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
           <div className={`w-8 h-8 rounded-xl ${badgeClasses} flex items-center justify-center shrink-0`}>
             <Icon className="w-4 h-4 stroke-[2.2]" />
           </div>
 
           <div className="min-w-0 flex-1">
-            <div className={`text-xs font-medium ${titleColorClasses} leading-tight`}>
+            <div className={`text-xs font-semibold ${titleColorClasses} leading-tight select-none`}>
               {title}
             </div>
             {message && (
-              <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-slate-100 truncate leading-snug mt-0.5">
+              <div
+                className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-slate-100 line-clamp-2 leading-snug mt-0.5 break-words"
+                title={message}
+              >
                 {message}
               </div>
             )}
@@ -128,10 +131,10 @@ export function AppToast() {
                 <Link
                   href={action.href}
                   onClick={() => hideToast(activeToast.id)}
-                  className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-[#044CD0] hover:bg-[#033eb0] text-white transition-colors shadow-2xs shrink-0 cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-[#044CD0] hover:bg-[#033eb0] text-white shadow-2xs transition-all shrink-0 cursor-pointer"
                 >
                   <span>{action.label}</span>
-                  <ArrowRight className="w-3 h-3" />
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               ) : (
                 <button
@@ -140,10 +143,10 @@ export function AppToast() {
                     action.onClick?.();
                     hideToast(activeToast.id);
                   }}
-                  className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-[#044CD0] hover:bg-[#033eb0] text-white transition-colors shadow-2xs shrink-0 cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-[#044CD0] hover:bg-[#033eb0] text-white shadow-2xs transition-all shrink-0 cursor-pointer"
                 >
                   <span>{action.label}</span>
-                  <ArrowRight className="w-3 h-3" />
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               )}
             </>
@@ -152,7 +155,7 @@ export function AppToast() {
           <button
             type="button"
             onClick={() => hideToast(activeToast.id)}
-            className="p-1 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 rounded-md transition-colors cursor-pointer shrink-0"
+            className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#071938] rounded-lg transition-colors cursor-pointer shrink-0"
             aria-label="Zamknij powiadomienie"
           >
             <X className="w-4 h-4" />

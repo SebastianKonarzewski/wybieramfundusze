@@ -66,17 +66,14 @@ export function CompareProvider({ children }: { children: React.ReactNode }) {
     if (!selectedFunds.some((f) => f.subfundId === fund.subfundId)) {
       const nextFunds = [...selectedFunds, fund];
       saveFunds(nextFunds);
-      toast.success(
-        t.compare.toastAdded.replace("{count}", String(nextFunds.length)),
-        {
-          message: fund.name,
-          category: "compare",
-          action: {
-            label: t.common.compareNow,
-            href: "/porownywarka",
-          },
-        }
-      );
+      toast.success(t.compare.toastAdded, {
+        message: fund.name,
+        category: "compare",
+        action: {
+          label: `${t.common.compare} (${nextFunds.length})`,
+          href: "/porownywarka",
+        },
+      });
     }
   };
 

@@ -235,7 +235,7 @@ export const pl = {
     emptySlot: "Wolne miejsce",
     addMoreHint: "+ Wybierz z listy",
     selectedCountBadge: "{count} z 4",
-    toastAdded: "Dodano do porównania ({count}/4)",
+    toastAdded: "Dodano do porównania",
     toastRemoved: "Usunięto z porównania",
     toastLimitReached: "Możesz porównać maksymalnie 4 fundusze jednocześnie.",
     limitWarningTitle: "Osiągnięto limit porównania",
