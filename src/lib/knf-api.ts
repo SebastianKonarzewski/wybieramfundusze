@@ -1029,6 +1029,16 @@ export const knfApi = {
       };
     });
 
+    // Filter inactive subfunds unless explicitly requested
+    if (!params?.includeInactive) {
+      filtered = filtered.filter((sf) => sf.isActive !== false);
+    }
+
+    // Filter subfunds in liquidation unless explicitly requested
+    if (!params?.includeLiquidating) {
+      filtered = filtered.filter((sf) => !sf.isLiquidating);
+    }
+
     // Filter by search terms across name, fullName, subfundId, nationalCode, classification, category, type, companyName, fundName
     if (params?.search && params.search.trim()) {
       const searchTerms = params.search.toLowerCase().trim().split(/\s+/).filter(Boolean);
