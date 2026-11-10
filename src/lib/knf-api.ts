@@ -888,6 +888,12 @@ export const knfApi = {
     includeInactive?: boolean;
     includeLiquidating?: boolean;
     search?: string;
+    company?: string;
+    companies?: string[];
+    sriLevels?: number[];
+    maxFee?: number;
+    onlyProfitable?: boolean;
+    returnPeriod?: string;
     page?: number;
     size?: number;
     sort?: string;
@@ -1168,6 +1174,59 @@ export const knfApi = {
       filtered = filtered.filter((sf) =>
         activeCurrencies.includes((sf.currency || "PLN").toUpperCase())
       );
+    }
+
+    // Filter by companies / TFI if provided
+    const activeCompanies = (
+      params?.companies && params.companies.length > 0
+        ? params.companies
+        : params?.company && params.company !== "ALL"
+        ? [params.company]
+        : []
+    )
+      .filter((c) => c && c !== "ALL")
+      .map((c) => c.toLowerCase().trim());
+
+    if (activeCompanies.length > 0) {
+      filtered = filtered.filter((sf) => {
+        const cName = (sf.companyName || "").toLowerCase().trim();
+        return activeCompanies.some((target) => cName === target || cName.includes(target) || target.includes(cName));
+      });
+    }
+
+    // Filter by SRI risk level if provided
+    if (params?.sriLevels && params.sriLevels.length > 0) {
+      const activeSri = params.sriLevels.filter((s) => !isNaN(s) && s >= 1 && s <= 7);
+      if (activeSri.length > 0) {
+        filtered = filtered.filter(
+          (sf) => sf.riskLevel !== null && sf.riskLevel !== undefined && activeSri.includes(sf.riskLevel)
+        );
+      }
+    }
+
+    // Filter by maximum management / ongoing fee if provided
+    if (params?.maxFee !== undefined && params.maxFee !== null && !isNaN(params.maxFee) && params.maxFee > 0) {
+      filtered = filtered.filter(
+        (sf) => sf.managementFee !== null && sf.managementFee !== undefined && sf.managementFee <= params.maxFee!
+      );
+    }
+
+    // Filter by positive return rate in selected period if requested
+    if (params?.onlyProfitable) {
+      filtered = filtered.filter((sf) => {
+        const period = params.returnPeriod || "1Y";
+        let rate: number | null | undefined = null;
+        switch (period) {
+          case "1M": rate = sf.returnRate1M; break;
+          case "3M": rate = sf.returnRate3M; break;
+          case "6M": rate = sf.returnRate6M; break;
+          case "1Y": rate = sf.returnRate1Y; break;
+          case "2Y": rate = sf.returnRate2Y; break;
+          case "YTD": rate = sf.returnRateYTD; break;
+          default: rate = sf.returnRate1Y; break;
+        }
+        return rate !== null && rate !== undefined && rate > 0;
+      });
     }
 
     // Handle sort if name,desc / return rates

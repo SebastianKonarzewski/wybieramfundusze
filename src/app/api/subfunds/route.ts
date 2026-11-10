@@ -33,6 +33,28 @@ export async function GET(request: NextRequest) {
     ? currencyParam.split(",").map((s) => s.slice(0, 10).trim().toUpperCase()).filter((s) => s && s !== "ALL")
     : undefined;
 
+  // Support both multi 'companies' and single 'company'
+  const companyParam = searchParams.get("companies") || searchParams.get("company") || undefined;
+  const companies = companyParam
+    ? companyParam.split(",").map((s) => s.slice(0, 100).trim()).filter((s) => s && s !== "ALL")
+    : undefined;
+
+  // Support multi 'sri' (e.g. "1,2,3")
+  const sriParam = searchParams.get("sri") || undefined;
+  const sriLevels = sriParam
+    ? sriParam
+        .split(",")
+        .map((s) => parseInt(s.trim(), 10))
+        .filter((n) => !isNaN(n) && n >= 1 && n <= 7)
+    : undefined;
+
+  // Support maxFee (e.g. "1.5")
+  const rawMaxFee = searchParams.get("maxFee");
+  const maxFee = rawMaxFee && !isNaN(parseFloat(rawMaxFee)) && parseFloat(rawMaxFee) > 0 ? parseFloat(rawMaxFee) : undefined;
+
+  const onlyProfitable = searchParams.get("onlyProfitable") === "true";
+  const returnPeriod = searchParams.get("returnPeriod") || undefined;
+
   const page = Math.max(0, parseInt(searchParams.get("page") || "0", 10) || 0);
   const size = Math.max(1, Math.min(parseInt(searchParams.get("size") || "24", 10) || 24, 100));
   const rawSort = searchParams.get("sort") || "name,asc";
@@ -75,6 +97,11 @@ export async function GET(request: NextRequest) {
         fundTypes,
         categories,
         currencies,
+        companies,
+        sriLevels,
+        maxFee,
+        onlyProfitable,
+        returnPeriod,
         page,
         size,
         sort,

@@ -25,6 +25,9 @@ import {
   TrendingUp,
   Coins,
   X,
+  Building2,
+  ShieldAlert,
+  Percent,
 } from "lucide-react";
 import { SubfundCardModel } from "@/types/knf";
 import { StatusBadge } from "./StatusBadge";
@@ -149,6 +152,71 @@ function getDisplayType(item: { name: string; type: string; classification?: str
   return item.type;
 }
 
+export const ALL_TFIS = [
+  "AgioFunds TFI",
+  "Alior TFI",
+  "Allied Funds TFI",
+  "Amathus TFI",
+  "Amundi Polska TFI",
+  "ARP TFI",
+  "Baltic Capital TFI",
+  "BEST TFI",
+  "BNP Paribas TFI",
+  "BPS TFI",
+  "Caspar TFI",
+  "Eques Investment TFI",
+  "Erste TFI",
+  "Esaliens TFI",
+  "Forum TFI",
+  "Generali Investments TFI",
+  "Hoist TFI",
+  "IB TFI",
+  "ING TFI",
+  "Insignis TFI",
+  "Intrum TFI",
+  "Investors TFI",
+  "Ipopema TFI",
+  "KRUK TFI",
+  "MCI Capital TFI",
+  "Mebis TFI SA",
+  "Michael/Ström TFI",
+  "Millennium TFI",
+  "MMP TFI",
+  "Mount TFI",
+  "mTFI",
+  "Opoka TFI",
+  "OPTI TFI",
+  "Origin TFI",
+  "OSTOJA TFI",
+  "Pekao TFI",
+  "PFR TFI",
+  "PKO TFI",
+  "PRA Group TFI",
+  "Quercus TFI",
+  "Rockbridge TFI",
+  "Skarbiec TFI",
+  "Superfund TFI",
+  "TFI AGRO",
+  "TFI Allianz Polska",
+  "TFI PZU SA",
+  "TYR TFI",
+  "Ultimo TFI",
+  "Uniqa TFI",
+  "VeloFunds TFI",
+  "VIG/C-QUADRAT TFI",
+  "White Berg TFI",
+];
+
+const SRI_LEVELS = [
+  { level: 1, label: "1", color: "bg-emerald-500", text: "text-emerald-700 dark:text-emerald-300", border: "border-emerald-400" },
+  { level: 2, label: "2", color: "bg-green-500", text: "text-green-700 dark:text-green-300", border: "border-green-400" },
+  { level: 3, label: "3", color: "bg-lime-500", text: "text-lime-700 dark:text-lime-300", border: "border-lime-400" },
+  { level: 4, label: "4", color: "bg-yellow-400", text: "text-yellow-700 dark:text-yellow-300", border: "border-yellow-400" },
+  { level: 5, label: "5", color: "bg-amber-500", text: "text-amber-700 dark:text-amber-300", border: "border-amber-400" },
+  { level: 6, label: "6", color: "bg-orange-500", text: "text-orange-700 dark:text-orange-300", border: "border-orange-400" },
+  { level: 7, label: "7", color: "bg-rose-600", text: "text-rose-700 dark:text-rose-300", border: "border-rose-400" },
+];
+
 interface SubfundsCatalogProps {
   initialItems: SubfundCardModel[];
   initialPage: {
@@ -192,6 +260,15 @@ export function SubfundsCatalog({
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const categoryDropdownRef = useRef<HTMLDivElement>(null);
+
+  // Advanced filters state: TFI, SRI, Max fee, Only profitable
+  const [selectedCompanies, setSelectedCompanies] = useState<string[]>([]);
+  const [isTfiOpen, setIsTfiOpen] = useState(false);
+  const [tfiSearchTerm, setTfiSearchTerm] = useState("");
+  const tfiDropdownRef = useRef<HTMLDivElement>(null);
+  const [selectedSri, setSelectedSri] = useState<number[]>([]);
+  const [maxFee, setMaxFee] = useState<number | null>(null);
+  const [onlyProfitable, setOnlyProfitable] = useState(false);
   const resultsTopRef = useRef<HTMLDivElement>(null);
   const [sortField, setSortField] = useState<"name" | "fee" | "risk" | "valuation" | "return" | "assets">("name");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
@@ -440,6 +517,68 @@ export function SubfundsCatalog({
     };
   }, [isCategoryOpen]);
 
+  // Close TFI dropdown on click outside or Escape
+  useEffect(() => {
+    if (!isTfiOpen) return;
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        tfiDropdownRef.current &&
+        !tfiDropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsTfiOpen(false);
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsTfiOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isTfiOpen]);
+
+  const filteredTfis = useMemo(() => {
+    if (!tfiSearchTerm.trim()) return ALL_TFIS;
+    const term = tfiSearchTerm.toLowerCase();
+    return ALL_TFIS.filter((tfi) => tfi.toLowerCase().includes(term));
+  }, [tfiSearchTerm]);
+
+  const toggleCompany = (company: string) => {
+    if (company === "ALL") {
+      setSelectedCompanies([]);
+      setCurrentPage(0);
+      return;
+    }
+    setSelectedCompanies((prev) =>
+      prev.includes(company) ? prev.filter((c) => c !== company) : [...prev, company]
+    );
+    setCurrentPage(0);
+  };
+
+  const tfiTriggerTitle = useMemo(() => {
+    if (selectedCompanies.length === 0) return t.catalog.allTfi;
+    return selectedCompanies.join(", ");
+  }, [selectedCompanies, t.catalog.allTfi]);
+
+  const toggleSri = (level: number) => {
+    if (level === 0) {
+      setSelectedSri([]);
+      setCurrentPage(0);
+      return;
+    }
+    setSelectedSri((prev) =>
+      prev.includes(level) ? prev.filter((l) => l !== level) : [...prev, level]
+    );
+    setCurrentPage(0);
+  };
+
   // Close sort dropdown on click outside or Escape
   useEffect(() => {
     if (!isSortOpen) return;
@@ -468,7 +607,22 @@ export function SubfundsCatalog({
   }, [isSortOpen]);
 
   const hasActiveAdvancedFilters =
-    selectedCategories.length > 0 || includeInactive || includeLiquidating;
+    selectedCompanies.length > 0 ||
+    selectedCategories.length > 0 ||
+    selectedSri.length > 0 ||
+    maxFee !== null ||
+    onlyProfitable ||
+    includeInactive ||
+    includeLiquidating;
+
+  const activeAdvancedFiltersCount =
+    selectedCompanies.length +
+    selectedCategories.length +
+    selectedSri.length +
+    (maxFee !== null ? 1 : 0) +
+    (onlyProfitable ? 1 : 0) +
+    (includeInactive ? 1 : 0) +
+    (includeLiquidating ? 1 : 0);
 
   const hasAnyActiveFilters =
     searchTerm.trim() !== "" ||
@@ -476,9 +630,7 @@ export function SubfundsCatalog({
     selectedClassifications.length > 0 ||
     selectedTypes.length > 0 ||
     selectedCurrencies.length > 0 ||
-    selectedCategories.length > 0 ||
-    includeInactive ||
-    includeLiquidating;
+    hasActiveAdvancedFilters;
 
   const activeFiltersCount =
     (searchTerm.trim() !== "" ? 1 : 0) +
@@ -486,9 +638,7 @@ export function SubfundsCatalog({
     selectedClassifications.length +
     selectedTypes.length +
     selectedCurrencies.length +
-    selectedCategories.length +
-    (includeInactive ? 1 : 0) +
-    (includeLiquidating ? 1 : 0);
+    activeAdvancedFiltersCount;
 
   const clearUmbrellaFundFilter = () => {
     setFundId(undefined);
@@ -503,6 +653,17 @@ export function SubfundsCatalog({
     }
   };
 
+  const resetAdvancedFilters = () => {
+    setSelectedCompanies([]);
+    setSelectedCategories([]);
+    setSelectedSri([]);
+    setMaxFee(null);
+    setOnlyProfitable(false);
+    setIncludeInactive(false);
+    setIncludeLiquidating(false);
+    setCurrentPage(0);
+  };
+
   const resetAllFilters = () => {
     setSearchTerm("");
     setFundId(undefined);
@@ -511,6 +672,10 @@ export function SubfundsCatalog({
     setSelectedTypes([]);
     setSelectedCurrencies([]);
     setSelectedCategories([]);
+    setSelectedCompanies([]);
+    setSelectedSri([]);
+    setMaxFee(null);
+    setOnlyProfitable(false);
     setIncludeInactive(false);
     setIncludeLiquidating(false);
     setCurrentPage(0);
@@ -541,11 +706,24 @@ export function SubfundsCatalog({
           if (selectedCurrencies.length > 0) {
             params.set("currencies", selectedCurrencies.join(","));
           }
+          if (selectedCompanies.length > 0) {
+            params.set("companies", selectedCompanies.join(","));
+          }
           if (selectedCategories.length > 0) {
             params.set("categories", selectedCategories.join(","));
           }
+          if (selectedSri.length > 0) {
+            params.set("sri", selectedSri.join(","));
+          }
+          if (maxFee !== null) {
+            params.set("maxFee", String(maxFee));
+          }
+          if (onlyProfitable) {
+            params.set("onlyProfitable", "true");
+          }
           if (includeInactive) params.set("includeInactive", "true");
           if (includeLiquidating) params.set("includeLiquidating", "true");
+          params.set("returnPeriod", returnPeriod);
           params.set("page", String(currentPage));
           params.set("size", String(currentPageSize));
           if (sortField === "name") {
@@ -582,7 +760,11 @@ export function SubfundsCatalog({
     selectedClassifications,
     selectedTypes,
     selectedCurrencies,
+    selectedCompanies,
     selectedCategories,
+    selectedSri,
+    maxFee,
+    onlyProfitable,
     includeInactive,
     includeLiquidating,
     currentPage,
@@ -967,18 +1149,260 @@ export function SubfundsCatalog({
 
         {/* Collapsible Advanced Filters Section */}
         {showAdvancedFilters && (
-          <div className="p-4 sm:p-5 rounded-xl bg-slate-50/80 dark:bg-[#030a16] border border-slate-200 dark:border-[#0e274d] space-y-3.5 text-xs sm:text-sm text-slate-700 dark:text-slate-300 animate-in fade-in duration-150 relative z-20">
-            {/* Line 1: Detailed Category */}
-            <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-3.5 min-w-0">
-              <label
-                id="detailed-category-label"
-                className="text-slate-600 dark:text-slate-400 font-medium font-sans flex items-center gap-1.5 shrink-0 whitespace-nowrap select-none"
-              >
-                <Layers className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
-                <span>{t.catalog.detailedCategory}</span>
-              </label>
+          <div className="p-4 sm:p-5 rounded-2xl bg-slate-50/90 dark:bg-[#030a16] border border-slate-200 dark:border-[#0e274d] space-y-4 text-xs sm:text-sm text-slate-700 dark:text-slate-300 animate-in fade-in duration-150 relative z-20 shadow-inner">
+            {/* Header with active count & quick reset */}
+            <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-[#0e274d]/80">
+              <div className="flex items-center gap-2">
+                <SlidersHorizontal className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6]" />
+                <span className="font-semibold text-slate-900 dark:text-white text-xs sm:text-sm">
+                  {t.catalog.advancedFilters}
+                </span>
+                {activeAdvancedFiltersCount > 0 && (
+                  <span className="px-2 py-0.5 rounded-full bg-blue-100 dark:bg-[#044CD0]/30 text-[#044CD0] dark:text-blue-300 text-[11px] font-bold border border-blue-200 dark:border-blue-800">
+                    {activeAdvancedFiltersCount} {t.catalog.activeFiltersCount}
+                  </span>
+                )}
+              </div>
+              {hasActiveAdvancedFilters && (
+                <button
+                  type="button"
+                  onClick={resetAdvancedFilters}
+                  className="text-xs text-slate-500 hover:text-rose-600 dark:text-slate-400 dark:hover:text-rose-400 font-medium transition-colors cursor-pointer flex items-center gap-1"
+                >
+                  <RotateCcw className="w-3 h-3" />
+                  <span>{t.common.clear}</span>
+                </button>
+              )}
+            </div>
 
-              <div ref={categoryDropdownRef} className="relative min-w-0 w-full sm:w-[380px] md:w-[420px]">
+            {/* 2-Column Responsive Grid for Main Advanced Controls */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              {/* Column 1: Entities & Detailed Category */}
+              <div className="space-y-3.5 bg-white dark:bg-[#051329] p-3.5 sm:p-4 rounded-xl border border-slate-200/90 dark:border-[#0e274d]">
+                <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 flex items-center gap-1.5">
+                  <Building2 className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#3b82f6]" />
+                  <span>{t.catalog.filterSectionEntities}</span>
+                </div>
+
+                {/* 1. Towarzystwo (TFI) */}
+                <div className="space-y-1.5">
+                  <label id="tfi-select-label" className="block text-xs font-semibold text-slate-700 dark:text-slate-300">
+                    {t.catalog.tfiLabel}
+                  </label>
+                  <div ref={tfiDropdownRef} className="relative w-full">
+                    <div
+                      className={`h-[38px] w-full bg-white dark:bg-[#030a16] border ${
+                        isTfiOpen
+                          ? "border-[#044CD0] ring-2 ring-[#044CD0]/20"
+                          : selectedCompanies.length > 0
+                          ? "border-blue-400 dark:border-[#044CD0]/60 bg-blue-50/70 dark:bg-[#044CD0]/10"
+                          : "border-slate-300 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-[#19407a]"
+                      } text-slate-800 dark:text-slate-200 font-sans font-medium text-xs sm:text-sm rounded-xl pl-3 pr-2.5 flex items-center justify-between gap-1 transition-all select-none shadow-2xs`}
+                    >
+                      <button
+                        type="button"
+                        id="tfi-select-btn"
+                        aria-labelledby="tfi-select-label"
+                        aria-haspopup="listbox"
+                        aria-expanded={isTfiOpen}
+                        onClick={() => setIsTfiOpen((prev) => !prev)}
+                        className="flex-1 min-w-0 h-full flex items-center gap-1.5 text-left cursor-pointer focus:outline-none"
+                      >
+                        <span className="truncate" title={tfiTriggerTitle}>
+                          {selectedCompanies.length === 0
+                            ? t.catalog.allTfi
+                            : selectedCompanies[0]}
+                        </span>
+                        {selectedCompanies.length > 1 && (
+                          <span className="px-1.5 py-0.5 rounded-full bg-[#044CD0] text-white text-[10px] font-bold shrink-0">
+                            +{selectedCompanies.length - 1}
+                          </span>
+                        )}
+                      </button>
+
+                      <div className="flex items-center gap-1 shrink-0 text-slate-400">
+                        {selectedCompanies.length > 0 && (
+                          <>
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setSelectedCompanies([]);
+                                setCurrentPage(0);
+                                setIsTfiOpen(false);
+                              }}
+                              title={t.catalog.clearTfi}
+                              className="p-1 text-slate-400 hover:text-slate-800 dark:hover:text-white hover:bg-slate-200/80 dark:hover:bg-slate-700/60 active:bg-slate-300 dark:active:bg-slate-600 rounded-lg transition-colors cursor-pointer flex items-center justify-center focus:outline-none"
+                              aria-label={t.catalog.clearTfi}
+                            >
+                              <X className="w-3.5 h-3.5" />
+                            </button>
+                            <div className="w-px h-3.5 bg-slate-300 dark:bg-[#0e274d]" />
+                          </>
+                        )}
+                        <button
+                          type="button"
+                          tabIndex={-1}
+                          aria-hidden="true"
+                          onClick={() => setIsTfiOpen((prev) => !prev)}
+                          className="p-1 hover:text-slate-700 dark:hover:text-slate-200 cursor-pointer flex items-center justify-center focus:outline-none"
+                        >
+                          <ChevronDown
+                            className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                              isTfiOpen ? "rotate-180 text-blue-600 dark:text-blue-400" : ""
+                            }`}
+                          />
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* TFI Popover */}
+                    {isTfiOpen && (
+                      <div
+                        role="listbox"
+                        aria-labelledby="tfi-select-label"
+                        aria-multiselectable="true"
+                        className="absolute top-full left-0 mt-1.5 w-full bg-white dark:bg-[#030c1c] border border-slate-200 dark:border-[#0e274d] rounded-xl shadow-2xl z-50 flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-100"
+                      >
+                        {/* Search TFI input */}
+                        <div className="p-2 border-b border-slate-200 dark:border-[#0e274d] bg-slate-50/70 dark:bg-[#051329]">
+                          <div className="relative">
+                            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
+                            <input
+                              type="text"
+                              autoFocus
+                              placeholder={t.catalog.searchTfiPlaceholder}
+                              value={tfiSearchTerm}
+                              onChange={(e) => setTfiSearchTerm(e.target.value)}
+                              className="w-full pl-8 pr-7 py-1.5 rounded-lg bg-white dark:bg-[#030a16] border border-slate-300 dark:border-[#0e274d] text-xs text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:border-[#044CD0]"
+                            />
+                            {tfiSearchTerm && (
+                              <button
+                                type="button"
+                                onClick={() => setTfiSearchTerm("")}
+                                className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 cursor-pointer"
+                              >
+                                <X className="w-3 h-3" />
+                              </button>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* TFI List */}
+                        <div className="max-h-60 overflow-y-auto p-1.5 space-y-0.5">
+                          {/* All TFI option */}
+                          <button
+                            type="button"
+                            role="option"
+                            aria-selected={selectedCompanies.length === 0}
+                            onClick={() => {
+                              setSelectedCompanies([]);
+                              setCurrentPage(0);
+                            }}
+                            className={`w-full text-left px-3 py-1.5 text-xs rounded-lg flex items-center justify-between transition-colors cursor-pointer select-none ${
+                              selectedCompanies.length === 0
+                                ? "bg-blue-50 dark:bg-[#044CD0]/25 text-[#044CD0] dark:text-blue-300 font-semibold"
+                                : "text-slate-700 dark:text-slate-200 hover:bg-blue-50/70 dark:hover:bg-[#071938] hover:text-[#044CD0] dark:hover:text-white"
+                            }`}
+                          >
+                            <div className="flex items-center gap-2.5">
+                              <div
+                                className={`w-4 h-4 rounded-sm flex items-center justify-center transition-colors ${
+                                  selectedCompanies.length === 0
+                                    ? "bg-[#044CD0] border border-[#044CD0] text-white"
+                                    : "border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#051329]"
+                                }`}
+                              >
+                                {selectedCompanies.length === 0 && <Check className="w-3 h-3 stroke-[3]" />}
+                              </div>
+                              <span>{t.catalog.allTfi}</span>
+                            </div>
+                          </button>
+
+                          {filteredTfis.length === 0 ? (
+                            <div className="px-3 py-4 text-center text-xs text-slate-400">
+                              {locale === "en" ? "No matching TFI found" : "Brak wyników dla podanej frazy"}
+                            </div>
+                          ) : (
+                            filteredTfis.map((company) => {
+                              const isSelected = selectedCompanies.includes(company);
+                              return (
+                                <button
+                                  key={company}
+                                  type="button"
+                                  role="option"
+                                  aria-selected={isSelected}
+                                  onClick={() => toggleCompany(company)}
+                                  className={`w-full text-left px-3 py-1.5 text-xs rounded-lg flex items-center justify-between transition-colors cursor-pointer select-none ${
+                                    isSelected
+                                      ? "bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-200 font-semibold"
+                                      : "text-slate-700 dark:text-slate-300 hover:bg-blue-50/70 dark:hover:bg-[#071938] hover:text-[#044CD0] dark:hover:text-white"
+                                  }`}
+                                >
+                                  <div className="flex items-center gap-2.5 min-w-0 flex-1 mr-2">
+                                    <div
+                                      className={`w-4 h-4 rounded-sm flex items-center justify-center shrink-0 transition-colors ${
+                                        isSelected
+                                          ? "bg-[#044CD0] border border-[#044CD0] text-white"
+                                          : "border border-slate-300 dark:border-slate-600 bg-white dark:bg-[#051329]"
+                                      }`}
+                                    >
+                                      {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
+                                    </div>
+                                    <span className="truncate">{company}</span>
+                                  </div>
+                                </button>
+                              );
+                            })
+                          )}
+                        </div>
+
+                        {/* TFI Footer */}
+                        <div className="px-3 py-2 bg-slate-50 dark:bg-[#051329] border-t border-slate-200 dark:border-[#0e274d] flex items-center justify-between text-xs shrink-0 select-none">
+                          <span className="text-slate-500 dark:text-slate-400 font-medium">
+                            {locale === "en" ? "Selected:" : "Wybrano:"}{" "}
+                            <strong className="text-slate-900 dark:text-white font-bold">
+                              {selectedCompanies.length === 0
+                                ? locale === "en"
+                                  ? "All"
+                                  : "Wszystkie"
+                                : selectedCompanies.length}
+                            </strong>
+                          </span>
+                          <div className="flex items-center gap-1.5">
+                            {selectedCompanies.length > 0 && (
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setSelectedCompanies([]);
+                                  setCurrentPage(0);
+                                }}
+                                className="px-2 py-1 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/80 dark:hover:bg-slate-800 transition-colors cursor-pointer font-medium"
+                              >
+                                {t.common.clear}
+                              </button>
+                            )}
+                            <button
+                              type="button"
+                              onClick={() => setIsTfiOpen(false)}
+                              className="px-3 py-1 rounded-lg bg-[#044CD0] hover:bg-blue-600 text-white font-medium transition-colors cursor-pointer shadow-xs"
+                            >
+                              {locale === "en" ? "Done" : "Gotowe"}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* 2. Kategoria szczegółowa */}
+                <div className="space-y-1.5">
+                  <label id="detailed-category-label" className="block text-xs font-semibold text-slate-700 dark:text-slate-300">
+                    {t.catalog.detailedCategory}
+                  </label>
+                  <div ref={categoryDropdownRef} className="relative w-full">
                 {/* Custom Trigger Container */}
                 <div
                   className={`h-[38px] w-full bg-white dark:bg-[#051329] border ${
@@ -1173,105 +1597,263 @@ export function SubfundsCatalog({
                 )}
               </div>
             </div>
+          </div>
 
-            {/* Subtle Divider between Line 1 and Line 2 */}
-            <div className="border-t border-slate-200 dark:border-[#0e274d]/60" />
+          {/* Column 2: SRI Risk Profile & Cost Slider */}
+          <div className="space-y-3.5 bg-white dark:bg-[#051329] p-3.5 sm:p-4 rounded-xl border border-slate-200/90 dark:border-[#0e274d]">
+            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 flex items-center gap-1.5">
+              <ShieldAlert className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#3b82f6]" />
+              <span>{t.catalog.filterSectionRiskFee}</span>
+            </div>
 
-            {/* Line 2: Legal Registry Checkboxes */}
-            <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-3.5 min-w-0">
-              <span className="text-slate-600 dark:text-slate-400 font-medium font-sans flex items-center gap-1.5 shrink-0 whitespace-nowrap select-none">
-                <Briefcase className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
-                <span>{t.catalog.legalRegistry}</span>
-              </span>
-
-              <div className="flex items-center flex-wrap gap-2.5 sm:gap-3">
-                {/* 1. Fundusze w likwidacji */}
-                <label
-                  className={`group relative inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xl border text-xs sm:text-sm cursor-pointer select-none transition-all shadow-2xs ${
-                    includeLiquidating
-                      ? "border-blue-300 dark:border-blue-800/80 bg-blue-50/60 dark:bg-[#044CD0]/15"
-                      : "border-slate-200/90 dark:border-[#0e274d] bg-white dark:bg-[#030a16]/60 hover:bg-slate-50 dark:hover:bg-[#071938] hover:border-slate-300 dark:hover:border-[#1e3a6a]"
+            {/* SRI Risk Profile (Pills 1 to 7) */}
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between">
+                <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                  {t.catalog.sriFilterLabel}
+                </label>
+                <span className="text-[11px] text-slate-400 dark:text-slate-500">
+                  {t.catalog.sriFilterHint}
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5 flex-wrap">
+                <button
+                  type="button"
+                  onClick={() => toggleSri(0)}
+                  className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                    selectedSri.length === 0
+                      ? "bg-slate-800 text-white dark:bg-slate-200 dark:text-slate-900 shadow-xs"
+                      : "bg-slate-100 dark:bg-[#030a16] text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-[#0e274d]"
                   }`}
                 >
-                  <input
-                    type="checkbox"
-                    checked={includeLiquidating}
-                    onChange={(e) => {
-                      setIncludeLiquidating(e.target.checked);
-                      setCurrentPage(0);
-                    }}
-                    className="sr-only peer"
-                  />
-                  <div
-                    className={`relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out peer-focus-visible:ring-2 peer-focus-visible:ring-[#044CD0] peer-focus-visible:ring-offset-2 ${
-                      includeLiquidating
-                        ? "bg-[#044CD0]"
-                        : "bg-slate-300 dark:bg-slate-700"
-                    }`}
-                  >
-                    <span
-                      aria-hidden="true"
-                      className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-xs transition duration-200 ease-in-out ${
-                        includeLiquidating ? "translate-x-4" : "translate-x-0"
+                  {t.catalog.sriAll}
+                </button>
+                {SRI_LEVELS.map((sri) => {
+                  const isSelected = selectedSri.includes(sri.level);
+                  return (
+                    <button
+                      key={sri.level}
+                      type="button"
+                      onClick={() => toggleSri(sri.level)}
+                      aria-pressed={isSelected}
+                      className={`w-8 h-8 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center ${
+                        isSelected
+                          ? `${sri.color} text-white shadow-md scale-105 ring-2 ring-offset-1 ring-slate-400 dark:ring-offset-[#051329]`
+                          : `bg-slate-100 dark:bg-[#030a16] ${sri.text} hover:opacity-100 opacity-80 border border-slate-200 dark:border-[#0e274d]`
                       }`}
-                    />
-                  </div>
-                  <span
-                    className={`whitespace-nowrap transition-colors ${
-                      includeLiquidating
-                        ? "text-[#044CD0] dark:text-blue-300 font-semibold"
-                        : "text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white font-medium"
-                    }`}
-                  >
-                    {t.catalog.showLiquidating}
-                  </span>
-                </label>
+                      title={`SRI ${sri.level}`}
+                    >
+                      {sri.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
 
-                {/* 2. Fundusze nieaktywne */}
-                <label
-                  className={`group relative inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xl border text-xs sm:text-sm cursor-pointer select-none transition-all shadow-2xs ${
-                    includeInactive
-                      ? "border-blue-300 dark:border-blue-800/80 bg-blue-50/60 dark:bg-[#044CD0]/15"
-                      : "border-slate-200/90 dark:border-[#0e274d] bg-white dark:bg-[#030a16]/60 hover:bg-slate-50 dark:hover:bg-[#071938] hover:border-slate-300 dark:hover:border-[#1e3a6a]"
+            {/* Management Fee Max Slider + Presets */}
+            <div className="space-y-1.5 pt-1">
+              <div className="flex items-center justify-between">
+                <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                  <Percent className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#3b82f6]" />
+                  <span>{t.catalog.feeFilterLabel}</span>
+                </label>
+                <span className="text-xs font-bold text-[#044CD0] dark:text-blue-300">
+                  {maxFee === null
+                    ? t.catalog.feeAny
+                    : t.catalog.feeSliderValue.replace("{val}", maxFee.toFixed(2).replace(".", ","))}
+                </span>
+              </div>
+
+              {/* Range Slider */}
+              <div className="flex items-center gap-3">
+                <input
+                  type="range"
+                  min="0.2"
+                  max="3.0"
+                  step="0.05"
+                  value={maxFee === null ? 3.0 : maxFee}
+                  onChange={(e) => {
+                    const val = parseFloat(e.target.value);
+                    setMaxFee(val >= 3.0 ? null : val);
+                    setCurrentPage(0);
+                  }}
+                  className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-[#044CD0]"
+                />
+              </div>
+
+              {/* Quick Fee Presets */}
+              <div className="flex items-center gap-1.5 pt-1 flex-wrap">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMaxFee(null);
+                    setCurrentPage(0);
+                  }}
+                  className={`px-2 py-1 rounded-md text-[11px] font-medium transition-all cursor-pointer ${
+                    maxFee === null
+                      ? "bg-[#044CD0] text-white shadow-xs font-bold"
+                      : "bg-slate-100 dark:bg-[#030a16] text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-[#0e274d]"
                   }`}
                 >
-                  <input
-                    type="checkbox"
-                    checked={includeInactive}
-                    onChange={(e) => {
-                      setIncludeInactive(e.target.checked);
-                      setCurrentPage(0);
-                    }}
-                    className="sr-only peer"
-                  />
-                  <div
-                    className={`relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out peer-focus-visible:ring-2 peer-focus-visible:ring-[#044CD0] peer-focus-visible:ring-offset-2 ${
-                      includeInactive
-                        ? "bg-[#044CD0]"
-                        : "bg-slate-300 dark:bg-slate-700"
-                    }`}
-                  >
-                    <span
-                      aria-hidden="true"
-                      className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-xs transition duration-200 ease-in-out ${
-                        includeInactive ? "translate-x-4" : "translate-x-0"
+                  {t.catalog.feePresets.any}
+                </button>
+                {[0.5, 1.0, 1.5, 2.0].map((presetVal) => {
+                  const isSelected = maxFee === presetVal;
+                  return (
+                    <button
+                      key={presetVal}
+                      type="button"
+                      onClick={() => {
+                        setMaxFee(isSelected ? null : presetVal);
+                        setCurrentPage(0);
+                      }}
+                      className={`px-2 py-1 rounded-md text-[11px] font-medium transition-all cursor-pointer ${
+                        isSelected
+                          ? "bg-[#044CD0] text-white shadow-xs font-bold"
+                          : "bg-slate-100 dark:bg-[#030a16] text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-[#0e274d]"
                       }`}
-                    />
-                  </div>
-                  <span
-                    className={`whitespace-nowrap transition-colors ${
-                      includeInactive
-                        ? "text-[#044CD0] dark:text-blue-300 font-semibold"
-                        : "text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white font-medium"
-                    }`}
-                  >
-                    {t.catalog.showInactive}
-                  </span>
-                </label>
+                    >
+                      ≤ {presetVal.toFixed(1).replace(".", ",")}%
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>
-        )}
+        </div>
+
+        {/* Bottom Row: Status & Profitability Toggles */}
+        <div className="pt-2 border-t border-slate-200 dark:border-[#0e274d]/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 flex items-center gap-1.5">
+            <Briefcase className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#3b82f6]" />
+            <span>{t.catalog.filterSectionStatus}</span>
+          </div>
+
+          <div className="flex items-center flex-wrap gap-2.5 sm:gap-3">
+            {/* 1. Only profitable funds toggle */}
+            <label
+              className={`group relative inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xl border text-xs sm:text-sm cursor-pointer select-none transition-all shadow-2xs ${
+                onlyProfitable
+                  ? "border-emerald-300 dark:border-emerald-800/80 bg-emerald-50/70 dark:bg-emerald-950/30"
+                  : "border-slate-200/90 dark:border-[#0e274d] bg-white dark:bg-[#030a16]/60 hover:bg-slate-50 dark:hover:bg-[#071938] hover:border-slate-300 dark:hover:border-[#1e3a6a]"
+              }`}
+              title={t.catalog.onlyProfitableDesc.replace("{period}", activePeriodLabel)}
+            >
+              <input
+                type="checkbox"
+                checked={onlyProfitable}
+                onChange={(e) => {
+                  setOnlyProfitable(e.target.checked);
+                  setCurrentPage(0);
+                }}
+                className="sr-only peer"
+              />
+              <div
+                className={`relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out peer-focus-visible:ring-2 peer-focus-visible:ring-emerald-500 peer-focus-visible:ring-offset-2 ${
+                  onlyProfitable ? "bg-emerald-600" : "bg-slate-300 dark:bg-slate-700"
+                }`}
+              >
+                <span
+                  aria-hidden="true"
+                  className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-xs transition duration-200 ease-in-out ${
+                    onlyProfitable ? "translate-x-4" : "translate-x-0"
+                  }`}
+                />
+              </div>
+              <span
+                className={`whitespace-nowrap transition-colors ${
+                  onlyProfitable
+                    ? "text-emerald-700 dark:text-emerald-300 font-semibold"
+                    : "text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white font-medium"
+                }`}
+              >
+                {t.catalog.onlyProfitable} ({activePeriodLabel})
+              </span>
+            </label>
+
+            {/* 2. Fundusze w likwidacji */}
+            <label
+              className={`group relative inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xl border text-xs sm:text-sm cursor-pointer select-none transition-all shadow-2xs ${
+                includeLiquidating
+                  ? "border-blue-300 dark:border-blue-800/80 bg-blue-50/60 dark:bg-[#044CD0]/15"
+                  : "border-slate-200/90 dark:border-[#0e274d] bg-white dark:bg-[#030a16]/60 hover:bg-slate-50 dark:hover:bg-[#071938] hover:border-slate-300 dark:hover:border-[#1e3a6a]"
+              }`}
+            >
+              <input
+                type="checkbox"
+                checked={includeLiquidating}
+                onChange={(e) => {
+                  setIncludeLiquidating(e.target.checked);
+                  setCurrentPage(0);
+                }}
+                className="sr-only peer"
+              />
+              <div
+                className={`relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out peer-focus-visible:ring-2 peer-focus-visible:ring-[#044CD0] peer-focus-visible:ring-offset-2 ${
+                  includeLiquidating ? "bg-[#044CD0]" : "bg-slate-300 dark:bg-slate-700"
+                }`}
+              >
+                <span
+                  aria-hidden="true"
+                  className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-xs transition duration-200 ease-in-out ${
+                    includeLiquidating ? "translate-x-4" : "translate-x-0"
+                  }`}
+                />
+              </div>
+              <span
+                className={`whitespace-nowrap transition-colors ${
+                  includeLiquidating
+                    ? "text-[#044CD0] dark:text-blue-300 font-semibold"
+                    : "text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white font-medium"
+                }`}
+              >
+                {t.catalog.showLiquidating}
+              </span>
+            </label>
+
+            {/* 3. Fundusze nieaktywne */}
+            <label
+              className={`group relative inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xl border text-xs sm:text-sm cursor-pointer select-none transition-all shadow-2xs ${
+                includeInactive
+                  ? "border-blue-300 dark:border-blue-800/80 bg-blue-50/60 dark:bg-[#044CD0]/15"
+                  : "border-slate-200/90 dark:border-[#0e274d] bg-white dark:bg-[#030a16]/60 hover:bg-slate-50 dark:hover:bg-[#071938] hover:border-slate-300 dark:hover:border-[#1e3a6a]"
+              }`}
+            >
+              <input
+                type="checkbox"
+                checked={includeInactive}
+                onChange={(e) => {
+                  setIncludeInactive(e.target.checked);
+                  setCurrentPage(0);
+                }}
+                className="sr-only peer"
+              />
+              <div
+                className={`relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out peer-focus-visible:ring-2 peer-focus-visible:ring-[#044CD0] peer-focus-visible:ring-offset-2 ${
+                  includeInactive ? "bg-[#044CD0]" : "bg-slate-300 dark:bg-slate-700"
+                }`}
+              >
+                <span
+                  aria-hidden="true"
+                  className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-xs transition duration-200 ease-in-out ${
+                    includeInactive ? "translate-x-4" : "translate-x-0"
+                  }`}
+                />
+              </div>
+              <span
+                className={`whitespace-nowrap transition-colors ${
+                  includeInactive
+                    ? "text-[#044CD0] dark:text-blue-300 font-semibold"
+                    : "text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white font-medium"
+                }`}
+              >
+                {t.catalog.showInactive}
+              </span>
+            </label>
+          </div>
+        </div>
+      </div>
+    )}
       </div>
 
       {/* Results Header & Presentation Controls */}
@@ -1538,6 +2120,68 @@ export function SubfundsCatalog({
                 <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
               </button>
             ))}
+
+            {/* TFI Company chips */}
+            {selectedCompanies.map((comp) => (
+              <button
+                key={comp}
+                type="button"
+                onClick={() => toggleCompany(comp)}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-300 border border-blue-200 dark:border-[#044CD0]/40 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
+                title={`Usuń: ${comp}`}
+              >
+                <span className="truncate max-w-[150px] sm:max-w-[220px]">
+                  {t.catalog.tfiTagLabel} {comp}
+                </span>
+                <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
+              </button>
+            ))}
+
+            {/* SRI risk chips */}
+            {selectedSri.map((sri) => (
+              <button
+                key={sri}
+                type="button"
+                onClick={() => toggleSri(sri)}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-300 border border-blue-200 dark:border-[#044CD0]/40 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
+                title={`Usuń: SRI ${sri}`}
+              >
+                <span>{t.catalog.sriTagLabel} {sri}</span>
+                <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
+              </button>
+            ))}
+
+            {/* Max fee chip */}
+            {maxFee !== null && (
+              <button
+                type="button"
+                onClick={() => {
+                  setMaxFee(null);
+                  setCurrentPage(0);
+                }}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-300 border border-blue-200 dark:border-[#044CD0]/40 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
+                title="Usuń limit opłaty"
+              >
+                <span>{t.catalog.feeTagLabel} ≤ {maxFee.toFixed(2).replace(".", ",")}%</span>
+                <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
+              </button>
+            )}
+
+            {/* Only profitable funds chip */}
+            {onlyProfitable && (
+              <button
+                type="button"
+                onClick={() => {
+                  setOnlyProfitable(false);
+                  setCurrentPage(0);
+                }}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
+                title="Usuń filtr dodatniego wyniku"
+              >
+                <span>{t.catalog.profitableTagLabel} ({activePeriodLabel})</span>
+                <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
+              </button>
+            )}
 
             {/* Liquidating & Inactive chips */}
             {includeLiquidating && (
