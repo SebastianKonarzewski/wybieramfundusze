@@ -161,7 +161,7 @@ export const pl = {
     categoryTagLabel: "kategoria:",
     fxTooltip: "Kurs NBP: 1 {curr} = {rate} PLN",
     returnPeriodLabel: "Stopa zwrotu:",
-    horizontalScrollHint: "Przesuń tabelę w bok, aby zobaczyć wszystkie kolumny (SRI, opłata, stopa zwrotu, wycena)",
+    horizontalScrollHint: "Przesuń tabelę w bok, aby zobaczyć wszystkie kolumny",
     backToTop: "Wróć na górę",
     displayingPage: "Wyświetlanie strony",
     totalItems: "łącznie",

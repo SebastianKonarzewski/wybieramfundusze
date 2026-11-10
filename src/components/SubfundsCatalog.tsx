@@ -28,6 +28,7 @@ import {
   Building2,
   ShieldAlert,
   Percent,
+  ArrowLeftRight,
 } from "lucide-react";
 import { SubfundCardModel } from "@/types/knf";
 import { StatusBadge } from "./StatusBadge";
@@ -2462,9 +2463,9 @@ export function SubfundsCatalog({
         /* View Mode: Interactive Table with Clickable Column Headers */
         <div className="catalog-table-container relative bg-white dark:bg-[#051329] border border-slate-200 dark:border-[#0e274d] rounded-2xl overflow-hidden shadow-sm dark:shadow-xl">
           {/* Mobile horizontal scroll hint */}
-          <div className="md:hidden px-3.5 py-2 bg-slate-50 dark:bg-[#030a16] border-b border-slate-200 dark:border-[#0e274d] flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 select-none">
-            <span className="flex items-center gap-1.5">
-              <span className="font-bold text-[#044CD0] dark:text-[#60a5fa]">↔</span>
+          <div className="md:hidden px-3.5 py-2 bg-slate-50 dark:bg-[#030a16] border-b border-slate-200 dark:border-[#0e274d] flex items-center justify-between text-xs text-slate-600 dark:text-slate-400 select-none">
+            <span className="flex items-center gap-2">
+              <ArrowLeftRight className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
               <span>{t.catalog.horizontalScrollHint}</span>
             </span>
           </div>

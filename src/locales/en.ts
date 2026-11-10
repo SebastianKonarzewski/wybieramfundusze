@@ -163,7 +163,7 @@ export const en: Translations = {
     categoryTagLabel: "category:",
     fxTooltip: "NBP rate: 1 {curr} = {rate} PLN",
     returnPeriodLabel: "Return rate:",
-    horizontalScrollHint: "Scroll horizontally to view all columns (SRI, fee, return rate, NAV)",
+    horizontalScrollHint: "Scroll horizontally to view all columns",
     backToTop: "Back to top",
     displayingPage: "Showing page",
     totalItems: "total",
