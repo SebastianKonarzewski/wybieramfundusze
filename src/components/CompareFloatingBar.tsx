@@ -26,9 +26,6 @@ export function CompareFloatingBar() {
             <span className="text-xs font-bold text-slate-800 dark:text-slate-200">
               {t.compare.floatingBarTitle}
             </span>
-            <span className="px-1.5 py-0.5 rounded-md bg-blue-100/80 dark:bg-[#071938] text-[11px] font-bold text-[#044CD0] dark:text-blue-300">
-              {selectedFunds.length}/4
-            </span>
           </div>
 
           {/* Actions */}
@@ -47,7 +44,7 @@ export function CompareFloatingBar() {
               href="/porownywarka"
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-[#044CD0] hover:bg-[#033eb0] text-white shadow-xs transition-all cursor-pointer"
             >
-              <span>{t.common.compareNow}</span>
+              <span>{t.common.compare}</span>
               <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-white/20 text-[10px] font-bold">
                 {selectedFunds.length}
               </span>
@@ -61,19 +58,14 @@ export function CompareFloatingBar() {
           <div className="w-8 h-8 rounded-xl bg-blue-50 dark:bg-[#071938] text-[#044CD0] dark:text-[#60a5fa] border border-blue-200/80 dark:border-[#0e274d] flex items-center justify-center shrink-0">
             <Scale className="w-4 h-4 stroke-[2.2]" />
           </div>
-          <div>
-            <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 leading-none">
-              {t.compare.floatingBarTitle}
-            </div>
-            <div className="text-xs font-bold text-slate-900 dark:text-slate-100 leading-tight mt-0.5">
-              {t.compare.selectedCountBadge.replace("{count}", String(selectedFunds.length))}
-            </div>
-          </div>
+          <span className="text-sm font-bold text-slate-900 dark:text-slate-100 tracking-tight">
+            {t.compare.floatingBarTitle}
+          </span>
         </div>
 
         <div className="hidden lg:block w-px h-10 bg-slate-200 dark:bg-[#0e274d] shrink-0" />
 
-        {/* Center / Grid Zone: 4 Slots in 2 rows (2x2 grid) with NO horizontal scroll */}
+        {/* Center / Grid Zone: 4 Clean Slots in 2 rows (2x2 grid) with NO horizontal scroll */}
         <div className="grid grid-cols-2 gap-1.5 sm:gap-2 flex-1 min-w-0">
           {Array.from({ length: 4 }).map((_, slotIndex) => {
             const fund = selectedFunds[slotIndex];
@@ -82,19 +74,14 @@ export function CompareFloatingBar() {
               return (
                 <div
                   key={fund.subfundId}
-                  className="h-[30px] sm:h-[32px] flex items-center justify-between gap-1.5 px-2 sm:px-2.5 rounded-xl text-xs bg-slate-50/90 dark:bg-[#030a16] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-[#0e274d] hover:border-blue-300 dark:hover:border-slate-600 transition-colors min-w-0 group"
+                  className="h-[30px] sm:h-[32px] flex items-center justify-between gap-1.5 px-2.5 rounded-xl text-xs bg-slate-50/90 dark:bg-[#030a16] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-[#0e274d] hover:border-blue-300 dark:hover:border-slate-600 transition-colors min-w-0 group"
                 >
-                  <div className="flex items-center gap-1.5 min-w-0 flex-1">
-                    <span className="text-[11px] sm:text-xs font-bold text-[#044CD0] dark:text-[#60a5fa] shrink-0 select-none">
-                      {slotIndex + 1}.
-                    </span>
-                    <span
-                      className="truncate font-semibold text-slate-900 dark:text-slate-100 text-[11px] sm:text-xs"
-                      title={fund.name}
-                    >
-                      {fund.name}
-                    </span>
-                  </div>
+                  <span
+                    className="truncate font-medium text-slate-800 dark:text-slate-200 text-[11px] sm:text-xs flex-1 min-w-0"
+                    title={fund.name}
+                  >
+                    {fund.name}
+                  </span>
                   <button
                     type="button"
                     onClick={() => removeFund(fund.subfundId)}
@@ -111,11 +98,8 @@ export function CompareFloatingBar() {
             return (
               <div
                 key={`slot-placeholder-${slotIndex}`}
-                className="h-[30px] sm:h-[32px] flex items-center gap-1.5 px-2 sm:px-2.5 rounded-xl text-xs border border-dashed border-slate-300 dark:border-[#0e274d]/80 bg-slate-50/40 dark:bg-[#020712]/40 text-slate-400 dark:text-slate-600 select-none min-w-0"
+                className="h-[30px] sm:h-[32px] flex items-center justify-center px-2.5 rounded-xl text-xs border border-dashed border-slate-300 dark:border-[#0e274d]/80 bg-slate-50/40 dark:bg-[#020712]/40 text-slate-400 dark:text-slate-600 select-none min-w-0"
               >
-                <span className="text-[11px] sm:text-xs font-semibold text-slate-400 dark:text-slate-600 shrink-0 select-none">
-                  {slotIndex + 1}.
-                </span>
                 <span className="truncate text-[11px] font-medium text-slate-400 dark:text-slate-500 italic">
                   {t.compare.emptySlot}
                 </span>
@@ -140,7 +124,7 @@ export function CompareFloatingBar() {
             href="/porownywarka"
             className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-[#044CD0] hover:bg-[#033eb0] text-white shadow-xs transition-all cursor-pointer"
           >
-            <span>{t.common.compareNow}</span>
+            <span>{t.common.compare}</span>
             <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-white/20 text-[11px] font-bold">
               {selectedFunds.length}
             </span>
