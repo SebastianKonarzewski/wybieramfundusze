@@ -9,7 +9,7 @@ export const pl = {
     profile: "Przejdź do profilu",
     goToProfile: "Przejdź do profilu",
     compare: "Porównaj",
-    compareNow: "Porównaj teraz",
+    compareNow: "Porównaj",
     clear: "Wyczyść",
     close: "Zamknij",
     active: "Aktywne",

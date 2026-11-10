@@ -11,7 +11,7 @@ export const en: Translations = {
     profile: "Go to profile",
     goToProfile: "Go to profile",
     compare: "Compare",
-    compareNow: "Compare Now",
+    compareNow: "Compare",
     clear: "Clear",
     close: "Close",
     active: "Active",
