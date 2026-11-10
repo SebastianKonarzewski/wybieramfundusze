@@ -2306,7 +2306,7 @@ export function SubfundsCatalog({
                       {/* 3. Return Rate */}
                       <div>
                         <span
-                          className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-[11px] block truncate font-medium cursor-help"
+                          className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-[11px] block truncate font-medium cursor-default"
                           title={activePeriodFullLabel}
                         >
                           {locale === "en" ? "Return" : "Wynik"}{" "}
