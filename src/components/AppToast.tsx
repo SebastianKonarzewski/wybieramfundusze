@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { Briefcase, Scale, Check, AlertTriangle, AlertCircle, Info, ArrowRight, X } from "lucide-react";
+import { Briefcase, Scale, AlertTriangle, AlertCircle, Info, ArrowRight, X } from "lucide-react";
 import { useToast } from "./ToastContext";
 
 export function AppToast() {
@@ -53,72 +53,67 @@ export function AppToast() {
 
   const { type, title, message, category, action, duration = 4500 } = activeToast;
 
-  // Visual Theme mapping based on type
-  let borderClasses = "border-blue-500/40 dark:border-blue-500/50";
-  let badgeClasses = "bg-blue-500/15 text-[#044CD0] dark:text-blue-400 border border-blue-500/30";
-  let titleColorClasses = "text-[#044CD0] dark:text-blue-400";
-  let progressBarClasses = "bg-[#044CD0] dark:bg-blue-400";
-
-  if (type === "success") {
-    borderClasses = "border-emerald-500/40 dark:border-emerald-500/50";
-    badgeClasses = "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30";
-    titleColorClasses = "text-emerald-600 dark:text-emerald-400";
-    progressBarClasses = "bg-emerald-500";
+  // Single representative icon (no duplicates, no redundant ticks)
+  let Icon = Briefcase;
+  if (category === "compare") {
+    Icon = Scale;
+  } else if (category === "portfolio") {
+    Icon = Briefcase;
   } else if (type === "warning") {
-    borderClasses = "border-amber-500/50 dark:border-amber-500/50";
-    badgeClasses = "bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30";
+    Icon = AlertTriangle;
+  } else if (type === "error") {
+    Icon = AlertCircle;
+  } else {
+    Icon = Info;
+  }
+
+  // Muted, refined color palette harmonized with the app theme
+  let borderClasses = "border-slate-200 dark:border-[#0e274d]";
+  let badgeClasses = "bg-blue-50 dark:bg-[#071938] text-[#044CD0] dark:text-[#60a5fa] border border-blue-100 dark:border-[#0e274d]";
+  let titleColorClasses = "text-slate-600 dark:text-slate-400";
+  let progressBarClasses = "bg-[#044CD0] dark:bg-blue-500";
+
+  if (type === "warning") {
+    borderClasses = "border-amber-400/40 dark:border-amber-500/40";
+    badgeClasses = "bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800/60";
     titleColorClasses = "text-amber-600 dark:text-amber-400";
     progressBarClasses = "bg-amber-500";
   } else if (type === "error") {
-    borderClasses = "border-rose-500/40 dark:border-rose-500/50";
-    badgeClasses = "bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30";
+    borderClasses = "border-rose-400/40 dark:border-rose-500/40";
+    badgeClasses = "bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800/60";
     titleColorClasses = "text-rose-600 dark:text-rose-400";
     progressBarClasses = "bg-rose-500";
-  }
-
-  // Choose appropriate main icon
-  let MainIcon = Check;
-  if (type === "warning") {
-    MainIcon = AlertTriangle;
-  } else if (type === "error") {
-    MainIcon = AlertCircle;
   } else if (type === "info") {
-    MainIcon = category === "compare" ? Scale : category === "portfolio" ? Briefcase : Info;
-  } else if (type === "success") {
-    MainIcon = category === "compare" ? Scale : Check;
+    borderClasses = "border-slate-200 dark:border-[#0e274d]";
+    badgeClasses = "bg-slate-100 dark:bg-[#071938] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-[#0e274d]";
+    titleColorClasses = "text-slate-500 dark:text-slate-400";
+    progressBarClasses = "bg-slate-400 dark:bg-slate-500";
   }
-
-  // Micro category icon for the title line
-  let CategoryIcon = Info;
-  if (category === "portfolio") CategoryIcon = Briefcase;
-  else if (category === "compare") CategoryIcon = Scale;
-  else if (type === "warning") CategoryIcon = AlertTriangle;
 
   return (
     <div
       role="status"
       aria-live="polite"
-      className="fixed top-18 sm:top-20 right-3 sm:right-6 left-3 sm:left-auto z-60 max-w-sm sm:max-w-md w-auto animate-in fade-in slide-in-from-top-3 duration-200"
+      className="fixed top-18 sm:top-20 right-3 sm:right-6 left-3 sm:left-auto z-60 w-auto sm:w-[420px] max-w-[calc(100vw-1.5rem)] animate-in fade-in slide-in-from-top-3 duration-200"
     >
       <div
         key={activeToast.id}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className={`toast-container relative overflow-hidden bg-white/95 dark:bg-[#051329]/95 border ${borderClasses} rounded-2xl p-3 sm:p-4 shadow-2xl backdrop-blur-md flex items-center justify-between gap-3 text-slate-800 dark:text-slate-100 transition-all group`}
+        className={`toast-container relative overflow-hidden bg-white/95 dark:bg-[#051329]/95 border ${borderClasses} rounded-2xl p-3 sm:p-3.5 shadow-xl sm:shadow-2xl backdrop-blur-md flex items-center justify-between gap-3 text-slate-800 dark:text-slate-100 transition-all group`}
       >
-        {/* Left: Icon & Text content */}
-        <div className="flex items-center gap-2.5 min-w-0">
+        {/* Left: Single Icon & Text content */}
+        <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
           <div className={`w-8 h-8 rounded-xl ${badgeClasses} flex items-center justify-center shrink-0`}>
-            <MainIcon className="w-4 h-4 stroke-[2.5]" />
+            <Icon className="w-4 h-4 stroke-[2.2]" />
           </div>
 
-          <div className="min-w-0">
-            <div className={`text-[11px] font-semibold ${titleColorClasses} uppercase tracking-wider flex items-center gap-1.5`}>
-              <CategoryIcon className="w-3 h-3 shrink-0" />
-              <span className="truncate">{title}</span>
+          <div className="min-w-0 flex-1">
+            <div className={`text-xs font-medium ${titleColorClasses} leading-tight`}>
+              {title}
             </div>
             {message && (
-              <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-slate-100 truncate max-w-[170px] sm:max-w-[230px]">
+              <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-slate-100 truncate leading-snug mt-0.5">
                 {message}
               </div>
             )}
@@ -126,14 +121,14 @@ export function AppToast() {
         </div>
 
         {/* Right: Optional Action Button & Close Button */}
-        <div className="flex items-center gap-1.5 shrink-0">
+        <div className="flex items-center gap-1.5 shrink-0 ml-1">
           {action && (
             <>
               {action.href ? (
                 <Link
                   href={action.href}
                   onClick={() => hideToast(activeToast.id)}
-                  className="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold bg-[#044CD0] hover:bg-blue-600 text-white transition-colors shadow-xs shrink-0 cursor-pointer"
+                  className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-[#044CD0] hover:bg-[#033eb0] text-white transition-colors shadow-2xs shrink-0 cursor-pointer"
                 >
                   <span>{action.label}</span>
                   <ArrowRight className="w-3 h-3" />
@@ -145,7 +140,7 @@ export function AppToast() {
                     action.onClick?.();
                     hideToast(activeToast.id);
                   }}
-                  className="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold bg-[#044CD0] hover:bg-blue-600 text-white transition-colors shadow-xs shrink-0 cursor-pointer"
+                  className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-[#044CD0] hover:bg-[#033eb0] text-white transition-colors shadow-2xs shrink-0 cursor-pointer"
                 >
                   <span>{action.label}</span>
                   <ArrowRight className="w-3 h-3" />
@@ -157,7 +152,7 @@ export function AppToast() {
           <button
             type="button"
             onClick={() => hideToast(activeToast.id)}
-            className="p-1 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 rounded-lg transition-colors cursor-pointer shrink-0"
+            className="p-1 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 rounded-md transition-colors cursor-pointer shrink-0"
             aria-label="Zamknij powiadomienie"
           >
             <X className="w-4 h-4" />

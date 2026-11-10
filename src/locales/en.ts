@@ -291,7 +291,7 @@ export const en: Translations = {
     addToPortfolio: "Add to portfolio",
     removeFromPortfolio: "Remove from portfolio",
     inPortfolio: "In portfolio",
-    toastAdded: "Added to your portfolio",
+    toastAdded: "Added to portfolio",
     toastRemoved: "Removed from portfolio",
     toastLimitReached: "You can add up to 15 funds to your portfolio.",
     limitWarningTitle: "Portfolio limit reached",

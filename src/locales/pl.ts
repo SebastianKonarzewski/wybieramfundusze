@@ -289,7 +289,7 @@ export const pl = {
     addToPortfolio: "Dodaj do portfela",
     removeFromPortfolio: "Usuń z portfela",
     inPortfolio: "W portfelu",
-    toastAdded: "Dodano do Twojego portfela",
+    toastAdded: "Dodano do portfela",
     toastRemoved: "Usunięto z portfela",
     toastLimitReached: "Możesz dodać maksymalnie 15 funduszy do portfela.",
     limitWarningTitle: "Osiągnięto limit portfela",
