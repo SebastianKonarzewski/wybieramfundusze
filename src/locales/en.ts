@@ -129,7 +129,7 @@ export const en: Translations = {
     searchTfiPlaceholder: "Search manager (TFI)...",
     clearTfi: "Clear manager",
     noTfiResults: "No results for searched manager",
-    sriFilterLabel: "SRI Risk Profile:",
+    sriFilterLabel: "Risk profile (SRI):",
     sriFilterHint: "1: lowest risk, 7: highest",
     sriAll: "All",
     feeFilterLabel: "Max ongoing charges:",

@@ -548,6 +548,29 @@ export function SubfundsCatalog({
     setCurrentPage(0);
   };
 
+  const isLowSriActive = selectedSri.includes(1) || selectedSri.includes(2);
+  const isMidSriActive = selectedSri.includes(3) || selectedSri.includes(4);
+  const isHighSriActive = selectedSri.includes(5) || selectedSri.includes(6) || selectedSri.includes(7);
+
+  const activeSriBucketsCount =
+    (isLowSriActive ? 1 : 0) +
+    (isMidSriActive ? 1 : 0) +
+    (isHighSriActive ? 1 : 0);
+
+  const toggleSriBucket = (bucket: "low" | "mid" | "high") => {
+    setCurrentPage(0);
+    const bucketValues = bucket === "low" ? [1, 2] : bucket === "mid" ? [3, 4] : [5, 6, 7];
+    const isCurrentlyActive = bucket === "low" ? isLowSriActive : bucket === "mid" ? isMidSriActive : isHighSriActive;
+
+    setSelectedSri((prev) => {
+      if (isCurrentlyActive) {
+        return prev.filter((val) => !bucketValues.includes(val));
+      } else {
+        return Array.from(new Set([...prev, ...bucketValues])).sort((a, b) => a - b);
+      }
+    });
+  };
+
   // Close sort dropdown on click outside or Escape
   useEffect(() => {
     if (!isSortOpen) return;
@@ -586,7 +609,7 @@ export function SubfundsCatalog({
   const activeAdvancedFiltersCount =
     selectedCategories.length +
     selectedCurrencies.length +
-    (selectedSri.length > 0 ? 1 : 0) +
+    activeSriBucketsCount +
     (maxFee !== null ? 1 : 0) +
     (includeInactive ? 1 : 0) +
     (includeLiquidating ? 1 : 0);
@@ -1581,9 +1604,9 @@ export function SubfundsCatalog({
                       <ShieldAlert className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#3b82f6]" />
                       <span>{t.catalog.sriFilterLabel}</span>
                     </div>
-                    {selectedSri.length > 0 && (
+                    {activeSriBucketsCount > 0 && (
                       <span className="px-1.5 py-0.2 rounded-full bg-[#044CD0] text-white text-[10px] font-bold">
-                        {selectedSri.length}
+                        {activeSriBucketsCount}
                       </span>
                     )}
                   </div>
@@ -1603,16 +1626,9 @@ export function SubfundsCatalog({
                     </button>
                     <button
                       type="button"
-                      onClick={() => {
-                        if (selectedSri.length === 2 && selectedSri.includes(1) && selectedSri.includes(2)) {
-                          setSelectedSri([]);
-                        } else {
-                          setSelectedSri([1, 2]);
-                        }
-                        setCurrentPage(0);
-                      }}
+                      onClick={() => toggleSriBucket("low")}
                       className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer select-none ${
-                        selectedSri.length === 2 && selectedSri.includes(1) && selectedSri.includes(2)
+                        isLowSriActive
                           ? "bg-[#044CD0] text-white shadow-xs font-bold ring-2 ring-[#044CD0]/20"
                           : "bg-slate-100 dark:bg-[#030a16] text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-[#0e274d]"
                       }`}
@@ -1621,16 +1637,9 @@ export function SubfundsCatalog({
                     </button>
                     <button
                       type="button"
-                      onClick={() => {
-                        if (selectedSri.length === 2 && selectedSri.includes(3) && selectedSri.includes(4)) {
-                          setSelectedSri([]);
-                        } else {
-                          setSelectedSri([3, 4]);
-                        }
-                        setCurrentPage(0);
-                      }}
+                      onClick={() => toggleSriBucket("mid")}
                       className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer select-none ${
-                        selectedSri.length === 2 && selectedSri.includes(3) && selectedSri.includes(4)
+                        isMidSriActive
                           ? "bg-[#044CD0] text-white shadow-xs font-bold ring-2 ring-[#044CD0]/20"
                           : "bg-slate-100 dark:bg-[#030a16] text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-[#0e274d]"
                       }`}
@@ -1639,16 +1648,9 @@ export function SubfundsCatalog({
                     </button>
                     <button
                       type="button"
-                      onClick={() => {
-                        if (selectedSri.length === 3 && selectedSri.includes(5) && selectedSri.includes(6) && selectedSri.includes(7)) {
-                          setSelectedSri([]);
-                        } else {
-                          setSelectedSri([5, 6, 7]);
-                        }
-                        setCurrentPage(0);
-                      }}
+                      onClick={() => toggleSriBucket("high")}
                       className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer select-none ${
-                        selectedSri.length === 3 && selectedSri.includes(5) && selectedSri.includes(6) && selectedSri.includes(7)
+                        isHighSriActive
                           ? "bg-[#044CD0] text-white shadow-xs font-bold ring-2 ring-[#044CD0]/20"
                           : "bg-slate-100 dark:bg-[#030a16] text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-[#0e274d]"
                       }`}
@@ -1668,8 +1670,8 @@ export function SubfundsCatalog({
                       <span>{t.catalog.feeFilterLabel}</span>
                     </div>
                     {maxFee !== null && (
-                      <span className="text-xs font-bold text-[#044CD0] dark:text-blue-300">
-                        ≤ {maxFee.toFixed(1).replace(".", ",")}%
+                      <span className="px-1.5 py-0.2 rounded-full bg-[#044CD0] text-white text-[10px] font-bold">
+                        1
                       </span>
                     )}
                   </div>
@@ -2041,56 +2043,47 @@ export function SubfundsCatalog({
             ))}
 
             {/* SRI risk chips */}
-            {(() => {
-              if (selectedSri.length === 2 && selectedSri.includes(1) && selectedSri.includes(2)) {
-                return (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSelectedSri([]);
-                      setCurrentPage(0);
-                    }}
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-300 border border-blue-200 dark:border-[#044CD0]/40 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
-                    title={`Usuń: ${t.catalog.sriTagLabel} ${t.catalog.sriLow}`}
-                  >
-                    <span>{t.catalog.sriTagLabel} {t.catalog.sriLow}</span>
-                    <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
-                  </button>
-                );
-              }
-              if (selectedSri.length === 2 && selectedSri.includes(3) && selectedSri.includes(4)) {
-                return (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSelectedSri([]);
-                      setCurrentPage(0);
-                    }}
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-300 border border-blue-200 dark:border-[#044CD0]/40 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
-                    title={`Usuń: ${t.catalog.sriTagLabel} ${t.catalog.sriMid}`}
-                  >
-                    <span>{t.catalog.sriTagLabel} {t.catalog.sriMid}</span>
-                    <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
-                  </button>
-                );
-              }
-              if (selectedSri.length === 3 && selectedSri.includes(5) && selectedSri.includes(6) && selectedSri.includes(7)) {
-                return (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSelectedSri([]);
-                      setCurrentPage(0);
-                    }}
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-300 border border-blue-200 dark:border-[#044CD0]/40 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
-                    title={`Usuń: ${t.catalog.sriTagLabel} ${t.catalog.sriHigh}`}
-                  >
-                    <span>{t.catalog.sriTagLabel} {t.catalog.sriHigh}</span>
-                    <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
-                  </button>
-                );
-              }
-              return selectedSri.map((sri) => (
+            {isLowSriActive && (
+              <button
+                type="button"
+                onClick={() => toggleSriBucket("low")}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-300 border border-blue-200 dark:border-[#044CD0]/40 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
+                title={`Usuń: ${t.catalog.sriTagLabel} ${t.catalog.sriLow}`}
+              >
+                <span>{t.catalog.sriTagLabel} {t.catalog.sriLow}</span>
+                <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
+              </button>
+            )}
+            {isMidSriActive && (
+              <button
+                type="button"
+                onClick={() => toggleSriBucket("mid")}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-300 border border-blue-200 dark:border-[#044CD0]/40 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
+                title={`Usuń: ${t.catalog.sriTagLabel} ${t.catalog.sriMid}`}
+              >
+                <span>{t.catalog.sriTagLabel} {t.catalog.sriMid}</span>
+                <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
+              </button>
+            )}
+            {isHighSriActive && (
+              <button
+                type="button"
+                onClick={() => toggleSriBucket("high")}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-blue-50 dark:bg-[#044CD0]/20 text-[#044CD0] dark:text-blue-300 border border-blue-200 dark:border-[#044CD0]/40 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 dark:hover:border-rose-800 transition-all cursor-pointer group shadow-2xs"
+                title={`Usuń: ${t.catalog.sriTagLabel} ${t.catalog.sriHigh}`}
+              >
+                <span>{t.catalog.sriTagLabel} {t.catalog.sriHigh}</span>
+                <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
+              </button>
+            )}
+            {selectedSri
+              .filter((sri) => {
+                if ((sri === 1 || sri === 2) && isLowSriActive) return false;
+                if ((sri === 3 || sri === 4) && isMidSriActive) return false;
+                if ((sri === 5 || sri === 6 || sri === 7) && isHighSriActive) return false;
+                return true;
+              })
+              .map((sri) => (
                 <button
                   key={sri}
                   type="button"
@@ -2101,8 +2094,7 @@ export function SubfundsCatalog({
                   <span>{t.catalog.sriTagLabel} {sri}</span>
                   <X className="w-3 h-3 group-hover:rotate-90 transition-transform" />
                 </button>
-              ));
-            })()}
+              ))}
 
             {/* Max fee chip */}
             {maxFee !== null && (

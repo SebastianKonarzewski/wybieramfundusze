@@ -127,7 +127,7 @@ export const pl = {
     searchTfiPlaceholder: "Szukaj zarządzającego (TFI)...",
     clearTfi: "Wyczyść zarządzającego",
     noTfiResults: "Brak wyników dla szukanego zarządzającego",
-    sriFilterLabel: "Profil ryzyka SRI:",
+    sriFilterLabel: "Profil ryzyka (SRI):",
     sriFilterHint: "1: najniższe ryzyko, 7: najwyższe",
     sriAll: "Wszystkie",
     feeFilterLabel: "Maksymalna opłata bieżąca:",
