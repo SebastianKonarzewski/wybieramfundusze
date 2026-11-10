@@ -67,40 +67,44 @@ export function AppToast() {
     Icon = Info;
   }
 
-  // Refined palette matching the comparison dock aesthetic
-  let borderClasses = "border-[#044CD0]/35 dark:border-[#044CD0]/55";
-  let badgeClasses = "bg-blue-50 dark:bg-[#071938] text-[#044CD0] dark:text-[#60a5fa] border border-blue-200/60 dark:border-[#0e274d]";
+  // Refined palette matching the comparison dock aesthetic with high contrast progress bar in light/dark mode
+  let borderClasses = "border-[#044CD0]/40 dark:border-[#044CD0]/60";
+  let badgeClasses = "bg-blue-50 dark:bg-[#071938] text-[#044CD0] dark:text-[#60a5fa] border border-blue-200/70 dark:border-[#0e274d]";
   let titleColorClasses = "text-[#044CD0] dark:text-[#60a5fa]";
-  let progressBarClasses = "bg-[#044CD0] dark:bg-blue-500";
+  let progressBarClasses = "bg-[#044CD0] dark:bg-[#3b82f6]";
+  let progressTrackClasses = "bg-blue-100/90 dark:bg-slate-800";
 
   if (type === "warning") {
     borderClasses = "border-amber-400/50 dark:border-amber-500/60";
     badgeClasses = "bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800/60";
     titleColorClasses = "text-amber-600 dark:text-amber-400";
     progressBarClasses = "bg-amber-500";
+    progressTrackClasses = "bg-amber-100 dark:bg-amber-950/60";
   } else if (type === "error") {
     borderClasses = "border-rose-400/50 dark:border-rose-500/60";
     badgeClasses = "bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800/60";
     titleColorClasses = "text-rose-600 dark:text-rose-400";
     progressBarClasses = "bg-rose-500";
+    progressTrackClasses = "bg-rose-100 dark:bg-rose-950/60";
   } else if (type === "info") {
     borderClasses = "border-slate-300/80 dark:border-[#0e274d]";
     badgeClasses = "bg-slate-100 dark:bg-[#071938] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-[#0e274d]";
     titleColorClasses = "text-slate-500 dark:text-slate-400";
-    progressBarClasses = "bg-slate-400 dark:bg-slate-500";
+    progressBarClasses = "bg-slate-500 dark:bg-slate-400";
+    progressTrackClasses = "bg-slate-200 dark:bg-slate-800";
   }
 
   return (
     <div
       role="status"
       aria-live="polite"
-      className="fixed top-18 sm:top-20 right-3 sm:right-6 left-3 sm:left-auto z-[80] w-auto sm:w-[460px] md:w-[480px] max-w-[calc(100vw-1.5rem)] animate-in fade-in slide-in-from-top-3 duration-200"
+      className="fixed top-3 sm:top-4 left-1/2 -translate-x-1/2 z-[80] w-[calc(100%-1.5rem)] sm:w-[480px] max-w-lg animate-in fade-in slide-in-from-top-4 duration-200 pointer-events-none"
     >
       <div
         key={activeToast.id}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className={`toast-container relative overflow-hidden bg-white/98 dark:bg-[#030d22]/98 border-2 ${borderClasses} rounded-2xl p-3 sm:p-3.5 shadow-[0_12px_36px_rgba(4,76,208,0.15),0_4px_12px_rgba(0,0,0,0.06)] dark:shadow-[0_18px_45px_rgba(0,0,0,0.85),0_0_20px_rgba(4,76,208,0.22)] backdrop-blur-md flex items-center justify-between gap-3 text-slate-800 dark:text-slate-100 transition-all group`}
+        className={`pointer-events-auto toast-container relative overflow-hidden bg-white/98 dark:bg-[#030d22]/98 border-2 ${borderClasses} rounded-2xl p-3 sm:p-3.5 shadow-[0_12px_36px_rgba(4,76,208,0.15),0_4px_12px_rgba(0,0,0,0.06)] dark:shadow-[0_18px_45px_rgba(0,0,0,0.85),0_0_20px_rgba(4,76,208,0.22)] backdrop-blur-md flex items-center justify-between gap-3 text-slate-800 dark:text-slate-100 transition-all group`}
       >
         {/* Left: Icon & Spacious Text Content */}
         <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
@@ -163,7 +167,7 @@ export function AppToast() {
         </div>
 
         {/* Bottom Progress Bar: Visual Countdown Timer */}
-        <div className="absolute bottom-0 left-0 right-0 h-1 bg-slate-100 dark:bg-slate-800/80 overflow-hidden pointer-events-none">
+        <div className={`absolute bottom-0 left-0 right-0 h-1.5 ${progressTrackClasses} overflow-hidden pointer-events-none`}>
           <div
             className={`toast-progress-bar h-full w-full ${progressBarClasses}`}
             style={{ animationDuration: `${duration}ms` }}
