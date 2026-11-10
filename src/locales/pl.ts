@@ -203,7 +203,7 @@ export const pl = {
       latestValuation: "Ostatnia wycena:",
       netAssets: "Aktywa netto:",
       returnRate: "Stopa zwrotu:",
-      fundDetails: "Szczegóły funduszu",
+      fundDetails: "Profil funduszu",
       addToCompare: "Dodaj do porównania",
       removeFromCompare: "Usuń z porównania",
     },

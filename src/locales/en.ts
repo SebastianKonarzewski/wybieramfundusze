@@ -205,7 +205,7 @@ export const en: Translations = {
       latestValuation: "Latest NAV:",
       netAssets: "Net Assets:",
       returnRate: "Return Rate:",
-      fundDetails: "Fund Details",
+      fundDetails: "Fund Profile",
       addToCompare: "Add to comparison",
       removeFromCompare: "Remove from Comparison",
     },
