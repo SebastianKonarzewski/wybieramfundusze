@@ -97,6 +97,7 @@ export const en: Translations = {
     allTypes: "All",
     currencyLabel: "Currency:",
     allCurrencies: "All",
+    sriLabel: "Risk (SRI):",
     classes: {
       ALL: "All",
       akcji: "Equity",

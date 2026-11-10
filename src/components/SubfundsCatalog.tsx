@@ -1001,84 +1001,120 @@ export function SubfundsCatalog({
           )}
         </div>
 
-        {/* 2-Column Responsive Grid for Quick Filters & Bottom Actions */}
-        <div className="pt-3 border-t border-slate-200 dark:border-[#0e274d] grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-6 items-center">
-          {/* Column 1 (Left): Asset Class & Legal Type */}
-          <div className="space-y-3">
-            {/* Row 1: Asset Class */}
-            <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-xs sm:text-sm">
-              <span className="text-slate-700 dark:text-slate-300 sm:w-[124px] shrink-0 font-semibold flex items-center gap-1.5 select-none">
-                <Compass className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
-                {t.catalog.assetClass}
-              </span>
-              <div className="inline-flex items-center p-1 rounded-xl bg-slate-100/90 dark:bg-[#030c1c] border border-slate-200/80 dark:border-[#0e274d]/80 gap-1 flex-wrap">
-                {classificationOptions.map((cls) => {
-                  const isSelected =
-                    cls.id === "ALL"
-                      ? selectedClassifications.length === 0
-                      : selectedClassifications.includes(cls.id);
+        {/* Filter Rows: Asset Class, Risk Profile, Legal Type & Currency */}
+        <div className="pt-3 border-t border-slate-200 dark:border-[#0e274d] space-y-3">
+          {/* Row 1: Asset Class */}
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-xs sm:text-sm">
+            <span className="text-slate-700 dark:text-slate-300 sm:w-[124px] shrink-0 font-semibold flex items-center gap-1.5 select-none">
+              <Compass className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
+              {t.catalog.assetClass}
+            </span>
+            <div className="inline-flex items-center p-1 rounded-xl bg-slate-100/90 dark:bg-[#030c1c] border border-slate-200/80 dark:border-[#0e274d]/80 gap-1 flex-wrap">
+              {classificationOptions.map((cls) => {
+                const isSelected =
+                  cls.id === "ALL"
+                    ? selectedClassifications.length === 0
+                    : selectedClassifications.includes(cls.id);
 
-                  return (
-                    <button
-                      key={cls.id}
-                      onClick={() => toggleClassification(cls.id)}
-                      aria-pressed={isSelected}
-                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all duration-150 cursor-pointer select-none ${
-                        isSelected
-                          ? "bg-[#044CD0] text-white shadow-xs font-semibold"
-                          : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-[#081a38]"
-                      }`}
-                    >
-                      {isSelected && cls.id !== "ALL" && (
-                        <Check className="w-3.5 h-3.5 stroke-[3]" />
-                      )}
-                      {cls.label}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Row 2: Legal Type */}
-            <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-xs sm:text-sm">
-              <span className="text-slate-700 dark:text-slate-300 sm:w-[124px] shrink-0 font-semibold flex items-center gap-1.5 select-none">
-                <Scale className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
-                {t.catalog.legalType}
-              </span>
-              <div className="inline-flex items-center p-1 rounded-xl bg-slate-100/90 dark:bg-[#030c1c] border border-slate-200/80 dark:border-[#0e274d]/80 gap-1 flex-wrap">
-                {["ALL", "FIO", "SFIO", "FIZ", "ETF", "PPK"].map((type) => {
-                  const isSelected =
-                    type === "ALL"
-                      ? selectedTypes.length === 0
-                      : selectedTypes.includes(type);
-
-                  return (
-                    <button
-                      key={type}
-                      onClick={() => toggleType(type)}
-                      aria-pressed={isSelected}
-                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all duration-150 cursor-pointer select-none ${
-                        isSelected
-                          ? "bg-[#044CD0] text-white shadow-xs font-semibold"
-                          : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-[#081a38]"
-                      }`}
-                    >
-                      {isSelected && type !== "ALL" && (
-                        <Check className="w-3.5 h-3.5 stroke-[3]" />
-                      )}
-                      {type === "ALL" ? t.catalog.allTypes : type}
-                    </button>
-                  );
-                })}
-              </div>
+                return (
+                  <button
+                    key={cls.id}
+                    onClick={() => toggleClassification(cls.id)}
+                    aria-pressed={isSelected}
+                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all duration-150 cursor-pointer select-none ${
+                      isSelected
+                        ? "bg-[#044CD0] text-white shadow-xs font-semibold"
+                        : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-[#081a38]"
+                    }`}
+                  >
+                    {isSelected && cls.id !== "ALL" && (
+                      <Check className="w-3.5 h-3.5 stroke-[3]" />
+                    )}
+                    {cls.label}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          {/* Column 2 (Right): Currency & Actions directly above expandable panel */}
-          <div className="space-y-3 flex flex-col justify-between h-full">
-            {/* Row 1: Currency */}
-            <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-xs sm:text-sm">
-              <span className="text-slate-700 dark:text-slate-300 sm:w-[84px] shrink-0 font-semibold flex items-center gap-1.5 select-none">
+          {/* Row 2: SRI Risk Profile */}
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-xs sm:text-sm">
+            <span className="text-slate-700 dark:text-slate-300 sm:w-[124px] shrink-0 font-semibold flex items-center gap-1.5 select-none">
+              <ShieldAlert className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
+              {t.catalog.sriLabel}
+            </span>
+            <div className="inline-flex items-center p-1 rounded-xl bg-slate-100/90 dark:bg-[#030c1c] border border-slate-200/80 dark:border-[#0e274d]/80 gap-1 flex-wrap">
+              <button
+                type="button"
+                onClick={() => toggleSri(0)}
+                className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all duration-150 cursor-pointer select-none ${
+                  selectedSri.length === 0
+                    ? "bg-[#044CD0] text-white shadow-xs font-semibold"
+                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-[#081a38]"
+                }`}
+              >
+                {t.catalog.sriAll}
+              </button>
+              {SRI_LEVELS.map((sri) => {
+                const isSelected = selectedSri.includes(sri.level);
+                return (
+                  <button
+                    key={sri.level}
+                    type="button"
+                    onClick={() => toggleSri(sri.level)}
+                    aria-pressed={isSelected}
+                    className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center select-none ${
+                      isSelected
+                        ? `${sri.color} text-white shadow-md scale-105 ring-2 ring-offset-1 ring-slate-400 dark:ring-offset-[#051329]`
+                        : `bg-white/80 dark:bg-[#051329] ${sri.text} hover:opacity-100 opacity-80 border border-slate-200/80 dark:border-[#0e274d]`
+                    }`}
+                    title={`SRI ${sri.level}`}
+                  >
+                    {sri.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Row 3: Legal Type */}
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-xs sm:text-sm">
+            <span className="text-slate-700 dark:text-slate-300 sm:w-[124px] shrink-0 font-semibold flex items-center gap-1.5 select-none">
+              <Scale className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
+              {t.catalog.legalType}
+            </span>
+            <div className="inline-flex items-center p-1 rounded-xl bg-slate-100/90 dark:bg-[#030c1c] border border-slate-200/80 dark:border-[#0e274d]/80 gap-1 flex-wrap">
+              {["ALL", "FIO", "SFIO", "FIZ", "ETF", "PPK"].map((type) => {
+                const isSelected =
+                  type === "ALL"
+                    ? selectedTypes.length === 0
+                    : selectedTypes.includes(type);
+
+                return (
+                  <button
+                    key={type}
+                    onClick={() => toggleType(type)}
+                    aria-pressed={isSelected}
+                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all duration-150 cursor-pointer select-none ${
+                      isSelected
+                        ? "bg-[#044CD0] text-white shadow-xs font-semibold"
+                        : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-[#081a38]"
+                    }`}
+                  >
+                    {isSelected && type !== "ALL" && (
+                      <Check className="w-3.5 h-3.5 stroke-[3]" />
+                    )}
+                    {type === "ALL" ? t.catalog.allTypes : type}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Row 4: Currency & Actions */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs sm:text-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+              <span className="text-slate-700 dark:text-slate-300 sm:w-[124px] shrink-0 font-semibold flex items-center gap-1.5 select-none">
                 <Coins className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
                 {t.catalog.currencyLabel}
               </span>
@@ -1110,8 +1146,8 @@ export function SubfundsCatalog({
               </div>
             </div>
 
-            {/* Row 2: Actions anchored at bottom right */}
-            <div className="flex items-center gap-2 self-start lg:self-end flex-wrap pt-0.5">
+            {/* Actions: Clear All Filters & Advanced Options Toggle */}
+            <div className="flex items-center gap-2 self-start sm:self-auto shrink-0 flex-wrap">
               {hasAnyActiveFilters && (
                 <button
                   type="button"

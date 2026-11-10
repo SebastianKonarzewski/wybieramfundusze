@@ -95,6 +95,7 @@ export const pl = {
     allTypes: "Wszystkie",
     currencyLabel: "Waluta:",
     allCurrencies: "Wszystkie",
+    sriLabel: "Ryzyko (SRI):",
     classes: {
       ALL: "Wszystkie",
       akcji: "Akcyjne",
