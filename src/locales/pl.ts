@@ -438,7 +438,7 @@ export const pl = {
     legalNoticeTitle: "Nota prawna i regulamin",
     legalNoticeDesc: "Prezentowane dane pochodzą z publicznych rejestrów Urzędu Komisji Nadzoru Finansowego (UKNF). Serwis ma charakter czysto informacyjny i edukacyjny. Informacje te nie stanowią porady inwestycyjnej ani oferty w rozumieniu Kodeksu cywilnego.",
     uknfPortal: "Portal UKNF „Wybieram Fundusze”",
-    apiDocs: "Dokumentacja techniczna API v1.0",
+    apiDocs: "Dokumentacja techniczna API",
     disclaimer: "Dane pobierane są w czasie rzeczywistym z publicznego API Urzędu Komisji Nadzoru Finansowego (wybieramfundusze-api.knf.gov.pl). Serwis ma charakter analityczno-edukacyjny i nie stanowi doradztwa inwestycyjnego ani rekomendacji finansowej w rozumieniu przepisów prawa.",
     copyright: "Dane źródłowe: Urząd Komisji Nadzoru Finansowego.",
     allRightsReserved: "Wszelkie prawa zastrzeżone.",

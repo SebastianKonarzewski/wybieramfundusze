@@ -440,7 +440,7 @@ export const en: Translations = {
     legalNoticeTitle: "Legal Notice & Terms",
     legalNoticeDesc: "The presented data originates from public registries maintained by the Polish Financial Supervision Authority (UKNF). The service is purely informative and educational, and does not constitute investment advice or a public offer under commercial law.",
     uknfPortal: "Official UKNF Portal 'Wybieram Fundusze'",
-    apiDocs: "UKNF API Technical Documentation v1.0",
+    apiDocs: "UKNF API Technical Documentation",
     disclaimer: "Data is retrieved in real-time from the official public API of the Polish Financial Supervision Authority (wybieramfundusze-api.knf.gov.pl). This portal is for analytical and educational purposes only and does not constitute financial advice or investment recommendations under applicable law.",
     copyright: "Source data: Polish Financial Supervision Authority (UKNF).",
     allRightsReserved: "All rights reserved.",
