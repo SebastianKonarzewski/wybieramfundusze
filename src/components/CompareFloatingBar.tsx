@@ -41,7 +41,6 @@ export function CompareFloatingBar() {
           <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto max-w-full py-0.5 no-scrollbar flex-1 min-w-0">
             {Array.from({ length: 4 }).map((_, slotIndex) => {
               const fund = selectedFunds[slotIndex];
-              const isNextSlot = slotIndex === selectedFunds.length;
 
               if (fund) {
                 return (
@@ -76,23 +75,13 @@ export function CompareFloatingBar() {
               return (
                 <div
                   key={`slot-placeholder-${slotIndex}`}
-                  className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs transition-all flex-1 min-w-[120px] md:min-w-0 shrink-0 md:shrink select-none border-2 border-dashed ${
-                    isNextSlot
-                      ? "border-blue-300 dark:border-blue-800/80 bg-blue-50/30 dark:bg-blue-950/20 text-[#044CD0] dark:text-blue-400"
-                      : "border-slate-300 dark:border-[#0e274d]/80 bg-slate-50/40 dark:bg-[#020712]/40 text-slate-400 dark:text-slate-600"
-                  }`}
+                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs transition-all flex-1 min-w-[120px] md:min-w-0 shrink-0 md:shrink select-none border-2 border-dashed border-slate-300 dark:border-[#0e274d]/80 bg-slate-50/40 dark:bg-[#020712]/40 text-slate-400 dark:text-slate-600"
                 >
-                  <span
-                    className={`w-4 h-4 rounded-full border border-dashed text-[10px] font-semibold flex items-center justify-center shrink-0 ${
-                      isNextSlot
-                        ? "border-blue-400 dark:border-blue-600 text-[#044CD0] dark:text-blue-400"
-                        : "border-slate-300 dark:border-slate-700 text-slate-400 dark:text-slate-600"
-                    }`}
-                  >
+                  <span className="w-4 h-4 rounded-full border border-dashed border-slate-300 dark:border-slate-700 text-slate-400 dark:text-slate-600 text-[10px] font-semibold flex items-center justify-center shrink-0">
                     {slotIndex + 1}
                   </span>
-                  <span className="truncate text-[11px] font-medium">
-                    {isNextSlot ? t.compare.addMoreHint : t.compare.emptySlot}
+                  <span className="truncate text-[11px] font-medium text-slate-400 dark:text-slate-500">
+                    {t.compare.emptySlot}
                   </span>
                 </div>
               );
