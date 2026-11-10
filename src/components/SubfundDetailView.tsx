@@ -28,7 +28,7 @@ import { usePortfolio } from "./PortfolioContext";
 import { useTranslation } from "@/lib/i18n";
 
 export function SubfundDetailView({ profile }: { profile: SubfundFullProfile }) {
-  const { t, formatCurrency, formatPercent, formatDate } = useTranslation();
+  const { t, formatPercent, formatDate } = useTranslation();
   const { toggleFund: toggleCompareFund, isSelected } = useCompare();
   const { toggleFund: togglePortfolioFund, isInPortfolio } = usePortfolio();
   const { subfund, company, latestKid, valuations, assets, history } = profile;

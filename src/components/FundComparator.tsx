@@ -33,7 +33,7 @@ const COLORS = ["#044CD0", "#00b4d8", "#f59e0b", "#ec4899"];
 
 export function FundComparator() {
   const { selectedFunds, removeFund, addFund, clearFunds } = useCompare();
-  const { t, locale, formatCurrency, formatPercent, formatDate } = useTranslation();
+  const { t, locale, formatPercent, formatDate } = useTranslation();
   const { reducedMotion } = useAccessibility();
 
   const [profiles, setProfiles] = useState<SubfundFullProfile[]>([]);

@@ -20,7 +20,6 @@ import {
   ArrowRight,
   ChevronDown,
   ChevronUp,
-  Layers,
   RotateCcw,
   TrendingUp,
   Coins,
@@ -644,16 +643,6 @@ export function SubfundsCatalog({
     }
   };
 
-  const resetAdvancedFilters = () => {
-    setSelectedCategories([]);
-    setSelectedCurrencies([]);
-    setSelectedSri([]);
-    setMaxFee(null);
-    setIncludeInactive(false);
-    setIncludeLiquidating(false);
-    setCurrentPage(0);
-  };
-
   const resetAllFilters = () => {
     setSearchTerm("");
     setFundId(undefined);
@@ -1100,7 +1089,7 @@ export function SubfundsCatalog({
             >
               <div className="flex items-center gap-1.5 min-w-0">
                 <Building2 className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#3b82f6] shrink-0" />
-                <span className="truncate max-w-[200px] sm:max-w-[180px] md:max-w-[220px] lg:max-w-[260px]">
+                <span className="truncate max-w-[200px] sm:max-w-[180px] md:max-w-[220px] lg:max-w-[260px]" title={tfiTriggerTitle}>
                   {selectedCompanies.length === 0
                     ? t.catalog.tfiFilter
                     : selectedCompanies[0]}
