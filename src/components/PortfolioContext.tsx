@@ -43,9 +43,22 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
       if (stored) {
         const parsed = JSON.parse(stored);
         if (Array.isArray(parsed)) {
-          const valid = parsed.filter(
-            (f) => f && typeof f.subfundId === "number" && typeof f.name === "string"
-          );
+          const valid: PortfolioFund[] = parsed
+            .filter(
+              (f): f is PortfolioFund =>
+                Boolean(f) && typeof f.subfundId === "number" && typeof f.name === "string"
+            )
+            .slice(0, MAX_PORTFOLIO_FUNDS)
+            .map((f) => ({
+              subfundId: f.subfundId,
+              name: String(f.name).slice(0, 200),
+              type: typeof f.type === "string" ? f.type : undefined,
+              category: typeof f.category === "string" ? f.category : null,
+              allocation:
+                typeof f.allocation === "number" && !isNaN(f.allocation)
+                  ? Math.max(0, f.allocation)
+                  : 0,
+            }));
           startTransition(() => {
             setPortfolioFunds(valid);
           });

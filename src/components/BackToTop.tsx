@@ -27,9 +27,14 @@ export function BackToTop() {
   if (!isVisible) return null;
 
   const scrollToTop = () => {
+    const isReducedMotion =
+      typeof window !== "undefined" &&
+      (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ||
+        document.documentElement.classList.contains("reduced-motion"));
+
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
+      behavior: isReducedMotion ? "auto" : "smooth",
     });
   };
 

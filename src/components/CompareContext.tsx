@@ -33,9 +33,18 @@ export function CompareProvider({ children }: { children: React.ReactNode }) {
       if (stored) {
         const parsed = JSON.parse(stored);
         if (Array.isArray(parsed)) {
-          const valid = parsed.filter(
-            (f) => f && typeof f.subfundId === "number" && typeof f.name === "string"
-          );
+          const valid: SelectedFund[] = parsed
+            .filter(
+              (f): f is SelectedFund =>
+                Boolean(f) && typeof f.subfundId === "number" && typeof f.name === "string"
+            )
+            .slice(0, 4)
+            .map((f) => ({
+              subfundId: f.subfundId,
+              name: String(f.name).slice(0, 200),
+              type: typeof f.type === "string" ? f.type : undefined,
+              category: typeof f.category === "string" ? f.category : null,
+            }));
           startTransition(() => {
             setSelectedFunds(valid);
           });

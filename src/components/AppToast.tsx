@@ -1,13 +1,14 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import Link from "next/link";
 import { Briefcase, Scale, AlertTriangle, AlertCircle, Info, ArrowRight, X } from "lucide-react";
 import { useToast } from "./ToastContext";
+import { useTranslation } from "@/lib/i18n";
 
 export function AppToast() {
   const { activeToast, hideToast } = useToast();
-  const [, setIsPaused] = useState(false);
+  const { t } = useTranslation();
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const remainingTimeRef = useRef<number>(4500);
   const startTimeRef = useRef<number>(Date.now());
@@ -17,7 +18,6 @@ export function AppToast() {
     const duration = activeToast.duration ?? 4500;
     remainingTimeRef.current = duration;
     startTimeRef.current = Date.now();
-    setIsPaused(false);
 
     timerRef.current = setTimeout(() => {
       hideToast(activeToast.id);
@@ -40,7 +40,6 @@ export function AppToast() {
     }
     const elapsed = Date.now() - startTimeRef.current;
     remainingTimeRef.current = Math.max(1500, remainingTimeRef.current - elapsed);
-    setIsPaused(true);
   };
 
   const handleMouseLeave = () => {
@@ -48,7 +47,6 @@ export function AppToast() {
     timerRef.current = setTimeout(() => {
       hideToast(activeToast.id);
     }, remainingTimeRef.current);
-    setIsPaused(false);
   };
 
   const { type, title, message, category, action, duration = 4500 } = activeToast;
@@ -77,7 +75,7 @@ export function AppToast() {
   if (type === "warning") {
     borderClasses = "border-amber-400/50 dark:border-amber-500/60";
     badgeClasses = "bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800/60";
-    titleColorClasses = "text-amber-600 dark:text-amber-400";
+    titleColorClasses = "text-amber-700 dark:text-amber-400";
     progressBarClasses = "bg-amber-500";
     progressTrackClasses = "bg-amber-100 dark:bg-amber-950/60";
   } else if (type === "error") {
@@ -159,8 +157,9 @@ export function AppToast() {
           <button
             type="button"
             onClick={() => hideToast(activeToast.id)}
-            className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#071938] rounded-lg transition-colors cursor-pointer shrink-0"
-            aria-label="Zamknij powiadomienie"
+            className="p-1.5 text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#071938] rounded-lg transition-colors cursor-pointer shrink-0"
+            aria-label={t.common.close}
+            title={t.common.close}
           >
             <X className="w-4 h-4" />
           </button>

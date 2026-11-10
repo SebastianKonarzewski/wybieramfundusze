@@ -33,7 +33,7 @@ export function CompareFloatingBar() {
             <button
               type="button"
               onClick={clearFunds}
-              className="p-1.5 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition-colors cursor-pointer"
+              className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition-colors cursor-pointer"
               title={t.compare.clearAll}
               aria-label={t.compare.clearAll}
             >
@@ -85,7 +85,7 @@ export function CompareFloatingBar() {
                   <button
                     type="button"
                     onClick={() => removeFund(fund.subfundId)}
-                    className="p-0.5 text-slate-400 hover:text-rose-500 dark:hover:text-rose-400 rounded-md transition-colors cursor-pointer shrink-0"
+                    className="p-0.5 text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 rounded-md transition-colors cursor-pointer shrink-0"
                     title={t.catalog.card.removeFromCompare}
                     aria-label={`${t.catalog.card.removeFromCompare}: ${fund.name}`}
                   >
@@ -113,7 +113,7 @@ export function CompareFloatingBar() {
           <button
             type="button"
             onClick={clearFunds}
-            className="p-2 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-xl text-xs transition-colors cursor-pointer"
+            className="p-2 text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-xl text-xs transition-colors cursor-pointer"
             title={t.compare.clearAll}
             aria-label={t.compare.clearAll}
           >
