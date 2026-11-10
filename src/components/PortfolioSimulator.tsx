@@ -113,6 +113,18 @@ export function PortfolioSimulator() {
   const [searchResults, setSearchResults] = useState<{ subfundId: number; name: string; type: string }[]>([]);
   const [searchLoading, setSearchLoading] = useState(false);
 
+  // Close search modal on Escape key
+  useEffect(() => {
+    if (!isSearching) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsSearching(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isSearching]);
+
   // 1. Fetch full profiles for all portfolio funds
   useEffect(() => {
     if (portfolioFunds.length === 0) {
@@ -1075,7 +1087,12 @@ export function PortfolioSimulator() {
 
       {/* 8. Search & Add Modal */}
       {isSearching && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#030a16]/85 backdrop-blur-xs">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 dark:bg-black/80 backdrop-blur-sm animate-in fade-in duration-150"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsSearching(false);
+          }}
+        >
           <div className="bg-white dark:bg-[#051329] border border-slate-200 dark:border-[#0e274d] rounded-2xl w-full max-w-lg p-5 shadow-2xl space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">

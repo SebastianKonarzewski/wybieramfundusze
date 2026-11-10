@@ -48,15 +48,15 @@ export function SubfundDetailView({ profile }: { profile: SubfundFullProfile }) 
       </Link>
 
       {/* Subfund Main Header */}
-      <div className="bg-gradient-to-b from-[#071938] via-[#051329] to-[#030a16] border border-[#0e274d] rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-xl">
+      <div className="bg-gradient-to-b from-blue-50/80 via-white to-white dark:from-[#071938] dark:via-[#051329] dark:to-[#030a16] border border-slate-200 dark:border-[#0e274d] rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-sm dark:shadow-xl transition-colors">
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-5 sm:gap-6">
           <div className="space-y-2.5 sm:space-y-3">
             {/* Badges row */}
             <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-              <span className="font-bold text-xs bg-[#030a16] text-blue-300 border border-[#0e274d] px-2.5 py-0.5 rounded-lg">
+              <span className="font-bold text-xs bg-blue-50 dark:bg-[#030a16] text-[#044CD0] dark:text-blue-300 border border-blue-200/60 dark:border-[#0e274d] px-2.5 py-0.5 rounded-lg">
                 {subfund.type}
               </span>
-              <span className="font-mono text-xs text-slate-400 bg-[#030a16] px-2 py-0.5 rounded border border-[#0e274d]">
+              <span className="font-mono text-xs text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-[#030a16] px-2 py-0.5 rounded border border-slate-200 dark:border-[#0e274d]">
                 {subfund.nationalCode}
               </span>
               <StatusBadge
@@ -69,20 +69,20 @@ export function SubfundDetailView({ profile }: { profile: SubfundFullProfile }) 
             </div>
 
             {/* Subfund Title */}
-            <h1 className="text-xl sm:text-3xl font-extrabold text-slate-100 tracking-tight leading-tight">
+            <h1 className="text-xl sm:text-3xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight leading-tight">
               {subfund.name}
             </h1>
 
             {subfund.fullName && subfund.fullName !== subfund.name && (
-              <p className="text-xs sm:text-sm text-slate-400">{subfund.fullName}</p>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">{subfund.fullName}</p>
             )}
 
             {/* Classification and Company Link */}
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-400 pt-1">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500 dark:text-slate-400 pt-1">
               {company && (
                 <Link
                   href={`/tfi/${company.companyId}`}
-                  className="inline-flex items-center gap-1.5 text-[#3b82f6] hover:text-[#60a5fa] font-semibold transition-colors"
+                  className="inline-flex items-center gap-1.5 text-[#044CD0] dark:text-[#3b82f6] hover:text-[#033eb0] dark:hover:text-[#60a5fa] font-semibold transition-colors"
                 >
                   <Building2 className="w-3.5 h-3.5" />
                   {company.name}
@@ -91,7 +91,7 @@ export function SubfundDetailView({ profile }: { profile: SubfundFullProfile }) 
 
               {(subfund.classification || subfund.category) && (
                 <div className="flex items-center gap-1.5">
-                  <Compass className="w-3.5 h-3.5 text-slate-500" />
+                  <Compass className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
                   <span>
                     {subfund.classification}
                     {subfund.category ? ` • ${subfund.category}` : ""}
@@ -101,7 +101,7 @@ export function SubfundDetailView({ profile }: { profile: SubfundFullProfile }) 
 
               {subfund.fromDate && (
                 <div className="flex items-center gap-1.5">
-                  <Calendar className="w-3.5 h-3.5 text-slate-500" />
+                  <Calendar className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
                   <span>{t.subfundDetail.inRegistrySince} {formatDate(subfund.fromDate)}</span>
                 </div>
               )}
@@ -121,7 +121,7 @@ export function SubfundDetailView({ profile }: { profile: SubfundFullProfile }) 
                 className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer shadow-xs ${
                   inPortfolio
                     ? "bg-[#044CD0] text-white border-[#044CD0]"
-                    : "bg-[#030a16] text-slate-300 border-[#0e274d] hover:text-[#60a5fa] hover:border-blue-500"
+                    : "bg-slate-50 dark:bg-[#030a16] text-slate-700 dark:text-slate-300 border-slate-200 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-[#60a5fa] hover:border-blue-400"
                 }`}
               >
                 {inPortfolio ? <Check className="w-3.5 h-3.5" /> : <Briefcase className="w-3.5 h-3.5" />}
@@ -139,8 +139,8 @@ export function SubfundDetailView({ profile }: { profile: SubfundFullProfile }) 
                 }
                 className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer shadow-xs ${
                   inCompare
-                    ? "bg-[#044CD0] text-white border-blue-400"
-                    : "bg-[#030a16] text-slate-300 border-[#0e274d] hover:text-blue-400 hover:border-blue-500"
+                    ? "bg-[#044CD0] text-white border-[#044CD0]"
+                    : "bg-slate-50 dark:bg-[#030a16] text-slate-700 dark:text-slate-300 border-slate-200 dark:border-[#0e274d] hover:text-[#044CD0] dark:hover:text-blue-400 hover:border-blue-400"
                 }`}
               >
                 {inCompare ? <Check className="w-3.5 h-3.5" /> : <Scale className="w-3.5 h-3.5" />}
@@ -151,26 +151,26 @@ export function SubfundDetailView({ profile }: { profile: SubfundFullProfile }) 
 
           {/* Quick Metrics Pillar */}
           <div className="grid grid-cols-2 md:flex md:flex-col gap-2.5 sm:gap-3 w-full md:w-auto shrink-0">
-            <div className="bg-[#030a16] border border-[#0e274d] p-3 sm:p-4 rounded-xl sm:rounded-2xl md:min-w-[140px] text-center">
-              <span className="text-[10px] sm:text-[11px] font-medium text-slate-500 block">
+            <div className="bg-white dark:bg-[#030a16] border border-slate-200 dark:border-[#0e274d] p-3 sm:p-4 rounded-xl sm:rounded-2xl md:min-w-[140px] text-center shadow-xs">
+              <span className="text-[10px] sm:text-[11px] font-medium text-slate-500 dark:text-slate-400 block">
                 {t.subfundDetail.quickMetrics.ongoingFee}
               </span>
-              <span className="text-lg sm:text-xl font-black text-blue-400">
+              <span className="text-lg sm:text-xl font-black text-[#044CD0] dark:text-blue-400">
                 {formatPercent(latestKid?.managementAndOtherFeesRate)}
               </span>
             </div>
 
             {valuations[0] && (
-              <div className="bg-[#030a16] border border-[#0e274d] p-3 sm:p-4 rounded-xl sm:rounded-2xl md:min-w-[140px] text-center">
-                <span className="text-[10px] sm:text-[11px] font-medium text-slate-500 block">
+              <div className="bg-white dark:bg-[#030a16] border border-slate-200 dark:border-[#0e274d] p-3 sm:p-4 rounded-xl sm:rounded-2xl md:min-w-[140px] text-center shadow-xs">
+                <span className="text-[10px] sm:text-[11px] font-medium text-slate-500 dark:text-slate-400 block">
                   {t.subfundDetail.quickMetrics.latestValuation}
                 </span>
                 <FormattedCurrency
                   value={valuations[0].valuation}
                   currency={valuations[0].currency}
                   className="inline-flex items-baseline justify-center gap-1"
-                  valueClassName="text-lg sm:text-xl font-bold text-slate-100"
-                  unitClassName="text-xs sm:text-sm font-semibold text-slate-400"
+                  valueClassName="text-lg sm:text-xl font-bold text-slate-900 dark:text-slate-100"
+                  unitClassName="text-xs sm:text-sm font-semibold text-slate-500 dark:text-slate-400"
                 />
               </div>
             )}

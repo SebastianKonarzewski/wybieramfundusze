@@ -4,8 +4,6 @@ import { notFound } from "next/navigation";
 import { knfApi } from "@/lib/knf-api";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { CompareProvider } from "@/components/CompareContext";
-import { CompareFloatingBar } from "@/components/CompareFloatingBar";
 import { CompanyDetailView } from "@/components/CompanyDetailView";
 
 export const dynamic = "force-dynamic";
@@ -53,17 +51,14 @@ export default async function CompanyDetailPage({
   const funds = fundsRes.content || [];
 
   return (
-    <CompareProvider>
-      <div className="min-h-screen flex flex-col bg-[#030a16] text-slate-100">
-        <Navbar />
+    <div className="min-h-screen flex flex-col bg-[#030a16] text-slate-100">
+      <Navbar />
 
-        <main id="main-content" className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <CompanyDetailView company={company} history={history} funds={funds} />
-        </main>
+      <main id="main-content" className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <CompanyDetailView company={company} history={history} funds={funds} />
+      </main>
 
-        <Footer />
-        <CompareFloatingBar />
-      </div>
-    </CompareProvider>
+      <Footer />
+    </div>
   );
 }

@@ -36,34 +36,34 @@ export function CompanyDetailView({ company, history, funds }: CompanyDetailView
       </Link>
 
       {/* Profile Header */}
-      <div className="bg-gradient-to-b from-[#071938] via-[#051329] to-[#030a16] border border-[#0e274d] rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-xl">
+      <div className="bg-gradient-to-b from-blue-50/80 via-white to-white dark:from-[#071938] dark:via-[#051329] dark:to-[#030a16] border border-slate-200 dark:border-[#0e274d] rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-sm dark:shadow-xl transition-colors">
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-5 sm:gap-6">
           <div className="space-y-2.5 sm:space-y-3">
             <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-              <span className="font-mono text-xs font-bold text-blue-300 bg-[#030a16] border border-[#0e274d] px-2.5 py-0.5 rounded-lg">
+              <span className="font-mono text-xs font-bold text-[#044CD0] dark:text-blue-300 bg-blue-50 dark:bg-[#030a16] border border-blue-200/60 dark:border-[#0e274d] px-2.5 py-0.5 rounded-lg">
                 {company.nationalCode}
               </span>
               <StatusBadge isActive={company.isActive} />
               {company.fromDate && (
-                <span className="text-xs text-slate-400">
+                <span className="text-xs text-slate-500 dark:text-slate-400">
                   {t.tfi.inRegistryFrom} {formatDate(company.fromDate)}
                 </span>
               )}
             </div>
 
-            <h1 className="text-xl sm:text-3xl font-extrabold text-slate-100 tracking-tight leading-tight">
+            <h1 className="text-xl sm:text-3xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight leading-tight">
               {company.name}
             </h1>
 
             {company.fullName && company.fullName !== company.name && (
-              <p className="text-xs sm:text-sm text-slate-400">{company.fullName}</p>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">{company.fullName}</p>
             )}
 
             {/* Company details grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3 pt-2 sm:pt-3 text-xs text-slate-300">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3 pt-2 sm:pt-3 text-xs text-slate-700 dark:text-slate-300">
               {(company.city || company.street) && (
-                <div className="flex items-center gap-2 bg-[#030a16] p-2 sm:p-2.5 rounded-xl border border-[#0e274d]">
-                  <MapPin className="w-4 h-4 text-slate-400 shrink-0" />
+                <div className="flex items-center gap-2 bg-slate-50 dark:bg-[#030a16] p-2 sm:p-2.5 rounded-xl border border-slate-200 dark:border-[#0e274d]">
+                  <MapPin className="w-4 h-4 text-slate-400 dark:text-slate-500 shrink-0" />
                   <span className="truncate">
                     {company.street}, {company.postCode} {company.city}
                   </span>
@@ -71,11 +71,11 @@ export function CompanyDetailView({ company, history, funds }: CompanyDetailView
               )}
 
               {company.krs && (
-                <div className="flex items-center gap-2 bg-[#030a16] p-2 sm:p-2.5 rounded-xl border border-[#0e274d]">
+                <div className="flex items-center gap-2 bg-slate-50 dark:bg-[#030a16] p-2 sm:p-2.5 rounded-xl border border-slate-200 dark:border-[#0e274d]">
                   <span className="font-semibold text-slate-500">KRS:</span>
-                  <span className="font-mono">{company.krs}</span>
+                  <span className="font-mono font-medium">{company.krs}</span>
                   {company.regon && (
-                    <span className="text-slate-500 truncate">| REGON: {company.regon}</span>
+                    <span className="text-slate-400 dark:text-slate-500 truncate">| REGON: {company.regon}</span>
                   )}
                 </div>
               )}
@@ -85,7 +85,7 @@ export function CompanyDetailView({ company, history, funds }: CompanyDetailView
                   href={company.website.startsWith("http") ? company.website : `https://${company.website}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 bg-[#030a16] p-2 sm:p-2.5 rounded-xl border border-[#0e274d] text-[#3b82f6] hover:text-[#60a5fa] transition-colors"
+                  className="flex items-center gap-2 bg-slate-50 dark:bg-[#030a16] p-2 sm:p-2.5 rounded-xl border border-slate-200 dark:border-[#0e274d] text-[#044CD0] dark:text-[#3b82f6] hover:text-[#033eb0] dark:hover:text-[#60a5fa] transition-colors"
                 >
                   <Globe className="w-4 h-4 shrink-0" />
                   <span className="truncate">{company.website}</span>
@@ -95,26 +95,26 @@ export function CompanyDetailView({ company, history, funds }: CompanyDetailView
             </div>
           </div>
 
-          <div className="bg-[#030a16] border border-[#0e274d] p-3 sm:p-4 rounded-xl sm:rounded-2xl shrink-0 text-center w-full md:w-auto md:min-w-[140px]">
-            <div className="text-2xl font-black text-blue-400">{funds.length}</div>
-            <div className="text-xs text-slate-400 mt-0.5">{t.tfi.fundsInRegistry}</div>
+          <div className="bg-white dark:bg-[#030a16] border border-slate-200 dark:border-[#0e274d] p-3 sm:p-4 rounded-xl sm:rounded-2xl shrink-0 text-center w-full md:w-auto md:min-w-[140px] shadow-xs">
+            <div className="text-2xl font-black text-[#044CD0] dark:text-blue-400">{funds.length}</div>
+            <div className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{t.tfi.fundsInRegistry}</div>
           </div>
         </div>
       </div>
 
       {/* Grid: Funds List & History Timeline */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
         {/* Managed Funds */}
         <div className="lg:col-span-2 space-y-4">
           <div className="flex items-center gap-2 mb-2">
             <Layers className="w-5 h-5 text-[#044CD0]" />
-            <h2 className="text-lg font-bold text-slate-100">
+            <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
               {t.tfi.managedFunds} ({funds.length})
             </h2>
           </div>
 
           {funds.length === 0 ? (
-            <div className="p-8 text-center bg-[#051329]/40 border border-[#0e274d] rounded-2xl text-slate-500">
+            <div className="p-8 text-center bg-white/60 dark:bg-[#051329]/40 border border-slate-200 dark:border-[#0e274d] rounded-2xl text-slate-500 dark:text-slate-400">
               {t.tfi.noFundsAssigned}
             </div>
           ) : (
@@ -122,14 +122,14 @@ export function CompanyDetailView({ company, history, funds }: CompanyDetailView
               {funds.map((fund) => (
                 <div
                   key={fund.fundId}
-                  className="bg-[#051329] border border-[#0e274d] rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-[#044CD0]/60 transition-colors"
+                  className="bg-white dark:bg-[#051329] border border-slate-200 dark:border-[#0e274d] rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-[#044CD0]/60 dark:hover:border-[#044CD0]/60 shadow-xs hover:shadow-md transition-all"
                 >
                   <div>
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="font-bold text-xs bg-[#030a16] border border-[#0e274d] px-2 py-0.5 rounded text-blue-300">
+                      <span className="font-bold text-xs bg-blue-50 dark:bg-[#030a16] border border-blue-200/60 dark:border-[#0e274d] px-2 py-0.5 rounded text-[#044CD0] dark:text-blue-300">
                         {fund.type}
                       </span>
-                      <span className="font-mono text-xs text-slate-500">
+                      <span className="font-mono text-xs text-slate-400 dark:text-slate-500">
                         {fund.nationalCode}
                       </span>
                       <StatusBadge
@@ -139,12 +139,12 @@ export function CompanyDetailView({ company, history, funds }: CompanyDetailView
                         liquidationEndDate={fund.liquidationEndDate}
                       />
                     </div>
-                    <h4 className="font-bold text-sm text-slate-100">{fund.name}</h4>
+                    <h4 className="font-bold text-sm text-slate-900 dark:text-slate-100 leading-snug">{fund.name}</h4>
                   </div>
 
                   <Link
                     href={`/?fundId=${fund.fundId}&fundName=${encodeURIComponent(fund.name)}`}
-                    className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-[#030a16] hover:bg-[#071938] border border-[#0e274d] text-slate-200 transition-colors self-start sm:self-auto shrink-0"
+                    className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-50 dark:bg-[#030a16] hover:bg-blue-50 dark:hover:bg-[#071938] border border-slate-200 dark:border-[#0e274d] text-slate-800 dark:text-slate-200 hover:text-[#044CD0] dark:hover:text-white transition-colors self-start sm:self-auto shrink-0"
                   >
                     {t.tfi.showSubfunds}
                   </Link>
@@ -158,10 +158,10 @@ export function CompanyDetailView({ company, history, funds }: CompanyDetailView
         <div className="space-y-4">
           <div className="flex items-center gap-2 mb-2">
             <Clock className="w-5 h-5 text-[#044CD0]" />
-            <h2 className="text-lg font-bold text-slate-100">{t.tfi.changesHistory}</h2>
+            <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">{t.tfi.changesHistory}</h2>
           </div>
 
-          <div className="bg-[#051329] border border-[#0e274d] rounded-2xl p-4">
+          <div className="bg-white dark:bg-[#051329] border border-slate-200 dark:border-[#0e274d] rounded-2xl p-4 sm:p-5 shadow-xs">
             <HistoryTimeline history={history} />
           </div>
         </div>

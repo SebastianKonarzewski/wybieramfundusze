@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Scale, X, ArrowRight, Trash2 } from "lucide-react";
 import { useCompare } from "./CompareContext";
 import { useTranslation } from "@/lib/i18n";
@@ -9,8 +10,9 @@ import { useTranslation } from "@/lib/i18n";
 export function CompareFloatingBar() {
   const { selectedFunds, removeFund, clearFunds } = useCompare();
   const { t } = useTranslation();
+  const pathname = usePathname();
 
-  if (selectedFunds.length === 0) return null;
+  if (pathname === "/porownywarka" || selectedFunds.length === 0) return null;
 
   return (
     <div className="fixed bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 z-40 w-full max-w-7xl px-3 sm:px-6 lg:px-8 animate-in fade-in slide-in-from-bottom-5 duration-200 pointer-events-none">

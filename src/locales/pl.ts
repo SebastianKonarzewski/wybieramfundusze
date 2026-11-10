@@ -241,6 +241,7 @@ export const pl = {
     limitWarningTitle: "Osiągnięto limit porównania",
     summaryTitle: "Zestawienie porównawcze funduszy",
     summarySubtitle: "Wybrano {count} z 4 dopuszczalnych funduszy. Porównaj koszty, profile ryzyka i znormalizowane wyniki.",
+    lowestFee: "Najniższa opłata",
     addFundBtn: "Dodaj fundusz",
     emptyTitle: "Brak wybranych funduszy do porównania",
     emptyDesc: "Wybierz od 2 do 4 funduszy z katalogu klikając ikonę wagi lub dodaj fundusz bezpośrednio przyciskiem poniżej.",

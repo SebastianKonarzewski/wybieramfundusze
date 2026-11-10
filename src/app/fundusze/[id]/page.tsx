@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { knfApi } from "@/lib/knf-api";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { CompareFloatingBar } from "@/components/CompareFloatingBar";
 import { SubfundDetailView } from "@/components/SubfundDetailView";
 
 export const dynamic = "force-dynamic";
@@ -54,7 +53,6 @@ export default async function SubfundDetailPage({
       </main>
 
       <Footer />
-      <CompareFloatingBar />
     </div>
   );
 }

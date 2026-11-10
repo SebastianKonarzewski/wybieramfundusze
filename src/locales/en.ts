@@ -243,6 +243,7 @@ export const en: Translations = {
     limitWarningTitle: "Comparison limit reached",
     summaryTitle: "Fund Comparison Summary",
     summarySubtitle: "Selected {count} of 4 maximum funds. Compare fees, risk profiles, and normalized performance.",
+    lowestFee: "Lowest fee",
     addFundBtn: "Add fund",
     emptyTitle: "No funds selected for comparison",
     emptyDesc: "Select 2 to 4 funds from the catalog by clicking the scale icon or search and add a fund directly using the button below.",

@@ -3,7 +3,6 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { MarketHero } from "@/components/MarketHero";
 import { SubfundsCatalog } from "@/components/SubfundsCatalog";
-import { CompareFloatingBar } from "@/components/CompareFloatingBar";
 import { knfApi } from "@/lib/knf-api";
 
 export const dynamic = "force-dynamic";
@@ -49,7 +48,6 @@ export default async function HomePage({
       </main>
 
       <Footer />
-      <CompareFloatingBar />
     </div>
   );
 }
