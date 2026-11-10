@@ -1548,3 +1548,34 @@ html.high-contrast [role="status"] a:hover {
   background-color: #ffff00 !important;
   color: #000000 !important;
 }
+
+/* Toast Countdown Timer Progress Bar */
+@keyframes toastProgressCountdown {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+.toast-progress-bar {
+  transform-origin: left;
+  animation: toastProgressCountdown linear forwards;
+}
+
+.toast-container:hover .toast-progress-bar {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast-progress-bar {
+    animation: none !important;
+    display: none !important;
+  }
+}
+
+html.reduced-motion .toast-progress-bar {
+  animation: none !important;
+  display: none !important;
+}

@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/lib/theme";
 import { LocaleProvider } from "@/lib/i18n";
 import { AccessibilityProvider } from "@/lib/accessibility";
+import { ToastProvider } from "@/components/ToastContext";
 import { CompareProvider } from "@/components/CompareContext";
 import { PortfolioProvider } from "@/components/PortfolioContext";
 import { PortfolioToast } from "@/components/PortfolioToast";
@@ -43,15 +44,17 @@ export default function RootLayout({
         <ThemeProvider>
           <LocaleProvider>
             <AccessibilityProvider>
-              <CompareProvider>
-                <PortfolioProvider>
-                  {children}
-                  <PortfolioToast />
-                  <BackToTop />
-                  <CookieBanner />
-                  <PrivacyModal />
-                </PortfolioProvider>
-              </CompareProvider>
+              <ToastProvider>
+                <CompareProvider>
+                  <PortfolioProvider>
+                    {children}
+                    <PortfolioToast />
+                    <BackToTop />
+                    <CookieBanner />
+                    <PrivacyModal />
+                  </PortfolioProvider>
+                </CompareProvider>
+              </ToastProvider>
             </AccessibilityProvider>
           </LocaleProvider>
         </ThemeProvider>

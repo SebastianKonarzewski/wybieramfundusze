@@ -1,6 +1,8 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState, startTransition } from "react";
+import { useToast } from "./ToastContext";
+import { useTranslation } from "@/lib/i18n";
 
 export interface SelectedFund {
   subfundId: number;
@@ -22,6 +24,8 @@ const CompareContext = createContext<CompareContextType | undefined>(undefined);
 
 export function CompareProvider({ children }: { children: React.ReactNode }) {
   const [selectedFunds, setSelectedFunds] = useState<SelectedFund[]>([]);
+  const { toast } = useToast();
+  const { t } = useTranslation();
 
   useEffect(() => {
     try {
@@ -53,16 +57,39 @@ export function CompareProvider({ children }: { children: React.ReactNode }) {
 
   const addFund = (fund: SelectedFund) => {
     if (selectedFunds.length >= 4) {
-      alert("Możesz porównać maksymalnie 4 fundusze jednocześnie.");
+      toast.warning(t.compare.limitWarningTitle, {
+        message: t.compare.toastLimitReached,
+        category: "compare",
+      });
       return;
     }
     if (!selectedFunds.some((f) => f.subfundId === fund.subfundId)) {
-      saveFunds([...selectedFunds, fund]);
+      const nextFunds = [...selectedFunds, fund];
+      saveFunds(nextFunds);
+      toast.success(
+        t.compare.toastAdded.replace("{count}", String(nextFunds.length)),
+        {
+          message: fund.name,
+          category: "compare",
+          action: {
+            label: t.common.compareNow,
+            href: "/porownywarka",
+          },
+        }
+      );
     }
   };
 
   const removeFund = (subfundId: number) => {
+    const fundToRemove = selectedFunds.find((f) => f.subfundId === subfundId);
     saveFunds(selectedFunds.filter((f) => f.subfundId !== subfundId));
+    if (fundToRemove) {
+      toast.info(t.compare.toastRemoved, {
+        message: fundToRemove.name,
+        category: "compare",
+        duration: 3000,
+      });
+    }
   };
 
   const toggleFund = (fund: SelectedFund) => {
@@ -104,4 +131,3 @@ export function useCompare() {
   }
   return context;
 }
-

@@ -1,6 +1,8 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState, startTransition } from "react";
+import { useToast } from "./ToastContext";
+import { useTranslation } from "@/lib/i18n";
 
 export interface PortfolioFund {
   subfundId: number;
@@ -31,6 +33,8 @@ const MAX_PORTFOLIO_FUNDS = 15;
 export function PortfolioProvider({ children }: { children: React.ReactNode }) {
   const [portfolioFunds, setPortfolioFunds] = useState<PortfolioFund[]>([]);
   const [lastAddedFund, setLastAddedFund] = useState<PortfolioFund | null>(null);
+  const { toast } = useToast();
+  const { t } = useTranslation();
 
   // Load saved portfolio from localStorage on mount
   useEffect(() => {
@@ -63,7 +67,10 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
 
   const addFund = (fund: PortfolioFund) => {
     if (portfolioFunds.length >= MAX_PORTFOLIO_FUNDS) {
-      alert(`Możesz dodać maksymalnie ${MAX_PORTFOLIO_FUNDS} funduszy do portfela.`);
+      toast.warning(t.portfolio.limitWarningTitle, {
+        message: t.portfolio.toastLimitReached,
+        category: "portfolio",
+      });
       return;
     }
     if (!portfolioFunds.some((f) => f.subfundId === fund.subfundId)) {
@@ -76,10 +83,19 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
       ];
       saveFunds(updated);
       setLastAddedFund(fund);
+      toast.success(t.portfolio.toastAdded, {
+        message: fund.name,
+        category: "portfolio",
+        action: {
+          label: t.portfolio.goToPortfolio,
+          href: "/portfel",
+        },
+      });
     }
   };
 
   const removeFund = (subfundId: number) => {
+    const fundToRemove = portfolioFunds.find((f) => f.subfundId === subfundId);
     if (lastAddedFund?.subfundId === subfundId) {
       setLastAddedFund(null);
     }
@@ -89,6 +105,13 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
       saveFunds(remaining.map((f) => ({ ...f, allocation: equalWeight })));
     } else {
       saveFunds([]);
+    }
+    if (fundToRemove) {
+      toast.info(t.portfolio.toastRemoved, {
+        message: fundToRemove.name,
+        category: "portfolio",
+        duration: 3000,
+      });
     }
   };
 
@@ -158,4 +181,3 @@ export function usePortfolio() {
   }
   return context;
 }
-
