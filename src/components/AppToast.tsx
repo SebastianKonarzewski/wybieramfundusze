@@ -102,7 +102,7 @@ export function AppToast() {
         key={activeToast.id}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className={`pointer-events-auto toast-container relative overflow-hidden bg-white/98 dark:bg-[#030d22]/98 border-2 ${borderClasses} rounded-2xl p-2.5 sm:py-3 sm:px-3.5 shadow-[0_12px_36px_rgba(4,76,208,0.15),0_4px_12px_rgba(0,0,0,0.06)] dark:shadow-[0_18px_45px_rgba(0,0,0,0.85),0_0_20px_rgba(4,76,208,0.22)] backdrop-blur-md flex items-center justify-between gap-2.5 sm:gap-3 text-slate-800 dark:text-slate-100 transition-all group`}
+        className={`pointer-events-auto toast-container relative overflow-hidden bg-white/98 dark:bg-[#030d22]/98 border-2 ${borderClasses} rounded-2xl pt-2.5 pb-3.5 sm:pt-3 sm:pb-3.5 px-3 sm:px-3.5 shadow-[0_12px_36px_rgba(4,76,208,0.15),0_4px_12px_rgba(0,0,0,0.06)] dark:shadow-[0_18px_45px_rgba(0,0,0,0.85),0_0_20px_rgba(4,76,208,0.22)] backdrop-blur-md flex items-center justify-between gap-2.5 sm:gap-3 text-slate-800 dark:text-slate-100 transition-all group`}
       >
         {/* Left: Icon & Spacious Text Content */}
         <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
@@ -166,7 +166,7 @@ export function AppToast() {
         </div>
 
         {/* Bottom Progress Bar: Visual Countdown Timer */}
-        <div className={`absolute bottom-0 left-0 right-0 h-1.5 ${progressTrackClasses} overflow-hidden pointer-events-none`}>
+        <div className={`absolute bottom-0 left-0 right-0 h-1 ${progressTrackClasses} overflow-hidden pointer-events-none`}>
           <div
             className={`toast-progress-bar h-full w-full ${progressBarClasses}`}
             style={{ animationDuration: `${duration}ms` }}
