@@ -939,19 +939,19 @@ export function SubfundsCatalog({
         className="bg-white dark:bg-[#051329] border border-slate-200 dark:border-[#0e274d] rounded-2xl p-3 sm:p-4 shadow-sm dark:shadow-xl space-y-3 relative z-30"
       >
         {/* Row 1: Surface Quick-Select (Klasa aktywów left + Typ prawny right) */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 pb-3 border-b border-slate-100 dark:border-[#0e274d]/70">
+        <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-3 pb-3 border-b border-slate-100 dark:border-[#0e274d]/70">
           {/* Column 1: Klasa aktywów */}
-          <div className="space-y-1.5">
-            {/* Header line: Etykieta + Wszystkie */}
-            <div className="flex items-center gap-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 items-center gap-1 inline-flex shrink-0">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 flex-wrap">
+            {/* Header line on mobile (label + Wszystkie), inline on sm+ */}
+            <div className="flex items-center gap-1.5 shrink-0">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mr-1 shrink-0 items-center gap-1 inline-flex">
                 <Compass className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#3b82f6]" />
                 <span>{t.catalog.assetClassFilter}:</span>
               </span>
               <button
                 type="button"
                 onClick={() => toggleClassification("ALL")}
-                className={`h-7 px-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer select-none inline-flex items-center justify-center ${
+                className={`h-8 sm:h-[32px] px-2.5 sm:px-3 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer select-none inline-flex items-center justify-center ${
                   selectedClassifications.length === 0
                     ? "bg-[#044CD0] text-white shadow-xs font-bold ring-2 ring-[#044CD0]/20"
                     : "bg-slate-100/90 dark:bg-[#030c1c] text-slate-700 dark:text-slate-300 hover:bg-slate-200/80 dark:hover:bg-[#071938] hover:text-[#044CD0] dark:hover:text-white border border-slate-200/90 dark:border-[#0e274d]"
@@ -961,7 +961,7 @@ export function SubfundsCatalog({
               </button>
             </div>
 
-            {/* Options line: Akcyjne, Dłużne, Mieszane, Alternatywne */}
+            {/* Options: on mobile line 2, on sm+ inline next to Wszystkie */}
             <div className="flex items-center gap-1.5 flex-wrap">
               {classificationOptions
                 .filter((cls) => cls.id !== "ALL")
@@ -986,17 +986,17 @@ export function SubfundsCatalog({
           </div>
 
           {/* Column 2: Typ prawny */}
-          <div className="space-y-1.5">
-            {/* Header line: Etykieta + Wszystkie */}
-            <div className="flex items-center gap-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 items-center gap-1 inline-flex shrink-0">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 flex-wrap">
+            {/* Header line on mobile (label + Wszystkie), inline on sm+ */}
+            <div className="flex items-center gap-1.5 shrink-0">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mr-1 shrink-0 items-center gap-1 inline-flex">
                 <Scale className="w-3.5 h-3.5 text-[#044CD0] dark:text-[#3b82f6]" />
                 <span>{t.catalog.legalTypeFilter}:</span>
               </span>
               <button
                 type="button"
                 onClick={() => toggleType("ALL")}
-                className={`h-7 px-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer select-none inline-flex items-center justify-center ${
+                className={`h-8 sm:h-[32px] px-2.5 sm:px-3 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer select-none inline-flex items-center justify-center ${
                   selectedTypes.length === 0
                     ? "bg-[#044CD0] text-white shadow-xs font-bold ring-2 ring-[#044CD0]/20"
                     : "bg-slate-100/90 dark:bg-[#030c1c] text-slate-700 dark:text-slate-300 hover:bg-slate-200/80 dark:hover:bg-[#071938] hover:text-[#044CD0] dark:hover:text-white border border-slate-200/90 dark:border-[#0e274d]"
@@ -1006,7 +1006,7 @@ export function SubfundsCatalog({
               </button>
             </div>
 
-            {/* Options line: FIO, SFIO, FIZ, ETF, PPK */}
+            {/* Options: on mobile line 2, on sm+ inline next to Wszystkie */}
             <div className="flex items-center gap-1.5 flex-wrap">
               {["FIO", "SFIO", "FIZ", "ETF", "PPK"].map((type) => {
                 const isSelected = selectedTypes.includes(type);
