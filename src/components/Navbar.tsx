@@ -102,7 +102,7 @@ export function Navbar() {
 
       <header
         data-component="navbar-header"
-        className="sticky top-0 z-50 w-full min-w-fit border-b border-[#0e274d] bg-[#030a16]/95 backdrop-blur-md"
+        className={`sticky top-0 ${isMobileMenuOpen || isA11yOpen ? "z-[70]" : "z-50"} w-full min-w-fit border-b border-[#0e274d] bg-[#030a16]/95 backdrop-blur-md`}
       >
         {/* Dev / Preview Mode Top Announcement Banner */}
         <div
@@ -250,7 +250,7 @@ export function Navbar() {
           <div
             id="mobile-nav-drawer"
             data-component="mobile-nav"
-            className="lg:hidden border-b border-slate-200 dark:border-[#0e274d] bg-white dark:bg-[#030a16] text-slate-800 dark:text-slate-200 shadow-2xl relative z-50 max-h-[calc(100vh-4.5rem)] overflow-y-auto overscroll-contain animate-in slide-in-from-top-2 duration-150"
+            className="lg:hidden border-b border-slate-200 dark:border-[#0e274d] bg-white dark:bg-[#030a16] text-slate-800 dark:text-slate-200 shadow-2xl relative z-[70] max-h-[calc(100vh-4.5rem)] overflow-y-auto overscroll-contain animate-in slide-in-from-top-2 duration-150"
           >
             <div className="max-w-7xl mx-auto px-3.5 py-3">
               {/* Portal Subpages Navigation Links Only */}
@@ -298,7 +298,7 @@ export function Navbar() {
       {/* Full-viewport Mobile Backdrop Overlay with blur & darkening */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md z-40 lg:hidden animate-in fade-in duration-150 touch-none overscroll-none"
+          className="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md z-[60] lg:hidden animate-in fade-in duration-150 touch-none overscroll-none"
           onClick={() => setIsMobileMenuOpen(false)}
           onTouchMove={(e) => e.preventDefault()}
           aria-hidden="true"

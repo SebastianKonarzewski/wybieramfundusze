@@ -13,7 +13,7 @@ export function CompareFloatingBar() {
   if (selectedFunds.length === 0) return null;
 
   return (
-    <div className="fixed bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-7xl px-3 sm:px-6 lg:px-8 animate-in fade-in slide-in-from-bottom-5 duration-200 pointer-events-none">
+    <div className="fixed bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 z-40 w-full max-w-7xl px-3 sm:px-6 lg:px-8 animate-in fade-in slide-in-from-bottom-5 duration-200 pointer-events-none">
       <div className="pointer-events-auto w-full bg-white/98 dark:bg-[#030d22]/98 border-2 border-[#044CD0]/35 dark:border-[#044CD0]/55 rounded-2xl p-2.5 sm:p-3 shadow-[0_12px_36px_rgba(4,76,208,0.15),0_4px_12px_rgba(0,0,0,0.06)] dark:shadow-[0_18px_45px_rgba(0,0,0,0.85),0_0_20px_rgba(4,76,208,0.22)] backdrop-blur-md flex flex-col lg:flex-row lg:items-center justify-between gap-2.5 sm:gap-3 text-slate-800 dark:text-slate-100 transition-all">
         
         {/* Mobile Control Row (< lg): Indicator on left, Actions on right */}

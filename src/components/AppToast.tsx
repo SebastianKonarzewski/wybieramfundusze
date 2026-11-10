@@ -94,7 +94,7 @@ export function AppToast() {
     <div
       role="status"
       aria-live="polite"
-      className="fixed top-18 sm:top-20 right-3 sm:right-6 left-3 sm:left-auto z-60 w-auto sm:w-[420px] max-w-[calc(100vw-1.5rem)] animate-in fade-in slide-in-from-top-3 duration-200"
+      className="fixed top-18 sm:top-20 right-3 sm:right-6 left-3 sm:left-auto z-[80] w-auto sm:w-[420px] max-w-[calc(100vw-1.5rem)] animate-in fade-in slide-in-from-top-3 duration-200"
     >
       <div
         key={activeToast.id}
