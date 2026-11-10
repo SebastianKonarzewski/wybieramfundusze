@@ -1043,37 +1043,39 @@ export function SubfundsCatalog({
         </div>
 
         {/* Row 2: Precision Filter Toolbar (Search + TFI + Waluta + Actions) */}
-        <div className="flex flex-col sm:flex-row sm:flex-wrap lg:flex-nowrap items-stretch sm:items-center gap-2 sm:gap-2.5">
-          {/* 1. Search Bar */}
-          <div className="relative w-full sm:flex-1 min-w-0 sm:min-w-[280px] lg:max-w-[360px]">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
-            <input
-              type="text"
-              placeholder={isMobile ? t.catalog.searchPlaceholderMobile : t.catalog.searchPlaceholder}
-              value={searchTerm}
-              onChange={(e) => {
-                setSearchTerm(e.target.value);
-                setCurrentPage(0);
-              }}
-              className="h-[38px] w-full pl-9 pr-8 rounded-xl bg-slate-50/90 dark:bg-[#030c1c] border border-slate-300 dark:border-[#0e274d] text-xs sm:text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-hidden focus:border-[#044CD0] focus:ring-2 focus:ring-[#044CD0]/15 transition-all shadow-2xs"
-            />
-            {searchTerm && (
-              <button
-                type="button"
-                onClick={() => {
-                  setSearchTerm("");
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-2.5 sm:gap-3">
+          {/* Primary Controls: Search & Manager selection */}
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-2.5 flex-1 min-w-0">
+            {/* 1. Search Bar */}
+            <div className="relative w-full sm:flex-1 min-w-0 sm:min-w-[280px] lg:max-w-[360px]">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+              <input
+                type="text"
+                placeholder={isMobile ? t.catalog.searchPlaceholderMobile : t.catalog.searchPlaceholder}
+                value={searchTerm}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
                   setCurrentPage(0);
                 }}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 rounded-md transition-colors cursor-pointer"
-                aria-label="Wyczyść szukanie"
-              >
-                <X className="w-3.5 h-3.5" />
-              </button>
-            )}
-          </div>
+                className="h-[38px] w-full pl-9 pr-8 rounded-xl bg-slate-50/90 dark:bg-[#030c1c] border border-slate-300 dark:border-[#0e274d] text-xs sm:text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-hidden focus:border-[#044CD0] focus:ring-2 focus:ring-[#044CD0]/15 transition-all shadow-2xs"
+              />
+              {searchTerm && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSearchTerm("");
+                    setCurrentPage(0);
+                  }}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 rounded-md transition-colors cursor-pointer"
+                  aria-label="Wyczyść szukanie"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              )}
+            </div>
 
-          {/* 2. Zarządzający Dropdown Pill */}
-          <div ref={tfiDropdownRef} className="relative w-full sm:w-auto shrink-0">
+            {/* 2. Zarządzający Dropdown Pill */}
+            <div ref={tfiDropdownRef} className="relative w-full sm:w-auto shrink-0">
             <button
               type="button"
               onClick={() => setOpenFilterDropdown(openFilterDropdown === "tfi" ? null : "tfi")}
@@ -1267,10 +1269,11 @@ export function SubfundsCatalog({
               </div>
             )}
           </div>
+        </div>
 
-          {/* 3. Right-Aligned Action: Advanced Filters Drawer Toggle */}
-          <div className="w-full sm:w-auto sm:ml-auto shrink-0 flex justify-end">
-            <button
+        {/* 3. Right-Aligned Action: Advanced Filters Drawer Toggle */}
+        <div className="w-full lg:w-auto lg:ml-auto shrink-0 flex justify-end pt-2.5 lg:pt-0 border-t border-slate-100 dark:border-[#0e274d]/70 lg:border-t-0">
+          <button
               type="button"
               onClick={toggleAdvancedFilters}
               className={`h-[38px] w-full sm:w-auto inline-flex items-center justify-between sm:justify-start gap-1.5 text-xs sm:text-sm py-1.5 px-3 sm:px-3.5 rounded-xl border transition-all cursor-pointer ${
