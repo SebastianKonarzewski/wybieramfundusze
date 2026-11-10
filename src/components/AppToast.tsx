@@ -102,7 +102,7 @@ export function AppToast() {
         key={activeToast.id}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className={`pointer-events-auto toast-container relative overflow-hidden bg-white/98 dark:bg-[#030d22]/98 border-2 ${borderClasses} rounded-2xl p-3 sm:p-3.5 shadow-[0_12px_36px_rgba(4,76,208,0.15),0_4px_12px_rgba(0,0,0,0.06)] dark:shadow-[0_18px_45px_rgba(0,0,0,0.85),0_0_20px_rgba(4,76,208,0.22)] backdrop-blur-md flex items-center justify-between gap-3 text-slate-800 dark:text-slate-100 transition-all group`}
+        className={`pointer-events-auto toast-container relative overflow-hidden bg-white/98 dark:bg-[#030d22]/98 border-2 ${borderClasses} rounded-2xl p-2.5 sm:py-3 sm:px-3.5 shadow-[0_12px_36px_rgba(4,76,208,0.15),0_4px_12px_rgba(0,0,0,0.06)] dark:shadow-[0_18px_45px_rgba(0,0,0,0.85),0_0_20px_rgba(4,76,208,0.22)] backdrop-blur-md flex items-center justify-between gap-2.5 sm:gap-3 text-slate-800 dark:text-slate-100 transition-all group`}
       >
         {/* Left: Icon & Spacious Text Content */}
         <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
@@ -111,12 +111,12 @@ export function AppToast() {
           </div>
 
           <div className="min-w-0 flex-1">
-            <div className={`text-xs font-semibold ${titleColorClasses} leading-tight select-none`}>
+            <div className={`text-[11px] sm:text-xs font-semibold ${titleColorClasses} leading-tight select-none`}>
               {title}
             </div>
             {message && (
               <div
-                className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-slate-100 line-clamp-2 leading-snug mt-0.5 break-words"
+                className="text-xs sm:text-[13px] font-semibold text-slate-900 dark:text-slate-100 line-clamp-2 leading-snug mt-0.5 break-words"
                 title={message}
               >
                 {message}

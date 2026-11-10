@@ -79,7 +79,7 @@ export function CompareProvider({ children }: { children: React.ReactNode }) {
         message: fund.name,
         category: "compare",
         action: {
-          label: `${t.common.compare} (${nextFunds.length})`,
+          label: t.common.compare,
           href: "/porownywarka",
         },
       });

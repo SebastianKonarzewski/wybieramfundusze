@@ -296,7 +296,7 @@ export const pl = {
     toastRemoved: "Usunięto z portfela",
     toastLimitReached: "Możesz dodać maksymalnie 15 funduszy do portfela.",
     limitWarningTitle: "Osiągnięto limit portfela",
-    goToPortfolio: "Przejdź do portfela",
+    goToPortfolio: "Portfel",
     summaryTitle: "Symulacja portfela",
     summarySubtitle: "Wybrano {count} funduszy. Skonfiguruj wagi, daty i zbadaj wyniki.",
     emptyTitle: "Twój portfel jest pusty",
