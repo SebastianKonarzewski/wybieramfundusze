@@ -13,7 +13,7 @@ import {
   Legend,
 } from "recharts";
 import { KNFValuation } from "@/types/knf";
-import { TrendingUp, TrendingDown, Calendar, LineChart as ChartIcon, RefreshCw } from "lucide-react";
+import { TrendingUp, TrendingDown, Calendar, LineChart as ChartIcon, RefreshCw, Download } from "lucide-react";
 import { BenchmarkSeries } from "@/lib/benchmark-api";
 import { useTranslation } from "@/lib/i18n";
 import { useAccessibility } from "@/lib/accessibility";
@@ -182,11 +182,29 @@ export function ValuationChart({
     });
   }, [filteredData, activeBenchmark, benchmarkData]);
 
+  // Export valuations to CSV
+  const handleExportCsv = () => {
+    if (!chronological.length) return;
+    const header = locale === "en" ? "Date;Valuation;Currency\r\n" : "Data;Wycena;Waluta\r\n";
+    const rows = chronological
+      .map((d) => `${d.date};${d.valuation.toFixed(4).replace(".", ",")};${currency}`)
+      .join("\r\n");
+    const blob = new Blob(["\uFEFF" + header + rows], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", `wyceny_${chronological[chronological.length - 1].date}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   if (valuations.length === 0) {
     return (
-      <div className="h-64 flex flex-col items-center justify-center bg-[#051329]/40 border border-[#0e274d] rounded-2xl text-slate-500">
-        <Calendar className="w-8 h-8 mb-2 opacity-50" />
-        <p className="text-sm">{t.chart.noValuations}</p>
+      <div className="h-64 flex flex-col items-center justify-center bg-white dark:bg-[#051329] border border-slate-200 dark:border-[#0e274d] rounded-2xl text-slate-500 shadow-sm">
+        <Calendar className="w-8 h-8 mb-2 opacity-40 text-[#044CD0]" />
+        <p className="text-sm font-medium">{t.chart.noValuations}</p>
       </div>
     );
   }
@@ -194,22 +212,22 @@ export function ValuationChart({
   const isPositive = stats.returnRate >= 0;
 
   return (
-    <div className="bg-[#051329] border border-[#0e274d] rounded-2xl p-5 shadow-lg">
+    <div className="bg-white dark:bg-[#051329] border border-slate-200 dark:border-[#0e274d] rounded-2xl sm:rounded-3xl p-5 sm:p-7 shadow-sm transition-colors">
       {/* Top Bar: Valuation & Range & Benchmark Select */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
         <div>
-          <div className="text-xs uppercase tracking-wider text-slate-400 font-medium mb-1">
+          <div className="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 font-medium mb-1">
             {t.chart.unitValuation}
           </div>
           <div className="flex items-baseline gap-3 flex-wrap">
-            <span className="text-2xl sm:text-3xl font-extrabold text-slate-100">
+            <span className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-slate-100">
               {formatCurrency(stats.end, currency)}
             </span>
             <span
               className={`inline-flex items-center gap-1 text-sm font-bold px-2 py-0.5 rounded-lg ${
                 isPositive
-                  ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30"
-                  : "bg-rose-500/15 text-rose-400 border border-rose-500/30"
+                  ? "bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/30"
+                  : "bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-500/30"
               }`}
             >
               {isPositive ? <TrendingUp className="w-3.5 h-3.5" /> : <TrendingDown className="w-3.5 h-3.5" />}
@@ -223,60 +241,71 @@ export function ValuationChart({
           </div>
         </div>
 
-        {/* Controls: Benchmark selector & Range buttons */}
+        {/* Controls: Benchmark selector & Range buttons & CSV Export */}
         <div className="flex flex-wrap items-center gap-2 self-start lg:self-auto">
           {/* Benchmark selector */}
-          <div className="flex items-center gap-1.5 bg-[#030a16] border border-[#0e274d] px-2.5 py-1 rounded-xl text-xs">
+          <div className="flex items-center gap-1.5 bg-slate-100/90 dark:bg-[#030a16] border border-slate-200 dark:border-[#0e274d] px-2.5 py-1 rounded-xl text-xs">
             {benchmarkLoading ? (
               <RefreshCw className="w-3.5 h-3.5 text-[#044CD0] animate-spin" />
             ) : (
               <ChartIcon className="w-3.5 h-3.5 text-[#044CD0]" />
             )}
-            <span className="text-slate-400 font-medium">{t.chart.benchmarkLabel}</span>
+            <span className="text-slate-500 dark:text-slate-400 font-medium">{t.chart.benchmarkLabel}</span>
             <select
               value={activeBenchmark}
               onChange={(e) => setActiveBenchmark(e.target.value as "NONE" | "WIG" | "TBSP")}
-              className="bg-transparent text-slate-200 font-semibold focus:outline-hidden cursor-pointer"
+              className="bg-transparent text-slate-800 dark:text-slate-200 font-semibold focus:outline-hidden cursor-pointer"
             >
-              <option value="NONE" className="bg-[#030a16]">{t.chart.noBenchmarkOption}</option>
-              <option value="WIG" className="bg-[#030a16]">{t.chart.wigOption}</option>
-              <option value="TBSP" className="bg-[#030a16]">{t.chart.tbspOption}</option>
+              <option value="NONE" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-100">{t.chart.noBenchmarkOption}</option>
+              <option value="WIG" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-100">{t.chart.wigOption}</option>
+              <option value="TBSP" className="bg-white dark:bg-[#030a16] text-slate-900 dark:text-slate-100">{t.chart.tbspOption}</option>
             </select>
           </div>
 
           {/* Range Buttons */}
-          <div className="flex items-center bg-[#030a16] p-1 rounded-xl border border-[#0e274d] overflow-x-auto">
+          <div className="flex items-center bg-slate-100/90 dark:bg-[#030a16] p-1 rounded-xl border border-slate-200 dark:border-[#0e274d] overflow-x-auto">
             {(["1M", "3M", "6M", "1Y", "3Y", "MAX"] as const).map((range) => (
               <button
                 key={range}
                 onClick={() => setSelectedRange(range)}
-                className={`px-2 sm:px-3 py-1 text-[11px] sm:text-xs font-semibold rounded-lg transition-colors cursor-pointer shrink-0 ${
+                className={`px-2.5 sm:px-3 py-1 text-[11px] sm:text-xs font-semibold rounded-lg transition-colors cursor-pointer shrink-0 ${
                   selectedRange === range
                     ? "bg-[#044CD0] text-white shadow-xs font-bold"
-                    : "text-slate-400 hover:text-slate-200"
+                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
                 }`}
               >
                 {range}
               </button>
             ))}
           </div>
+
+          {/* CSV Export Button */}
+          <button
+            type="button"
+            onClick={handleExportCsv}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100/90 dark:bg-[#030a16] border border-slate-200 dark:border-[#0e274d] hover:border-[#044CD0] dark:hover:border-[#044CD0]/60 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#044CD0] dark:hover:text-white transition-colors cursor-pointer shadow-2xs"
+            title={t.subfundDetail.exportCsv}
+          >
+            <Download className="w-3.5 h-3.5 text-[#044CD0]" />
+            <span className="hidden sm:inline">{t.subfundDetail.exportCsv}</span>
+          </button>
         </div>
       </div>
 
       {/* Chart Canvas */}
-      <div className="h-60 sm:h-72 w-full">
+      <div className="h-64 sm:h-80 w-full">
         <ResponsiveContainer width="100%" height="100%">
           {activeBenchmark === "NONE" ? (
             <AreaChart data={alignedChartData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
               <defs>
                 <linearGradient id="valGradUknf" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#044CD0" stopOpacity={0.4} />
-                  <stop offset="95%" stopColor="#02224D" stopOpacity={0.05} />
+                  <stop offset="5%" stopColor="#044CD0" stopOpacity={0.35} />
+                  <stop offset="95%" stopColor="#044CD0" stopOpacity={0.0} />
                 </linearGradient>
               </defs>
               <XAxis
                 dataKey="date"
-                stroke="#475569"
+                stroke="#94a3b8"
                 fontSize={11}
                 tickLine={false}
                 axisLine={false}
@@ -286,7 +315,7 @@ export function ValuationChart({
                 }}
               />
               <YAxis
-                stroke="#475569"
+                stroke="#94a3b8"
                 fontSize={11}
                 tickLine={false}
                 axisLine={false}
@@ -299,9 +328,9 @@ export function ValuationChart({
                   if (active && payload && payload.length) {
                     const data = payload[0].payload;
                     return (
-                      <div className="bg-[#030a16] border border-[#0e274d] px-3.5 py-2.5 rounded-xl shadow-xl text-xs">
-                        <div className="text-slate-400 font-medium mb-1">{formatDate(data.date)}</div>
-                        <div className="text-base font-bold text-slate-100">
+                      <div className="bg-white dark:bg-[#030a16] border border-slate-200 dark:border-[#0e274d] px-3.5 py-2.5 rounded-xl shadow-xl text-xs">
+                        <div className="text-slate-500 dark:text-slate-400 font-medium mb-1">{formatDate(data.date)}</div>
+                        <div className="text-base font-bold text-slate-900 dark:text-slate-100">
                           {formatCurrency(data.valuation, currency)}
                         </div>
                       </div>
@@ -324,7 +353,7 @@ export function ValuationChart({
             <LineChart data={alignedChartData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
               <XAxis
                 dataKey="date"
-                stroke="#475569"
+                stroke="#94a3b8"
                 fontSize={11}
                 tickLine={false}
                 axisLine={false}
@@ -334,7 +363,7 @@ export function ValuationChart({
                 }}
               />
               <YAxis
-                stroke="#475569"
+                stroke="#94a3b8"
                 fontSize={11}
                 tickLine={false}
                 axisLine={false}
@@ -346,27 +375,27 @@ export function ValuationChart({
                   if (active && payload && payload.length) {
                     const row = payload[0].payload;
                     return (
-                      <div className="bg-[#030a16] border border-[#0e274d] p-3 rounded-xl shadow-xl text-xs space-y-1.5">
-                        <div className="text-slate-400 font-semibold mb-1">{formatDate(String(label))}</div>
+                      <div className="bg-white dark:bg-[#030a16] border border-slate-200 dark:border-[#0e274d] p-3.5 rounded-xl shadow-xl text-xs space-y-1.5">
+                        <div className="text-slate-500 dark:text-slate-400 font-semibold mb-1">{formatDate(String(label))}</div>
                         <div className="flex items-center justify-between gap-4">
-                          <span className="flex items-center gap-1.5 text-blue-400 font-medium">
+                          <span className="flex items-center gap-1.5 text-[#044CD0] font-medium">
                             <span className="w-2 h-2 rounded-full bg-[#044CD0]" />
                             {t.chart.subfundSeries}
                           </span>
-                          <span className="font-bold text-slate-100">
+                          <span className="font-bold text-slate-900 dark:text-slate-100">
                             {row.fundReturn >= 0 ? "+" : ""}
                             {formatPercent(row.fundReturn / 100)}
-                            <span className="text-[11px] text-slate-400 font-normal ml-1">
+                            <span className="text-[11px] text-slate-500 dark:text-slate-400 font-normal ml-1">
                               ({formatCurrency(row.valuation, currency)})
                             </span>
                           </span>
                         </div>
                         <div className="flex items-center justify-between gap-4">
-                          <span className="flex items-center gap-1.5 text-amber-400 font-medium">
-                            <span className="w-2 h-2 rounded-full bg-amber-400" />
+                          <span className="flex items-center gap-1.5 text-amber-500 font-medium">
+                            <span className="w-2 h-2 rounded-full bg-amber-500" />
                             {activeBenchmark === "WIG" ? "WIG20 TR" : "TBSP"}:
                           </span>
-                          <span className="font-bold text-slate-100">
+                          <span className="font-bold text-slate-900 dark:text-slate-100">
                             {row.benchmarkReturn >= 0 ? "+" : ""}
                             {formatPercent(row.benchmarkReturn / 100)}
                           </span>

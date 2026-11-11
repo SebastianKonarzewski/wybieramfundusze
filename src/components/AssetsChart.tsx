@@ -27,9 +27,9 @@ export function AssetsChart({ assets }: { assets: KNFAsset[] }) {
 
   if (assets.length === 0) {
     return (
-      <div className="h-64 flex flex-col items-center justify-center bg-[#051329]/40 border border-[#0e274d] rounded-2xl text-slate-500">
-        <Coins className="w-8 h-8 mb-2 opacity-50" />
-        <p className="text-sm">{t.assets.noAssets}</p>
+      <div className="h-64 flex flex-col items-center justify-center bg-white dark:bg-[#051329]/50 border border-slate-200 dark:border-[#0e274d] rounded-2xl text-slate-500 shadow-sm">
+        <Coins className="w-8 h-8 mb-2 opacity-50 text-[#044CD0]" />
+        <p className="text-sm font-medium">{t.assets.noAssets}</p>
       </div>
     );
   }
@@ -38,10 +38,10 @@ export function AssetsChart({ assets }: { assets: KNFAsset[] }) {
   const currency = latest.currency || "PLN";
 
   return (
-    <div className="bg-[#051329] border border-[#0e274d] rounded-2xl p-5 shadow-md">
+    <div className="bg-white dark:bg-[#051329] border border-slate-200 dark:border-[#0e274d] rounded-2xl sm:rounded-3xl p-5 sm:p-7 shadow-sm transition-colors">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
         <div>
-          <div className="text-xs uppercase tracking-wider text-slate-400 font-medium mb-1">
+          <div className="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 font-medium mb-1">
             {t.assets.title}
           </div>
           <div className="flex items-baseline gap-3">
@@ -49,22 +49,22 @@ export function AssetsChart({ assets }: { assets: KNFAsset[] }) {
               value={latest.netAssets}
               currency={currency}
               className="inline-flex items-baseline gap-1.5"
-              valueClassName="text-2xl font-extrabold text-slate-100"
-              unitClassName="text-sm font-bold text-slate-400"
+              valueClassName="text-2xl font-extrabold text-slate-900 dark:text-slate-100"
+              unitClassName="text-sm font-bold text-slate-500 dark:text-slate-400"
             />
-            <span className="text-xs text-slate-400">
+            <span className="text-xs text-slate-500 dark:text-slate-400">
               ({t.assets.netAssetsOn} {formatDate(latest.date)})
             </span>
           </div>
         </div>
-        <div className="text-xs text-slate-400">
+        <div className="text-xs text-slate-500 dark:text-slate-400">
           {t.assets.grossAssetsLabel}{" "}
           <FormattedLargeNumber
             value={latest.assets}
             currency={currency}
             className="inline-flex items-baseline gap-1"
-            valueClassName="font-bold text-slate-200"
-            unitClassName="text-[11px] font-medium text-slate-400"
+            valueClassName="font-bold text-slate-800 dark:text-slate-200"
+            unitClassName="text-[11px] font-medium text-slate-500 dark:text-slate-400"
           />
         </div>
       </div>
@@ -74,7 +74,7 @@ export function AssetsChart({ assets }: { assets: KNFAsset[] }) {
           <BarChart data={chronological} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
             <XAxis
               dataKey="date"
-              stroke="#475569"
+              stroke="#94a3b8"
               fontSize={11}
               tickLine={false}
               axisLine={false}
@@ -84,7 +84,7 @@ export function AssetsChart({ assets }: { assets: KNFAsset[] }) {
               }}
             />
             <YAxis
-              stroke="#475569"
+              stroke="#94a3b8"
               fontSize={11}
               tickLine={false}
               axisLine={false}
@@ -102,14 +102,14 @@ export function AssetsChart({ assets }: { assets: KNFAsset[] }) {
                 if (active && payload && payload.length) {
                   const data = payload[0].payload as KNFAsset;
                   return (
-                    <div className="bg-[#030a16] border border-[#0e274d] p-3 rounded-xl shadow-xl text-xs space-y-1">
-                      <div className="text-slate-400 font-medium mb-1">
+                    <div className="bg-white dark:bg-[#030a16] border border-slate-200 dark:border-[#0e274d] p-3.5 rounded-xl shadow-xl text-xs space-y-1">
+                      <div className="text-slate-500 dark:text-slate-400 font-medium mb-1">
                         {t.assets.reportLabel} {formatDate(data.date)}
                       </div>
-                      <div className="text-blue-400 font-semibold">
+                      <div className="text-[#044CD0] dark:text-blue-400 font-semibold">
                         {t.assets.netAssetsLabel} {formatLargeNumber(data.netAssets, data.currency || currency)}
                       </div>
-                      <div className="text-slate-200 font-semibold">
+                      <div className="text-slate-800 dark:text-slate-200 font-semibold">
                         {t.assets.grossAssetsTooltip} {formatLargeNumber(data.assets, data.currency || currency)}
                       </div>
                     </div>

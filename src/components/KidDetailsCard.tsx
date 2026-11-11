@@ -11,9 +11,9 @@ export function KidDetailsCard({ kid }: { kid?: KNFKeyInformationDetail | null }
 
   if (!kid) {
     return (
-      <div className="p-8 text-center bg-[#051329]/50 border border-[#0e274d] rounded-2xl text-slate-500">
-        <FileText className="w-8 h-8 mx-auto mb-2 opacity-50" />
-        <p className="text-sm">{t.subfundDetail.noKidAlert}</p>
+      <div className="p-8 text-center bg-white dark:bg-[#051329]/50 border border-slate-200 dark:border-[#0e274d] rounded-2xl text-slate-500 shadow-sm">
+        <FileText className="w-8 h-8 mx-auto mb-2 opacity-50 text-[#044CD0]" />
+        <p className="text-sm font-medium">{t.subfundDetail.noKidAlert}</p>
       </div>
     );
   }
@@ -23,22 +23,22 @@ export function KidDetailsCard({ kid }: { kid?: KNFKeyInformationDetail | null }
   return (
     <div className="space-y-6">
       {/* Top Banner with Download & Meta */}
-      <div className="bg-[#051329] border border-[#0e274d] rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-md">
+      <div className="bg-white dark:bg-[#051329] border border-slate-200 dark:border-[#0e274d] rounded-2xl sm:rounded-3xl p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm transition-colors">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#60a5fa]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#044CD0] dark:text-[#60a5fa]">
               {t.subfundDetail.kidBannerTitle}
             </span>
-            <span className="text-xs text-slate-500">
+            <span className="text-xs text-slate-500 dark:text-slate-400">
               {t.subfundDetail.publicationDate} {formatDate(kid.publicationDate)}
             </span>
           </div>
-          <div className="text-sm font-semibold text-slate-200">
+          <div className="text-sm sm:text-base font-bold text-slate-900 dark:text-slate-100">
             {kid.filename || "KID Funduszu"}
           </div>
           {kid.unit && (
-            <div className="text-xs text-slate-400 mt-0.5">
-              {t.subfundDetail.unitCategory} <span className="text-slate-300 font-mono">{kid.unit}</span> ({kid.currency})
+            <div className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+              {t.subfundDetail.unitCategory} <span className="text-slate-800 dark:text-slate-300 font-mono font-semibold">{kid.unit}</span> ({kid.currency})
             </div>
           )}
         </div>
@@ -57,28 +57,28 @@ export function KidDetailsCard({ kid }: { kid?: KNFKeyInformationDetail | null }
       {/* Grid: Risk & Benchmark & Fees */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Risk & Benchmark Box */}
-        <div className="bg-[#051329] border border-[#0e274d] rounded-2xl p-5 space-y-5">
+        <div className="bg-white dark:bg-[#051329] border border-slate-200 dark:border-[#0e274d] rounded-2xl sm:rounded-3xl p-5 sm:p-6 space-y-5 shadow-sm transition-colors">
           <div>
-            <h3 className="text-xs uppercase font-bold tracking-wider text-slate-400 mb-2">
+            <h3 className="text-xs uppercase font-bold tracking-wider text-slate-500 dark:text-slate-400 mb-2">
               {t.subfundDetail.riskTitle}
             </h3>
             <RiskBadge level={kid.riskLevel} size="lg" showLabel={true} />
-            <p className="text-xs text-slate-400 mt-3 leading-relaxed">
+            <p className="text-xs text-slate-600 dark:text-slate-400 mt-3 leading-relaxed">
               {t.subfundDetail.riskDesc}
             </p>
           </div>
 
-          <div className="pt-4 border-t border-[#0e274d]">
-            <div className="flex items-center gap-2 text-xs uppercase font-bold tracking-wider text-slate-400 mb-2">
-              <Target className="w-4 h-4 text-[#3b82f6]" />
+          <div className="pt-4 border-t border-slate-100 dark:border-[#0e274d]">
+            <div className="flex items-center gap-2 text-xs uppercase font-bold tracking-wider text-slate-500 dark:text-slate-400 mb-2">
+              <Target className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6]" />
               {t.subfundDetail.benchmarkTitle}
             </div>
             {kid.hasBenchmark && kid.benchmark ? (
-              <div className="p-3 rounded-xl bg-[#030a16] border border-[#0e274d] text-sm font-medium text-slate-200">
+              <div className="p-3 rounded-xl bg-slate-50 dark:bg-[#030a16] border border-slate-200 dark:border-[#0e274d] text-sm font-medium text-slate-800 dark:text-slate-200">
                 {kid.benchmark}
               </div>
             ) : (
-              <div className="text-xs text-slate-500 italic">
+              <div className="text-xs text-slate-500 dark:text-slate-400 italic">
                 {t.subfundDetail.noBenchmarkDeclared}
               </div>
             )}
@@ -86,54 +86,54 @@ export function KidDetailsCard({ kid }: { kid?: KNFKeyInformationDetail | null }
         </div>
 
         {/* Fees Breakdown Box */}
-        <div className="bg-[#051329] border border-[#0e274d] rounded-2xl p-5">
-          <h3 className="text-xs uppercase font-bold tracking-wider text-slate-400 mb-4 flex items-center gap-1.5">
-            <Percent className="w-4 h-4 text-[#3b82f6]" />
+        <div className="bg-white dark:bg-[#051329] border border-slate-200 dark:border-[#0e274d] rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-sm transition-colors">
+          <h3 className="text-xs uppercase font-bold tracking-wider text-slate-500 dark:text-slate-400 mb-4 flex items-center gap-1.5">
+            <Percent className="w-4 h-4 text-[#044CD0] dark:text-[#3b82f6]" />
             {t.subfundDetail.feeStructure}
           </h3>
 
-          <div className="space-y-3.5 text-xs">
+          <div className="space-y-3 text-xs">
             {/* Management fee */}
-            <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#030a16] border border-[#0e274d]">
+            <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-[#030a16] border border-slate-200 dark:border-[#0e274d]">
               <div>
-                <span className="font-semibold text-slate-200 block">{t.subfundDetail.mgmtFeeTitle}</span>
-                <span className="text-[11px] text-slate-500">{t.subfundDetail.mgmtFeeDesc}</span>
+                <span className="font-semibold text-slate-800 dark:text-slate-200 block">{t.subfundDetail.mgmtFeeTitle}</span>
+                <span className="text-[11px] text-slate-500 dark:text-slate-400">{t.subfundDetail.mgmtFeeDesc}</span>
               </div>
-              <span className="text-sm font-bold text-blue-400">
+              <span className="text-sm font-bold text-[#044CD0] dark:text-blue-400">
                 {formatPercent(kid.managementAndOtherFeesRate)}
               </span>
             </div>
 
             {/* Entry fee */}
-            <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#030a16] border border-[#0e274d]">
+            <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-[#030a16] border border-slate-200 dark:border-[#0e274d]">
               <div>
-                <span className="font-semibold text-slate-200 block">{t.subfundDetail.entryFeeTitle}</span>
-                <span className="text-[11px] text-slate-500">{t.subfundDetail.entryFeeDesc}</span>
+                <span className="font-semibold text-slate-800 dark:text-slate-200 block">{t.subfundDetail.entryFeeTitle}</span>
+                <span className="text-[11px] text-slate-500 dark:text-slate-400">{t.subfundDetail.entryFeeDesc}</span>
               </div>
-              <span className="text-sm font-bold text-slate-200">
+              <span className="text-sm font-bold text-slate-800 dark:text-slate-200">
                 {formatPercent(kid.maxEntryFeeRate)}
               </span>
             </div>
 
             {/* Exit fee */}
-            <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#030a16] border border-[#0e274d]">
+            <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-[#030a16] border border-slate-200 dark:border-[#0e274d]">
               <div>
-                <span className="font-semibold text-slate-200 block">{t.subfundDetail.exitFeeTitle}</span>
-                <span className="text-[11px] text-slate-500">{t.subfundDetail.exitFeeDesc}</span>
+                <span className="font-semibold text-slate-800 dark:text-slate-200 block">{t.subfundDetail.exitFeeTitle}</span>
+                <span className="text-[11px] text-slate-500 dark:text-slate-400">{t.subfundDetail.exitFeeDesc}</span>
               </div>
-              <span className="text-sm font-bold text-slate-200">
+              <span className="text-sm font-bold text-slate-800 dark:text-slate-200">
                 {formatPercent(kid.maxExitFeeRate)}
               </span>
             </div>
 
             {/* Transaction costs */}
             {kid.transactionCostsRate !== null && kid.transactionCostsRate !== undefined && (
-              <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#030a16] border border-[#0e274d]">
+              <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-[#030a16] border border-slate-200 dark:border-[#0e274d]">
                 <div>
-                  <span className="font-semibold text-slate-200 block">{t.subfundDetail.transCostsTitle}</span>
-                  <span className="text-[11px] text-slate-500">{t.subfundDetail.transCostsDesc}</span>
+                  <span className="font-semibold text-slate-800 dark:text-slate-200 block">{t.subfundDetail.transCostsTitle}</span>
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400">{t.subfundDetail.transCostsDesc}</span>
                 </div>
-                <span className="text-sm font-bold text-slate-200">
+                <span className="text-sm font-bold text-slate-800 dark:text-slate-200">
                   {formatPercent(kid.transactionCostsRate)}
                 </span>
               </div>
@@ -141,7 +141,7 @@ export function KidDetailsCard({ kid }: { kid?: KNFKeyInformationDetail | null }
 
             {/* Success fee note */}
             {kid.hasSuccessFee && (
-              <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 text-[11px] leading-relaxed">
+              <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-500/30 text-amber-800 dark:text-amber-300 text-[11px] leading-relaxed">
                 <strong>{t.subfundDetail.successFeeLabel}</strong> {kid.successFee || t.subfundDetail.successFeeDefaultNote}
               </div>
             )}
@@ -151,12 +151,12 @@ export function KidDetailsCard({ kid }: { kid?: KNFKeyInformationDetail | null }
 
       {/* PRIIPs Scenarios Table with Polish percent formatting */}
       {kid.scenarios && kid.scenarios.length > 0 && (
-        <div className="bg-[#051329] border border-[#0e274d] rounded-2xl p-5 shadow-lg">
+        <div className="bg-white dark:bg-[#051329] border border-slate-200 dark:border-[#0e274d] rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-sm transition-colors">
           <div className="mb-4">
-            <h3 className="text-sm font-bold text-slate-100">
+            <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-slate-100">
               {t.subfundDetail.priipsTitle}
             </h3>
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
               {t.subfundDetail.priipsDesc}
             </p>
           </div>
@@ -175,25 +175,25 @@ export function KidDetailsCard({ kid }: { kid?: KNFKeyInformationDetail | null }
                   key={idx}
                   className={`p-4 rounded-xl border flex flex-col justify-between ${
                     isFavorable
-                      ? "bg-emerald-950/20 border-emerald-500/30"
+                      ? "bg-emerald-50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-500/30"
                       : isUnfavorable
-                      ? "bg-rose-950/20 border-rose-500/30"
+                      ? "bg-rose-50 dark:bg-rose-950/20 border-rose-200 dark:border-rose-500/30"
                       : isStress
-                      ? "bg-red-950/30 border-red-500/40"
-                      : "bg-[#030a16] border-[#0e274d]"
+                      ? "bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-red-500/40"
+                      : "bg-slate-50 dark:bg-[#030a16] border-slate-200 dark:border-[#0e274d]"
                   }`}
                 >
-                  <div className="text-xs font-bold uppercase tracking-wider text-slate-300 capitalize mb-3">
+                  <div className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 capitalize mb-3">
                     {scenario.name}
                   </div>
 
                   <div className="space-y-3">
                     {res1Y && (
                       <div className="flex items-center justify-between text-xs">
-                        <span className="text-slate-400">{t.subfundDetail.after1Year}</span>
+                        <span className="text-slate-500 dark:text-slate-400">{t.subfundDetail.after1Year}</span>
                         <span
                           className={`font-bold text-sm ${
-                            res1Y.returnRate >= 0 ? "text-emerald-400" : "text-rose-400"
+                            res1Y.returnRate >= 0 ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"
                           }`}
                         >
                           {res1Y.returnRate >= 0 ? "+" : ""}
@@ -203,11 +203,11 @@ export function KidDetailsCard({ kid }: { kid?: KNFKeyInformationDetail | null }
                     )}
 
                     {res5Y && (
-                      <div className="flex items-center justify-between text-xs pt-2 border-t border-[#0e274d]">
-                        <span className="text-slate-400">{t.subfundDetail.after5Years}</span>
+                      <div className="flex items-center justify-between text-xs pt-2 border-t border-slate-200 dark:border-[#0e274d]">
+                        <span className="text-slate-500 dark:text-slate-400">{t.subfundDetail.after5Years}</span>
                         <span
                           className={`font-bold text-sm ${
-                            res5Y.returnRate >= 0 ? "text-emerald-400" : "text-rose-400"
+                            res5Y.returnRate >= 0 ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"
                           }`}
                         >
                           {res5Y.returnRate >= 0 ? "+" : ""}
